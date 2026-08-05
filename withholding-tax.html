@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Withholding Tax (WHT) Calculator Pakistan | Pakistan Tax Calculator</title>
-<meta name="description" content="Calculate Pakistan income tax withholding (WHT) on goods, services, contracts, dividends, profit on debt, rent, imports, exports and more — filer vs non-filer rates for TY2025-26 and TY2026-27.">
+<title>Withholding Tax (WHT) Calculator Pakistan 2025-26 & 2026-27 | Filer vs Non-Filer</title>
+<meta name="description" content="Calculate income tax withholding under the Income Tax Ordinance 2001 — goods, services, contracts, dividends, non-residents, imports, exports, property and more. Filer and non-filer rates for tax years 2025-26 and 2026-27.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
 <!-- Google tag (gtag.js) -->
@@ -686,7 +686,7 @@ table.gst td.note{
   </div>
 
   <div class="disclaimer">
-    WHT under the Income Tax Ordinance, 2001 has many category-specific rates and exemptions beyond what is listed here. Most rates shown are minimum/adjustable tax (creditable against final liability); dividend and profit-on-debt rates are generally final tax. TY2025-26 rates are sourced from FBR's official withholding tax rate card; TY2026-27 rates reflect Finance Bill 2026 changes as summarized in Trustpoint Consultants' TY2026-27 Withholding Tax Card. Verify the exact clause applicable to your transaction with FBR's official rate card or a tax advisor.
+    WHT under the Income Tax Ordinance, 2001 has many category-specific rates and exemptions beyond what is listed here. Most rates shown are minimum/adjustable tax (creditable against final liability); dividend and profit-on-debt rates are generally final tax. TY2025-26 rates are sourced from FBR's official Withholding Tax Rate Card updated to 30 June 2025 (Finance Act 2025); TY2026-27 rates reflect Finance Act 2026 changes. Both tax years show the same 14 categories, but the line items inside a category can differ, because some charges did not exist in both years &mdash; social-media/digital platform revenue (s.154B) and life-insurance payout gains (s.151B) were introduced by the Finance Act 2026 and therefore have no TY2025-26 equivalent, while the graduated property-transfer slabs under s.236C and s.236K were replaced by flat rates from TY2026-27. Note also that FBR had not published an official TY2026-27 rate card at the time of writing, so TY2026-27 figures are drawn from professional-firm commentary on the Finance Act; the non-filer rates for s.236C and s.236K in particular are not officially confirmed and are shown on the assumption that the previous non-filer rates carry over. Verify the exact clause applicable to your transaction with FBR's official rate card or a tax advisor.
   </div>
 
 </div>
@@ -743,6 +743,18 @@ document.querySelectorAll('.year-toggle button').forEach(b=>{
 
 /* =========================================================
    WHT DATA
+
+   Both tax years use an IDENTICAL set of 14 categories, in the
+   same order, so switching years never changes the shape of the
+   form. Line items within a category may still differ, because
+   some charges did not exist in both years (e.g. s.154B social
+   media revenue and s.151B life-insurance gains were introduced
+   by the Finance Act 2026 and so have no 2025-26 counterpart).
+
+   2025-26 = "Tax Year 2026" (year ending 30 June 2026), sourced
+   from FBR's official Withholding Tax Rate Card updated to
+   30 June 2025 per the Finance Act 2025.
+   2026-27 reflects the Finance Act 2026 changes.
 ========================================================= */
 const MOTOR_VEHICLE_ITEMS = {
   "Motor vehicle ≤850cc": [0.5,1.5],
@@ -756,64 +768,94 @@ const MOTOR_VEHICLE_ITEMS = {
   "Motor vehicle >3000cc": [12,36],
 };
 
+// Shared across both years — rates unchanged by the Finance Act 2026
+const NON_RESIDENT_ITEMS = {
+  "Contracts – construction/assembly/installation (152(1A))": [7,7],
+  "Insurance / re-insurance premium (152(1AA))": [5,5],
+  "Advertisement – non-resident media person (152(1AAA))": [10,10],
+  "Royalty / fee for technical services & offshore digital services (152(1))": [15,15],
+  "Other payments to a non-resident, general (152(2))": [20,20],
+  "Capital gain – debt/securities via non-resident accounts (152(1D/1DA))": [10,10],
+  "Sale of goods – company (152(2A)(a))": [5,10],
+  "Sale of goods – other than company (152(2A)(a))": [5.5,11],
+  "Services – specified list (152(2A)(b))": [8,16],
+  "Services – IT/IT-enabled (152(2A)(b))": [4,8],
+  "Services – other (152(2A)(b))": [15,30],
+  "Contracts – sportspersons (152(2A)(c))": [15,30],
+  "Contracts – other (152(2A)(c))": [8,16],
+};
+
+const BROKERAGE_ITEMS = {
+  "Advertising agents": [10,20],
+  "Life-insurance agents (<Rs 0.5m p.a.)": [8,16],
+  "Other brokerage / commission": [12,24],
+};
+
+const RENT_ITEMS = {
+  "Company (flat rate)": [15,30],
+  "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
+};
+
 const WHT_DATA_BY_YEAR = {
   "2025-26": {
     "Goods (Sec 153)": { filerToggle:true, items:{
-      "Rice, cottonseed, edible oils": [1.5,3],
-      "Other supplies – Company": [5,10],
-      "Other supplies – Individual/AOP": [5.5,11],
-      "Toll manufacturing – Company": [9,18],
-      "Toll manufacturing – Individual/AOP": [11,22],
+      "Rice, cotton-seed or edible oils": [1.5,3],
+      "Sale of goods – company": [5,10],
+      "Sale of goods – other than company": [5.5,11],
+      "Toll manufacturing – company": [9,18],
+      "Toll manufacturing – other than company": [11,22],
     }},
     "Services (Sec 153)": { filerToggle:true, items:{
-      "IT & IT-enabled services": [4,8],
-      "Specified services (transport/freight etc.)": [6,12],
-      "Other / professional services": [15,30],
-      "Advertising (media)": [1.5,3],
+      "Services – specified list": [6,12],
+      "Services – IT / IT-enabled": [4,8],
+      "Independent professionals (doctors, lawyers, etc.)": [15,30],
+      "Other services": [15,30],
+      "Advertising to print / electronic media": [1.5,3],
       "Services rendered to exporters": [1,2],
     }},
     "Contracts (Sec 153)": { filerToggle:true, items:{
-      "Companies": [7.5,15],
-      "Individuals / AOP": [8,16],
-      "Sportspersons": [15,30],
+      "Contracts – company": [7.5,15],
+      "Contracts – other than company": [8,16],
+      "Contracts – sportspersons": [15,30],
     }},
-    "E-commerce (Sec 153)": { filerToggle:false, items:{
-      "Digital payment": [1,2],
-      "Cash on delivery": [2,4],
+    "E-commerce (Sec 153(2A))": { filerToggle:false, items:{
+      "Digitally ordered goods/services (digital/bank channel)": [1,2],
+      "Cash on delivery (by courier)": [2,4],
     }},
-    "Dividends (Sec 150)": { filerToggle:true, items:{
-      "Independent Power Producers (IPPs)": [7.5,15],
-      "REITs & others": [15,30],
-      "Mutual funds – equity": [15,30],
-      "Mutual funds – debt (>50% debt income)": [25,50],
-      "Tax-exempt / loss-making companies": [25,50],
+    "Dividend, Sukuk & Profit on Debt (Sec 150/150A/151)": { filerToggle:true, items:{
+      "Dividend – general & REIT": [15,30],
+      "Dividend – IPP pass-through (CPPA-G)": [7.5,15],
+      "Dividend – company paying no tax (exemption/loss/credit)": [25,50],
+      "Dividend – mutual funds (equity)": [15,30],
+      "Dividend – mutual funds (>50% debt income)": [25,50],
+      "Sukuk return – company holder": [25,50],
+      "Sukuk return – individual/AOP, return > Rs 1m": [12.5,25],
+      "Sukuk return – individual/AOP, return < Rs 1m": [10,20],
+      "Profit on debt – bank/FI deposits & govt securities": [20,40],
+      "Profit on debt – all other cases": [15,30],
     }},
-    "Profit on Debt (Sec 151)": { filerToggle:true, items:{
-      "Bank deposits / profit on debt": [20,40],
-      "Government securities": [20,40],
-      "Sukuk – company holder": [25,50],
-      "Sukuk – individual/AOP (>Rs 1M)": [12.5,25],
-      "Sukuk – individual/AOP (≤Rs 1M)": [10,20],
-      "Other cases": [15,30],
+    "Payments to Non-Residents (Sec 152)": { filerToggle:true, items:{
+      ...NON_RESIDENT_ITEMS,
     }},
     "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
-      "Company (flat rate)": [15,30],
-      "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
+      ...RENT_ITEMS,
     }},
     "Imports (Sec 148)": { filerToggle:true, items:{
-      "12th Schedule Part I": [1,2],
-      "12th Schedule Part II – general": [2,4],
-      "12th Schedule Part II – commercial importer": [3.5,7],
-      "12th Schedule Part III – general": [5.5,11],
-      "12th Schedule Part III – commercial importer": [6,12],
-      "Pharmaceutical (finished products)": [4,8],
+      "12th Sch Part I (steel, fertiliser, urea, gold, cotton, LNG)": [1,2],
+      "12th Sch Part II – general": [2,4],
+      "12th Sch Part II – commercial importer": [3.5,7],
+      "12th Sch Part III – general": [5.5,11],
+      "12th Sch Part III – commercial importer": [6,12],
+      "SRO 1125(I)/2011 manufacturers": [1,2],
+      "Finished pharmaceutical products (DRAP registered)": [4,8],
+      "EV / small-car CKD kits": [1,2],
     }},
-    "Exports (Sec 154 / 154A)": { filerToggle:true, items:{
-      "Export of goods": [1,2],
-      "Export of IT/software services (PSEB registered)": [0.25,0.5],
-      "Other export of services": [1,2],
+    "Exports & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
+      "Export proceeds of goods": [1,2],
+      "Export of IT/IT-enabled services (PSEB registered)": [0.25,0.5],
+      "Export of services – any other case": [1,2],
     }},
-    "Prizes, Winnings & Petroleum (Sec 156/156A)": { filerToggle:true, items:{
+    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/151B)": { filerToggle:true, items:{
       "Prize bond / cross-word puzzle": [15,30],
       "Raffle / lottery / quiz / promotional prize": [20,40],
       "Commission to petroleum-pump operators": [12,24],
@@ -822,8 +864,27 @@ const WHT_DATA_BY_YEAR = {
       "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
       ...MOTOR_VEHICLE_ITEMS,
     }},
-    "Remittance Abroad via Card (Sec 236Y)": { filerToggle:true, items:{
-      "Credit / debit / prepaid card remittance": [5,10],
+    "Brokerage & Commission (Sec 233)": { filerToggle:true, items:{
+      ...BROKERAGE_ITEMS,
+    }},
+    "Property Transactions & Other Collections (Sec 236A/C/K/CB/G/H/Y/Z)": { filerToggle:true, items:{
+      "Sale by auction – general (236A)": [10,20],
+      "Sale by auction – immovable property / Pakistan Railways (236A)": [5,10],
+      "Sale/transfer of immovable property, seller – value ≤ Rs 50m (236C)": [4.5,11.5],
+      "Sale/transfer of immovable property, seller – value Rs 50–100m (236C)": [5,11.5],
+      "Sale/transfer of immovable property, seller – value > Rs 100m (236C)": [5.5,11.5],
+      "Purchase of immovable property, buyer – value ≤ Rs 50m (236K)": [1.5,10.5],
+      "Purchase of immovable property, buyer – value Rs 50–100m (236K)": [2,14.5],
+      "Purchase of immovable property, buyer – value > Rs 100m (236K)": [2.5,18.5],
+      "Functions & gatherings – marriage halls, marquees, etc. (236CB)": [10,20],
+      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.25,0.7],
+      "Sale to distributors/dealers/wholesalers – other than fertiliser (236G)": [0.1,2],
+      "Sale to retailers, on gross sales (236H)": [0.5,2.5],
+      "Remittance abroad via credit/debit/prepaid card (236Y)": [5,10],
+      "Bonus shares (236Z)": [10,20],
+    }},
+    "Foreign Domestic Workers (Sec 231C)": { filerToggle:true, fixed:true, items:{
+      "Per worker, at visa issue/renewal": [200000,400000],
     }},
   },
 
@@ -863,25 +924,12 @@ const WHT_DATA_BY_YEAR = {
       "Profit on debt – bank/FI deposits & govt securities (non-individuals)": [20,40],
       "Profit on debt – all other cases": [15,30],
       "Gain on disposal of debt securities (NCCPL, Sec 151A)": [15,30],
-      "Bonus shares issued by a company (Sec 236Z)": [10,10],
     }},
     "Payments to Non-Residents (Sec 152)": { filerToggle:true, items:{
-      "Contracts – construction/assembly/installation (152(1A))": [7,7],
-      "Insurance / re-insurance premium (152(1AA))": [5,5],
-      "Advertisement – non-resident media person (152(1AAA))": [10,10],
-      "Other payments to a non-resident, general (152(2))": [20,20],
-      "Capital gain – debt/securities via non-resident accounts (152(1D/1DA))": [10,10],
-      "Sale of goods – company (152(2A)(a))": [5,10],
-      "Sale of goods – other than company (152(2A)(a))": [5.5,11],
-      "Services – specified list (152(2A)(b))": [8,16],
-      "Services – IT/IT-enabled (152(2A)(b))": [4,8],
-      "Services – other (152(2A)(b))": [15,30],
-      "Contracts – sportspersons (152(2A)(c))": [15,30],
-      "Contracts – other (152(2A)(c))": [8,16],
+      ...NON_RESIDENT_ITEMS,
     }},
     "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
-      "Company (flat rate)": [15,30],
-      "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
+      ...RENT_ITEMS,
     }},
     "Imports (Sec 148)": { filerToggle:true, items:{
       "12th Sch Part I (steel, fertiliser, urea, gold, cotton, LNG)": [1,2],
@@ -894,19 +942,19 @@ const WHT_DATA_BY_YEAR = {
       "Plastic raw material (industrial / own use)": [1.75,3.5],
       "Plastic raw material (commercial importer)": [4.5,9],
     }},
-    "Exports, IT & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
+    "Exports & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
       "Export proceeds of goods": [1.25,1.25],
       "Export of IT/IT-enabled services (PSEB, to TY2029)": [0.25,0.25],
       "Export of services – any other case": [1,1],
       "Social-media platform revenue (resident)": [5,10],
       "Social-media platform revenue (non-resident)": [5,5],
     }},
-    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/7G/151B)": { filerToggle:true, items:{
+    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/151B)": { filerToggle:true, items:{
       "Prize bond / cross-word puzzle": [15,30],
       "Raffle / lottery / quiz / promotional prize": [20,40],
       "Commission to petroleum-pump operators": [12,24],
       "Life-insurance payout gain – cashed within 1 year": [15,30],
-      "Life-insurance payout gain – cashed 1 to 7 years": [10,20],
+      "Life-insurance payout gain – cashed 1 to 4 years (exempt after 4)": [10,20],
     }},
     "Cash Withdrawal & Motor Vehicles (Sec 231AB/231B)": { filerToggle:true, items:{
       "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
@@ -914,23 +962,21 @@ const WHT_DATA_BY_YEAR = {
       "Vehicle, cc N/A, value ≥ Rs 5m (filer 3%)": [3,9],
     }},
     "Brokerage & Commission (Sec 233)": { filerToggle:true, items:{
-      "Advertising agents": [10,20],
-      "Life-insurance agents (<Rs 0.5m p.a.)": [8,16],
-      "Other brokerage / commission": [12,24],
+      ...BROKERAGE_ITEMS,
     }},
     "Property Transactions & Other Collections (Sec 236A/C/K/CB/G/H/Y/Z)": { filerToggle:true, items:{
       "Sale by auction – general (236A)": [10,20],
       "Sale by auction – immovable property / Pakistan Railways (236A)": [5,10],
-      "Sale/transfer of immovable property, seller (236C)": [2.75,11.5],
+      "Sale/transfer of immovable property, seller – flat rate (236C)": [2.75,11.5],
       "Purchase of immovable property, buyer – value ≤ Rs 50m (236K)": [1.25,10.5],
       "Purchase of immovable property, buyer – value Rs 50–100m (236K)": [1.25,14.5],
       "Purchase of immovable property, buyer – value > Rs 100m (236K)": [1.25,18.5],
       "Functions & gatherings – marriage halls, marquees, etc. (236CB)": [10,20],
-      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.7,1.4],
+      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.25,0.7],
       "Sale to distributors/dealers/wholesalers – other than fertiliser (236G)": [0.1,2],
       "Sale to retailers, on gross sales (236H)": [0.5,2.5],
       "Remittance abroad via credit/debit/prepaid card (236Y)": [0.5,1],
-      "Bonus shares (236Z)": [10,10],
+      "Bonus shares (236Z)": [10,20],
     }},
     "Foreign Domestic Workers (Sec 231C)": { filerToggle:true, fixed:true, items:{
       "Per worker, at visa issue/renewal": [200000,400000],
@@ -946,24 +992,31 @@ const whtCategoryEl = document.getElementById('whtCategory');
 const whtSubcategoryEl = document.getElementById('whtSubcategory');
 
 function populateWhtCategories(){
+  // Preserve the selected category across a year switch where possible —
+  // both years share the same category list, so this should always hold.
+  const previous = whtCategoryEl.value;
   whtCategoryEl.innerHTML = "";
   Object.keys(currentWhtData()).forEach(cat=>{
     const o = document.createElement('option');
     o.value = cat; o.textContent = cat;
     whtCategoryEl.appendChild(o);
   });
+  if(previous && currentWhtData()[previous]) whtCategoryEl.value = previous;
   populateWhtSub();
 }
 
 function populateWhtSub(){
   const cat = currentWhtData()[whtCategoryEl.value];
   if(!cat) return;
+  // Preserve the selected line item too, when it exists in the new year.
+  const previousSub = whtSubcategoryEl.value;
   whtSubcategoryEl.innerHTML = "";
   Object.keys(cat.items).forEach(k=>{
     const o = document.createElement('option');
     o.value = k; o.textContent = k;
     whtSubcategoryEl.appendChild(o);
   });
+  if(previousSub && cat.items[previousSub]) whtSubcategoryEl.value = previousSub;
   document.getElementById('whtFilerField').style.display = cat.filerToggle ? 'block':'none';
   document.getElementById('whtAmountField').style.display = cat.fixed ? 'none' : 'block';
   computeWht();
