@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sales Tax Withholding Calculator 2026 | Federal & Provincial Rates</title>
-<meta name="description" content="Calculate sales tax withholding on goods and services across FBR, Sindh SRB, Punjab PRA, KP KPRA, Balochistan BRA and ICT — registered vs unregistered supplier rates.">
+<meta name="description" content="Calculate sales tax withholding on goods and services across FBR, Sindh SRB, Punjab PRA, KP KPRA, Balochistan BRA and ICT — registered vs unregistered supplier rates, tax-inclusive or tax-exclusive amounts.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
 <!-- Google tag (gtag.js) -->
@@ -651,9 +651,18 @@ table.gst td.note{
       <select id="stwCategory"></select>
     </div>
 
+    <div class="field">
+      <label>Amount You Enter Is</label>
+      <div class="seg" id="stwBasisSeg">
+        <button class="active" data-basis="excl">Excluding Tax</button>
+        <button data-basis="incl">Including Tax</button>
+      </div>
+      <div class="hint" id="stwBasisHint">Choose "Including Tax" if the figure on the invoice already has the sales tax built into it &mdash; the tax will be worked back out of that total.</div>
+    </div>
+
     <div class="row">
       <div class="field">
-        <label>Value of Supply, Excl. Tax (PKR)</label>
+        <label id="stwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
         <div class="amount-wrap">
           <span class="currency-prefix">₨</span>
           <input type="text" inputmode="numeric" autocomplete="off" id="stwValue" class="amount-input" placeholder="e.g. 200,000">
@@ -808,19 +817,45 @@ stwCategoryEl.addEventListener('change', computeStw);
 document.getElementById('stwValue').addEventListener('input', computeStw);
 document.getElementById('stwRate').addEventListener('input', computeStw);
 
+/* Amount basis: 'excl' = figure entered is net of tax (tax added on top),
+   'incl' = figure entered is the gross invoice total with tax already inside,
+   so the tax is extracted using the tax fraction rate/(100+rate). */
+let stwBasis = 'excl';
+document.querySelectorAll('#stwBasisSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#stwBasisSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    stwBasis = b.dataset.basis;
+    document.getElementById('stwValueLabel').textContent =
+      stwBasis === 'incl' ? 'Total Invoice Amount, Incl. Tax (PKR)' : 'Value of Supply, Excl. Tax (PKR)';
+    computeStw();
+  });
+});
+
 function computeStw(){
   const auth = STW_DATA[stwAuthorityEl.value];
   if(!auth) return;
   const item = auth.items[stwCategoryEl.value];
-  const value = numVal('stwValue');
+  const entered = numVal('stwValue');
   const rate = parseFloat(document.getElementById('stwRate').value) || 0;
-  const salesTax = value * (rate/100);
+
+  // Work out the tax-exclusive value and the tax itself from whichever basis was chosen.
+  let value, salesTax, gross;
+  if(stwBasis === 'incl'){
+    gross = entered;
+    value = rate === -100 ? 0 : entered / (1 + rate/100);
+    salesTax = gross - value;
+  } else {
+    value = entered;
+    salesTax = value * (rate/100);
+    gross = value + salesTax;
+  }
 
   let withheld = 0;
   if(item){
     withheld = item.type === 'fraction' ? salesTax * (item.value/100) : value * (item.value/100);
   }
-  const netToSupplier = (value + salesTax) - withheld;
+  const netToSupplier = gross - withheld;
 
   document.getElementById('stwWithheld').textContent = fmt(withheld);
   document.getElementById('stwStats').innerHTML = `
@@ -830,8 +865,9 @@ function computeStw(){
   `;
   document.getElementById('stwBreakdown').innerHTML = `
     <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
-    <tr><td>Value of supply (excl. tax)</td><td>Entered</td><td>${fmt(value)}</td></tr>
-    <tr><td>Sales tax on invoice</td><td>${rate}% of value</td><td>${fmt(salesTax)}</td></tr>
+    <tr><td>Value of supply (excl. tax)</td><td>${stwBasis==='incl' ? `Invoice total &divide; ${(1+rate/100).toFixed(4)}` : 'Entered'}</td><td>${fmt(value)}</td></tr>
+    <tr><td>Sales tax on invoice</td><td>${stwBasis==='incl' ? `${rate}/${(100+rate)} of invoice total` : `${rate}% of value`}</td><td>${fmt(salesTax)}</td></tr>
+    <tr><td>Gross invoice (incl. tax)</td><td>${stwBasis==='incl' ? 'Entered' : 'Value + tax'}</td><td>${fmt(gross)}</td></tr>
     <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(withheld)}</td></tr>
     <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(netToSupplier)}</td></tr>
   `;
