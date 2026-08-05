@@ -611,6 +611,22 @@ table.gst td.note{
 }
 .tag-req{ background:var(--green); color:#fff; }
 .tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
+
+/* ---- Always-visible Home link in the header ---- */
+.homeLink{
+  display:inline-block;
+  margin:0 auto .7rem;
+  padding:.42rem 1.05rem;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:999px;
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  transition:background .15s ease, border-color .15s ease;
+}
+.homeLink:hover{ background:rgba(255,255,255,.28); border-color:#fff; }
 </style>
 </head>
 <body>
@@ -619,6 +635,7 @@ table.gst td.note{
   <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <a href="index.html" class="homeLink">&#8962; Home &mdash; All Calculators</a>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
       <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
@@ -764,20 +781,57 @@ function attachCommaFormat(id){
 
 /* =========================================================
    FEDERAL GST ON GOODS
+   Sales Tax Act 1990 as amended by the Finance Act 2025 / 2026-27.
+   Grouped to match the provincial calculators. Items charged at a
+   fixed rupee amount rather than a percentage (mobile phones by CIF
+   band, steel per tonne, potassium chlorate) are not listed, since
+   they cannot be expressed as a rate on value.
 ========================================================= */
-const GST_GOODS_DATA = {
-  "Standard rate (general goods)": 18,
-  "Third Schedule retail-price items (biscuits, drinks, toiletries, etc.)": 18,
-  "Dairy products (other than fresh milk)": 10,
-  "Prepared / preserved meat & poultry": 8,
-  "Zero-rated (exports)": 0,
-  "Exempt goods (Sixth Schedule)": 0,
-};
+const GST_GOODS_GROUPS = [
+  { group: "Standard Rate (18%)", items: {
+      "Standard rate \u2013 all taxable goods & supplies": 18,
+      "Sale to an unregistered person (18% + 4% further tax)": 22,
+      "Third Schedule retail-price items (biscuits, drinks, tea, cereals, ice cream, toiletries, cosmetics, etc.)": 18,
+      "Natural gas": 18,
+      "Electricity \u2013 registered commercial/industrial consumer": 18,
+      "Cement (GST portion; a separate per-bag FED also applies)": 18,
+  }},
+  { group: "Reduced Rates (Eighth Schedule)", items: {
+      "Dairy products other than fresh milk (flavoured/UHT milk, yogurt, etc.)": 10,
+      "Prepared / preserved meat & poultry products": 8,
+      "Gold & silver jewellery \u2013 making charges": 3,
+      "Gold & silver jewellery \u2013 precious metal value": 1.5,
+      "Gold & silver jewellery \u2013 diamonds/stones value": 0.5,
+  }},
+  { group: "Zero-Rated (0%, input tax refundable)", items: {
+      "Exports of goods (Fifth Schedule)": 0,
+      "Supplies to diplomats & diplomatic missions": 0,
+  }},
+  { group: "Exempt \u2013 Sixth Schedule (0%, no input tax credit)", items: {
+      "Fresh milk, plain atta/flour, rice, pulses": 0,
+      "Fresh fruits & vegetables, eggs, live animals & poultry": 0,
+      "Unbranded, unpacked meat & poultry": 0,
+      "Books, newspapers & journals": 0,
+      "Most medicines & pharmaceutical raw materials": 0,
+      "Specified agricultural inputs (seeds, select pesticides)": 0,
+      "POL products \u2013 petrol, diesel, kerosene, HOBC (Petroleum Levy instead)": 0,
+  }},
+];
+
+// Flatten for lookup
+const GST_GOODS_DATA = {};
+GST_GOODS_GROUPS.forEach(g => Object.keys(g.items).forEach(k => { GST_GOODS_DATA[k] = g.items[k]; }));
+
 const gstCategoryEl = document.getElementById('gstCategory');
-Object.keys(GST_GOODS_DATA).forEach(k=>{
-  const o = document.createElement('option');
-  o.value = k; o.textContent = k + " (" + GST_GOODS_DATA[k] + "%)";
-  gstCategoryEl.appendChild(o);
+GST_GOODS_GROUPS.forEach(g=>{
+  const og = document.createElement('optgroup');
+  og.label = g.group;
+  Object.keys(g.items).forEach(k=>{
+    const o = document.createElement('option');
+    o.value = k; o.textContent = k + " (" + g.items[k] + "%)";
+    og.appendChild(o);
+  });
+  gstCategoryEl.appendChild(og);
 });
 gstCategoryEl.addEventListener('change', computeGst);
 document.getElementById('gstAmount').addEventListener('input', computeGst);
