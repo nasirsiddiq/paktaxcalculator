@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sales Tax Withholding Calculator 2026 | Federal & Provincial Rates</title>
-<meta name="description" content="Calculate sales tax withholding on goods and services across FBR, Sindh SRB, Punjab PRA, KP KPRA, Balochistan BRA and ICT — registered vs unregistered supplier rates, shown for tax-inclusive and tax-exclusive invoice amounts.">
+<meta name="description" content="Calculate sales tax withholding on goods and services across FBR, Sindh SRB, Punjab PRA, KP KPRA, Balochistan BRA and ICT — registered and unregistered supplier rates, with the tax fraction applied automatically for unregistered providers.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
 <!-- Google tag (gtag.js) -->
@@ -653,7 +653,7 @@ table.gst td.note{
 
     <div class="row">
       <div class="field">
-        <label>Invoice Amount (PKR)</label>
+        <label id="stwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
         <div class="amount-wrap">
           <span class="currency-prefix">₨</span>
           <input type="text" inputmode="numeric" autocomplete="off" id="stwValue" class="amount-input" placeholder="e.g. 200,000">
@@ -664,25 +664,16 @@ table.gst td.note{
         <input type="number" id="stwRate" placeholder="e.g. 18" min="0" step="0.5">
       </div>
     </div>
-    <div class="hint">Both readings of your figure are worked out below, so you don't need to know in advance whether the amount includes tax. Use the first block if the tax is added on top of your figure, and the second if the tax is already inside it.</div>
+    <div class="hint" id="stwBasisHint"></div>
   </div>
 
   <div class="card">
     <div class="result">
-      <div class="label">If your amount EXCLUDES tax &mdash; withheld by agent</div>
-      <div class="big" id="stwWithheldExcl">Rs. 0</div>
-      <div class="grid3" id="stwStatsExcl"></div>
+      <div class="label">Amount Withheld &amp; Deposited by Agent</div>
+      <div class="big" id="stwWithheld">Rs. 0</div>
+      <div class="grid3" id="stwStats"></div>
     </div>
-    <table class="breakdown" id="stwBreakdownExcl"></table>
-  </div>
-
-  <div class="card">
-    <div class="result">
-      <div class="label">If your amount INCLUDES tax &mdash; withheld by agent</div>
-      <div class="big" id="stwWithheldIncl">Rs. 0</div>
-      <div class="grid3" id="stwStatsIncl"></div>
-    </div>
-    <table class="breakdown" id="stwBreakdownIncl"></table>
+    <table class="breakdown" id="stwBreakdown"></table>
   </div>
 
   <div class="disclaimer">
@@ -737,9 +728,9 @@ const STW_DATA = {
     items: {
       "Registered / active taxpayer (ATL) – standard supply": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; remaining 4/5th deposited by the supplier itself"},
       "Wholesaler / dealer / distributor (active taxpayer)": {type:"fraction", value:10, note:"1/10th of the sales tax shown on invoice"},
-      "Unregistered / non-ATL supplier – govt/public sector agent": {type:"fraction", value:100, note:"Whole amount of tax, computed at standard rate on value"},
-      "Unregistered / non-ATL supplier – company agent (goods)": {type:"value", value:5, note:"5% of gross value of supplies per current guidance (some older summaries cite 1% – confirm the applicable SRO)"},
-      "Advertisement services (unregistered provider)": {type:"fraction", value:100, note:"Full amount, regardless of recipient type"},
+      "Unregistered / non-ATL supplier – govt/public sector agent": {type:"fraction", value:100, basis:"incl", note:"Whole amount of tax, computed at standard rate on value"},
+      "Unregistered / non-ATL supplier – company agent (goods)": {type:"value", value:5, basis:"incl", note:"5% of gross value of supplies per current guidance (some older summaries cite 1% – confirm the applicable SRO)"},
+      "Advertisement services (unregistered provider)": {type:"fraction", value:100, basis:"incl", note:"Full amount, regardless of recipient type"},
       "Online marketplace – non-active seller": {type:"value", value:1, note:"1% of gross value of supplies (11th Schedule S.No. 8)"},
       "Lead / scrap battery suppliers": {type:"fraction", value:75, note:"75% of applicable sales tax"},
       "Surgical instruments exporters (purchase of goods)": {type:"value", value:5, note:"5% of gross value of supplies"},
@@ -749,7 +740,7 @@ const STW_DATA = {
     defaultRate: 15,
     items: {
       "Registered service provider (general)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; provider deposits remaining 4/5th itself"},
-      "Unregistered service provider": {type:"fraction", value:100, note:"Full applicable sales tax on gross value"},
+      "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value"},
       "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
       "Insurance agents / brokers": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
       "Cab-hailing / truck aggregator services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
@@ -763,7 +754,7 @@ const STW_DATA = {
     defaultRate: 16,
     items: {
       "Registered service provider (general, corporate agent)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice, per current PRA withholding card"},
-      "Unregistered service provider": {type:"fraction", value:100, note:"Full applicable sales tax on gross value; agent must record the provider's CNIC/NTN"},
+      "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value; agent must record the provider's CNIC/NTN"},
       "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
       "Telecom / banking / insurance (ATL company – Rule 5A, w.e.f. 10 Jul 2025)": {type:"fraction", value:80, note:"Newly brought into the withholding net in July 2025; provider deposits remaining 20% itself"},
     }
@@ -772,7 +763,7 @@ const STW_DATA = {
     defaultRate: 15,
     items: {
       "Registered service provider (general)": {type:"fraction", value:20, note:"Per current KPRA withholding guidance; KPRA regulations separately set a 50% residual rate for some non-standard categories – confirm which applies to your service"},
-      "Unregistered service provider": {type:"fraction", value:100, note:"Full applicable sales tax on gross value; agent must obtain CNIC/NTN"},
+      "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value; agent must obtain CNIC/NTN"},
       "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
       "Any provider – government/public sector recipient": {type:"fraction", value:100, note:"Full withholding regardless of the provider's registration status"},
     }
@@ -781,14 +772,14 @@ const STW_DATA = {
     defaultRate: 15,
     items: {
       "Registered service provider (general)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; provider deposits remaining 4/5th itself"},
-      "Unregistered / foreign provider": {type:"fraction", value:100, note:"Full amount shown on invoice, or computed on gross value if not shown"},
+      "Unregistered / foreign provider": {type:"fraction", value:100, basis:"incl", note:"Full amount shown on invoice, or computed on gross value if not shown"},
     }
   },
   "Islamabad – ICT (Services, FBR-administered)": {
     defaultRate: 15,
     items: {
       "Registered service provider (general)": {type:"fraction", value:20, note:"ICT services tax is administered by FBR; withholding is understood to follow the general federal 1/5th rule (a distinct ICT-specific withholding regulation was not found)"},
-      "Unregistered service provider": {type:"fraction", value:100, note:"Full applicable sales tax on gross value"},
+      "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value"},
       "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
     }
   },
@@ -818,12 +809,15 @@ stwCategoryEl.addEventListener('change', computeStw);
 document.getElementById('stwValue').addEventListener('input', computeStw);
 document.getElementById('stwRate').addEventListener('input', computeStw);
 
-/* Both readings of the entered figure are always computed and shown, so the
-   user never has to declare up front whether their amount includes tax:
-     - "excl": the figure is net of tax, so tax is added on top.
-     - "incl": the figure is the gross invoice total with tax already inside,
-       so tax is extracted with the tax fraction rate/(100+rate). This is the
-       method prescribed where an invoice shows no separate tax component. */
+/* The correct reading of the entered figure is chosen automatically from the
+   selected category, so the user is never asked which one applies:
+     - "excl" (default): a registered provider issues a proper tax invoice with
+       the sales tax shown as a separate line, so the figure to enter is the
+       value of supply and the tax is added on top.
+     - "incl": an unregistered provider's invoice carries no separate tax
+       component, so the gross price is treated as tax-inclusive and the tax is
+       extracted with the tax fraction rate/(100+rate) — the method prescribed
+       by the provincial withholding rules for exactly this situation. */
 function stwScenario(entered, rate, item, basis){
   let value, salesTax, gross;
   if(basis === 'incl'){
@@ -842,14 +836,31 @@ function stwScenario(entered, rate, item, basis){
   return { value, salesTax, gross, withheld, netToSupplier: gross - withheld };
 }
 
-function renderStwScenario(suffix, s, rate, item, basis){
-  document.getElementById('stwWithheld'+suffix).textContent = fmt(s.withheld);
-  document.getElementById('stwStats'+suffix).innerHTML = `
+function computeStw(){
+  const auth = STW_DATA[stwAuthorityEl.value];
+  if(!auth) return;
+  const item = auth.items[stwCategoryEl.value];
+  const entered = numVal('stwValue');
+  const rate = parseFloat(document.getElementById('stwRate').value) || 0;
+  const basis = (item && item.basis) || 'excl';
+  const s = stwScenario(entered, rate, item, basis);
+
+  // The input label and hint follow the basis, so it is always clear which
+  // figure the user is expected to type in.
+  document.getElementById('stwValueLabel').textContent = basis === 'incl'
+    ? 'Total Invoice Amount, Incl. Tax (PKR)'
+    : 'Value of Supply, Excl. Tax (PKR)';
+  document.getElementById('stwBasisHint').innerHTML = basis === 'incl'
+    ? 'This category covers an <strong>unregistered</strong> provider, whose invoice carries no separate sales tax line. Enter the gross invoice total &mdash; the tax is extracted from it using the tax fraction, not added on top.'
+    : 'This category covers a <strong>registered</strong> provider, whose tax invoice shows the sales tax separately. Enter the value of supply excluding tax &mdash; the tax is added on top.';
+
+  document.getElementById('stwWithheld').textContent = fmt(s.withheld);
+  document.getElementById('stwStats').innerHTML = `
     <div class="stat"><div class="v">${fmt(s.salesTax)}</div><div class="k">Sales Tax on Invoice</div></div>
     <div class="stat"><div class="v">${fmt(s.netToSupplier)}</div><div class="k">Net Paid to Supplier</div></div>
     <div class="stat"><div class="v">${item? (item.type==='fraction'? item.value+'% of tax' : item.value+'% of value') : '-'}</div><div class="k">Withholding Basis</div></div>
   `;
-  document.getElementById('stwBreakdown'+suffix).innerHTML = `
+  document.getElementById('stwBreakdown').innerHTML = `
     <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
     <tr><td>Value of supply (excl. tax)</td><td>${basis==='incl' ? `Invoice &times; 100/${(100+rate)}` : 'Amount entered'}</td><td>${fmt(s.value)}</td></tr>
     <tr><td>Sales tax on invoice</td><td>${basis==='incl' ? `Invoice &times; ${rate}/${(100+rate)} (tax fraction)` : `${rate}% of value`}</td><td>${fmt(s.salesTax)}</td></tr>
@@ -857,17 +868,6 @@ function renderStwScenario(suffix, s, rate, item, basis){
     <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
     <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
   `;
-}
-
-function computeStw(){
-  const auth = STW_DATA[stwAuthorityEl.value];
-  if(!auth) return;
-  const item = auth.items[stwCategoryEl.value];
-  const entered = numVal('stwValue');
-  const rate = parseFloat(document.getElementById('stwRate').value) || 0;
-
-  renderStwScenario('Excl', stwScenario(entered, rate, item, 'excl'), rate, item, 'excl');
-  renderStwScenario('Incl', stwScenario(entered, rate, item, 'incl'), rate, item, 'incl');
 }
 
 /* =========================================================
