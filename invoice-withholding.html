@@ -658,29 +658,31 @@ table.gst td.note{
     <p class="sub">Enter a single invoice amount and see the whole picture: federal GST, an optional provincial sales tax on services, how much of each a withholding agent deducts, and what the supplier is actually paid. Rates are picked up automatically from each authority's own schedule &mdash; you don't need to type them in.</p>
 
     <div class="field">
-      <label>Supplier Registration Status</label>
-      <div class="seg" id="invStatusSeg">
-        <button class="active" data-status="registered">Registered (ATL)</button>
-        <button data-status="unregistered">Unregistered</button>
-      </div>
-      <div class="hint" id="invStatusHint"></div>
-    </div>
-
-    <div class="field">
       <label id="invAmountLabel">Value of Supply, Excl. Tax (PKR)</label>
       <div class="amount-wrap">
         <span class="currency-prefix">₨</span>
         <input type="text" inputmode="numeric" autocomplete="off" id="invAmount" class="amount-input" placeholder="e.g. 100">
       </div>
+      <div class="hint" id="invAmountHint"></div>
     </div>
   </div>
 
   <div class="card">
     <h2>1. Federal GST on Goods <span class="tag-req">Always applied</span></h2>
     <p class="sub">Federal sales tax under the Sales Tax Act 1990, administered by FBR.</p>
+
     <div class="field">
       <label>Goods Category</label>
       <select id="invGstCategory"></select>
+    </div>
+
+    <div class="field">
+      <label>Supplier Registration Status</label>
+      <div class="seg" id="invGstStatusSeg">
+        <button class="active" data-status="registered">Registered (ATL)</button>
+        <button data-status="unregistered">Unregistered</button>
+      </div>
+      <div class="hint" id="invGstStatusHint"></div>
     </div>
   </div>
 
@@ -702,6 +704,14 @@ table.gst td.note{
         <label>Service Category</label>
         <select id="invProvCategory"></select>
       </div>
+      <div class="field">
+        <label>Service Provider Registration Status</label>
+        <div class="seg" id="invProvStatusSeg">
+          <button class="active" data-status="registered">Registered (ATL)</button>
+          <button data-status="unregistered">Unregistered</button>
+        </div>
+        <div class="hint" id="invProvStatusHint"></div>
+      </div>
     </div>
   </div>
 
@@ -715,7 +725,7 @@ table.gst td.note{
   </div>
 
   <div class="disclaimer">
-    This page applies the general withholding rule &mdash; an agent deducts 1/5th (20%) of the tax shown on the invoice from a registered, ATL-active supplier, and the whole (100%) applicable tax from an unregistered one. Several categories depart from that rule (advertisement services withheld in full regardless of registration, federal wholesalers/dealers at 1/10th, Punjab telecom/banking/insurance at 80%, and others) &mdash; for those, use the detailed <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, which models each category separately. Note also that federal GST on goods and provincial sales tax on services are levied on <em>different</em> supplies: a single line item is normally subject to one or the other, not both. Combine them here only when your invoice genuinely covers both a supply of goods and a supply of services, and be aware the calculator applies each tax to the full amount you enter rather than splitting it between a goods portion and a services portion. Income tax withholding under s.153 is deducted from the same payment but is not included here &mdash; see the <a href="withholding-tax.html">Withholding Tax (WHT)</a> calculator. Rates change frequently; confirm with FBR or the relevant provincial authority before relying on these figures for filing.
+    Each tax is worked out under the general withholding rule using its own supplier status &mdash; an agent deducts 1/5th (20%) of the tax from a registered, ATL-active supplier, and the whole (100%) applicable tax from an unregistered one. Because an unregistered supplier issues no tax invoice showing tax separately, the amount you enter is treated as already including any tax whose supplier is unregistered, and that tax is extracted using the tax fraction rate/(100+rate); tax for a registered supplier is added on top instead. If both statuses are set to registered, your figure is simply the value of supply. Several categories depart from the 20%/100% rule (advertisement services withheld in full regardless of registration, federal wholesalers/dealers at 1/10th, Punjab telecom/banking/insurance at 80%, and others) &mdash; for those, use the detailed <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, which models each category separately. Note also that federal GST on goods and provincial sales tax on services are levied on <em>different</em> supplies: a single line item is normally subject to one or the other, not both. Combine them here only when your invoice genuinely covers both, and be aware each tax is applied to the full value rather than split between a goods portion and a services portion. Income tax withholding under s.153 is deducted from the same payment but is not included here &mdash; see the <a href="withholding-tax.html">Withholding Tax (WHT)</a> calculator. Rates change frequently; confirm with FBR or the relevant provincial authority before relying on these figures for filing.
   </div>
 
 </div>
@@ -794,7 +804,7 @@ function rateOf(authorityKey, category){
   return 0;
 }
 
-const gstCatEl  = document.getElementById('invGstCategory');
+const gstCatEl   = document.getElementById('invGstCategory');
 const provAuthEl = document.getElementById('invProvAuthority');
 const provCatEl  = document.getElementById('invProvCategory');
 
@@ -809,17 +819,26 @@ function refreshProvCategories(){
   compute();
 }
 
-let status = 'registered';
+/* Each levy carries its own supplier registration status, because the goods
+   and the services on a combined invoice may well come from parties with
+   different registration positions. */
+let gstStatus  = 'registered';
+let provStatus = 'registered';
 let provOn = true;
 
-document.querySelectorAll('#invStatusSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#invStatusSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    status = b.dataset.status;
-    compute();
+function wireStatus(segId, setter){
+  document.querySelectorAll('#'+segId+' button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('#'+segId+' button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      setter(b.dataset.status);
+      compute();
+    });
   });
-});
+}
+wireStatus('invGstStatusSeg',  v => gstStatus  = v);
+wireStatus('invProvStatusSeg', v => provStatus = v);
+
 document.querySelectorAll('#invProvSeg button').forEach(b=>{
   b.addEventListener('click', ()=>{
     document.querySelectorAll('#invProvSeg button').forEach(x=>x.classList.remove('active'));
@@ -834,59 +853,68 @@ provAuthEl.addEventListener('change', refreshProvCategories);
 provCatEl.addEventListener('change', compute);
 document.getElementById('invAmount').addEventListener('input', compute);
 
-function compute(){
-  const entered = numVal('invAmount');
-  const gstRate = rateOf(FEDERAL_KEY, gstCatEl.value);
-  const provRate = provOn ? rateOf(provAuthEl.value, provCatEl.value) : 0;
-  const totalRate = gstRate + provRate;
-  const unregistered = status === 'unregistered';
+function statusHint(unreg){
+  return unreg
+    ? 'An <strong>unregistered</strong> supplier issues no tax invoice showing tax separately, so this tax is treated as already inside the amount you entered and extracted with the tax fraction. The agent withholds <strong>100%</strong> of it.'
+    : 'A <strong>registered</strong> supplier issues a tax invoice showing the tax separately, so this tax is added on top of the amount you entered. The agent withholds <strong>1/5th (20%)</strong>; the supplier pays the remaining 4/5th through its own return.';
+}
 
-  // A registered supplier issues a tax invoice showing tax separately, so the
-  // figure entered is the value of supply. An unregistered supplier shows no
-  // tax line, so the figure entered is treated as tax-inclusive and the tax is
-  // extracted with the tax fraction.
-  let value;
-  if(unregistered){
-    value = (100 + totalRate) === 0 ? 0 : entered * 100 / (100 + totalRate);
-  } else {
-    value = entered;
-  }
+function compute(){
+  const entered  = numVal('invAmount');
+  const gstRate  = rateOf(FEDERAL_KEY, gstCatEl.value);
+  const provRate = provOn ? rateOf(provAuthEl.value, provCatEl.value) : 0;
+  const gstUnreg  = gstStatus  === 'unregistered';
+  const provUnreg = provOn && provStatus === 'unregistered';
+
+  /* The entered figure is treated as INCLUSIVE of any tax whose supplier is
+     unregistered (no separate tax line on such an invoice) and EXCLUSIVE of
+     any tax whose supplier is registered (that tax is added on top). So only
+     the unregistered rates are backed out of the amount. */
+  const inclusiveRate = (gstUnreg ? gstRate : 0) + (provUnreg ? provRate : 0);
+  const value = (100 + inclusiveRate) === 0 ? 0 : entered * 100 / (100 + inclusiveRate);
 
   const gstTax  = value * (gstRate/100);
   const provTax = value * (provRate/100);
   const gross   = value + gstTax + provTax;
 
-  const share = unregistered ? 100 : 20;
-  const gstWithheld  = gstTax  * (share/100);
-  const provWithheld = provTax * (share/100);
+  const gstShare  = gstUnreg  ? 100 : 20;
+  const provShare = provUnreg ? 100 : 20;
+  const gstWithheld  = gstTax  * (gstShare/100);
+  const provWithheld = provTax * (provShare/100);
   const totalWithheld = gstWithheld + provWithheld;
   const net = gross - totalWithheld;
 
-  document.getElementById('invAmountLabel').textContent = unregistered
-    ? 'Total Invoice Amount, Incl. Tax (PKR)'
+  document.getElementById('invGstStatusHint').innerHTML  = statusHint(gstUnreg);
+  document.getElementById('invProvStatusHint').innerHTML = statusHint(provUnreg);
+
+  document.getElementById('invAmountLabel').textContent = inclusiveRate > 0
+    ? 'Invoice Amount (PKR)'
     : 'Value of Supply, Excl. Tax (PKR)';
-  document.getElementById('invStatusHint').innerHTML = unregistered
-    ? 'An <strong>unregistered</strong> supplier issues no tax invoice, so the amount you enter is treated as tax-inclusive and the tax is worked back out of it. The agent withholds <strong>100%</strong> of the tax.'
-    : 'A <strong>registered</strong> supplier issues a tax invoice showing the tax separately, so the amount you enter is the value of supply and tax is added on top. The agent withholds <strong>1/5th (20%)</strong> of the tax; the supplier pays the remaining 4/5th through its own return.';
+  const bothParties = provOn ? 'Both suppliers are' : 'The supplier is';
+  document.getElementById('invAmountHint').innerHTML = inclusiveRate === 0
+    ? bothParties + ' registered, so this figure is the value of supply and tax is added on top of it.'
+    : (inclusiveRate === gstRate + provRate
+        ? bothParties + ' unregistered, so this figure is treated as the gross invoice total with tax already inside it.'
+        : 'This figure is treated as already including the tax of the unregistered supplier, with the registered supplier\'s tax added on top.');
 
   document.getElementById('invNet').textContent = fmt(net);
   document.getElementById('invStats').innerHTML = `
     <div class="stat"><div class="v">${fmt(gross)}</div><div class="k">Gross Invoice</div></div>
     <div class="stat"><div class="v">${fmt(totalWithheld)}</div><div class="k">Total Withheld</div></div>
-    <div class="stat"><div class="v">${totalRate}%</div><div class="k">Combined Tax Rate</div></div>
+    <div class="stat"><div class="v">${(gstRate + provRate)}%</div><div class="k">Combined Tax Rate</div></div>
   `;
 
   const provRows = provOn ? `
-    <tr><td>Provincial sales tax &mdash; ${provAuthEl.value.split('–')[0].trim()}</td><td>${provRate}% of value</td><td>${fmt(provTax)}</td></tr>
-    <tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>${share}% of that tax</td><td>&minus; ${fmt(provWithheld)}</td></tr>` : '';
+    <tr><td>Provincial sales tax &mdash; ${provAuthEl.value.split('–')[0].trim()} <em>(${provUnreg?'unregistered':'registered'})</em></td><td>${provRate}% of value</td><td>${fmt(provTax)}</td></tr>
+    <tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>${provShare}% of that tax</td><td>&minus; ${fmt(provWithheld)}</td></tr>` : '';
 
   document.getElementById('invBreakdown').innerHTML = `
     <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
-    <tr><td>Value of supply (excl. tax)</td><td>${unregistered ? `Invoice &times; 100/${100+totalRate}` : 'Amount entered'}</td><td>${fmt(value)}</td></tr>
-    <tr><td>Federal GST</td><td>${gstRate}% of value</td><td>${fmt(gstTax)}</td></tr>
-    <tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>${share}% of that tax</td><td>&minus; ${fmt(gstWithheld)}</td></tr>
+    <tr><td>Value of supply (excl. tax)</td><td>${inclusiveRate > 0 ? `Invoice &times; 100/${100+inclusiveRate}` : 'Amount entered'}</td><td>${fmt(value)}</td></tr>
+    <tr><td>Federal GST <em>(${gstUnreg?'unregistered':'registered'})</em></td><td>${gstRate}% of value</td><td>${fmt(gstTax)}</td></tr>
+    <tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>${gstShare}% of that tax</td><td>&minus; ${fmt(gstWithheld)}</td></tr>
     ${provRows}
-    <tr><td>Gross invoice (incl. all tax)</td><td>${unregistered ? 'Amount entered' : 'Value + tax'}</td><td>${fmt(gross)}</td></tr>
+    <tr><td>Gross invoice (incl. all tax)</td><td>Value + all tax</td><td>${fmt(gross)}</td></tr>
     <tr><td>Total withheld &amp; deposited by agent</td><td>Paid to FBR / provincial authority</td><td>&minus; ${fmt(totalWithheld)}</td></tr>
     <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(net)}</td></tr>
   `;
