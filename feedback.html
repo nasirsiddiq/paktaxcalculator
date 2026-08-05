@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us | Pakistan Tax Calculator</title>
-<meta name="description" content="About paktaxcalculator.net — a free, independent tool for estimating Pakistan income tax, withholding tax (WHT), and federal & provincial sales tax for tax years 2025-26 and 2026-27.">
+<title>Give Feedback | Pakistan Tax Calculator</title>
+<meta name="description" content="Report a wrong tax rate, a bug, or request a new calculator on paktaxcalculator.net.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
 <!-- Google tag (gtag.js) -->
@@ -776,8 +776,8 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 <a href="sales-tax-ict.html">Islamabad (ICT)</a>
       </div>
       <div class="navGroup">
-<a href="about.html" class="active">About Us</a>
-<a href="feedback.html">Give Feedback</a>
+<a href="about.html">About Us</a>
+<a href="feedback.html" class="active">Give Feedback</a>
 <a href="privacy.html">Privacy Policy</a>
       </div>
     </div>
@@ -786,56 +786,74 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 
 <div class="wrap">
 
-  <div class="card">
-    <h2>About paktaxcalculator.net</h2>
-    <p>
-      paktaxcalculator.net is a free, independent online tool built to help salaried individuals,
-      business owners, freelancers, and companies in Pakistan quickly estimate their tax obligations
-      for Tax Year 2025-26 and Tax Year 2026-27.
-    </p>
-    <p>
-      The site is organized into separate calculators you can reach from the menu above:
-    </p>
-    <ul>
-      <li><strong><a href="income-tax.html">Income Tax</a></strong> &mdash; for salaried individuals, business individuals/AOPs, and companies, including super tax, minimum tax on turnover, and a Section 82 residency checker.</li>
-      <li><strong><a href="withholding-tax.html">Withholding Tax (WHT)</a></strong> &mdash; covering goods, services, contracts, dividends, profit on debt, rent, imports and exports, with filer vs. non-filer rates.</li>
-      <li><strong><a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a></strong> &mdash; federal GST rates plus the complete FBR rate list.</li>
-      <li><strong><a href="sales-tax-withholding.html">Sales Tax Withholding</a></strong> &mdash; withholding on the GST portion of an invoice, federal and provincial.</li>
-      <li><strong>Provincial Sales Tax on Services</strong> &mdash; separate calculators for <a href="sales-tax-punjab.html">Punjab (PRA)</a>, <a href="sales-tax-sindh.html">Sindh (SRB)</a>, <a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>, <a href="sales-tax-balochistan.html">Balochistan (BRA)</a> and <a href="sales-tax-ict.html">Islamabad (ICT)</a>.</li>
-    </ul>
+  <div class="card" id="thanksCard" style="display:none;">
+    <div class="result">
+      <div class="label">Thank you</div>
+      <div class="big" style="font-size:1.5rem;">Your feedback has been sent</div>
+    </div>
+    <p class="sub" style="margin-top:1rem;">Thanks for taking the time &mdash; corrections to tax rates are especially welcome, and they get looked at first. If you left an email address and your message needs a reply, you'll hear back. <a href="index.html">Back to the calculators</a>.</p>
   </div>
 
-  <div class="card">
-    <h2>Why We Built This</h2>
-    <p>
-      Pakistan's tax system spans a federal Income Tax Ordinance, a separate Sales Tax Act, and five
-      distinct provincial/territorial sales tax authorities &mdash; each revising rates through its own
-      annual Finance Act or SRO notifications. Finding a clear, current, all-in-one reference is
-      surprisingly hard. Our goal is to make the most commonly needed rates and calculations
-      accessible in one clean, mobile-friendly site, sourced from FBR's official rate cards and
-      the relevant Finance Acts, and organized so you can jump straight to the calculator you need.
-    </p>
+  <div class="card" id="formCard">
+    <h2>Give Feedback</h2>
+    <p class="sub">Spotted a rate that looks wrong, hit a bug, or want a calculator that isn't here yet? Tell us. This site is maintained by hand from the finance acts and revenue-authority schedules, so corrections from people who use these rules daily are genuinely useful.</p>
+
+    <form name="feedback" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/feedback.html?sent=1">
+      <input type="hidden" name="form-name" value="feedback">
+      <p style="display:none;">
+        <label>Leave this field empty: <input name="bot-field"></label>
+      </p>
+
+      <div class="field">
+        <label for="fbType">What is this about?</label>
+        <select id="fbType" name="type">
+          <option>A rate looks wrong or out of date</option>
+          <option>Something is broken or miscalculating</option>
+          <option>Request a new calculator or category</option>
+          <option>Website / usability suggestion</option>
+          <option>General comment</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="fbPage">Which page? (optional)</label>
+        <select id="fbPage" name="page">
+          <option value="">&mdash; Not specific to one page &mdash;</option>
+          <option>Invoice Withholding (All in One)</option>
+          <option>Income Tax</option>
+          <option>Withholding Tax (WHT)</option>
+          <option>Sales Tax on Goods (GST)</option>
+          <option>Sales Tax Withholding</option>
+          <option>Punjab (PRA)</option>
+          <option>Sindh (SRB)</option>
+          <option>Khyber Pakhtunkhwa (KPRA)</option>
+          <option>Balochistan (BRA)</option>
+          <option>Islamabad (ICT)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="fbMessage">Your message</label>
+        <textarea id="fbMessage" name="message" rows="7" required placeholder="If you're reporting a wrong rate, it helps a lot to say which category, what rate you expected, and where you saw it — an SRO number, a schedule entry or an FBR/PRA/SRB page reference is ideal."></textarea>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="fbName">Your name (optional)</label>
+          <input type="text" id="fbName" name="name" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="fbEmail">Email (optional, only if you want a reply)</label>
+          <input type="email" id="fbEmail" name="email" autocomplete="email">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Send Feedback</button>
+    </form>
   </div>
 
-  <div class="card">
-    <h2>Accuracy &amp; Limitations</h2>
-    <p>
-      We review and update rates when new Finance Acts and FBR notifications are issued, and we cite
-      our sources wherever practical. That said, Pakistani tax law is complex, changes frequently
-      via SROs and clarificatory circulars, and includes many item-specific and case-specific
-      provisions that a general calculator cannot fully capture. This tool is provided for
-      informational and estimation purposes only and does <strong>not</strong> constitute legal,
-      financial, or tax advice. Always confirm figures against official FBR/PRA/SRB/KPRA/BRA
-      publications or consult a qualified tax advisor before filing or making financial decisions.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Contact</h2>
-    <p>
-      Spotted an outdated rate or have a suggestion? We'd like to hear from you &mdash; feedback helps
-      us keep the calculators accurate and useful for everyone.
-    </p>
+  <div class="disclaimer">
+    Please don't send personal tax details, CNIC numbers, NTNs or financial account information through this form &mdash; it isn't a secure channel and nothing here constitutes tax advice. For a question about your own tax position, speak to a tax practitioner or contact FBR or your provincial revenue authority directly. Feedback is read by the site maintainer; an email address is only used to reply to you and is never published, sold or added to a mailing list. See the <a href="privacy.html">Privacy Policy</a> for more.
   </div>
 
 </div>
@@ -855,7 +873,17 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 </footer>
 
 <script>
-/* This page has no calculator logic of its own. */
+/* Netlify posts the form and redirects back here with ?sent=1, so the
+   thank-you state lives on this same page rather than a separate one. */
+(function(){
+  const sent = new URLSearchParams(window.location.search).get('sent') === '1';
+  if(!sent) return;
+  const thanks = document.getElementById('thanksCard');
+  const form   = document.getElementById('formCard');
+  if(thanks) thanks.style.display = 'block';
+  if(form)   form.style.display   = 'none';
+  window.scrollTo(0,0);
+})();
 
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{

@@ -164,7 +164,7 @@ header.site-header p.tagline{
   color:var(--muted);
   margin-top:4px;
 }
-input[type=number], input[type=date], select{
+input[type=number], input[type=date], input[type=text], input[type=email], select{
   width:100%;
   padding:11px 12px;
   border:1px solid var(--border);
@@ -173,7 +173,7 @@ input[type=number], input[type=date], select{
   background:#fbfdfc;
   color:var(--text);
 }
-input[type=number]:focus, select:focus{
+input[type=number]:focus, input[type=date]:focus, input[type=text]:focus, input[type=email]:focus, select:focus{
   outline:none;
   border-color:var(--green-light);
   background:#fff;
@@ -639,6 +639,91 @@ table.gst td.note{
   .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
   .quickLinks a + a{ border-left:none; }
 }
+
+/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
+.qlDrop{ position:relative; display:inline-block; }
+.qlDropBtn{
+  font:inherit;
+  color:rgba(255,255,255,.92);
+  background:transparent;
+  border:none;
+  border-left:1px solid rgba(255,255,255,.28);
+  border-radius:0 6px 6px 0;
+  font-size:13px;
+  font-weight:600;
+  padding:.3rem .62rem;
+  cursor:pointer;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  transition:background .15s ease, color .15s ease;
+}
+.qlDropBtn:hover, .qlDropBtn.open{ background:rgba(255,255,255,.2); color:#fff; }
+.qlDropBtn .chev{ font-size:10px; transition:transform .18s ease; }
+.qlDropBtn.open .chev{ transform:rotate(180deg); }
+.qlDropMenu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:50%;
+  transform:translateX(-50%);
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+  padding:.35rem;
+  z-index:60;
+  text-align:left;
+}
+.qlDropMenu.open{ display:block; }
+.qlDropMenu a{
+  display:block;
+  color:var(--green);
+  font-size:13px;
+  font-weight:600;
+  padding:.5rem .7rem;
+  border-radius:6px;
+  white-space:nowrap;
+  text-decoration:none;
+  border:none;
+}
+.qlDropMenu a:hover{ background:var(--green-pale); color:var(--green); }
+@media (max-width:560px){
+  .qlDropBtn{ border-left:none; font-size:12px; padding:.28rem .45rem; }
+  .qlDropMenu{ min-width:200px; }
+}
+
+/* ---- Feedback form ---- */
+textarea{
+  width:100%;
+  font:inherit;
+  font-size:15px;
+  color:var(--text);
+  padding:.7rem .85rem;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:#fff;
+  resize:vertical;
+  box-sizing:border-box;
+}
+textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-pale); }
+.btn-submit{
+  display:inline-block;
+  font:inherit;
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+  background:var(--green);
+  border:none;
+  border-radius:var(--radius);
+  padding:.8rem 1.9rem;
+  cursor:pointer;
+  transition:background .15s ease, transform .08s ease;
+}
+.btn-submit:hover{ background:#0b5c33; }
+.btn-submit:active{ transform:translateY(1px); }
 </style>
 </head>
 <body>
@@ -653,8 +738,18 @@ table.gst td.note{
     <a href="income-tax.html">Income Tax</a>
     <a href="withholding-tax.html">Withholding Tax</a>
     <a href="sales-tax-gst.html">Sales Tax (GST)</a>
+    <span class="qlDrop" id="qlDrop">
+      <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu" id="qlDropMenu">
+        <a href="sales-tax-punjab.html">Punjab (PRA)</a>
+        <a href="sales-tax-sindh.html">Sindh (SRB)</a>
+        <a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
+        <a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
+        <a href="sales-tax-ict.html">Islamabad (ICT)</a>
+      </span>
+    </span>
     <a href="about.html">About Us</a>
-    <a href="privacy.html">Privacy Policy</a>
+    <a href="feedback.html">Feedback</a>
   </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
@@ -682,6 +777,7 @@ table.gst td.note{
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
+<a href="feedback.html">Give Feedback</a>
 <a href="privacy.html">Privacy Policy</a>
       </div>
     </div>
@@ -791,6 +887,7 @@ table.gst td.note{
     <a href="withholding-tax.html">Withholding Tax</a>&middot;
     <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
     <a href="about.html">About Us</a>&middot;
+    <a href="feedback.html">Feedback</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
@@ -1007,6 +1104,34 @@ document.addEventListener('click', (e)=>{
     document.getElementById('navMenu').classList.remove('open');
   }
 });
+
+/* ---- Provincial Tax dropdown in the header quick-links bar ---- */
+(function(){
+  const drop = document.getElementById('qlDrop');
+  const btn  = document.getElementById('qlDropBtn');
+  const menu = document.getElementById('qlDropMenu');
+  if(!drop || !btn || !menu) return;
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e)=>{
+    if(!drop.contains(e.target)){
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+})();
 </script>
 </body>
 </html>
