@@ -612,21 +612,33 @@ table.gst td.note{
 .tag-req{ background:var(--green); color:#fff; }
 .tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 
-/* ---- Always-visible Home link in the header ---- */
-.homeLink{
-  display:inline-block;
-  margin:0 auto .7rem;
-  padding:.42rem 1.05rem;
-  background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.4);
-  border-radius:999px;
-  color:#fff;
+/* ---- Quick links bar in the header ---- */
+.quickLinks{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:.15rem .1rem;
+  margin:0 auto .75rem;
+  max-width:900px;
+}
+.quickLinks a{
+  color:rgba(255,255,255,.92);
   text-decoration:none;
   font-size:13px;
   font-weight:600;
-  transition:background .15s ease, border-color .15s ease;
+  padding:.3rem .62rem;
+  border-radius:6px;
+  white-space:nowrap;
+  transition:background .15s ease, color .15s ease;
 }
-.homeLink:hover{ background:rgba(255,255,255,.28); border-color:#fff; }
+.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
+.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
+@media (max-width:560px){
+  .quickLinks{ gap:.1rem 0; }
+  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
+  .quickLinks a + a{ border-left:none; }
+}
 </style>
 </head>
 <body>
@@ -635,7 +647,15 @@ table.gst td.note{
   <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
-  <a href="index.html" class="homeLink">&#8962; Home &mdash; All Calculators</a>
+  <nav class="quickLinks">
+    <a href="index.html">Home</a>
+    <a href="invoice-withholding.html">Invoice Withholding</a>
+    <a href="income-tax.html">Income Tax</a>
+    <a href="withholding-tax.html">Withholding Tax</a>
+    <a href="sales-tax-gst.html">Sales Tax (GST)</a>
+    <a href="about.html">About Us</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
       <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
