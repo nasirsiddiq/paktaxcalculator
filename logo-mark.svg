@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Pakistan Tax Calculator">
+  <defs>
+    <linearGradient id="pk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#137d47"/>
+      <stop offset="1" stop-color="#0a4f2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#pk)"/>
+
+  <!-- Crescent and star, upper right -->
+  <path fill="#ffffff" fill-rule="evenodd"
+        d="M44 8.5a7.8 7.8 0 1 0 0 15.6 7.8 7.8 0 1 0 0-15.6Zm2.9 1.5a6.3 6.3 0 1 1 0 12.6 6.3 6.3 0 1 1 0-12.6Z"/>
+  <path fill="#ffffff"
+        d="m54.6 10.9.95 2.1 2.3.25-1.72 1.55.49 2.25-2.02-1.13-2.02 1.13.49-2.25L51.35 13.25l2.3-.25z"/>
+
+  <!-- Percent mark, lower left -->
+  <g stroke="#ffffff" stroke-width="4.6" stroke-linecap="round" fill="none">
+    <line x1="14" y1="49" x2="35" y2="28"/>
+    <circle cx="15.8" cy="29.6" r="5"/>
+    <circle cx="33.2" cy="47.4" r="5"/>
+  </g>
+</svg>

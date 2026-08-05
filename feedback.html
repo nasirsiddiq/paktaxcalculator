@@ -7,6 +7,22 @@
 <meta name="description" content="Report a wrong tax rate, a bug, or request a new calculator on paktaxcalculator.net.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a4f2c">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pakistan Tax Calculator">
+<meta property="og:title" content="Give Feedback | Pakistan Tax Calculator">
+<meta property="og:description" content="Report a wrong tax rate, a bug, or request a new calculator on paktaxcalculator.net.">
+<meta property="og:image" content="https://paktaxcalculator.net/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Give Feedback | Pakistan Tax Calculator">
+<meta name="twitter:description" content="Report a wrong tax rate, a bug, or request a new calculator on paktaxcalculator.net.">
+<meta name="twitter:image" content="https://paktaxcalculator.net/og-image.png">
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
 <script>
@@ -724,16 +740,48 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 }
 .btn-submit:hover{ background:#0b5c33; }
 .btn-submit:active{ transform:translateY(1px); }
+
+/* ---- Brand lockup: logo mark + wordmark ----
+   Matches the specificity of the earlier `header.site-header .brand`
+   rule, which otherwise keeps the anchor as inline-block and stacks
+   the mark above the title. */
+header.site-header .brand{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.75rem;
+  text-decoration:none;
+}
+header.site-header .brand h1{ margin:0; }
+.brandMark{
+  width:52px;
+  height:52px;
+  flex:0 0 auto;
+  display:block;
+  background:#fff;
+  border-radius:13px;
+  padding:3px;
+  box-sizing:border-box;
+  box-shadow:0 2px 8px rgba(0,0,0,.28);
+}
+@media (max-width:560px){
+  header.site-header .brand{ gap:.55rem; }
+  .brandMark{ width:40px; height:40px; border-radius:10px; padding:2px; }
+}
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
+  <a href="index.html" class="brand">
+    <img src="logo-mark.svg" alt="" class="brandMark" width="52" height="52">
+    <h1>Pakistan Tax Calculator</h1>
+  </a>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
   <nav class="quickLinks">
     <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
     <a href="invoice-withholding.html">Invoice Withholding</a>
     <a href="income-tax.html">Income Tax</a>
     <a href="withholding-tax.html">Withholding Tax</a>
@@ -748,7 +796,6 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
         <a href="sales-tax-ict.html">Islamabad (ICT)</a>
       </span>
     </span>
-    <a href="about.html">About Us</a>
     <a href="feedback.html">Feedback</a>
   </nav>
   <nav class="mainnav" id="mainNav">
