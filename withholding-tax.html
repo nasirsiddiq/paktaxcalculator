@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withholding Tax (WHT) Calculator Pakistan | Pakistan Tax Calculator</title>
+<meta name="description" content="Calculate Pakistan income tax withholding (WHT) on goods, services, contracts, dividends, profit on debt, rent, imports, exports and more — filer vs non-filer rates for TY2025-26 and TY2026-27.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7006762409656530"
+     crossorigin="anonymous"></script>
+
+<style>
+:root{
+  --green:#01411C;
+  --green-light:#0a6b34;
+  --green-pale:#e8f3ec;
+  --accent:#ffffff;
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#1c2a22;
+  --muted:#5b6b62;
+  --border:#dde5e0;
+  --radius:12px;
+  --shadow:0 2px 10px rgba(1,65,28,0.08);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+a{color:var(--green-light);}
+header.site-header{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
+  color:#fff;
+  padding:22px 16px 0;
+  text-align:center;
+}
+header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
+header.site-header h1{
+  margin:0 0 6px;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+header.site-header p.tagline{
+  margin:0 0 16px;
+  color:#dff0e6;
+  font-size:14px;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
+.wrap{
+  max-width:920px;
+  margin:0 auto;
+  padding:16px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h2{
+  margin:0 0 4px;
+  font-size:18px;
+  color:var(--green);
+}
+.card .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 16px;
+}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.field .hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+input[type=number], input[type=date], select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+input[type=number]:focus, select:focus{
+  outline:none;
+  border-color:var(--green-light);
+  background:#fff;
+}
+.amount-wrap{position:relative;}
+.amount-wrap .currency-prefix{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-weight:800;
+  color:var(--green);
+  font-size:17px;
+  pointer-events:none;
+}
+input.amount-input{
+  width:100%;
+  padding:14px 14px 14px 40px;
+  font-size:19px;
+  font-weight:700;
+  color:var(--green);
+  border:2px solid var(--green-light);
+  background:#fbfff9;
+  box-shadow:0 0 0 3px rgba(10,107,52,0.08);
+  border-radius:10px;
+}
+input.amount-input::placeholder{
+  color:#9db3a8;
+  font-weight:400;
+}
+input.amount-input:focus{
+  outline:none;
+  background:#fff;
+  border-color:var(--green);
+  box-shadow:0 0 0 5px rgba(10,107,52,0.16);
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:520px){
+  .row{grid-template-columns:1fr;}
+}
+.seg{
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.seg button{
+  flex:1;
+  background:#fbfdfc;
+  border:none;
+  padding:10px 8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  border-right:1px solid var(--border);
+}
+.seg button:last-child{border-right:none;}
+.seg button.active{
+  background:var(--green);
+  color:#fff;
+}
+.result{
+  background:var(--green-pale);
+  border:1px solid #cfe7d8;
+  border-radius:var(--radius);
+  padding:18px;
+}
+.result .big{
+  font-size:26px;
+  font-weight:700;
+  color:var(--green);
+}
+.result .label{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:2px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+@media (max-width:600px){
+  .grid3{grid-template-columns:1fr 1fr;}
+}
+.stat{
+  background:#fff;
+  border:1px solid #cfe7d8;
+  border-radius:8px;
+  padding:10px 12px;
+}
+.stat .v{font-size:16px;font-weight:700;color:var(--green);}
+.stat .k{font-size:11px;color:var(--muted);margin-top:2px;}
+table.breakdown{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  font-size:13px;
+}
+table.breakdown th, table.breakdown td{
+  text-align:left;
+  padding:8px 6px;
+  border-bottom:1px solid var(--border);
+}
+table.breakdown th{
+  color:var(--muted);
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+}
+table.breakdown tr:last-child td{
+  font-weight:700;
+  border-bottom:none;
+  color:var(--green);
+}
+.disclaimer{
+  font-size:12px;
+  color:var(--muted);
+  background:#fff9e6;
+  border:1px solid #f0e2a8;
+  border-radius:8px;
+  padding:12px 14px;
+  margin-top:6px;
+}
+footer{
+  text-align:center;
+  padding:24px 16px 40px;
+  color:var(--muted);
+  font-size:12px;
+}
+footer a{color:var(--green);}
+footer nav{margin-top:10px;}
+footer nav a{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:600;
+  margin:0 8px;
+  display:inline-block;
+}
+footer nav a:hover{text-decoration:underline;}
+.note{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+table.gst{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-top:4px;
+}
+table.gst th{
+  background:var(--green-pale);
+  color:var(--green);
+  text-align:left;
+  padding:9px 8px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+table.gst td{
+  padding:9px 8px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+table.gst tr.group td{
+  background:#f2f8f4;
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  padding-top:12px;
+  padding-bottom:6px;
+}
+table.gst td.rate{
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+table.gst td.note{
+  color:var(--muted);
+  font-size:12px;
+}
+.checkbox-row{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.checkbox-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
+.trip-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+.trip-row input[type=date]{
+  flex:1;
+  padding:9px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:13px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+.trip-row .arrow{color:var(--muted);font-size:13px;flex-shrink:0;}
+.trip-row .tripDays{
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+  min-width:52px;
+  text-align:right;
+}
+.tripRemove{
+  background:#fdecec;
+  color:#c0392b;
+  border:1px solid #f3c6c6;
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+}
+.addTripBtn{
+  background:var(--green-pale);
+  color:var(--green);
+  border:1.5px dashed var(--green-light);
+  border-radius:8px;
+  padding:10px;
+  width:100%;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  margin-top:4px;
+}
+.status-pill{
+  display:inline-block;
+  padding:6px 16px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:15px;
+}
+.status-pill.resident{background:#e0f5e6;color:#0a6b34;}
+.status-pill.nonresident{background:#fdecea;color:#b3261e;}
+.status-pill.pending{background:#f0f0f0;color:var(--muted);}
+
+.tax-hero{
+  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.tax-hero .hero-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:#e8c766;
+  margin-bottom:8px;
+}
+.tax-hero .hero-amount{
+  font-size:clamp(32px,9vw,44px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.tax-hero .hero-sub{
+  font-size:13px;
+  color:rgba(255,255,255,0.68);
+  margin-bottom:18px;
+}
+.tax-hero .hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.tax-hero .hero-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.tax-hero .hero-stat .k{
+  font-size:11px;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:4px;
+}
+.tax-hero .hero-stat .v{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+
+.slab-panel h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.slab-row{margin-bottom:16px;}
+.slab-row:last-child{margin-bottom:0;}
+.slab-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.slab-row .slab-rate{
+  font-weight:700;
+  font-size:14px;
+  color:var(--text);
+  min-width:38px;
+}
+.slab-row .slab-bar-track{
+  flex:1;
+  height:8px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+.slab-row .slab-bar-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:6px;
+  width:0%;
+  transition:width .35s ease;
+}
+.slab-row .slab-bar-fill.extra{background:#c99a2e;}
+.slab-row .slab-amount{
+  font-weight:700;
+  font-size:13px;
+  color:var(--green);
+  min-width:78px;
+  text-align:right;
+}
+.slab-row .slab-amount.muted{color:var(--muted);font-weight:400;}
+.slab-row-range{
+  font-size:12px;
+  color:var(--muted);
+  margin:5px 0 0 48px;
+}
+
+.hero-home{
+  max-width:920px;
+  margin:0 auto;
+  padding:8px 16px 4px;
+  text-align:center;
+}
+.hero-home h2{
+  font-size:clamp(20px,4vw,26px);
+  color:var(--green);
+  margin:0 0 8px;
+}
+.hero-home p{
+  color:var(--muted);
+  font-size:14px;
+  max-width:640px;
+  margin:0 auto;
+}
+.section-title{
+  max-width:920px;
+  margin:28px auto 12px;
+  padding:0 16px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:var(--green);
+}
+.section-desc{
+  max-width:920px;
+  margin:-8px auto 12px;
+  padding:0 16px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.calc-grid{
+  max-width:920px;
+  margin:0 auto;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:600px){
+  .calc-grid{grid-template-columns:1fr;}
+}
+.calc-card{
+  display:block;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.calc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(1,65,28,0.14);}
+.calc-card .icon{font-size:24px;margin-bottom:8px;}
+.calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
+.calc-card p{margin:0;font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
+  <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
+  <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <nav class="mainnav" id="mainNav">
+    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
+      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
+    </button>
+    <div class="navMenu" id="navMenu">
+      <div class="navGroup">
+<a href="index.html">Home</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Federal Taxes</div>
+<a href="income-tax.html">Income Tax</a>
+<a href="withholding-tax.html" class="active">Withholding Tax (WHT)</a>
+<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
+<a href="sales-tax-punjab.html">Punjab (PRA)</a>
+<a href="sales-tax-sindh.html">Sindh (SRB)</a>
+<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
+<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
+<a href="sales-tax-ict.html">Islamabad (ICT)</a>
+      </div>
+      <div class="navGroup">
+<a href="about.html">About Us</a>
+<a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>Income Tax WHT Calculator</h2>
+    <p class="sub">Every major withholding &amp; advance-tax provision of the Income Tax Ordinance, 2001 &mdash; Filer (ATL) and Non-filer rates. This covers withholding on goods, services, contracts, dividends, profit on debt, rent, imports, exports and more. (Looking for withholding on the <em>GST/sales-tax portion</em> of an invoice instead? See <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.)</p>
+
+    <div class="field">
+      <label>Tax Year</label>
+      <div class="seg year-toggle" id="whtYearSeg">
+        <button class="active" data-year="2025-26">2025-26</button>
+        <button data-year="2026-27">2026-27</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Category</label>
+      <select id="whtCategory"></select>
+    </div>
+
+    <div class="field">
+      <label>Sub-category</label>
+      <select id="whtSubcategory"></select>
+    </div>
+
+    <div class="field" id="whtFilerField">
+      <label>Filer Status</label>
+      <div class="seg" id="filerSeg">
+        <button class="active" data-filer="filer">Filer (ATL)</button>
+        <button data-filer="nonfiler">Non-Filer</button>
+      </div>
+      <div class="hint" id="filerHint">Non-filer rates are generally double the filer/Active Taxpayer List (ATL) rate under the Tenth Schedule.</div>
+    </div>
+
+    <div class="field" id="whtAmountField">
+      <label id="whtAmountLabel">Gross Amount (PKR)</label>
+      <div class="amount-wrap">
+        <span class="currency-prefix">₨</span>
+        <input type="text" inputmode="numeric" autocomplete="off" id="whtAmount" class="amount-input" placeholder="e.g. 500,000">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="result">
+      <div class="label">Withholding Tax Deducted</div>
+      <div class="big" id="whtTaxAmount">Rs. 0</div>
+      <div class="grid3" id="whtStats"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    WHT under the Income Tax Ordinance, 2001 has many category-specific rates and exemptions beyond what is listed here. Most rates shown are minimum/adjustable tax (creditable against final liability); dividend and profit-on-debt rates are generally final tax. TY2025-26 rates are sourced from FBR's official withholding tax rate card; TY2026-27 rates reflect Finance Bill 2026 changes as summarized in Trustpoint Consultants' TY2026-27 Withholding Tax Card. Verify the exact clause applicable to your transaction with FBR's official rate card or a tax advisor.
+  </div>
+
+</div>
+
+<footer>
+  Built for <strong>paktaxcalculator.net</strong> &middot; For informational purposes only, not a substitute for professional tax advice.<br>
+  Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
+  <nav>
+    <a href="index.html">Home</a>&middot;
+    <a href="income-tax.html">Income Tax</a>&middot;
+    <a href="withholding-tax.html">Withholding Tax</a>&middot;
+    <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
+    <a href="about.html">About Us</a>&middot;
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
+</footer>
+
+<script>
+function fmt(n){
+  if(isNaN(n)) n = 0;
+  n = Math.round(n);
+  return "Rs. " + n.toLocaleString('en-PK');
+}
+function numVal(id){
+  const el = document.getElementById(id);
+  if(!el) return 0;
+  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
+}
+function attachCommaFormat(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const cursorFromEnd = el.value.length - el.selectionStart;
+    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
+    const newPos = Math.max(0, el.value.length - cursorFromEnd);
+    el.setSelectionRange(newPos, newPos);
+  });
+}
+['whtAmount'].forEach(attachCommaFormat);
+
+let currentYear = "2025-26";
+function setTaxYear(year){
+  currentYear = year;
+  document.querySelectorAll('.year-toggle button').forEach(x=>{
+    x.classList.toggle('active', x.dataset.year === year);
+  });
+  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
+  populateWhtCategories();
+}
+document.querySelectorAll('.year-toggle button').forEach(b=>{
+  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
+});
+
+/* =========================================================
+   WHT DATA
+========================================================= */
+const MOTOR_VEHICLE_ITEMS = {
+  "Motor vehicle ≤850cc": [0.5,1.5],
+  "Motor vehicle 851–1000cc": [1,3],
+  "Motor vehicle 1001–1300cc": [1.5,4.5],
+  "Motor vehicle 1301–1600cc": [2,6],
+  "Motor vehicle 1601–1800cc": [3,9],
+  "Motor vehicle 1801–2000cc": [5,15],
+  "Motor vehicle 2001–2500cc": [7,21],
+  "Motor vehicle 2501–3000cc": [9,27],
+  "Motor vehicle >3000cc": [12,36],
+};
+
+const WHT_DATA_BY_YEAR = {
+  "2025-26": {
+    "Goods (Sec 153)": { filerToggle:true, items:{
+      "Rice, cottonseed, edible oils": [1.5,3],
+      "Other supplies – Company": [5,10],
+      "Other supplies – Individual/AOP": [5.5,11],
+      "Toll manufacturing – Company": [9,18],
+      "Toll manufacturing – Individual/AOP": [11,22],
+    }},
+    "Services (Sec 153)": { filerToggle:true, items:{
+      "IT & IT-enabled services": [4,8],
+      "Specified services (transport/freight etc.)": [6,12],
+      "Other / professional services": [15,30],
+      "Advertising (media)": [1.5,3],
+      "Services rendered to exporters": [1,2],
+    }},
+    "Contracts (Sec 153)": { filerToggle:true, items:{
+      "Companies": [7.5,15],
+      "Individuals / AOP": [8,16],
+      "Sportspersons": [15,30],
+    }},
+    "E-commerce (Sec 153)": { filerToggle:false, items:{
+      "Digital payment": [1,2],
+      "Cash on delivery": [2,4],
+    }},
+    "Dividends (Sec 150)": { filerToggle:true, items:{
+      "Independent Power Producers (IPPs)": [7.5,15],
+      "REITs & others": [15,30],
+      "Mutual funds – equity": [15,30],
+      "Mutual funds – debt (>50% debt income)": [25,50],
+      "Tax-exempt / loss-making companies": [25,50],
+    }},
+    "Profit on Debt (Sec 151)": { filerToggle:true, items:{
+      "Bank deposits / profit on debt": [20,40],
+      "Government securities": [20,40],
+      "Sukuk – company holder": [25,50],
+      "Sukuk – individual/AOP (>Rs 1M)": [12.5,25],
+      "Sukuk – individual/AOP (≤Rs 1M)": [10,20],
+      "Other cases": [15,30],
+    }},
+    "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
+      "Company (flat rate)": [15,30],
+      "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
+    }},
+    "Imports (Sec 148)": { filerToggle:true, items:{
+      "12th Schedule Part I": [1,2],
+      "12th Schedule Part II – general": [2,4],
+      "12th Schedule Part II – commercial importer": [3.5,7],
+      "12th Schedule Part III – general": [5.5,11],
+      "12th Schedule Part III – commercial importer": [6,12],
+      "Pharmaceutical (finished products)": [4,8],
+    }},
+    "Exports (Sec 154 / 154A)": { filerToggle:true, items:{
+      "Export of goods": [1,2],
+      "Export of IT/software services (PSEB registered)": [0.25,0.5],
+      "Other export of services": [1,2],
+    }},
+    "Prizes, Winnings & Petroleum (Sec 156/156A)": { filerToggle:true, items:{
+      "Prize bond / cross-word puzzle": [15,30],
+      "Raffle / lottery / quiz / promotional prize": [20,40],
+      "Commission to petroleum-pump operators": [12,24],
+    }},
+    "Cash Withdrawal & Motor Vehicles (Sec 231AB/231B)": { filerToggle:true, items:{
+      "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
+      ...MOTOR_VEHICLE_ITEMS,
+    }},
+    "Remittance Abroad via Card (Sec 236Y)": { filerToggle:true, items:{
+      "Credit / debit / prepaid card remittance": [5,10],
+    }},
+  },
+
+  "2026-27": {
+    "Goods (Sec 153)": { filerToggle:true, items:{
+      "Rice, cotton-seed or edible oils": [1.5,3],
+      "Sale of goods – company": [5,10],
+      "Sale of goods – other than company": [5.5,11],
+      "Toll manufacturing – company": [9,18],
+      "Toll manufacturing – other than company": [11,22],
+    }},
+    "Services (Sec 153)": { filerToggle:true, items:{
+      "Services – specified list": [7,14],
+      "Services – IT / IT-enabled": [4,8],
+      "Independent professionals (doctors, lawyers, etc.)": [15,30],
+      "Other services": [14,28],
+      "Advertising to print / electronic media": [1.5,3],
+      "Terminal / port operator services": [12,24],
+    }},
+    "Contracts (Sec 153)": { filerToggle:true, items:{
+      "Contracts – company": [7.5,15],
+      "Contracts – other than company": [8,16],
+      "Contracts – sportspersons": [15,30],
+    }},
+    "E-commerce (Sec 153(2A))": { filerToggle:false, items:{
+      "Digitally ordered goods/services (digital/bank channel)": [1,2],
+      "Cash on delivery (by courier)": [2,4],
+    }},
+    "Dividend, Sukuk & Profit on Debt (Sec 150/150A/151)": { filerToggle:true, items:{
+      "Dividend – general & REIT": [15,30],
+      "Dividend – IPP pass-through (CPPA-G)": [7.5,15],
+      "Dividend – company paying no tax (exemption/loss/credit)": [25,50],
+      "Dividend – REIT scheme from SPV": [0,0],
+      "Sukuk return – company holder": [25,50],
+      "Sukuk return – individual/AOP, return > Rs 1m": [12.5,25],
+      "Sukuk return – individual/AOP, return < Rs 1m": [10,20],
+      "Profit on debt – bank/FI deposits & govt securities (non-individuals)": [20,40],
+      "Profit on debt – all other cases": [15,30],
+      "Gain on disposal of debt securities (NCCPL, Sec 151A)": [15,30],
+      "Bonus shares issued by a company (Sec 236Z)": [10,10],
+    }},
+    "Payments to Non-Residents (Sec 152)": { filerToggle:true, items:{
+      "Contracts – construction/assembly/installation (152(1A))": [7,7],
+      "Insurance / re-insurance premium (152(1AA))": [5,5],
+      "Advertisement – non-resident media person (152(1AAA))": [10,10],
+      "Other payments to a non-resident, general (152(2))": [20,20],
+      "Capital gain – debt/securities via non-resident accounts (152(1D/1DA))": [10,10],
+      "Sale of goods – company (152(2A)(a))": [5,10],
+      "Sale of goods – other than company (152(2A)(a))": [5.5,11],
+      "Services – specified list (152(2A)(b))": [8,16],
+      "Services – IT/IT-enabled (152(2A)(b))": [4,8],
+      "Services – other (152(2A)(b))": [15,30],
+      "Contracts – sportspersons (152(2A)(c))": [15,30],
+      "Contracts – other (152(2A)(c))": [8,16],
+    }},
+    "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
+      "Company (flat rate)": [15,30],
+      "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
+    }},
+    "Imports (Sec 148)": { filerToggle:true, items:{
+      "12th Sch Part I (steel, fertiliser, urea, gold, cotton, LNG)": [1,2],
+      "12th Sch Part II goods; pulses": [2,4],
+      "SRO-1125 commercial importers": [3,6],
+      "Coal": [4,8],
+      "Ship-breakers": [4.5,9],
+      "Industrial undertakings & companies": [5.5,11],
+      "Any other person": [6,12],
+      "Plastic raw material (industrial / own use)": [1.75,3.5],
+      "Plastic raw material (commercial importer)": [4.5,9],
+    }},
+    "Exports, IT & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
+      "Export proceeds of goods": [1.25,1.25],
+      "Export of IT/IT-enabled services (PSEB, to TY2029)": [0.25,0.25],
+      "Export of services – any other case": [1,1],
+      "Social-media platform revenue (resident)": [5,10],
+      "Social-media platform revenue (non-resident)": [5,5],
+    }},
+    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/7G/151B)": { filerToggle:true, items:{
+      "Prize bond / cross-word puzzle": [15,30],
+      "Raffle / lottery / quiz / promotional prize": [20,40],
+      "Commission to petroleum-pump operators": [12,24],
+      "Life-insurance payout gain – cashed within 1 year": [15,30],
+      "Life-insurance payout gain – cashed 1 to 7 years": [10,20],
+    }},
+    "Cash Withdrawal & Motor Vehicles (Sec 231AB/231B)": { filerToggle:true, items:{
+      "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
+      ...MOTOR_VEHICLE_ITEMS,
+      "Vehicle, cc N/A, value ≥ Rs 5m (filer 3%)": [3,9],
+    }},
+    "Brokerage & Commission (Sec 233)": { filerToggle:true, items:{
+      "Advertising agents": [10,20],
+      "Life-insurance agents (<Rs 0.5m p.a.)": [8,16],
+      "Other brokerage / commission": [12,24],
+    }},
+    "Property Transactions & Other Collections (Sec 236A/C/K/CB/G/H/Y/Z)": { filerToggle:true, items:{
+      "Sale by auction – general (236A)": [10,20],
+      "Sale by auction – immovable property / Pakistan Railways (236A)": [5,10],
+      "Sale/transfer of immovable property, seller (236C)": [2.75,11.5],
+      "Purchase of immovable property, buyer – value ≤ Rs 50m (236K)": [1.25,10.5],
+      "Purchase of immovable property, buyer – value Rs 50–100m (236K)": [1.25,14.5],
+      "Purchase of immovable property, buyer – value > Rs 100m (236K)": [1.25,18.5],
+      "Functions & gatherings – marriage halls, marquees, etc. (236CB)": [10,20],
+      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.7,1.4],
+      "Sale to distributors/dealers/wholesalers – other than fertiliser (236G)": [0.1,2],
+      "Sale to retailers, on gross sales (236H)": [0.5,2.5],
+      "Remittance abroad via credit/debit/prepaid card (236Y)": [0.5,1],
+      "Bonus shares (236Z)": [10,10],
+    }},
+    "Foreign Domestic Workers (Sec 231C)": { filerToggle:true, fixed:true, items:{
+      "Per worker, at visa issue/renewal": [200000,400000],
+    }},
+  },
+};
+
+function currentWhtData(){
+  return WHT_DATA_BY_YEAR[currentYear];
+}
+
+const whtCategoryEl = document.getElementById('whtCategory');
+const whtSubcategoryEl = document.getElementById('whtSubcategory');
+
+function populateWhtCategories(){
+  whtCategoryEl.innerHTML = "";
+  Object.keys(currentWhtData()).forEach(cat=>{
+    const o = document.createElement('option');
+    o.value = cat; o.textContent = cat;
+    whtCategoryEl.appendChild(o);
+  });
+  populateWhtSub();
+}
+
+function populateWhtSub(){
+  const cat = currentWhtData()[whtCategoryEl.value];
+  if(!cat) return;
+  whtSubcategoryEl.innerHTML = "";
+  Object.keys(cat.items).forEach(k=>{
+    const o = document.createElement('option');
+    o.value = k; o.textContent = k;
+    whtSubcategoryEl.appendChild(o);
+  });
+  document.getElementById('whtFilerField').style.display = cat.filerToggle ? 'block':'none';
+  document.getElementById('whtAmountField').style.display = cat.fixed ? 'none' : 'block';
+  computeWht();
+}
+whtCategoryEl.addEventListener('change', populateWhtSub);
+whtSubcategoryEl.addEventListener('change', computeWht);
+document.getElementById('whtAmount').addEventListener('input', computeWht);
+
+let filerStatus = 'filer';
+document.querySelectorAll('#filerSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#filerSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filerStatus = b.dataset.filer;
+    computeWht();
+  });
+});
+
+function rentSlabTax(amount){
+  if(amount<=300000) return 0;
+  if(amount<=600000) return (amount-300000)*0.05;
+  if(amount<=2000000) return 15000 + (amount-600000)*0.10;
+  return 155000 + (amount-2000000)*0.25;
+}
+
+function computeWht(){
+  const cat = currentWhtData()[whtCategoryEl.value];
+  if(!cat) return;
+  const sub = cat.items[whtSubcategoryEl.value];
+  if(!sub) return;
+
+  if(cat.fixed){
+    const feeAmt = filerStatus==='filer' ? sub[0] : sub[1];
+    document.getElementById('whtTaxAmount').textContent = fmt(feeAmt);
+    document.getElementById('whtStats').innerHTML = `
+      <div class="stat"><div class="v">Flat fee</div><div class="k">Basis</div></div>
+      <div class="stat"><div class="v">${fmt(sub[0])}</div><div class="k">Filer Rate</div></div>
+      <div class="stat"><div class="v">${fmt(sub[1])}</div><div class="k">Non-Filer Rate</div></div>
+    `;
+    return;
+  }
+
+  const amount = numVal('whtAmount');
+  let taxAmt = 0;
+  let rateDisplay = "";
+
+  if(sub[0]==="slab"){
+    const base = rentSlabTax(amount);
+    taxAmt = filerStatus==='filer' ? base : base*2;
+    rateDisplay = filerStatus==='filer' ? "Slab rate" : "2× slab rate";
+  } else {
+    const rate = filerStatus==='filer' ? sub[0] : sub[1];
+    taxAmt = amount * (rate/100);
+    rateDisplay = rate + "%";
+  }
+
+  document.getElementById('whtTaxAmount').textContent = fmt(taxAmt);
+  document.getElementById('whtStats').innerHTML = `
+    <div class="stat"><div class="v">${rateDisplay}</div><div class="k">Rate Applied</div></div>
+    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Gross Amount</div></div>
+    <div class="stat"><div class="v">${fmt(Math.max(amount-taxAmt,0))}</div><div class="k">Net Payment</div></div>
+  `;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+populateWhtCategories();
+
+/* ---- Nav dropdown toggle (shared) ---- */
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navToggle').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const nav = document.getElementById('mainNav');
+  if(nav && !nav.contains(e.target)){
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federal Sales Tax (GST) on Goods Calculator | Pakistan Tax Calculator</title>
+<meta name="description" content="Calculate federal sales tax (GST) on goods under the Sales Tax Act 1990, with the complete FBR GST rate list — standard, reduced, zero-rated and exempt categories.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7006762409656530"
+     crossorigin="anonymous"></script>
+
+<style>
+:root{
+  --green:#01411C;
+  --green-light:#0a6b34;
+  --green-pale:#e8f3ec;
+  --accent:#ffffff;
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#1c2a22;
+  --muted:#5b6b62;
+  --border:#dde5e0;
+  --radius:12px;
+  --shadow:0 2px 10px rgba(1,65,28,0.08);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+a{color:var(--green-light);}
+header.site-header{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
+  color:#fff;
+  padding:22px 16px 0;
+  text-align:center;
+}
+header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
+header.site-header h1{
+  margin:0 0 6px;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+header.site-header p.tagline{
+  margin:0 0 16px;
+  color:#dff0e6;
+  font-size:14px;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
+.wrap{
+  max-width:920px;
+  margin:0 auto;
+  padding:16px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h2{
+  margin:0 0 4px;
+  font-size:18px;
+  color:var(--green);
+}
+.card .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 16px;
+}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.field .hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+input[type=number], input[type=date], select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+input[type=number]:focus, select:focus{
+  outline:none;
+  border-color:var(--green-light);
+  background:#fff;
+}
+.amount-wrap{position:relative;}
+.amount-wrap .currency-prefix{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-weight:800;
+  color:var(--green);
+  font-size:17px;
+  pointer-events:none;
+}
+input.amount-input{
+  width:100%;
+  padding:14px 14px 14px 40px;
+  font-size:19px;
+  font-weight:700;
+  color:var(--green);
+  border:2px solid var(--green-light);
+  background:#fbfff9;
+  box-shadow:0 0 0 3px rgba(10,107,52,0.08);
+  border-radius:10px;
+}
+input.amount-input::placeholder{
+  color:#9db3a8;
+  font-weight:400;
+}
+input.amount-input:focus{
+  outline:none;
+  background:#fff;
+  border-color:var(--green);
+  box-shadow:0 0 0 5px rgba(10,107,52,0.16);
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:520px){
+  .row{grid-template-columns:1fr;}
+}
+.seg{
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.seg button{
+  flex:1;
+  background:#fbfdfc;
+  border:none;
+  padding:10px 8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  border-right:1px solid var(--border);
+}
+.seg button:last-child{border-right:none;}
+.seg button.active{
+  background:var(--green);
+  color:#fff;
+}
+.result{
+  background:var(--green-pale);
+  border:1px solid #cfe7d8;
+  border-radius:var(--radius);
+  padding:18px;
+}
+.result .big{
+  font-size:26px;
+  font-weight:700;
+  color:var(--green);
+}
+.result .label{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:2px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+@media (max-width:600px){
+  .grid3{grid-template-columns:1fr 1fr;}
+}
+.stat{
+  background:#fff;
+  border:1px solid #cfe7d8;
+  border-radius:8px;
+  padding:10px 12px;
+}
+.stat .v{font-size:16px;font-weight:700;color:var(--green);}
+.stat .k{font-size:11px;color:var(--muted);margin-top:2px;}
+table.breakdown{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  font-size:13px;
+}
+table.breakdown th, table.breakdown td{
+  text-align:left;
+  padding:8px 6px;
+  border-bottom:1px solid var(--border);
+}
+table.breakdown th{
+  color:var(--muted);
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+}
+table.breakdown tr:last-child td{
+  font-weight:700;
+  border-bottom:none;
+  color:var(--green);
+}
+.disclaimer{
+  font-size:12px;
+  color:var(--muted);
+  background:#fff9e6;
+  border:1px solid #f0e2a8;
+  border-radius:8px;
+  padding:12px 14px;
+  margin-top:6px;
+}
+footer{
+  text-align:center;
+  padding:24px 16px 40px;
+  color:var(--muted);
+  font-size:12px;
+}
+footer a{color:var(--green);}
+footer nav{margin-top:10px;}
+footer nav a{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:600;
+  margin:0 8px;
+  display:inline-block;
+}
+footer nav a:hover{text-decoration:underline;}
+.note{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+table.gst{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-top:4px;
+}
+table.gst th{
+  background:var(--green-pale);
+  color:var(--green);
+  text-align:left;
+  padding:9px 8px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+table.gst td{
+  padding:9px 8px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+table.gst tr.group td{
+  background:#f2f8f4;
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  padding-top:12px;
+  padding-bottom:6px;
+}
+table.gst td.rate{
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+table.gst td.note{
+  color:var(--muted);
+  font-size:12px;
+}
+.checkbox-row{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.checkbox-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
+.trip-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+.trip-row input[type=date]{
+  flex:1;
+  padding:9px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:13px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+.trip-row .arrow{color:var(--muted);font-size:13px;flex-shrink:0;}
+.trip-row .tripDays{
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+  min-width:52px;
+  text-align:right;
+}
+.tripRemove{
+  background:#fdecec;
+  color:#c0392b;
+  border:1px solid #f3c6c6;
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+}
+.addTripBtn{
+  background:var(--green-pale);
+  color:var(--green);
+  border:1.5px dashed var(--green-light);
+  border-radius:8px;
+  padding:10px;
+  width:100%;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  margin-top:4px;
+}
+.status-pill{
+  display:inline-block;
+  padding:6px 16px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:15px;
+}
+.status-pill.resident{background:#e0f5e6;color:#0a6b34;}
+.status-pill.nonresident{background:#fdecea;color:#b3261e;}
+.status-pill.pending{background:#f0f0f0;color:var(--muted);}
+
+.tax-hero{
+  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.tax-hero .hero-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:#e8c766;
+  margin-bottom:8px;
+}
+.tax-hero .hero-amount{
+  font-size:clamp(32px,9vw,44px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.tax-hero .hero-sub{
+  font-size:13px;
+  color:rgba(255,255,255,0.68);
+  margin-bottom:18px;
+}
+.tax-hero .hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.tax-hero .hero-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.tax-hero .hero-stat .k{
+  font-size:11px;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:4px;
+}
+.tax-hero .hero-stat .v{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+
+.slab-panel h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.slab-row{margin-bottom:16px;}
+.slab-row:last-child{margin-bottom:0;}
+.slab-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.slab-row .slab-rate{
+  font-weight:700;
+  font-size:14px;
+  color:var(--text);
+  min-width:38px;
+}
+.slab-row .slab-bar-track{
+  flex:1;
+  height:8px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+.slab-row .slab-bar-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:6px;
+  width:0%;
+  transition:width .35s ease;
+}
+.slab-row .slab-bar-fill.extra{background:#c99a2e;}
+.slab-row .slab-amount{
+  font-weight:700;
+  font-size:13px;
+  color:var(--green);
+  min-width:78px;
+  text-align:right;
+}
+.slab-row .slab-amount.muted{color:var(--muted);font-weight:400;}
+.slab-row-range{
+  font-size:12px;
+  color:var(--muted);
+  margin:5px 0 0 48px;
+}
+
+.hero-home{
+  max-width:920px;
+  margin:0 auto;
+  padding:8px 16px 4px;
+  text-align:center;
+}
+.hero-home h2{
+  font-size:clamp(20px,4vw,26px);
+  color:var(--green);
+  margin:0 0 8px;
+}
+.hero-home p{
+  color:var(--muted);
+  font-size:14px;
+  max-width:640px;
+  margin:0 auto;
+}
+.section-title{
+  max-width:920px;
+  margin:28px auto 12px;
+  padding:0 16px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:var(--green);
+}
+.section-desc{
+  max-width:920px;
+  margin:-8px auto 12px;
+  padding:0 16px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.calc-grid{
+  max-width:920px;
+  margin:0 auto;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:600px){
+  .calc-grid{grid-template-columns:1fr;}
+}
+.calc-card{
+  display:block;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.calc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(1,65,28,0.14);}
+.calc-card .icon{font-size:24px;margin-bottom:8px;}
+.calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
+.calc-card p{margin:0;font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
+  <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
+  <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <nav class="mainnav" id="mainNav">
+    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
+      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
+    </button>
+    <div class="navMenu" id="navMenu">
+      <div class="navGroup">
+<a href="index.html">Home</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Federal Taxes</div>
+<a href="income-tax.html">Income Tax</a>
+<a href="withholding-tax.html">Withholding Tax (WHT)</a>
+<a href="sales-tax-gst.html" class="active">Sales Tax on Goods (GST)</a>
+<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
+<a href="sales-tax-punjab.html">Punjab (PRA)</a>
+<a href="sales-tax-sindh.html">Sindh (SRB)</a>
+<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
+<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
+<a href="sales-tax-ict.html">Islamabad (ICT)</a>
+      </div>
+      <div class="navGroup">
+<a href="about.html">About Us</a>
+<a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>Federal Sales Tax (GST) on Goods</h2>
+    <p class="sub">Under the Sales Tax Act, 1990 &mdash; select a category and enter the value excluding tax.</p>
+
+    <div class="field">
+      <label>Goods Category</label>
+      <select id="gstCategory"></select>
+    </div>
+
+    <div class="field">
+      <label>Value Excluding Tax (PKR)</label>
+      <div class="amount-wrap">
+        <span class="currency-prefix">₨</span>
+        <input type="text" inputmode="numeric" autocomplete="off" id="gstAmount" class="amount-input" placeholder="e.g. 100,000">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="result">
+      <div class="label">GST Amount</div>
+      <div class="big" id="gstTaxAmount">Rs. 0</div>
+      <div class="grid3" id="gstStats"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Complete FBR GST / Sales Tax Rate List</h2>
+    <p class="sub">Federal sales tax (GST) on goods under the Sales Tax Act, 1990 &mdash; standard, reduced, zero-rated and exempt categories.</p>
+    <table class="gst">
+      <tr><th>Category</th><th>Rate</th><th>Notes</th></tr>
+
+      <tr class="group"><td colspan="3">Standard Rate</td></tr>
+      <tr><td>Standard rate &ndash; all taxable goods/supplies</td><td class="rate">18%</td><td class="note">General rate for registered persons &amp; imports</td></tr>
+      <tr><td>Further tax &ndash; sales to unregistered persons</td><td class="rate">+4%</td><td class="note">Charged in addition to the standard rate, Sec 3(1A)</td></tr>
+
+      <tr class="group"><td colspan="3">Zero-Rated (0%)</td></tr>
+      <tr><td>Exports of goods</td><td class="rate">0%</td><td class="note">Fifth Schedule; input tax refundable</td></tr>
+      <tr><td>Supplies to diplomats &amp; diplomatic missions</td><td class="rate">0%</td><td class="note">As notified by FBR</td></tr>
+
+      <tr class="group"><td colspan="3">Exempt &ndash; Sixth Schedule (no GST, no input tax credit)</td></tr>
+      <tr><td>Fresh milk, plain atta/flour, rice, pulses</td><td class="rate">Exempt</td><td class="note">Basic unprocessed food</td></tr>
+      <tr><td>Fresh fruits &amp; vegetables, eggs, live animals &amp; poultry</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Unbranded, unpacked meat &amp; poultry</td><td class="rate">Exempt</td><td class="note">Branded/packaged meat is taxable</td></tr>
+      <tr><td>Books, newspapers &amp; journals</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Most medicines &amp; pharmaceutical raw materials</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Specified agricultural inputs (seeds, select pesticides)</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
+
+      <tr class="group"><td colspan="3">Reduced Rates</td></tr>
+      <tr><td>Dairy products other than fresh milk (flavoured/UHT milk, yogurt, etc.)</td><td class="rate">10%</td><td class="note">Eighth Schedule</td></tr>
+      <tr><td>Prepared / preserved meat &amp; poultry products</td><td class="rate">8%</td><td class="note">Eighth Schedule</td></tr>
+      <tr><td>Gold &amp; silver jewellery &ndash; precious metal value</td><td class="rate">1.5%</td><td class="note">Plus rates below</td></tr>
+      <tr><td>Gold &amp; silver jewellery &ndash; diamonds/stones value</td><td class="rate">0.5%</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Gold &amp; silver jewellery &ndash; making charges</td><td class="rate">3%</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Third Schedule retail-price items (biscuits, aerated &amp; mineral water, juices, tea, cereals, ice cream, toiletries, detergents, cosmetics, etc.)</td><td class="rate">18%</td><td class="note">Charged on printed retail price, collected at manufacturer stage</td></tr>
+
+      <tr class="group"><td colspan="3">Value / Weight-Based (Eighth Schedule &amp; SRO-notified)</td></tr>
+      <tr><td>Mobile phones</td><td class="rate">Fixed Rs. slab</td><td class="note">By CIF value band at import/manufacture stage; slabs revised periodically via SRO</td></tr>
+      <tr><td>Steel billets, ingots &amp; re-rolled products</td><td class="rate">Fixed Rs./ton</td><td class="note">Specific rate per metric tonne, notified periodically</td></tr>
+      <tr><td>Potassium chlorate</td><td class="rate">Enhanced specific rate</td><td class="note">Sec 3(2), higher than standard rate</td></tr>
+
+      <tr class="group"><td colspan="3">Other Notable Categories</td></tr>
+      <tr><td>Natural gas</td><td class="rate">18%</td><td class="note">&nbsp;</td></tr>
+      <tr><td>Electricity (registered commercial/industrial)</td><td class="rate">18%</td><td class="note">Extra tax applies for unregistered/inactive consumers</td></tr>
+      <tr><td>Cement</td><td class="rate">18% + FED</td><td class="note">GST plus a separate per-bag Federal Excise Duty</td></tr>
+      <tr><td>POL products (petrol, diesel, kerosene, HOBC)</td><td class="rate">Exempt from GST</td><td class="note">Subject to Petroleum Levy instead</td></tr>
+    </table>
+    <div class="note">Rates reflect the Sales Tax Act, 1990 as amended by the Finance Act 2025 / 2026-27. This list covers the most commonly referenced categories only &mdash; the Third, Sixth, Eighth, Tenth &amp; Eleventh Schedules contain many more item- and HS-code-specific rates that are frequently revised by SRO. Always confirm the exact rate for your item/HS code on <a href="https://www.fbr.gov.pk/sales-tax/142263/131269" target="_blank" rel="noopener">fbr.gov.pk</a>.</div>
+  </div>
+
+</div>
+
+<footer>
+  Built for <strong>paktaxcalculator.net</strong> &middot; For informational purposes only, not a substitute for professional tax advice.<br>
+  Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
+  <nav>
+    <a href="index.html">Home</a>&middot;
+    <a href="income-tax.html">Income Tax</a>&middot;
+    <a href="withholding-tax.html">Withholding Tax</a>&middot;
+    <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
+    <a href="about.html">About Us</a>&middot;
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
+</footer>
+
+<script>
+function fmt(n){
+  if(isNaN(n)) n = 0;
+  n = Math.round(n);
+  return "Rs. " + n.toLocaleString('en-PK');
+}
+function numVal(id){
+  const el = document.getElementById(id);
+  if(!el) return 0;
+  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
+}
+function attachCommaFormat(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const cursorFromEnd = el.value.length - el.selectionStart;
+    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
+    const newPos = Math.max(0, el.value.length - cursorFromEnd);
+    el.setSelectionRange(newPos, newPos);
+  });
+}
+['gstAmount'].forEach(attachCommaFormat);
+
+/* =========================================================
+   FEDERAL GST ON GOODS
+========================================================= */
+const GST_GOODS_DATA = {
+  "Standard rate (general goods)": 18,
+  "Third Schedule retail-price items (biscuits, drinks, toiletries, etc.)": 18,
+  "Dairy products (other than fresh milk)": 10,
+  "Prepared / preserved meat & poultry": 8,
+  "Zero-rated (exports)": 0,
+  "Exempt goods (Sixth Schedule)": 0,
+};
+const gstCategoryEl = document.getElementById('gstCategory');
+Object.keys(GST_GOODS_DATA).forEach(k=>{
+  const o = document.createElement('option');
+  o.value = k; o.textContent = k + " (" + GST_GOODS_DATA[k] + "%)";
+  gstCategoryEl.appendChild(o);
+});
+gstCategoryEl.addEventListener('change', computeGst);
+document.getElementById('gstAmount').addEventListener('input', computeGst);
+
+function computeGst(){
+  const rate = GST_GOODS_DATA[gstCategoryEl.value] || 0;
+  const amount = numVal('gstAmount');
+  const tax = amount * (rate/100);
+  document.getElementById('gstTaxAmount').textContent = fmt(tax);
+  document.getElementById('gstStats').innerHTML = `
+    <div class="stat"><div class="v">${rate}%</div><div class="k">Rate Applied</div></div>
+    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
+    <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
+  `;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+computeGst();
+
+/* ---- Nav dropdown toggle (shared) ---- */
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navToggle').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const nav = document.getElementById('mainNav');
+  if(nav && !nav.contains(e.target)){
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

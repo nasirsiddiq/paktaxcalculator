@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | Pakistan Tax Calculator</title>
+<meta name="description" content="About paktaxcalculator.net — a free, independent tool for estimating Pakistan income tax, withholding tax (WHT), and federal & provincial sales tax for tax years 2025-26 and 2026-27.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7006762409656530"
+     crossorigin="anonymous"></script>
+
+<style>
+:root{
+  --green:#01411C;
+  --green-light:#0a6b34;
+  --green-pale:#e8f3ec;
+  --accent:#ffffff;
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#1c2a22;
+  --muted:#5b6b62;
+  --border:#dde5e0;
+  --radius:12px;
+  --shadow:0 2px 10px rgba(1,65,28,0.08);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+a{color:var(--green-light);}
+header.site-header{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
+  color:#fff;
+  padding:22px 16px 0;
+  text-align:center;
+}
+header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
+header.site-header h1{
+  margin:0 0 6px;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+header.site-header p.tagline{
+  margin:0 0 16px;
+  color:#dff0e6;
+  font-size:14px;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
+.wrap{
+  max-width:920px;
+  margin:0 auto;
+  padding:16px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h2{
+  margin:0 0 4px;
+  font-size:18px;
+  color:var(--green);
+}
+.card .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 16px;
+}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.field .hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+input[type=number], input[type=date], select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+input[type=number]:focus, select:focus{
+  outline:none;
+  border-color:var(--green-light);
+  background:#fff;
+}
+.amount-wrap{position:relative;}
+.amount-wrap .currency-prefix{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-weight:800;
+  color:var(--green);
+  font-size:17px;
+  pointer-events:none;
+}
+input.amount-input{
+  width:100%;
+  padding:14px 14px 14px 40px;
+  font-size:19px;
+  font-weight:700;
+  color:var(--green);
+  border:2px solid var(--green-light);
+  background:#fbfff9;
+  box-shadow:0 0 0 3px rgba(10,107,52,0.08);
+  border-radius:10px;
+}
+input.amount-input::placeholder{
+  color:#9db3a8;
+  font-weight:400;
+}
+input.amount-input:focus{
+  outline:none;
+  background:#fff;
+  border-color:var(--green);
+  box-shadow:0 0 0 5px rgba(10,107,52,0.16);
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:520px){
+  .row{grid-template-columns:1fr;}
+}
+.seg{
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.seg button{
+  flex:1;
+  background:#fbfdfc;
+  border:none;
+  padding:10px 8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  border-right:1px solid var(--border);
+}
+.seg button:last-child{border-right:none;}
+.seg button.active{
+  background:var(--green);
+  color:#fff;
+}
+.result{
+  background:var(--green-pale);
+  border:1px solid #cfe7d8;
+  border-radius:var(--radius);
+  padding:18px;
+}
+.result .big{
+  font-size:26px;
+  font-weight:700;
+  color:var(--green);
+}
+.result .label{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:2px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+@media (max-width:600px){
+  .grid3{grid-template-columns:1fr 1fr;}
+}
+.stat{
+  background:#fff;
+  border:1px solid #cfe7d8;
+  border-radius:8px;
+  padding:10px 12px;
+}
+.stat .v{font-size:16px;font-weight:700;color:var(--green);}
+.stat .k{font-size:11px;color:var(--muted);margin-top:2px;}
+table.breakdown{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  font-size:13px;
+}
+table.breakdown th, table.breakdown td{
+  text-align:left;
+  padding:8px 6px;
+  border-bottom:1px solid var(--border);
+}
+table.breakdown th{
+  color:var(--muted);
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+}
+table.breakdown tr:last-child td{
+  font-weight:700;
+  border-bottom:none;
+  color:var(--green);
+}
+.disclaimer{
+  font-size:12px;
+  color:var(--muted);
+  background:#fff9e6;
+  border:1px solid #f0e2a8;
+  border-radius:8px;
+  padding:12px 14px;
+  margin-top:6px;
+}
+footer{
+  text-align:center;
+  padding:24px 16px 40px;
+  color:var(--muted);
+  font-size:12px;
+}
+footer a{color:var(--green);}
+footer nav{margin-top:10px;}
+footer nav a{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:600;
+  margin:0 8px;
+  display:inline-block;
+}
+footer nav a:hover{text-decoration:underline;}
+.note{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+table.gst{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-top:4px;
+}
+table.gst th{
+  background:var(--green-pale);
+  color:var(--green);
+  text-align:left;
+  padding:9px 8px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+table.gst td{
+  padding:9px 8px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+table.gst tr.group td{
+  background:#f2f8f4;
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  padding-top:12px;
+  padding-bottom:6px;
+}
+table.gst td.rate{
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+table.gst td.note{
+  color:var(--muted);
+  font-size:12px;
+}
+.checkbox-row{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.checkbox-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
+.trip-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+.trip-row input[type=date]{
+  flex:1;
+  padding:9px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:13px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+.trip-row .arrow{color:var(--muted);font-size:13px;flex-shrink:0;}
+.trip-row .tripDays{
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+  min-width:52px;
+  text-align:right;
+}
+.tripRemove{
+  background:#fdecec;
+  color:#c0392b;
+  border:1px solid #f3c6c6;
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+}
+.addTripBtn{
+  background:var(--green-pale);
+  color:var(--green);
+  border:1.5px dashed var(--green-light);
+  border-radius:8px;
+  padding:10px;
+  width:100%;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  margin-top:4px;
+}
+.status-pill{
+  display:inline-block;
+  padding:6px 16px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:15px;
+}
+.status-pill.resident{background:#e0f5e6;color:#0a6b34;}
+.status-pill.nonresident{background:#fdecea;color:#b3261e;}
+.status-pill.pending{background:#f0f0f0;color:var(--muted);}
+
+.tax-hero{
+  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.tax-hero .hero-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:#e8c766;
+  margin-bottom:8px;
+}
+.tax-hero .hero-amount{
+  font-size:clamp(32px,9vw,44px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.tax-hero .hero-sub{
+  font-size:13px;
+  color:rgba(255,255,255,0.68);
+  margin-bottom:18px;
+}
+.tax-hero .hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.tax-hero .hero-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.tax-hero .hero-stat .k{
+  font-size:11px;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:4px;
+}
+.tax-hero .hero-stat .v{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+
+.slab-panel h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.slab-row{margin-bottom:16px;}
+.slab-row:last-child{margin-bottom:0;}
+.slab-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.slab-row .slab-rate{
+  font-weight:700;
+  font-size:14px;
+  color:var(--text);
+  min-width:38px;
+}
+.slab-row .slab-bar-track{
+  flex:1;
+  height:8px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+.slab-row .slab-bar-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:6px;
+  width:0%;
+  transition:width .35s ease;
+}
+.slab-row .slab-bar-fill.extra{background:#c99a2e;}
+.slab-row .slab-amount{
+  font-weight:700;
+  font-size:13px;
+  color:var(--green);
+  min-width:78px;
+  text-align:right;
+}
+.slab-row .slab-amount.muted{color:var(--muted);font-weight:400;}
+.slab-row-range{
+  font-size:12px;
+  color:var(--muted);
+  margin:5px 0 0 48px;
+}
+
+.hero-home{
+  max-width:920px;
+  margin:0 auto;
+  padding:8px 16px 4px;
+  text-align:center;
+}
+.hero-home h2{
+  font-size:clamp(20px,4vw,26px);
+  color:var(--green);
+  margin:0 0 8px;
+}
+.hero-home p{
+  color:var(--muted);
+  font-size:14px;
+  max-width:640px;
+  margin:0 auto;
+}
+.section-title{
+  max-width:920px;
+  margin:28px auto 12px;
+  padding:0 16px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:var(--green);
+}
+.section-desc{
+  max-width:920px;
+  margin:-8px auto 12px;
+  padding:0 16px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.calc-grid{
+  max-width:920px;
+  margin:0 auto;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:600px){
+  .calc-grid{grid-template-columns:1fr;}
+}
+.calc-card{
+  display:block;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.calc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(1,65,28,0.14);}
+.calc-card .icon{font-size:24px;margin-bottom:8px;}
+.calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
+.calc-card p{margin:0;font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
+  <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
+  <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <nav class="mainnav" id="mainNav">
+    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
+      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
+    </button>
+    <div class="navMenu" id="navMenu">
+      <div class="navGroup">
+<a href="index.html">Home</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Federal Taxes</div>
+<a href="income-tax.html">Income Tax</a>
+<a href="withholding-tax.html">Withholding Tax (WHT)</a>
+<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
+<a href="sales-tax-punjab.html">Punjab (PRA)</a>
+<a href="sales-tax-sindh.html">Sindh (SRB)</a>
+<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
+<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
+<a href="sales-tax-ict.html">Islamabad (ICT)</a>
+      </div>
+      <div class="navGroup">
+<a href="about.html" class="active">About Us</a>
+<a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>About paktaxcalculator.net</h2>
+    <p>
+      paktaxcalculator.net is a free, independent online tool built to help salaried individuals,
+      business owners, freelancers, and companies in Pakistan quickly estimate their tax obligations
+      for Tax Year 2025-26 and Tax Year 2026-27.
+    </p>
+    <p>
+      The site is organized into separate calculators you can reach from the menu above:
+    </p>
+    <ul>
+      <li><strong><a href="income-tax.html">Income Tax</a></strong> &mdash; for salaried individuals, business individuals/AOPs, and companies, including super tax, minimum tax on turnover, and a Section 82 residency checker.</li>
+      <li><strong><a href="withholding-tax.html">Withholding Tax (WHT)</a></strong> &mdash; covering goods, services, contracts, dividends, profit on debt, rent, imports and exports, with filer vs. non-filer rates.</li>
+      <li><strong><a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a></strong> &mdash; federal GST rates plus the complete FBR rate list.</li>
+      <li><strong><a href="sales-tax-withholding.html">Sales Tax Withholding</a></strong> &mdash; withholding on the GST portion of an invoice, federal and provincial.</li>
+      <li><strong>Provincial Sales Tax on Services</strong> &mdash; separate calculators for <a href="sales-tax-punjab.html">Punjab (PRA)</a>, <a href="sales-tax-sindh.html">Sindh (SRB)</a>, <a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>, <a href="sales-tax-balochistan.html">Balochistan (BRA)</a> and <a href="sales-tax-ict.html">Islamabad (ICT)</a>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Why We Built This</h2>
+    <p>
+      Pakistan's tax system spans a federal Income Tax Ordinance, a separate Sales Tax Act, and five
+      distinct provincial/territorial sales tax authorities &mdash; each revising rates through its own
+      annual Finance Act or SRO notifications. Finding a clear, current, all-in-one reference is
+      surprisingly hard. Our goal is to make the most commonly needed rates and calculations
+      accessible in one clean, mobile-friendly site, sourced from FBR's official rate cards and
+      the relevant Finance Acts, and organized so you can jump straight to the calculator you need.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Accuracy &amp; Limitations</h2>
+    <p>
+      We review and update rates when new Finance Acts and FBR notifications are issued, and we cite
+      our sources wherever practical. That said, Pakistani tax law is complex, changes frequently
+      via SROs and clarificatory circulars, and includes many item-specific and case-specific
+      provisions that a general calculator cannot fully capture. This tool is provided for
+      informational and estimation purposes only and does <strong>not</strong> constitute legal,
+      financial, or tax advice. Always confirm figures against official FBR/PRA/SRB/KPRA/BRA
+      publications or consult a qualified tax advisor before filing or making financial decisions.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Contact</h2>
+    <p>
+      Spotted an outdated rate or have a suggestion? We'd like to hear from you &mdash; feedback helps
+      us keep the calculators accurate and useful for everyone.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  Built for <strong>paktaxcalculator.net</strong> &middot; For informational purposes only, not a substitute for professional tax advice.<br>
+  Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
+  <nav>
+    <a href="index.html">Home</a>&middot;
+    <a href="income-tax.html">Income Tax</a>&middot;
+    <a href="withholding-tax.html">Withholding Tax</a>&middot;
+    <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
+    <a href="about.html">About Us</a>&middot;
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
+</footer>
+
+<script>
+/* This page has no calculator logic of its own. */
+
+/* ---- Nav dropdown toggle (shared) ---- */
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navToggle').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const nav = document.getElementById('mainNav');
+  if(nav && !nav.contains(e.target)){
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

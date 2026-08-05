@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Tax Calculator Pakistan 2025-26 & 2026-27 | Pakistan Tax Calculator</title>
+<meta name="description" content="Calculate Pakistan income tax for salaried individuals, business/AOPs and companies for tax year 2025-26 and 2026-27, plus check your Section 82 residency status.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7006762409656530"
+     crossorigin="anonymous"></script>
+
+<style>
+:root{
+  --green:#01411C;
+  --green-light:#0a6b34;
+  --green-pale:#e8f3ec;
+  --accent:#ffffff;
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#1c2a22;
+  --muted:#5b6b62;
+  --border:#dde5e0;
+  --radius:12px;
+  --shadow:0 2px 10px rgba(1,65,28,0.08);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+a{color:var(--green-light);}
+header.site-header{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
+  color:#fff;
+  padding:22px 16px 0;
+  text-align:center;
+}
+header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
+header.site-header h1{
+  margin:0 0 6px;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+header.site-header p.tagline{
+  margin:0 0 16px;
+  color:#dff0e6;
+  font-size:14px;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
+.wrap{
+  max-width:920px;
+  margin:0 auto;
+  padding:16px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h2{
+  margin:0 0 4px;
+  font-size:18px;
+  color:var(--green);
+}
+.card .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 16px;
+}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.field .hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+input[type=number], input[type=date], select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+input[type=number]:focus, select:focus{
+  outline:none;
+  border-color:var(--green-light);
+  background:#fff;
+}
+.amount-wrap{position:relative;}
+.amount-wrap .currency-prefix{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-weight:800;
+  color:var(--green);
+  font-size:17px;
+  pointer-events:none;
+}
+input.amount-input{
+  width:100%;
+  padding:14px 14px 14px 40px;
+  font-size:19px;
+  font-weight:700;
+  color:var(--green);
+  border:2px solid var(--green-light);
+  background:#fbfff9;
+  box-shadow:0 0 0 3px rgba(10,107,52,0.08);
+  border-radius:10px;
+}
+input.amount-input::placeholder{
+  color:#9db3a8;
+  font-weight:400;
+}
+input.amount-input:focus{
+  outline:none;
+  background:#fff;
+  border-color:var(--green);
+  box-shadow:0 0 0 5px rgba(10,107,52,0.16);
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:520px){
+  .row{grid-template-columns:1fr;}
+}
+.seg{
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.seg button{
+  flex:1;
+  background:#fbfdfc;
+  border:none;
+  padding:10px 8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  border-right:1px solid var(--border);
+}
+.seg button:last-child{border-right:none;}
+.seg button.active{
+  background:var(--green);
+  color:#fff;
+}
+.result{
+  background:var(--green-pale);
+  border:1px solid #cfe7d8;
+  border-radius:var(--radius);
+  padding:18px;
+}
+.result .big{
+  font-size:26px;
+  font-weight:700;
+  color:var(--green);
+}
+.result .label{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:2px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+@media (max-width:600px){
+  .grid3{grid-template-columns:1fr 1fr;}
+}
+.stat{
+  background:#fff;
+  border:1px solid #cfe7d8;
+  border-radius:8px;
+  padding:10px 12px;
+}
+.stat .v{font-size:16px;font-weight:700;color:var(--green);}
+.stat .k{font-size:11px;color:var(--muted);margin-top:2px;}
+table.breakdown{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  font-size:13px;
+}
+table.breakdown th, table.breakdown td{
+  text-align:left;
+  padding:8px 6px;
+  border-bottom:1px solid var(--border);
+}
+table.breakdown th{
+  color:var(--muted);
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+}
+table.breakdown tr:last-child td{
+  font-weight:700;
+  border-bottom:none;
+  color:var(--green);
+}
+.disclaimer{
+  font-size:12px;
+  color:var(--muted);
+  background:#fff9e6;
+  border:1px solid #f0e2a8;
+  border-radius:8px;
+  padding:12px 14px;
+  margin-top:6px;
+}
+footer{
+  text-align:center;
+  padding:24px 16px 40px;
+  color:var(--muted);
+  font-size:12px;
+}
+footer a{color:var(--green);}
+footer nav{margin-top:10px;}
+footer nav a{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:600;
+  margin:0 8px;
+  display:inline-block;
+}
+footer nav a:hover{text-decoration:underline;}
+.note{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+table.gst{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-top:4px;
+}
+table.gst th{
+  background:var(--green-pale);
+  color:var(--green);
+  text-align:left;
+  padding:9px 8px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+table.gst td{
+  padding:9px 8px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+table.gst tr.group td{
+  background:#f2f8f4;
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  padding-top:12px;
+  padding-bottom:6px;
+}
+table.gst td.rate{
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+table.gst td.note{
+  color:var(--muted);
+  font-size:12px;
+}
+.checkbox-row{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.checkbox-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
+.trip-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+.trip-row input[type=date]{
+  flex:1;
+  padding:9px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:13px;
+  background:#fbfdfc;
+  color:var(--text);
+}
+.trip-row .arrow{color:var(--muted);font-size:13px;flex-shrink:0;}
+.trip-row .tripDays{
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+  min-width:52px;
+  text-align:right;
+}
+.tripRemove{
+  background:#fdecec;
+  color:#c0392b;
+  border:1px solid #f3c6c6;
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+}
+.addTripBtn{
+  background:var(--green-pale);
+  color:var(--green);
+  border:1.5px dashed var(--green-light);
+  border-radius:8px;
+  padding:10px;
+  width:100%;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  margin-top:4px;
+}
+.status-pill{
+  display:inline-block;
+  padding:6px 16px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:15px;
+}
+.status-pill.resident{background:#e0f5e6;color:#0a6b34;}
+.status-pill.nonresident{background:#fdecea;color:#b3261e;}
+.status-pill.pending{background:#f0f0f0;color:var(--muted);}
+
+.tax-hero{
+  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.tax-hero .hero-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:#e8c766;
+  margin-bottom:8px;
+}
+.tax-hero .hero-amount{
+  font-size:clamp(32px,9vw,44px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.tax-hero .hero-sub{
+  font-size:13px;
+  color:rgba(255,255,255,0.68);
+  margin-bottom:18px;
+}
+.tax-hero .hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.tax-hero .hero-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.tax-hero .hero-stat .k{
+  font-size:11px;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:4px;
+}
+.tax-hero .hero-stat .v{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+
+.slab-panel h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.slab-row{margin-bottom:16px;}
+.slab-row:last-child{margin-bottom:0;}
+.slab-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.slab-row .slab-rate{
+  font-weight:700;
+  font-size:14px;
+  color:var(--text);
+  min-width:38px;
+}
+.slab-row .slab-bar-track{
+  flex:1;
+  height:8px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+.slab-row .slab-bar-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:6px;
+  width:0%;
+  transition:width .35s ease;
+}
+.slab-row .slab-bar-fill.extra{background:#c99a2e;}
+.slab-row .slab-amount{
+  font-weight:700;
+  font-size:13px;
+  color:var(--green);
+  min-width:78px;
+  text-align:right;
+}
+.slab-row .slab-amount.muted{color:var(--muted);font-weight:400;}
+.slab-row-range{
+  font-size:12px;
+  color:var(--muted);
+  margin:5px 0 0 48px;
+}
+
+.hero-home{
+  max-width:920px;
+  margin:0 auto;
+  padding:8px 16px 4px;
+  text-align:center;
+}
+.hero-home h2{
+  font-size:clamp(20px,4vw,26px);
+  color:var(--green);
+  margin:0 0 8px;
+}
+.hero-home p{
+  color:var(--muted);
+  font-size:14px;
+  max-width:640px;
+  margin:0 auto;
+}
+.section-title{
+  max-width:920px;
+  margin:28px auto 12px;
+  padding:0 16px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:var(--green);
+}
+.section-desc{
+  max-width:920px;
+  margin:-8px auto 12px;
+  padding:0 16px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.calc-grid{
+  max-width:920px;
+  margin:0 auto;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:600px){
+  .calc-grid{grid-template-columns:1fr;}
+}
+.calc-card{
+  display:block;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.calc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(1,65,28,0.14);}
+.calc-card .icon{font-size:24px;margin-bottom:8px;}
+.calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
+.calc-card p{margin:0;font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="brand"><h1>Pakistan Tax Calculator</h1></a>
+  <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
+  <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <nav class="mainnav" id="mainNav">
+    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
+      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
+    </button>
+    <div class="navMenu" id="navMenu">
+      <div class="navGroup">
+<a href="index.html">Home</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Federal Taxes</div>
+<a href="income-tax.html" class="active">Income Tax</a>
+<a href="withholding-tax.html">Withholding Tax (WHT)</a>
+<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+      </div>
+      <div class="navGroup">
+        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
+<a href="sales-tax-punjab.html">Punjab (PRA)</a>
+<a href="sales-tax-sindh.html">Sindh (SRB)</a>
+<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
+<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
+<a href="sales-tax-ict.html">Islamabad (ICT)</a>
+      </div>
+      <div class="navGroup">
+<a href="about.html">About Us</a>
+<a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>Income Tax Calculator</h2>
+    <p class="sub">Calculate your annual income tax liability under the Income Tax Ordinance, 2001.</p>
+
+    <div class="field">
+      <label>Tax Year</label>
+      <div class="seg year-toggle" id="yearSeg">
+        <button class="active" data-year="2025-26">2025-26</button>
+        <button data-year="2026-27">2026-27</button>
+      </div>
+      <div class="hint">2025-26: 1 Jul 2025 &ndash; 30 Jun 2026 &nbsp;|&nbsp; 2026-27: 1 Jul 2026 &ndash; 30 Jun 2027</div>
+    </div>
+
+    <div class="field">
+      <label>Taxpayer Type</label>
+      <div class="seg" id="typeSeg">
+        <button class="active" data-type="salaried">Salaried</button>
+        <button data-type="business">Business / AOP</button>
+        <button data-type="company">Company</button>
+      </div>
+    </div>
+
+    <div class="field" id="companyTypeField" style="display:none;">
+      <label>Company Category</label>
+      <select id="companyType">
+        <option value="other">Other Company (29%)</option>
+        <option value="small">Small Company (20%)</option>
+        <option value="banking">Banking Company (39%)</option>
+      </select>
+    </div>
+
+    <div class="field" id="freqField">
+      <label>Income Frequency</label>
+      <div class="seg" id="freqSeg">
+        <button class="active" data-freq="annual">Annual</button>
+        <button data-freq="monthly">Monthly Salary</button>
+      </div>
+      <div class="hint">Choose "Monthly Salary" to type what you actually earn per month &mdash; it's automatically annualised (&times;12) to work out your slab, tax bracket, and take-home pay.</div>
+    </div>
+
+    <div class="field">
+      <label id="incomeLabel">Annual Taxable Income (PKR)</label>
+      <div class="amount-wrap">
+        <span class="currency-prefix">₨</span>
+        <input type="text" inputmode="numeric" autocomplete="off" id="incomeInput" class="amount-input" placeholder="e.g. 3,000,000">
+      </div>
+      <div class="hint" id="salariedHint">For salaried individuals, at least 75% of taxable income must be from salary to use these rates.</div>
+    </div>
+
+    <div class="field" id="turnoverField" style="display:none;">
+      <label>Annual Turnover (PKR) &mdash; optional, for minimum tax check</label>
+      <input type="text" inputmode="numeric" autocomplete="off" id="turnoverInput" placeholder="e.g. 50,000,000">
+      <div class="hint">Minimum tax is 1.25% of turnover (lower rates 0.25%-0.75% apply to certain sectors). Shown only if higher than computed tax.</div>
+    </div>
+  </div>
+
+  <div class="tax-hero">
+    <div class="hero-label">Estimated Tax Payable &middot; Annual</div>
+    <div class="hero-amount" id="incomeTotalTax">Rs. 0</div>
+    <div class="hero-sub" id="heroSub">Enter an amount above to calculate</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="k" id="heroStat1Label">Monthly tax</div>
+        <div class="v" id="heroStat1Value">Rs. 0</div>
+      </div>
+      <div class="hero-stat">
+        <div class="k" id="heroStat2Label">Take-home / month</div>
+        <div class="v" id="heroStat2Value">Rs. 0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card slab-panel">
+    <h3 id="slabPanelTitle">Slab-by-Slab Breakdown</h3>
+    <div id="slabBreakdown"></div>
+  </div>
+
+  <div class="disclaimer">
+    Rates are based on the First Schedule to the Income Tax Ordinance, 2001 as amended by the Finance Act 2025 and the Finance Act 2026-27. Business/AOP slabs for 2026-27 are shown unchanged pending final confirmation of any Finance Act 2026 revision &mdash; please verify with FBR before filing. Super tax (Section 4C) and minimum tax on turnover (Section 113) may apply in addition for high earners and companies.
+  </div>
+
+  <!-- ---- Resident Status Checker ---- -->
+  <div class="card">
+    <h2>Resident Status Checker</h2>
+    <p class="sub">Determine your tax residency under Section 82 of the Income Tax Ordinance, 2001 for the Tax Year selected above. Residency affects whether your <em>worldwide</em> income (resident) or only your <em>Pakistan-source</em> income (non-resident) is taxable &mdash; the slab rates themselves are the same either way.</p>
+
+    <div class="field">
+      <label>How do you want to enter your stay in Pakistan?</label>
+      <div class="seg" id="residencyModeSeg">
+        <button class="active" data-mode="days">Enter Total Days</button>
+        <button data-mode="trips">Enter Entry/Exit Dates</button>
+      </div>
+    </div>
+
+    <div id="residencyDaysMode">
+      <div class="field">
+        <label>Days Present in Pakistan &ndash; This Tax Year</label>
+        <input type="number" id="residencyDaysInput" min="0" max="366" placeholder="e.g. 200">
+      </div>
+    </div>
+
+    <div id="residencyTripsMode" style="display:none;">
+      <div class="field">
+        <label>Trips to/from Pakistan</label>
+        <div id="tripsList"></div>
+        <button type="button" class="addTripBtn" id="addTripBtn">+ Add Trip</button>
+        <div class="hint">Add every period you were physically present in Pakistan (entry date &rarr; exit date). Days are counted inclusively and automatically clipped to the selected Tax Year.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Days Present in Pakistan &ndash; Preceding 4 Tax Years (cumulative)</label>
+      <input type="number" id="residencyPrev4Input" min="0" placeholder="e.g. 400">
+      <div class="hint">Only needed for the "120-day" test below. Leave blank if not applicable.</div>
+    </div>
+
+    <div class="field">
+      <label>Other Criteria</label>
+      <label class="checkbox-row" for="residencyGovt">
+        <input type="checkbox" id="residencyGovt">
+        Federal / Provincial Government employee posted abroad this tax year
+      </label>
+      <label class="checkbox-row" for="residencyCitizen">
+        <input type="checkbox" id="residencyCitizen">
+        Pakistani citizen and not present abroad 183+ days, and not a tax resident of any other country, this tax year
+      </label>
+    </div>
+
+    <div class="result">
+      <div class="label">Residency Status</div>
+      <div style="margin-top:6px;"><span class="status-pill pending" id="residencyStatus">Enter your details above</span></div>
+      <table class="breakdown" id="residencyBreakdown" style="margin-top:14px;"></table>
+    </div>
+
+    <div class="disclaimer">
+      Based on Section 82 of the Income Tax Ordinance, 2001: (a) present 183+ days in the tax year; (b) present 120+ days in the tax year <em>and</em> 365+ days cumulatively in the preceding 4 tax years; (c) a Federal/Provincial Government employee posted abroad; or (d) a Pakistani citizen not resident/183+ days present in any other country in the tax year (added by the Finance Act 2022, aimed at Pakistanis not tax-resident anywhere). Meeting <em>any one</em> test is sufficient for residency. This is a simplified guide &mdash; edge cases (part-year moves, tax treaties, tie-breaker rules) should be confirmed with a tax advisor or FBR.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Built for <strong>paktaxcalculator.net</strong> &middot; For informational purposes only, not a substitute for professional tax advice.<br>
+  Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
+  <nav>
+    <a href="index.html">Home</a>&middot;
+    <a href="income-tax.html">Income Tax</a>&middot;
+    <a href="withholding-tax.html">Withholding Tax</a>&middot;
+    <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
+    <a href="about.html">About Us</a>&middot;
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
+</footer>
+
+<script>
+/* =========================================================
+   INCOME TAX DATA
+========================================================= */
+function slabTax(income, slabs){
+  income = Math.max(0, income||0);
+  if(income<=0) return {tax:0, slab:null};
+  let chosen = slabs[slabs.length-1];
+  for(const s of slabs){
+    if(income > s.min && income <= s.max){ chosen = s; break; }
+  }
+  const tax = chosen.base + (income - chosen.min) * (chosen.rate/100);
+  return {tax: Math.max(0,tax), slab: chosen};
+}
+
+const TAX_DATA = {
+  "2025-26": {
+    label: "Tax Year 2025-26",
+    salariedSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:1, base:0},
+      {min:1200000, max:2200000, rate:11, base:6000},
+      {min:2200000, max:3200000, rate:23, base:116000},
+      {min:3200000, max:4100000, rate:30, base:346000},
+      {min:4100000, max:Infinity, rate:35, base:616000},
+    ],
+    salariedSurcharge: true,
+    businessSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:15, base:0},
+      {min:1200000, max:1600000, rate:20, base:90000},
+      {min:1600000, max:3200000, rate:30, base:170000},
+      {min:3200000, max:5600000, rate:40, base:650000},
+      {min:5600000, max:Infinity, rate:45, base:1610000},
+    ],
+    businessSurcharge: true
+  },
+  "2026-27": {
+    label: "Tax Year 2026-27",
+    salariedSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:1, base:0},
+      {min:1200000, max:2200000, rate:11, base:6000},
+      {min:2200000, max:3200000, rate:20, base:116000},
+      {min:3200000, max:4100000, rate:25, base:316000},
+      {min:4100000, max:5600000, rate:29, base:541000},
+      {min:5600000, max:7000000, rate:32, base:976000},
+      {min:7000000, max:Infinity, rate:35, base:1424000},
+    ],
+    salariedSurcharge: false,
+    businessSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:15, base:0},
+      {min:1200000, max:1600000, rate:20, base:90000},
+      {min:1600000, max:3200000, rate:30, base:170000},
+      {min:3200000, max:5600000, rate:40, base:650000},
+      {min:5600000, max:Infinity, rate:45, base:1610000},
+    ],
+    businessSurcharge: true
+  }
+};
+
+const COMPANY_RATES = { other:29, small:20, banking:39 };
+
+const SUPER_TAX_SLABS = [
+  {min:0, max:150e6, rate:0},
+  {min:150e6, max:200e6, rate:1},
+  {min:200e6, max:250e6, rate:1.5},
+  {min:250e6, max:300e6, rate:2.5},
+  {min:300e6, max:350e6, rate:3.5},
+  {min:350e6, max:400e6, rate:5.5},
+  {min:400e6, max:500e6, rate:7.5},
+  {min:500e6, max:Infinity, rate:10},
+];
+function superTaxRate(income){
+  let r = 0;
+  for(const s of SUPER_TAX_SLABS){ if(income > s.min && income <= s.max){ r = s.rate; break; } }
+  if(income > 500e6) r = 10;
+  return r;
+}
+
+const SURCHARGE_THRESHOLD = 10000000;
+const SURCHARGE_RATE = 9;
+
+function fmt(n){
+  if(isNaN(n)) n = 0;
+  n = Math.round(n);
+  return "Rs. " + n.toLocaleString('en-PK');
+}
+
+function numVal(id){
+  const el = document.getElementById(id);
+  if(!el) return 0;
+  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
+}
+
+function attachCommaFormat(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const cursorFromEnd = el.value.length - el.selectionStart;
+    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
+    const newPos = Math.max(0, el.value.length - cursorFromEnd);
+    el.setSelectionRange(newPos, newPos);
+  });
+}
+['incomeInput','turnoverInput'].forEach(attachCommaFormat);
+
+/* ---- UI wiring ---- */
+let currentYear = "2025-26";
+let currentType = "salaried";
+let currentFreq = "annual";
+
+function updateIncomeLabel(){
+  const label = document.getElementById('incomeLabel');
+  const input = document.getElementById('incomeInput');
+  if(currentType === 'company'){
+    label.textContent = 'Annual Taxable Income / Profit (PKR)';
+    input.placeholder = 'e.g. 3000000';
+  } else if(currentFreq === 'monthly'){
+    label.textContent = 'Monthly Salary / Income (PKR)';
+    input.placeholder = 'e.g. 250000';
+  } else {
+    label.textContent = 'Annual Taxable Income (PKR)';
+    input.placeholder = 'e.g. 3000000';
+  }
+}
+
+function setTaxYear(year){
+  currentYear = year;
+  document.querySelectorAll('.year-toggle button').forEach(x=>{
+    x.classList.toggle('active', x.dataset.year === year);
+  });
+  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
+  computeIncomeTax();
+  computeResidency();
+}
+
+document.querySelectorAll('.year-toggle button').forEach(b=>{
+  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
+});
+
+document.querySelectorAll('#typeSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#typeSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentType = b.dataset.type;
+    document.getElementById('companyTypeField').style.display = currentType==='company' ? 'block':'none';
+    document.getElementById('turnoverField').style.display = currentType==='company' ? 'block':'none';
+    document.getElementById('salariedHint').style.display = currentType==='salaried' ? 'block':'none';
+    document.getElementById('freqField').style.display = currentType==='company' ? 'none':'block';
+    updateIncomeLabel();
+    computeIncomeTax();
+  });
+});
+
+document.querySelectorAll('#freqSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#freqSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentFreq = b.dataset.freq;
+    updateIncomeLabel();
+    computeIncomeTax();
+  });
+});
+
+document.getElementById('companyType').addEventListener('change', computeIncomeTax);
+document.getElementById('incomeInput').addEventListener('input', computeIncomeTax);
+document.getElementById('turnoverInput').addEventListener('input', computeIncomeTax);
+
+function slabRowHtml(rateLabel, amt, pct, rangeText){
+  return `
+    <div class="slab-row">
+      <div class="slab-row-top">
+        <div class="slab-rate">${rateLabel}</div>
+        <div class="slab-bar-track"><div class="slab-bar-fill" style="width:${pct}%"></div></div>
+        <div class="slab-amount ${amt<=0?'muted':''}">${amt>0 ? fmt(amt) : '−'}</div>
+      </div>
+      <div class="slab-row-range">${rangeText}</div>
+    </div>`;
+}
+
+function computeIncomeTax(){
+  const rawInput = numVal('incomeInput');
+  const income = (currentFreq === 'monthly' && currentType !== 'company') ? rawInput * 12 : rawInput;
+  const yearData = TAX_DATA[currentYear];
+  const slabEl = document.getElementById('slabBreakdown');
+  const heroSubEl = document.getElementById('heroSub');
+  let total = 0;
+  let baseTax = 0;
+  let surcharge = 0;
+  let superTax = 0;
+  let minTax = 0;
+  let slabHtml = "";
+
+  if(currentType === 'salaried' || currentType === 'business'){
+    const slabs = currentType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
+    const surchargeApplies = currentType==='salaried' ? yearData.salariedSurcharge : yearData.businessSurcharge;
+    const {tax, slab} = slabTax(income, slabs);
+    baseTax = tax;
+    if(surchargeApplies && income > SURCHARGE_THRESHOLD){
+      surcharge = tax * (SURCHARGE_RATE/100);
+    }
+    superTax = income * (superTaxRate(income)/100);
+    total = baseTax + surcharge + superTax;
+
+    document.getElementById('slabPanelTitle').textContent = 'Slab-by-Slab Breakdown';
+    slabs.forEach(s=>{
+      let amt = 0;
+      if(income > s.min){
+        const cap = s.max===Infinity ? income : Math.min(income, s.max);
+        amt = (cap - s.min) * (s.rate/100);
+      }
+      const pct = baseTax>0 ? Math.min(100, (amt/baseTax*100)) : 0;
+      const rangeText = s.max===Infinity
+        ? `Rs. ${s.min.toLocaleString('en-US')} &amp; above`
+        : `Rs. ${s.min.toLocaleString('en-US')} – ${s.max.toLocaleString('en-US')}`;
+      slabHtml += slabRowHtml(s.rate+'%', amt, pct, rangeText);
+    });
+    if(surchargeApplies && surcharge>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">+9%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(surcharge)}</div></div><div class="slab-row-range">Surcharge on tax, income above Rs. 10,000,000</div></div>`;
+    }
+    if(superTax>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
+    }
+
+    if(income<=0){
+      heroSubEl.textContent = 'Enter an amount above to calculate';
+    } else if(slab && slab.rate===0){
+      heroSubEl.textContent = 'Below taxable threshold (Rs. 600,000) — no income tax';
+    } else if(slab){
+      const rangeText = slab.max===Infinity
+        ? `above Rs. ${slab.min.toLocaleString('en-PK')}`
+        : `Rs. ${slab.min.toLocaleString('en-PK')} – Rs. ${slab.max.toLocaleString('en-PK')}`;
+      heroSubEl.textContent = `You fall in the ${slab.rate}% tax bracket (${rangeText})`;
+    }
+
+    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
+    document.getElementById('heroStat1Value').textContent = fmt(total/12);
+    document.getElementById('heroStat2Label').textContent = 'Take-home / month';
+    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
+  } else {
+    // company
+    const compType = document.getElementById('companyType').value;
+    const rate = COMPANY_RATES[compType];
+    baseTax = income * (rate/100);
+    superTax = income * (superTaxRate(income)/100);
+    const turnover = numVal('turnoverInput');
+    minTax = turnover * 0.0125;
+    const higherBase = Math.max(baseTax, minTax);
+    total = higherBase + superTax;
+
+    document.getElementById('slabPanelTitle').textContent = 'Tax Breakdown';
+    slabHtml += slabRowHtml(rate+'%', baseTax, higherBase>0 ? Math.min(100, baseTax/higherBase*100) : 0, 'Corporate tax on taxable income');
+    if(turnover>0){
+      slabHtml += slabRowHtml('1.25%', minTax, higherBase>0 ? Math.min(100, minTax/higherBase*100) : 0, 'Minimum tax on turnover (Sec 113)');
+    }
+    if(superTax>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
+    }
+
+    const compLabel = compType==='small'?'Small':compType==='banking'?'Banking':'Standard';
+    heroSubEl.textContent = income>0 ? `${compLabel} company rate: ${rate}%` : 'Enter an amount above to calculate';
+
+    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
+    document.getElementById('heroStat1Value').textContent = fmt(total/12);
+    document.getElementById('heroStat2Label').textContent = 'Net profit / month';
+    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
+  }
+
+  slabEl.innerHTML = slabHtml;
+  document.getElementById('incomeTotalTax').textContent = fmt(total);
+}
+
+/* =========================================================
+   RESIDENT STATUS CHECKER (Section 82)
+========================================================= */
+const TAX_YEAR_RANGES = {
+  "2025-26": { start: Date.UTC(2025,6,1), end: Date.UTC(2026,5,30) },
+  "2026-27": { start: Date.UTC(2026,6,1), end: Date.UTC(2027,5,30) },
+};
+const MS_DAY = 86400000;
+
+let residencyMode = 'days';
+let tripCounter = 0;
+
+document.querySelectorAll('#residencyModeSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#residencyModeSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    residencyMode = b.dataset.mode;
+    document.getElementById('residencyDaysMode').style.display = residencyMode==='days' ? 'block':'none';
+    document.getElementById('residencyTripsMode').style.display = residencyMode==='trips' ? 'block':'none';
+    computeResidency();
+  });
+});
+
+function addTripRow(){
+  tripCounter++;
+  const id = 'trip'+tripCounter;
+  const row = document.createElement('div');
+  row.className = 'trip-row';
+  row.dataset.id = id;
+  row.innerHTML = `
+    <input type="date" class="tripEntry" id="${id}-entry">
+    <span class="arrow">&rarr;</span>
+    <input type="date" class="tripExit" id="${id}-exit">
+    <span class="tripDays" id="${id}-days">0 days</span>
+    <button type="button" class="tripRemove" aria-label="Remove trip">&times;</button>
+  `;
+  row.querySelector('.tripEntry').addEventListener('input', computeResidency);
+  row.querySelector('.tripExit').addEventListener('input', computeResidency);
+  row.querySelector('.tripRemove').addEventListener('click', ()=>{
+    row.remove();
+    computeResidency();
+  });
+  document.getElementById('tripsList').appendChild(row);
+}
+document.getElementById('addTripBtn').addEventListener('click', addTripRow);
+addTripRow(); // start with one row
+
+document.getElementById('residencyDaysInput').addEventListener('input', computeResidency);
+document.getElementById('residencyPrev4Input').addEventListener('input', computeResidency);
+document.getElementById('residencyGovt').addEventListener('change', computeResidency);
+document.getElementById('residencyCitizen').addEventListener('change', computeResidency);
+
+function computeResidency(){
+  const range = TAX_YEAR_RANGES[currentYear];
+  let daysThisYear = 0;
+
+  if(residencyMode === 'days'){
+    daysThisYear = parseFloat(document.getElementById('residencyDaysInput').value) || 0;
+  } else {
+    document.querySelectorAll('#tripsList .trip-row').forEach(row=>{
+      const entryVal = row.querySelector('.tripEntry').value;
+      const exitVal = row.querySelector('.tripExit').value;
+      const daysLabel = row.querySelector('.tripDays');
+      let rowDays = 0;
+      if(entryVal && exitVal){
+        const entryMs = Date.parse(entryVal + 'T00:00:00Z');
+        const exitMs = Date.parse(exitVal + 'T00:00:00Z');
+        if(!isNaN(entryMs) && !isNaN(exitMs) && exitMs >= entryMs){
+          const clipStart = Math.max(entryMs, range.start);
+          const clipEnd = Math.min(exitMs, range.end);
+          if(clipEnd >= clipStart){
+            rowDays = Math.round((clipEnd - clipStart) / MS_DAY) + 1;
+          }
+        }
+      }
+      daysLabel.textContent = rowDays + (rowDays===1?' day':' days');
+      daysThisYear += rowDays;
+    });
+  }
+
+  const prev4 = parseFloat(document.getElementById('residencyPrev4Input').value) || 0;
+  const govt = document.getElementById('residencyGovt').checked;
+  const citizen = document.getElementById('residencyCitizen').checked;
+
+  const test183 = daysThisYear >= 183;
+  const test120 = daysThisYear >= 120 && prev4 >= 365;
+  const anyInput = daysThisYear>0 || prev4>0 || govt || citizen;
+
+  const isResident = test183 || test120 || govt || citizen;
+
+  const pill = document.getElementById('residencyStatus');
+  const breakdownEl = document.getElementById('residencyBreakdown');
+
+  if(!anyInput){
+    pill.className = 'status-pill pending';
+    pill.textContent = 'Enter your details above';
+    breakdownEl.innerHTML = '';
+    return;
+  }
+
+  pill.className = 'status-pill ' + (isResident ? 'resident' : 'nonresident');
+  pill.textContent = isResident ? 'Resident' : 'Non-Resident';
+
+  breakdownEl.innerHTML = `
+    <tr><th>Test (Sec 82)</th><th>Your Figures</th><th>Result</th></tr>
+    <tr><td>(a) 183+ days present this tax year</td><td>${daysThisYear} days</td><td>${test183?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(b) 120+ days this year AND 365+ days in preceding 4 years</td><td>${daysThisYear} days this year, ${prev4} days prior 4 yrs</td><td>${test120?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(c) Govt employee posted abroad</td><td>${govt?'Yes':'No'}</td><td>${govt?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(d) Citizen, not resident/183+ days elsewhere</td><td>${citizen?'Yes':'No'}</td><td>${citizen?'✅ Met':'Not met'}</td></tr>
+    <tr><td colspan="2">Overall Status</td><td>${isResident?'Resident':'Non-Resident'}</td></tr>
+  `;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+computeIncomeTax();
+computeResidency();
+
+/* ---- Nav dropdown toggle (shared) ---- */
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navToggle').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const nav = document.getElementById('mainNav');
+  if(nav && !nav.contains(e.target)){
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
