@@ -596,6 +596,21 @@ table.gst td.note{
 .calc-card .icon{font-size:24px;margin-bottom:8px;}
 .calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
 .calc-card p{margin:0;font-size:13px;color:var(--muted);}
+
+/* ---- Required / optional tags on the combined invoice page ---- */
+.tag-req, .tag-opt{
+  display:inline-block;
+  font-size:.62em;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:.28em .7em;
+  border-radius:999px;
+  vertical-align:middle;
+  margin-left:.5rem;
+}
+.tag-req{ background:var(--green); color:#fff; }
+.tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 </style>
 </head>
 <body>
@@ -614,6 +629,7 @@ table.gst td.note{
       </div>
       <div class="navGroup">
         <div class="navGroupTitle">Federal Taxes</div>
+<a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
 <a href="income-tax.html">Income Tax</a>
 <a href="withholding-tax.html" class="active">Withholding Tax (WHT)</a>
 <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>

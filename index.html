@@ -596,6 +596,21 @@ table.gst td.note{
 .calc-card .icon{font-size:24px;margin-bottom:8px;}
 .calc-card h3{margin:0 0 6px;font-size:16px;color:var(--green);}
 .calc-card p{margin:0;font-size:13px;color:var(--muted);}
+
+/* ---- Required / optional tags on the combined invoice page ---- */
+.tag-req, .tag-opt{
+  display:inline-block;
+  font-size:.62em;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:.28em .7em;
+  border-radius:999px;
+  vertical-align:middle;
+  margin-left:.5rem;
+}
+.tag-req{ background:var(--green); color:#fff; }
+.tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 </style>
 </head>
 <body>
@@ -614,6 +629,7 @@ table.gst td.note{
       </div>
       <div class="navGroup">
         <div class="navGroupTitle">Federal Taxes</div>
+<a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
 <a href="income-tax.html">Income Tax</a>
 <a href="withholding-tax.html">Withholding Tax (WHT)</a>
 <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
@@ -638,6 +654,16 @@ table.gst td.note{
 <div class="hero-home">
   <h2>All Pakistan Tax Calculators in One Place</h2>
   <p>Pick a calculator below, or use the "All Calculators" menu above from any page. Covers Tax Year 2025-26 and 2026-27.</p>
+</div>
+
+<div class="section-title">Start Here</div>
+<div class="section-desc">Working out what to actually pay a supplier? Enter the invoice amount once and get every deduction in a single view.</div>
+<div class="calc-grid">
+  <a class="calc-card" href="invoice-withholding.html">
+    <div class="icon">🧮</div>
+    <h3>Invoice Withholding &mdash; All in One</h3>
+    <p>One amount in, everything out: federal GST, optional provincial sales tax on services, what the agent withholds from each, and the net payment to the supplier.</p>
+  </a>
 </div>
 
 <div class="section-title">Federal Taxes</div>
