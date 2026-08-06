@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Federal Sales Tax (GST) on Goods Calculator | Pakistan Tax Calculator</title>
-<meta name="description" content="Calculate federal sales tax (GST) on goods under the Sales Tax Act 1990, with the complete FBR GST rate list — standard, reduced, zero-rated and exempt categories.">
+<title>Blog | Pakistan Tax Calculator</title>
+<meta name="description" content="Notes on Pakistani tax rules, enforcement and filing from paktaxcalculator.net.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -15,12 +15,12 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="Federal Sales Tax (GST) on Goods Calculator | Pakistan Tax Calculator">
-<meta property="og:description" content="Calculate federal sales tax (GST) on goods under the Sales Tax Act 1990, with the complete FBR GST rate list — standard, reduced, zero-rated and exempt categories.">
+<meta property="og:title" content="Blog | Pakistan Tax Calculator">
+<meta property="og:description" content="Notes on Pakistani tax rules, enforcement and filing from paktaxcalculator.net.">
 <meta property="og:image" content="https://paktaxcalculator.net/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Federal Sales Tax (GST) on Goods Calculator | Pakistan Tax Calculator">
-<meta name="twitter:description" content="Calculate federal sales tax (GST) on goods under the Sales Tax Act 1990, with the complete FBR GST rate list — standard, reduced, zero-rated and exempt categories.">
+<meta name="twitter:title" content="Blog | Pakistan Tax Calculator">
+<meta name="twitter:description" content="Notes on Pakistani tax rules, enforcement and filing from paktaxcalculator.net.">
 <meta name="twitter:image" content="https://paktaxcalculator.net/og-image.png">
 
 <!-- Google tag (gtag.js) -->
@@ -866,7 +866,7 @@ header.site-header .headerTop h1{
 <a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
 <a href="income-tax.html">Income Tax</a>
 <a href="withholding-tax.html">Withholding Tax (WHT)</a>
-<a href="sales-tax-gst.html" class="active">Sales Tax on Goods (GST)</a>
+<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
 <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
       </div>
       <div class="navGroup">
@@ -879,7 +879,7 @@ header.site-header .headerTop h1{
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
-<a href="blog.html">Blog</a>
+<a href="blog.html" class="active">Blog</a>
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
@@ -890,74 +890,22 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
-  <div class="card">
-    <h2>Federal Sales Tax (GST) on Goods</h2>
-    <p class="sub">Under the Sales Tax Act, 1990 &mdash; select a category and enter the value excluding tax.</p>
-
-    <div class="field">
-      <label>Goods Category</label>
-      <select id="gstCategory"></select>
-    </div>
-
-    <div class="field">
-      <label>Value Excluding Tax (PKR)</label>
-      <div class="amount-wrap">
-        <span class="currency-prefix">₨</span>
-        <input type="text" inputmode="numeric" autocomplete="off" id="gstAmount" class="amount-input" placeholder="e.g. 100,000">
-      </div>
-    </div>
+  <div class="hero-home">
+    <h2>Blog</h2>
+    <p>Notes on Pakistani tax rules, enforcement and filing &mdash; written to explain what changed and what it means in practice.</p>
   </div>
 
-  <div class="card">
-    <div class="result">
-      <div class="label">GST Amount</div>
-      <div class="big" id="gstTaxAmount">Rs. 0</div>
-      <div class="grid3" id="gstStats"></div>
-    </div>
+  <div class="calc-grid">
+    <a class="calc-card" href="fbr-ai-tax-audit-pakistan-2026.html">
+      <div class="icon">🤖</div>
+      <h3>FBR's AI Tax Audit System: What It Is, How It Works, and What It Means for Taxpayers in 2026</h3>
+      <p>FBR now cross-checks returns against NADRA records, bank data, property registries and real-time factory output. How the risk engine works, the numbers behind the rollout, and who faces the most scrutiny.</p>
+      <p class="cardMeta">August 2026 &middot; 6 min read</p>
+    </a>
   </div>
 
-  <div class="card">
-    <h2>Complete FBR GST / Sales Tax Rate List</h2>
-    <p class="sub">Federal sales tax (GST) on goods under the Sales Tax Act, 1990 &mdash; standard, reduced, zero-rated and exempt categories.</p>
-    <table class="gst">
-      <tr><th>Category</th><th>Rate</th><th>Notes</th></tr>
-
-      <tr class="group"><td colspan="3">Standard Rate</td></tr>
-      <tr><td>Standard rate &ndash; all taxable goods/supplies</td><td class="rate">18%</td><td class="note">General rate for registered persons &amp; imports</td></tr>
-      <tr><td>Further tax &ndash; sales to unregistered persons</td><td class="rate">+4%</td><td class="note">Charged in addition to the standard rate, Sec 3(1A)</td></tr>
-
-      <tr class="group"><td colspan="3">Zero-Rated (0%)</td></tr>
-      <tr><td>Exports of goods</td><td class="rate">0%</td><td class="note">Fifth Schedule; input tax refundable</td></tr>
-      <tr><td>Supplies to diplomats &amp; diplomatic missions</td><td class="rate">0%</td><td class="note">As notified by FBR</td></tr>
-
-      <tr class="group"><td colspan="3">Exempt &ndash; Sixth Schedule (no GST, no input tax credit)</td></tr>
-      <tr><td>Fresh milk, plain atta/flour, rice, pulses</td><td class="rate">Exempt</td><td class="note">Basic unprocessed food</td></tr>
-      <tr><td>Fresh fruits &amp; vegetables, eggs, live animals &amp; poultry</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Unbranded, unpacked meat &amp; poultry</td><td class="rate">Exempt</td><td class="note">Branded/packaged meat is taxable</td></tr>
-      <tr><td>Books, newspapers &amp; journals</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Most medicines &amp; pharmaceutical raw materials</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Specified agricultural inputs (seeds, select pesticides)</td><td class="rate">Exempt</td><td class="note">&nbsp;</td></tr>
-
-      <tr class="group"><td colspan="3">Reduced Rates</td></tr>
-      <tr><td>Dairy products other than fresh milk (flavoured/UHT milk, yogurt, etc.)</td><td class="rate">10%</td><td class="note">Eighth Schedule</td></tr>
-      <tr><td>Prepared / preserved meat &amp; poultry products</td><td class="rate">8%</td><td class="note">Eighth Schedule</td></tr>
-      <tr><td>Gold &amp; silver jewellery &ndash; precious metal value</td><td class="rate">1.5%</td><td class="note">Plus rates below</td></tr>
-      <tr><td>Gold &amp; silver jewellery &ndash; diamonds/stones value</td><td class="rate">0.5%</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Gold &amp; silver jewellery &ndash; making charges</td><td class="rate">3%</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Third Schedule retail-price items (biscuits, aerated &amp; mineral water, juices, tea, cereals, ice cream, toiletries, detergents, cosmetics, etc.)</td><td class="rate">18%</td><td class="note">Charged on printed retail price, collected at manufacturer stage</td></tr>
-
-      <tr class="group"><td colspan="3">Value / Weight-Based (Eighth Schedule &amp; SRO-notified)</td></tr>
-      <tr><td>Mobile phones</td><td class="rate">Fixed Rs. slab</td><td class="note">By CIF value band at import/manufacture stage; slabs revised periodically via SRO</td></tr>
-      <tr><td>Steel billets, ingots &amp; re-rolled products</td><td class="rate">Fixed Rs./ton</td><td class="note">Specific rate per metric tonne, notified periodically</td></tr>
-      <tr><td>Potassium chlorate</td><td class="rate">Enhanced specific rate</td><td class="note">Sec 3(2), higher than standard rate</td></tr>
-
-      <tr class="group"><td colspan="3">Other Notable Categories</td></tr>
-      <tr><td>Natural gas</td><td class="rate">18%</td><td class="note">&nbsp;</td></tr>
-      <tr><td>Electricity (registered commercial/industrial)</td><td class="rate">18%</td><td class="note">Extra tax applies for unregistered/inactive consumers</td></tr>
-      <tr><td>Cement</td><td class="rate">18% + FED</td><td class="note">GST plus a separate per-bag Federal Excise Duty</td></tr>
-      <tr><td>POL products (petrol, diesel, kerosene, HOBC)</td><td class="rate">Exempt from GST</td><td class="note">Subject to Petroleum Levy instead</td></tr>
-    </table>
-    <div class="note">Rates reflect the Sales Tax Act, 1990 as amended by the Finance Act 2025 / 2026-27. This list covers the most commonly referenced categories only &mdash; the Third, Sixth, Eighth, Tenth &amp; Eleventh Schedules contain many more item- and HS-code-specific rates that are frequently revised by SRO. Always confirm the exact rate for your item/HS code on <a href="https://www.fbr.gov.pk/sales-tax/142263/131269" target="_blank" rel="noopener">fbr.gov.pk</a>.</div>
+  <div class="disclaimer">
+    Articles here are general commentary written for information only, not tax or legal advice, and they are not a substitute for professional guidance on your own position. Tax rules in Pakistan change frequently &mdash; check the publication date and confirm anything you intend to rely on with FBR, your provincial revenue authority, or a qualified tax practitioner. Spotted something out of date? Tell us through the <a href="feedback.html">feedback form</a>.
   </div>
 
 </div>
@@ -979,102 +927,7 @@ header.site-header .headerTop h1{
 </footer>
 
 <script>
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['gstAmount'].forEach(attachCommaFormat);
-
-/* =========================================================
-   FEDERAL GST ON GOODS
-   Sales Tax Act 1990 as amended by the Finance Act 2025 / 2026-27.
-   Grouped to match the provincial calculators. Items charged at a
-   fixed rupee amount rather than a percentage (mobile phones by CIF
-   band, steel per tonne, potassium chlorate) are not listed, since
-   they cannot be expressed as a rate on value.
-========================================================= */
-const GST_GOODS_GROUPS = [
-  { group: "Standard Rate (18%)", items: {
-      "Standard rate \u2013 all taxable goods & supplies": 18,
-      "Sale to an unregistered person (18% + 4% further tax)": 22,
-      "Third Schedule retail-price items (biscuits, drinks, tea, cereals, ice cream, toiletries, cosmetics, etc.)": 18,
-      "Natural gas": 18,
-      "Electricity \u2013 registered commercial/industrial consumer": 18,
-      "Cement (GST portion; a separate per-bag FED also applies)": 18,
-  }},
-  { group: "Reduced Rates (Eighth Schedule)", items: {
-      "Dairy products other than fresh milk (flavoured/UHT milk, yogurt, etc.)": 10,
-      "Prepared / preserved meat & poultry products": 8,
-      "Gold & silver jewellery \u2013 making charges": 3,
-      "Gold & silver jewellery \u2013 precious metal value": 1.5,
-      "Gold & silver jewellery \u2013 diamonds/stones value": 0.5,
-  }},
-  { group: "Zero-Rated (0%, input tax refundable)", items: {
-      "Exports of goods (Fifth Schedule)": 0,
-      "Supplies to diplomats & diplomatic missions": 0,
-  }},
-  { group: "Exempt \u2013 Sixth Schedule (0%, no input tax credit)", items: {
-      "Fresh milk, plain atta/flour, rice, pulses": 0,
-      "Fresh fruits & vegetables, eggs, live animals & poultry": 0,
-      "Unbranded, unpacked meat & poultry": 0,
-      "Books, newspapers & journals": 0,
-      "Most medicines & pharmaceutical raw materials": 0,
-      "Specified agricultural inputs (seeds, select pesticides)": 0,
-      "POL products \u2013 petrol, diesel, kerosene, HOBC (Petroleum Levy instead)": 0,
-  }},
-];
-
-// Flatten for lookup
-const GST_GOODS_DATA = {};
-GST_GOODS_GROUPS.forEach(g => Object.keys(g.items).forEach(k => { GST_GOODS_DATA[k] = g.items[k]; }));
-
-const gstCategoryEl = document.getElementById('gstCategory');
-GST_GOODS_GROUPS.forEach(g=>{
-  const og = document.createElement('optgroup');
-  og.label = g.group;
-  Object.keys(g.items).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k; o.textContent = k + " (" + g.items[k] + "%)";
-    og.appendChild(o);
-  });
-  gstCategoryEl.appendChild(og);
-});
-gstCategoryEl.addEventListener('change', computeGst);
-document.getElementById('gstAmount').addEventListener('input', computeGst);
-
-function computeGst(){
-  const rate = GST_GOODS_DATA[gstCategoryEl.value] || 0;
-  const amount = numVal('gstAmount');
-  const tax = amount * (rate/100);
-  document.getElementById('gstTaxAmount').textContent = fmt(tax);
-  document.getElementById('gstStats').innerHTML = `
-    <div class="stat"><div class="v">${rate}%</div><div class="k">Rate Applied</div></div>
-    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
-    <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
-  `;
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeGst();
+/* Blog index is static — no calculator logic on this page. */
 
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{

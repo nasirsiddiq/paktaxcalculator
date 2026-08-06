@@ -781,6 +781,43 @@ header.site-header .headerTop h1{
   .brandLogo{ width:99px; height:99px; }
   .brandSpacer{ width:0; }
 }
+
+/* ---- Blog article typography ---- */
+.article{ max-width:820px; margin-left:auto; margin-right:auto; }
+.article .kicker{
+  margin:0 0 .5rem;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--green);
+}
+.article .kicker a{ color:var(--green); text-decoration:none; }
+.article .kicker a:hover{ text-decoration:underline; }
+.article h2{ font-size:clamp(21px,3.4vw,30px); line-height:1.28; margin:0 0 .6rem; }
+.article .byline{ margin:0 0 1.4rem; font-size:13px; color:var(--muted); }
+.article .lead{ font-size:17px; line-height:1.72; color:var(--text); }
+.article h3{
+  margin:2.1rem 0 .7rem;
+  font-size:19px;
+  color:var(--green);
+  padding-bottom:.4rem;
+  border-bottom:1px solid var(--border);
+}
+.article p{ line-height:1.75; margin:0 0 1rem; }
+.article ul, .article ol{ margin:0 0 1.15rem; padding-left:1.3rem; }
+.article li{ line-height:1.72; margin-bottom:.55rem; }
+.article .faq-q{ font-weight:700; color:var(--green); margin-bottom:.35rem; }
+.article .sources{ font-size:13px; color:var(--muted); margin-top:1.6rem; }
+.article-cta{
+  margin-top:1.6rem;
+  padding:1rem 1.15rem;
+  background:var(--green-pale);
+  border:1px solid var(--green-light);
+  border-radius:var(--radius);
+}
+.article-cta p{ margin:0; font-size:14px; }
+.cardMeta{ margin-top:.6rem !important; font-size:12px !important; color:var(--muted); font-weight:600; }
 </style>
 </head>
 <body>
@@ -812,6 +849,7 @@ header.site-header .headerTop h1{
         <a href="sales-tax-ict.html">Islamabad (ICT)</a>
       </span>
     </span>
+    <a href="blog.html">Blog</a>
     <a href="feedback.html">Feedback</a>
     <a href="contact.html">Contact</a>
   </nav>
@@ -841,6 +879,7 @@ header.site-header .headerTop h1{
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
+<a href="blog.html">Blog</a>
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
@@ -914,6 +953,7 @@ header.site-header .headerTop h1{
     <a href="withholding-tax.html">Withholding Tax</a>&middot;
     <a href="sales-tax-gst.html">Sales Tax (GST)</a>&middot;
     <a href="about.html">About Us</a>&middot;
+    <a href="blog.html">Blog</a>&middot;
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
