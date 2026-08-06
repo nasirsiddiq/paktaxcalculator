@@ -818,6 +818,33 @@ header.site-header .headerTop h1{
 }
 .article-cta p{ margin:0; font-size:14px; }
 .cardMeta{ margin-top:.6rem !important; font-size:12px !important; color:var(--muted); font-weight:600; }
+
+/* ---- Article language toggle ---- */
+.langBar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+  max-width:820px;
+  margin:0 auto .9rem;
+  flex-wrap:wrap;
+}
+.langLabel{ font-size:13px; font-weight:600; color:var(--muted); }
+.seg.langSeg{ width:auto; display:inline-flex; }
+.seg.langSeg button{ padding:.45rem 1.3rem; font-size:14px; }
+
+/* ---- Urdu article: right-to-left, Nastaliq, roomier lines ---- */
+.articleUr{
+  font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Noto Naskh Arabic',serif;
+  text-align:right;
+}
+.articleUr h2{ line-height:1.9; font-size:clamp(19px,3vw,26px); }
+.articleUr h3{ line-height:1.9; font-size:18px; }
+.articleUr p, .articleUr li{ line-height:2.35; font-size:15px; }
+.articleUr .lead{ font-size:16px; }
+.articleUr ul, .articleUr ol{ padding-left:0; padding-right:1.4rem; }
+.articleUr .byline, .articleUr .sources{ line-height:2; }
+.articleUr .kicker{ letter-spacing:0; }
 </style>
 </head>
 <body>
@@ -927,7 +954,36 @@ header.site-header .headerTop h1{
 </footer>
 
 <script>
-/* Blog index is static — no calculator logic on this page. */
+/* Language toggle for bilingual articles. The Urdu block is a full
+   translation held in the same page rather than a separate URL, so the
+   reader can switch without losing their place or the page reloading.
+   The choice is remembered for the session. */
+(function(){
+  const seg = document.getElementById('langSeg');
+  const en  = document.getElementById('lang-en');
+  const ur  = document.getElementById('lang-ur');
+  if(!seg || !en || !ur) return;
+
+  function setLang(lang){
+    const urdu = lang === 'ur';
+    en.style.display = urdu ? 'none' : '';
+    ur.style.display = urdu ? '' : 'none';
+    seg.querySelectorAll('button').forEach(b=>{
+      const on = b.dataset.lang === lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try{ sessionStorage.setItem('ptc-article-lang', lang); }catch(e){}
+  }
+
+  seg.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=> setLang(b.dataset.lang));
+  });
+
+  let saved = null;
+  try{ saved = sessionStorage.getItem('ptc-article-lang'); }catch(e){}
+  if(saved === 'ur') setLang('ur');
+})();
 
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{

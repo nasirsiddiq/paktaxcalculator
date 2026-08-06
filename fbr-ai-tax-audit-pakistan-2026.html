@@ -818,6 +818,33 @@ header.site-header .headerTop h1{
 }
 .article-cta p{ margin:0; font-size:14px; }
 .cardMeta{ margin-top:.6rem !important; font-size:12px !important; color:var(--muted); font-weight:600; }
+
+/* ---- Article language toggle ---- */
+.langBar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+  max-width:820px;
+  margin:0 auto .9rem;
+  flex-wrap:wrap;
+}
+.langLabel{ font-size:13px; font-weight:600; color:var(--muted); }
+.seg.langSeg{ width:auto; display:inline-flex; }
+.seg.langSeg button{ padding:.45rem 1.3rem; font-size:14px; }
+
+/* ---- Urdu article: right-to-left, Nastaliq, roomier lines ---- */
+.articleUr{
+  font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Noto Naskh Arabic',serif;
+  text-align:right;
+}
+.articleUr h2{ line-height:1.9; font-size:clamp(19px,3vw,26px); }
+.articleUr h3{ line-height:1.9; font-size:18px; }
+.articleUr p, .articleUr li{ line-height:2.35; font-size:15px; }
+.articleUr .lead{ font-size:16px; }
+.articleUr ul, .articleUr ol{ padding-left:0; padding-right:1.4rem; }
+.articleUr .byline, .articleUr .sources{ line-height:2; }
+.articleUr .kicker{ letter-spacing:0; }
 </style>
 </head>
 <body>
@@ -890,7 +917,17 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
-  <article class="card article">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap">
+
+  <div class="langBar">
+    <span class="langLabel">Read in:</span>
+    <div class="seg langSeg" id="langSeg">
+      <button class="active" type="button" data-lang="en">English</button>
+      <button type="button" data-lang="ur" lang="ur">اردو</button>
+    </div>
+  </div>
+
+  <article class="card article" id="lang-en">
     <p class="kicker"><a href="blog.html">&larr; Blog</a> &middot; Tax Enforcement</p>
     <h2>FBR's AI Tax Audit System: What It Is, How It Works, and What It Means for Taxpayers in 2026</h2>
     <p class="byline">Published August 2026 &middot; paktaxcalculator.net</p>
@@ -981,6 +1018,98 @@ header.site-header .headerTop h1{
     </div>
   </article>
 
+
+  <article class="card article articleUr" id="lang-ur" lang="ur" dir="rtl" style="display:none;">
+    <p class="kicker"><a href="blog.html">&larr; بلاگ</a> &middot; ٹیکس نفاذ</p>
+    <h2>ایف بی آر کا اے آئی ٹیکس آڈٹ سسٹم: یہ کیا ہے، کیسے کام کرتا ہے، اور 2026 میں ٹیکس دہندگان کے لیے اس کا کیا مطلب ہے</h2>
+    <p class="byline">اشاعت: اگست 2026 &middot; paktaxcalculator.net</p>
+
+    <p class="lead">پاکستان کا ادارۂ محصولات اب کم ظاہر کی گئی آمدنی پکڑنے کے لیے صرف دستی جانچ پڑتال پر انحصار نہیں کر رہا۔ گزشتہ ایک سال کے دوران فیڈرل بورڈ آف ریونیو (ایف بی آر) نے مصنوعی ذہانت پر مبنی آڈٹ اور رسک ڈیٹیکشن نظام متعارف کرایا ہے، جو ٹیکس گوشواروں کا موازنہ حقیقی دنیا کے اعداد و شمار سے کرتا ہے &mdash; قومی شناختی ریکارڈ سے لے کر پیداوار اور کسٹمز کے اعداد و شمار تک۔ نتیجہ یہ کہ کون کم ٹیکس ادا کر رہا ہے اور کتنا، اس کی نشاندہی اب کہیں زیادہ تیز اور ڈیٹا پر مبنی ہو گئی ہے۔</p>
+
+    <p>اس مضمون میں بتایا گیا ہے کہ ایف بی آر کا اے آئی آڈٹ نظام دراصل کیسے کام کرتا ہے، اس کے پیچھے کیا اعداد و شمار ہیں، کون سے شعبے اور ٹیکس دہندگان سب سے زیادہ زیرِ نظر ہیں، اور کاروباری ادارے اور افراد قوانین کی پاسداری کے لیے عملی طور پر کیا کر سکتے ہیں۔</p>
+
+    <h3>ایف بی آر کا اے آئی آڈٹ سسٹم کیا ہے؟</h3>
+    <p>ایف بی آر کا اے آئی آڈٹ نظام ایک رسک انجن پر مبنی نظام ہے جو مشین لرننگ اور مختلف ذرائع سے حاصل کردہ ڈیٹا کے تقابل کی مدد سے گوشواروں کو جانچ کے لیے نشان زد کرتا ہے۔ بے ترتیب آڈٹ یا محض افسر کی صوابدید پر انحصار کرنے کے بجائے، یہ نظام ٹیکس دہندہ کے ظاہر کردہ اعداد کا موازنہ آزاد ذرائع سے کرتا ہے، جن میں شامل ہیں:</p>
+    <ul>
+      <li>قومی شناختی ڈیٹابیس (نادرا) کا ریکارڈ</li>
+      <li>بینک اکاؤنٹس اور لین دین کا ڈیٹا</li>
+      <li>جائیداد کی رجسٹریشن اور گاڑیوں کی ملکیت</li>
+      <li>زیرِ نگرانی صنعتوں سے پیداوار اور ترسیل کا حقیقی وقت میں ڈیٹا</li>
+      <li>کسٹمز گوشوارے اور درآمدی مالیت</li>
+      <li>عوامی سطح پر نظر آنے والے طرزِ زندگی کے اشارے، بشمول سوشل میڈیا کی سرگرمی</li>
+    </ul>
+    <p>جہاں تضاد سامنے آئے &mdash; مثلاً ظاہر کردہ آمدنی ٹیکس دہندہ کے اثاثوں، اخراجات یا نظر آنے والے طرزِ زندگی سے میل نہ کھائے &mdash; وہاں گوشوارے کو زیادہ خطرے والا قرار دے کر مزید جانچ یا باقاعدہ آڈٹ نوٹس کے لیے بھیج دیا جاتا ہے۔</p>
+
+    <h3>یہ نظام مرحلہ وار کیسے کام کرتا ہے</h3>
+    <p>ایف بی آر کے اپنے بیان کے مطابق آڈٹ کا عمل کئی مرحلوں سے گزرتا ہے:</p>
+    <ol>
+      <li><strong>ڈیٹا کی جمع آوری اور تقابل۔</strong> گوشوارے کے اعداد کا موازنہ فریقِ ثالث کے ذرائع، مثلاً نادرا، بینک ریکارڈ اور جائیداد و گاڑیوں کی رجسٹری سے کیا جاتا ہے۔</li>
+      <li><strong>خودکار چھانٹی۔</strong> ابتدائی جانچ اصولوں پر مبنی ہوتی ہے (مثلاً ایسا کوئی بھی گوشوارہ نشان زد کرنا جس میں ادا شدہ ٹیکس متوقع واجب الادا رقم کے تقریباً 25 فیصد سے کم ہو)، جس کے ساتھ اے آئی ماڈلز بھی کام کرتے ہیں جو بیک وقت کئی متغیرات میں بے قاعدگی پہچاننے کے لیے تربیت یافتہ ہیں۔</li>
+      <li><strong>مختلف پہلوؤں سے رسک اسکورنگ۔</strong> رپورٹس کے مطابق یہ نظام گوشواروں کو تقریباً آٹھ مختلف زمروں میں جانچتا ہے اور پھر ایک رسک اسکور مرتب کرتا ہے۔</li>
+      <li><strong>مرحلہ وار آڈٹ۔</strong> اس کا اطلاق پہلے تجارتی اور صنعتی فائلرز پر ہوا، پھر واحد مالکانہ اور رجسٹرڈ کمپنیوں پر، اور آخر میں انفرادی اور تنخواہ دار ٹیکس دہندگان پر۔</li>
+      <li><strong>انسانی جائزہ۔</strong> نشان زد کیسز اِن لینڈ ریونیو کے افسران اور آڈیٹرز کے سپرد کیے جاتے ہیں، جو کسی بھی باقاعدہ کارروائی یا نوٹس سے پہلے تصدیق کرتے ہیں۔</li>
+    </ol>
+    <p>ایف بی آر کا کہنا ہے کہ مقصد ایک &rdquo;کاروبار دوست&ldquo; نظام ہے جس میں روزمرہ نفاذ کے دوران انسانی مداخلت کم سے کم ہو &mdash; خودکار نظام کا مقصد بدعنوانی کے خطرے اور قانون کی پاسداری کرنے والے ٹیکس دہندگان کی غیر ضروری پریشانی، دونوں کو کم کرنا ہے، اور ساتھ ہی اس امکان کو بڑھانا ہے کہ خلاف ورزی واقعی پکڑی جائے۔</p>
+
+    <h3>اس اقدام کے پیچھے اعداد و شمار</h3>
+    <p>اس منصوبے کا حجم خاصا بڑا ہے:</p>
+    <ul>
+      <li>متوقع 80 لاکھ گوشواروں میں سے تقریباً <strong>70 لاکھ سے زائد انکم ٹیکس گوشوارے</strong> اے آئی اور ڈیجیٹل ذرائع سے زیرِ نگرانی ہیں۔</li>
+      <li>ایف بی آر کے رسک انجن نے <strong>840 زیادہ خطرے والے کیسز</strong> نشان زد کیے، جن میں اندازاً <strong>34 ارب روپے</strong> (تقریباً 12 کروڑ 20 لاکھ ڈالر) کا ٹیکس وصولی کے قابل ہو سکتا ہے۔</li>
+      <li>نشان زد کیسز کے جائزے میں <strong>8,000 اِن لینڈ ریونیو افسران</strong> اور <strong>4,000 آڈیٹرز</strong> شامل ہیں۔</li>
+      <li>ڈیجیٹل پیداواری نگرانی فی الحال 4 شعبوں میں نافذ ہے اور مزید 16 شعبوں تک بڑھائی جا رہی ہے، جو مجموعی طور پر پاکستان کی <strong>مینوفیکچرنگ جی ڈی پی کے تقریباً 70 فیصد</strong> کا احاطہ کرتے ہیں۔</li>
+      <li><strong>شوگر کے شعبے</strong> میں زیرِ نگرانی پیداوار 31 فیصد بڑھی، جس سے اندازاً 27 ارب روپے اضافی آمدن متوقع ہے؛ <strong>سیمنٹ کے شعبے</strong> سے تقریباً 32 ارب روپے کا ٹیکس پہلے ہی وصول ہو چکا ہے۔</li>
+      <li>نگرانی سخت ہونے کے بعد کسٹمز کنسائنمنٹ کی اوسط ظاہر کردہ مالیت تقریباً <strong>63 لاکھ روپے سے بڑھ کر 78 لاکھ روپے</strong> ہو گئی۔</li>
+      <li>مجموعی ٹیکس وصولی دو برسوں میں تقریباً <strong>40 فیصد</strong> بڑھی ہے، مالی سال 2023-24 کے تقریباً 9.3 ٹریلین روپے سے حالیہ مالی سال میں تقریباً 13 ٹریلین روپے تک &mdash; حکام اس رجحان کا کچھ سہرا اے آئی کی معاونت سے ہونے والے نفاذ کو دیتے ہیں۔</li>
+    </ul>
+    <p>وزیرِ خزانہ محمد اورنگزیب نے اس کوشش کو واضح طور پر &rdquo;عمل درآمد اور نفاذ&ldquo; کے مرحلے میں قرار دیا ہے، نہ کہ اب بھی زیرِ تشکیل، جس کا مطلب ہے کہ یہ کاغذوں تک محدود کوئی آزمائشی منصوبہ نہیں بلکہ نفاذ کی فعال ترجیح ہے۔</p>
+
+    <h3>کون سے شعبے اور ٹیکس دہندگان سب سے زیادہ زیرِ نظر ہیں</h3>
+    <p>نئے نظام کے تحت کچھ طبقات نمایاں طور پر زیادہ جانچ پڑتال کا سامنا کر رہے ہیں:</p>
+    <ul>
+      <li><strong>زیرِ نگرانی شعبوں کے مینوفیکچررز</strong> &mdash; شوگر، سیمنٹ، تمباکو، کھاد، ٹیکسٹائل اور مشروبات &mdash; جہاں حقیقی وقت میں پیداوار کی نگرانی کم ظاہر کرنے کو پکڑنا کہیں آسان بنا دیتی ہے۔</li>
+      <li><strong>درآمد کنندگان اور تاجر</strong>، کیونکہ ظاہر کردہ کسٹمز مالیت کا مارکیٹ اور ماضی کے اعداد و شمار سے تقابل سخت کر دیا گیا ہے تاکہ کم انوائسنگ کی روک تھام ہو۔</li>
+      <li><strong>زیادہ مالیت والے افراد</strong> جن کے اثاثے (جائیداد، گاڑیاں، بینک بیلنس) ان کی ظاہر کردہ آمدنی سے میل نہیں کھاتے۔</li>
+      <li><strong>تنخواہ دار اور انفرادی فائلرز</strong> جو آمدنی کے اشاریوں کے مقابلے میں اپنی متوقع ٹیکس ذمہ داری کا تقریباً 25 فیصد سے کم ادا کرتے ہیں۔</li>
+      <li><strong>ایسے ٹیکس دہندگان جن کے طرزِ زندگی اور ظاہر کردہ آمدنی میں واضح تضاد ہو</strong> &mdash; ایف بی آر نے &rdquo;سوشل میڈیا پر مبالغہ آمیز آمدنی&ldquo; کو ایک ایسی علامت قرار دیا ہے جس پر وہ اب نظر رکھے ہوئے ہے۔</li>
+    </ul>
+
+    <h3>کاروباری اداروں اور افراد کے لیے اس کا کیا مطلب ہے</h3>
+    <p>قانون کی پاسداری کرنے والے بیشتر ٹیکس دہندگان پر عملی اثر بالواسطہ ہے: تیز اور ڈیٹا پر مبنی آڈٹ کا مطلب یہ ہے کہ یہ فرض کر لینے کے دن ختم ہو رہے ہیں کہ گوشوارہ یونہی نظر سے اوجھل رہ جائے گا۔ چند عملی پہلو جن کی منصوبہ بندی ضروری ہے:</p>
+    <ul>
+      <li><strong>ریکارڈ رکھنا پہلے سے کہیں زیادہ اہم ہے۔</strong> چونکہ نظام ظاہر کردہ اعداد کا موازنہ پیداوار، بینکنگ اور جائیداد کے ڈیٹا سے کرتا ہے، اس لیے وہ تضادات جو پہلے نظر انداز ہو جاتے تھے، اب کہیں آسانی سے پکڑے جا سکتے ہیں۔</li>
+      <li><strong>کم انوائسنگ اور کم مالیت ظاہر کرنے کا خطرہ بڑھ گیا ہے۔</strong> مینوفیکچرنگ میں حقیقی وقت کی نگرانی اور کسٹمز مالیت کی سخت جانچ اسے برقرار رکھنا مشکل بنا دیتی ہے۔</li>
+      <li><strong>نوٹس زیادہ تیزی سے اور بہتر شواہد کے ساتھ آ سکتے ہیں۔</strong> چونکہ نشاندہی مخصوص ڈیٹا تضادات سے ہوتی ہے، اس لیے ٹیکس دہندگان کو توقع رکھنی چاہیے کہ آڈٹ نوٹس مبہم شبہے کے بجائے ٹھوس اعداد کا حوالہ دیں گے۔</li>
+      <li><strong>ڈیجیٹل انوائسنگ کی پابندی سخت ہو رہی ہے۔</strong> زیرِ نگرانی شعبوں کے کاروباری اداروں کو توقع رکھنی چاہیے کہ پیداوار، ترسیل اور انوائس کے ریکارڈ کا موازنہ ٹیکس گوشواروں سے مسلسل ہوتا رہے گا، نہ کہ صرف گوشوارہ جمع کراتے وقت۔</li>
+    </ul>
+
+    <h3>اکثر پوچھے جانے والے سوالات</h3>
+
+    <p class="faq-q">کیا ایف بی آر کا اے آئی آڈٹ نظام پہلے سے فعال ہے یا ابھی آزمائش میں ہے؟</p>
+    <p>یہ فعال ہے۔ 2026 کے وسط تک حکام اسے عمل درآمد اور نفاذ کے مرحلے میں قرار دیتے ہیں، سینکڑوں زیادہ خطرے والے کیسز پہلے ہی نشان زد ہو چکے ہیں اور سیمنٹ و شوگر جیسے شعبوں سے مخصوص رقوم وصول بھی ہوئی ہیں۔</p>
+
+    <p class="faq-q">اے آئی سے نشان زد آڈٹ کس بنیاد پر ہوتا ہے؟</p>
+    <p>بنیادی وجہ ظاہر کردہ آمدنی یا پیداوار اور آزاد ذرائع کے ڈیٹا کے درمیان تضاد ہے &mdash; جیسے نادرا کا ریکارڈ، بینک ڈیٹا، جائیداد و گاڑیوں کی ملکیت، یا حقیقی وقت میں پیداوار کی نگرانی &mdash; اس کے علاوہ وہ گوشوارے بھی جن میں ادا شدہ ٹیکس متوقع حد سے کم ہو۔</p>
+
+    <p class="faq-q">کیا اس کا اثر تنخواہ دار افراد پر بھی ہے یا صرف کاروبار پر؟</p>
+    <p>دونوں پر۔ اس کا اطلاق مرحلہ وار ہوا ہے، پہلے تجارتی اور صنعتی فائلرز، پھر کمپنیاں، اور اب انفرادی اور تنخواہ دار ٹیکس دہندگان تک۔</p>
+
+    <p class="faq-q">کیا ٹیکس دہندہ اے آئی کی نشاندہی کو چیلنج کر سکتا ہے؟</p>
+    <p>جی ہاں۔ نشان زد کیسز پر باقاعدہ کارروائی سے پہلے اِن لینڈ ریونیو افسران اور آڈیٹرز کا انسانی جائزہ ہوتا ہے، اور نوٹس جاری ہونے کے بعد اپیل و جواب کے معمول کے طریقۂ کار لاگو ہوتے ہیں۔</p>
+
+    <p class="faq-q">زیرِ نگرانی شعبوں کے کاروباری اداروں کو اب کیا کرنا چاہیے؟</p>
+    <p>یقینی بنائیں کہ پیداوار، ترسیل اور انوائسنگ کا ریکارڈ ٹیکس گوشواروں سے مطابقت رکھتا ہو، کیونکہ شوگر، سیمنٹ، تمباکو، کھاد، ٹیکسٹائل اور مشروبات جیسے شعبے حقیقی وقت کی ڈیجیٹل نگرانی میں ہیں۔</p>
+
+    <h3>خلاصہ</h3>
+    <p>ایف بی آر کا اے آئی پر مبنی آڈٹ ماڈل کی طرف رجوع پاکستان کے ٹیکس نفاذ میں حالیہ برسوں کی سب سے نمایاں تبدیلیوں میں سے ایک ہے۔ ظاہر کردہ گوشواروں کا آزاد ذرائع کے ڈیٹا سے تقابل کر کے &mdash; قومی ریکارڈ سے لے کر حقیقی وقت کے پیداواری اعداد تک &mdash; یہ نظام ان خلا کو پُر کرنے کے لیے بنایا گیا ہے جو دستی آڈٹ میں اکثر رہ جاتے تھے۔ اربوں روپے کی نشان زد آمدن اور ہزاروں افسران کے اے آئی سے تیار کردہ رسک اسکورز پر کام کرنے کے ساتھ، ٹیکس دہندگان اور کاروباری اداروں کے پاس واضح وجہ ہے کہ وہ اپنے ظاہر کردہ اعداد کو حقیقت سے ہم آہنگ کر لیں، اس سے پہلے کہ الگورتھم خود یہ تضاد ڈھونڈ نکالے۔</p>
+
+    <p class="sources"><em>مآخذ: فون ورلڈ، پاکستان ٹوڈے، پرو پاکستانی، ونڈوز نیوز، اور نومبر 2025 سے جولائی 2026 کے دوران شائع ہونے والی کوریج میں شامل سرکاری بیانات۔</em></p>
+
+    <div class="article-cta">
+      <p><strong>اپنی پوزیشن خود جانچیں۔</strong> اگر آپ یہ تصدیق کرنا چاہتے ہیں کہ آپ کو کتنا ادا کرنا چاہیے، تو سالانہ ذمہ داری کے لیے <a href="income-tax.html">انکم ٹیکس کیلکولیٹر</a>، ذریعے پر کٹوتی کے لیے <a href="withholding-tax.html">ود ہولڈنگ ٹیکس کیلکولیٹر</a>، یا سپلائر کی ادائیگی پر جی ایس ٹی اور صوبائی سیلز ٹیکس کی کٹوتی جانچنے کے لیے <a href="invoice-withholding.html">آل اِن ون انوائس ٹول</a> استعمال کریں۔</p>
+    </div>
+  </article>
+
   <div class="disclaimer">
     This article is general commentary on publicly reported developments in Pakistan's tax administration, written for information only. Figures and programme details are as reported at the time of writing and may change as the rollout continues; they have not been independently verified against FBR's internal records. Nothing here is tax or legal advice, and it should not be relied on in responding to an audit notice or assessment. If you have received a notice or believe your filings may be affected, speak to a qualified tax practitioner, or contact FBR or your provincial revenue authority directly.
   </div>
@@ -1057,7 +1186,36 @@ header.site-header .headerTop h1{
 </footer>
 
 <script>
-/* Blog index is static — no calculator logic on this page. */
+/* Language toggle for bilingual articles. The Urdu block is a full
+   translation held in the same page rather than a separate URL, so the
+   reader can switch without losing their place or the page reloading.
+   The choice is remembered for the session. */
+(function(){
+  const seg = document.getElementById('langSeg');
+  const en  = document.getElementById('lang-en');
+  const ur  = document.getElementById('lang-ur');
+  if(!seg || !en || !ur) return;
+
+  function setLang(lang){
+    const urdu = lang === 'ur';
+    en.style.display = urdu ? 'none' : '';
+    ur.style.display = urdu ? '' : 'none';
+    seg.querySelectorAll('button').forEach(b=>{
+      const on = b.dataset.lang === lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try{ sessionStorage.setItem('ptc-article-lang', lang); }catch(e){}
+  }
+
+  seg.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=> setLang(b.dataset.lang));
+  });
+
+  let saved = null;
+  try{ saved = sessionStorage.getItem('ptc-article-lang'); }catch(e){}
+  if(saved === 'ur') setLang('ur');
+})();
 
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
