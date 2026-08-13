@@ -664,10 +664,12 @@ table.breakdown tr:last-child td{
 
 .calcSidebar{
   display:none;
-  position:absolute;
+  position:fixed;
   top:200px;
   left:24px;
   width:230px;
+  max-height:calc(100vh - 220px);
+  overflow-y:auto;
   background:#fff;
   border:1px solid var(--border);
   border-radius:12px;
