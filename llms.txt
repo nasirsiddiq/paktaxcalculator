@@ -1,0 +1,33 @@
+# Pakistan Tax Calculator
+
+> Free, FBR-rate-accurate tax calculators for Pakistan: income tax, withholding tax, sales tax (federal and provincial), property valuation, and property transaction expenses, covering Tax Year 2025-26 and 2026-27.
+
+Pakistan Tax Calculator (paktaxcalculator.net) provides browser-based calculators built on official FBR (Federal Board of Revenue) rate cards, the Finance Act 2025, the Finance Act 2026-27, and provincial revenue authority publications. All figures are sourced from official notifications and reviewed regularly. This is an independent, informational resource and not affiliated with FBR or any government body.
+
+## Calculators
+
+- [Income Tax Calculator](https://paktaxcalculator.net/income-tax.html): Salaried, business/AOP, and company tax slabs and liability under the Income Tax Ordinance, 2001.
+- [Withholding Tax (WHT) Calculator](https://paktaxcalculator.net/withholding-tax.html): Withholding tax on goods, services, contracts, and dividends for filers and non-filers.
+- [Invoice Withholding — All in One](https://paktaxcalculator.net/invoice-withholding.html): GST, provincial sales tax, and withholding tax combined on a single supplier invoice.
+- [Sales Tax on Goods (GST)](https://paktaxcalculator.net/sales-tax-gst.html): Federal General Sales Tax rates on goods.
+- [Sales Tax Withholding](https://paktaxcalculator.net/sales-tax-withholding.html): Withholding on the GST portion of an invoice.
+- [FBR Property Valuation Directory & Calculator](https://paktaxcalculator.net/fbr-property-valuation.html): Official FBR/DC property valuation rates for 46+ verified cities across Pakistan, with an integrated property expense calculator (stamp duty, registration fee, 236C/236K withholding tax, Capital Gains Tax).
+- [Property Expense Calculator](https://paktaxcalculator.net/property-expense-calculator.html): Stamp duty, registration fee, 236C/236K withholding tax, and Capital Gains Tax on property transactions.
+
+## Provincial Sales Tax on Services
+
+- [Punjab Sales Tax (PRA)](https://paktaxcalculator.net/sales-tax-punjab.html)
+- [Sindh Sales Tax (SRB)](https://paktaxcalculator.net/sales-tax-sindh.html)
+- [Khyber Pakhtunkhwa Sales Tax (KPRA)](https://paktaxcalculator.net/sales-tax-kpk.html)
+- [Balochistan Sales Tax (BRA)](https://paktaxcalculator.net/sales-tax-balochistan.html)
+- [Islamabad Sales Tax (ICT)](https://paktaxcalculator.net/sales-tax-ict.html)
+
+## Articles
+
+- [Blog](https://paktaxcalculator.net/blog.html): Notes on Pakistani tax rules, FBR enforcement actions, and tax-policy news.
+
+## About
+
+- [About Us](https://paktaxcalculator.net/about.html)
+- [Contact Us](https://paktaxcalculator.net/contact.html)
+- [Privacy Policy](https://paktaxcalculator.net/privacy.html)
