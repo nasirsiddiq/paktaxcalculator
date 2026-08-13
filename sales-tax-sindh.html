@@ -870,9 +870,91 @@ header.site-header .headerTop h1{
   color:var(--muted);
   text-align:center;
 }
+
+/* ---- Site search ---- */
+.siteSearch{ position:relative; max-width:440px; margin:0 auto 14px; }
+.siteSearch input{
+  width:100%; box-sizing:border-box; padding:10px 16px; border-radius:20px;
+  border:1px solid rgba(255,255,255,0.4); background:rgba(255,255,255,0.14);
+  color:#fff; font-size:14px; outline:none; font-family:inherit;
+}
+.siteSearch input::placeholder{ color:rgba(255,255,255,0.78); }
+.siteSearch input:focus{ background:#fff; color:var(--text); }
+.siteSearch input:focus::placeholder{ color:var(--muted); }
+.siteSearchResults{
+  display:none; position:absolute; top:calc(100% + 6px); left:0; right:0;
+  background:#fff; border:1px solid var(--border); border-radius:12px;
+  box-shadow:0 10px 28px rgba(0,0,0,.22); max-height:360px; overflow-y:auto; z-index:70; text-align:left;
+}
+.siteSearchResults.open{ display:block; }
+.siteSearchResults a{
+  display:block; padding:10px 14px; text-decoration:none; color:var(--text);
+  border-bottom:1px solid var(--border); font-size:14px;
+}
+.siteSearchResults a:last-child{ border-bottom:none; }
+.siteSearchResults a:hover{ background:var(--green-pale); }
+.siteSearchResults .resTitle{ font-weight:700; color:var(--green); display:block; }
+.siteSearchResults .resDesc{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
+.siteSearchResults .noResults{ padding:14px; font-size:13px; color:var(--muted); text-align:center; }
+@media (max-width:560px){
+  .siteSearch{ max-width:100%; padding:0 4px; }
+}
+
+.calcSidebar{
+  display:none;
+  position:absolute;
+  top:200px;
+  left:24px;
+  width:230px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:14px;
+  z-index:40;
+}
+.calcSidebar h3{
+  margin:0 0 10px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.calcSidebar a{
+  display:block;
+  padding:7px 9px;
+  border-radius:7px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:13.5px;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.calcSidebar a:hover{ background:var(--green-pale); }
+.calcSidebar a.active{ background:var(--green); color:#fff; }
+@media (min-width:1300px){
+  .calcSidebar{ display:block; }
+}
 </style>
 </head>
 <body>
+<aside class="calcSidebar" id="calcSidebar">
+  <h3>All Calculators</h3>
+    <a href="income-tax.html">Income Tax Calculator</a>
+    <a href="withholding-tax.html">Withholding Tax (WHT)</a>
+    <a href="invoice-withholding.html">Invoice Withholding</a>
+    <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+    <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+    <a href="property-expense-calculator.html">Property Expense Calculator</a>
+    <a href="fbr-property-valuation.html">FBR Property Valuation</a>
+    <a href="sales-tax-punjab.html">Punjab Sales Tax (PRA)</a>
+    <a href="sales-tax-sindh.html" class="active">Sindh Sales Tax (SRB)</a>
+    <a href="sales-tax-kpk.html">KPK Sales Tax (KPRA)</a>
+    <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
+    <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
+</aside>
+
 
 <header class="site-header">
   <div class="headerTop">
@@ -884,6 +966,12 @@ header.site-header .headerTop h1{
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+
+  <div class="siteSearch" id="siteSearch">
+    <input type="text" id="siteSearchInput" placeholder="&#128269; Search calculators, articles&hellip;" autocomplete="off" aria-label="Search this site">
+    <div class="siteSearchResults" id="siteSearchResults"></div>
+  </div>
+
   <nav class="quickLinks">
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
@@ -1258,6 +1346,85 @@ document.addEventListener('click', (e)=>{
       menu.classList.remove('open');
       btn.classList.remove('open');
       btn.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+<script>
+/* ---- Site search (all pages) ---- */
+(function(){
+  var PAGES = [
+    {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
+    {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
+    {title:"Withholding Tax (WHT) Calculator", url:"withholding-tax.html", desc:"Goods, services, contracts, dividends, filer vs non-filer"},
+    {title:"Invoice Withholding — All in One", url:"invoice-withholding.html", desc:"GST, provincial sales tax & withholding on a supplier invoice"},
+    {title:"Sales Tax on Goods (GST)", url:"sales-tax-gst.html", desc:"Federal GST rates on goods"},
+    {title:"Sales Tax Withholding", url:"sales-tax-withholding.html", desc:"Withholding on the GST portion of an invoice"},
+    {title:"Property Expense Calculator", url:"property-expense-calculator.html", desc:"Stamp duty, registration fee, 236C/236K, Capital Gains Tax"},
+    {title:"FBR Property Valuation Directory", url:"fbr-property-valuation.html", desc:"Official FBR/DC valuation rates for 56 cities"},
+    {title:"Punjab Sales Tax on Services (PRA)", url:"sales-tax-punjab.html", desc:"Punjab Revenue Authority rates"},
+    {title:"Sindh Sales Tax on Services (SRB)", url:"sales-tax-sindh.html", desc:"Sindh Revenue Board rates"},
+    {title:"Khyber Pakhtunkhwa Sales Tax (KPRA)", url:"sales-tax-kpk.html", desc:"KPK Revenue Authority rates"},
+    {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan Revenue Authority rates"},
+    {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"ICT sales tax on services"},
+    {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"},
+    {title:"FBR's Rs. 5/Unit Electricity Tax on Steel", url:"fbr-electricity-tax-steel-2026.html", desc:"Who pays the new steel-sector electricity tax"},
+    {title:"FBR's AI Tax Audit System", url:"fbr-ai-tax-audit-pakistan-2026.html", desc:"How FBR's AI risk-engine audit works"},
+    {title:"Shabbar Zaidi: Rs1bn Defamation Notice", url:"shabbar-zaidi-defamation-notice-2026.html", desc:"Ex-FBR chief hit with JI legal notice"},
+    {title:"شبر زیدی نوٹس — اردو (Urdu)", url:"shabbar-zaidi-defamation-notice-2026-ur.html", desc:"Shabbar Zaidi article in Urdu"},
+    {title:"About Us", url:"about.html", desc:"About Pakistan Tax Calculator"},
+    {title:"Feedback", url:"feedback.html", desc:"Give feedback or report an issue"},
+    {title:"Contact Us", url:"contact.html", desc:"Get in touch"},
+    {title:"Privacy Policy", url:"privacy.html", desc:"Privacy policy"}
+  ];
+
+  var input = document.getElementById('siteSearchInput');
+  var results = document.getElementById('siteSearchResults');
+  var wrap = document.getElementById('siteSearch');
+  if(!input || !results || !wrap) return;
+
+  function esc(s){
+    return s.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; });
+  }
+
+  function render(list){
+    if(!list.length){
+      results.innerHTML = '<div class="noResults">No matching page found.</div>';
+      results.classList.add('open');
+      return;
+    }
+    results.innerHTML = list.map(function(p){
+      return '<a href="'+p.url+'"><span class="resTitle">'+esc(p.title)+'</span><span class="resDesc">'+esc(p.desc)+'</span></a>';
+    }).join('');
+    results.classList.add('open');
+  }
+
+  input.addEventListener('input', function(){
+    var q = input.value.trim().toLowerCase();
+    if(!q){ results.classList.remove('open'); results.innerHTML=''; return; }
+    var scored = PAGES.map(function(p){
+      var hay = (p.title+' '+p.desc).toLowerCase();
+      var score = -1;
+      if(p.title.toLowerCase().indexOf(q) === 0) score = 100;
+      else if(p.title.toLowerCase().indexOf(q) > -1) score = 60;
+      else if(hay.indexOf(q) > -1) score = 20;
+      return {p:p, score:score};
+    }).filter(function(x){ return x.score > 0; })
+      .sort(function(a,b){ return b.score - a.score; })
+      .map(function(x){ return x.p; })
+      .slice(0, 8);
+    render(scored);
+  });
+  input.addEventListener('focus', function(){ if(input.value.trim()) results.classList.add('open'); });
+  document.addEventListener('click', function(e){
+    if(!wrap.contains(e.target)){ results.classList.remove('open'); }
+  });
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      var first = results.querySelector('a');
+      if(first){ window.location.href = first.getAttribute('href'); }
+    } else if(e.key === 'Escape'){
+      results.classList.remove('open'); input.blur();
     }
   });
 })();

@@ -899,9 +899,62 @@ header.site-header .headerTop h1{
 @media (max-width:560px){
   .siteSearch{ max-width:100%; padding:0 4px; }
 }
+
+.calcSidebar{
+  display:none;
+  position:absolute;
+  top:200px;
+  left:24px;
+  width:230px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:14px;
+  z-index:40;
+}
+.calcSidebar h3{
+  margin:0 0 10px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.calcSidebar a{
+  display:block;
+  padding:7px 9px;
+  border-radius:7px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:13.5px;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.calcSidebar a:hover{ background:var(--green-pale); }
+.calcSidebar a.active{ background:var(--green); color:#fff; }
+@media (min-width:1300px){
+  .calcSidebar{ display:block; }
+}
 </style>
 </head>
 <body>
+<aside class="calcSidebar" id="calcSidebar">
+  <h3>All Calculators</h3>
+    <a href="income-tax.html">Income Tax Calculator</a>
+    <a href="withholding-tax.html">Withholding Tax (WHT)</a>
+    <a href="invoice-withholding.html" class="active">Invoice Withholding</a>
+    <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+    <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+    <a href="property-expense-calculator.html">Property Expense Calculator</a>
+    <a href="fbr-property-valuation.html">FBR Property Valuation</a>
+    <a href="sales-tax-punjab.html">Punjab Sales Tax (PRA)</a>
+    <a href="sales-tax-sindh.html">Sindh Sales Tax (SRB)</a>
+    <a href="sales-tax-kpk.html">KPK Sales Tax (KPRA)</a>
+    <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
+    <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
+</aside>
+
 
 <header class="site-header">
   <div class="headerTop">
