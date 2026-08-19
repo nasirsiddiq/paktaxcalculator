@@ -168,6 +168,42 @@ header.site-header p.tagline{
   font-size:13px;
   margin:0 0 16px;
 }
+.calcWithVideo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+@media (max-width:860px){
+  .calcWithVideo{ grid-template-columns:1fr; }
+}
+.calcWithVideo > .card{ margin-bottom:0; }
+.videoCard{ position:sticky; top:20px; }
+.videoCard h3{
+  margin:0 0 4px;
+  font-size:16px;
+  color:var(--green);
+}
+.videoCard .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 14px;
+}
+.videoFrame{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:8px;
+  overflow:hidden;
+  background:#000;
+}
+.videoFrame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
 .field{margin-bottom:14px;}
 .field label{
   display:block;
@@ -1042,6 +1078,8 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
+  <div class="calcWithVideo">
+
   <div class="card">
     <h2>Income Tax Calculator</h2>
     <p class="sub">Calculate your annual income tax liability under the Income Tax Ordinance, 2001.</p>
@@ -1096,6 +1134,21 @@ header.site-header .headerTop h1{
       <input type="text" inputmode="numeric" autocomplete="off" id="turnoverInput" placeholder="e.g. 50,000,000">
       <div class="hint">Minimum tax is 1.25% of turnover (lower rates 0.25%-0.75% apply to certain sectors). Shown only if higher than computed tax.</div>
     </div>
+  </div>
+
+  <div class="card videoCard">
+    <h3>Watch: How to Use This Calculator</h3>
+    <p class="sub">Step-by-step walkthrough of the Income Tax Calculator above.</p>
+    <div class="videoFrame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/j3QTBR_K5NE"
+        title="How to Use the Pakistan Tax Calculator (Step-by-Step)"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+
   </div>
 
   <div class="tax-hero">
