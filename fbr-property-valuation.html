@@ -179,6 +179,32 @@ header.site-header p.tagline{
   margin:0 auto;
   padding:16px;
 }
+.videoRail .card{margin-bottom:0;}
+.videoFrame{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:10px;
+  overflow:hidden;
+  background:#000;
+}
+.videoFrame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+@media (min-width:1180px){
+  .wrap{
+    max-width:1320px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 360px;
+    gap:24px;
+    align-items:start;
+  }
+  .videoRail{position:sticky;top:16px;}
+}
 .card{
   background:var(--card);
   border:1px solid var(--border);
@@ -797,6 +823,8 @@ table.breakdown tr:last-child td{
 
 <div class="wrap">
 
+<div class="pageMain">
+
   <div class="pageIntro">
     <h1>FBR Property Valuation Directory &amp; Calculator</h1>
     <p>FBR publishes an official per-square-yard / per-marla valuation notification for each city, and it's revised periodically. Find your city below to open its current official notification on fbr.gov.pk, then use the calculator to turn a rate + size into a total value.</p>
@@ -1048,23 +1076,26 @@ table.breakdown tr:last-child td{
     </table>
   </div>
 
-  <div class="card">
-    <h2>Watch: How to Check FBR Property Valuation</h2>
-    <p class="sub">Step-by-step walkthrough in Urdu &mdash; find your city's official FBR valuation rate and see what tax applies.</p>
-    <div style="position:relative;width:100%;padding-top:56.25%;border-radius:10px;overflow:hidden;background:#000;">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/QqjYsb9aMfQ"
-        title="How to Check FBR Property Valuation (Step-by-Step in Urdu)"
-        loading="lazy"
-        style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen></iframe>
-    </div>
-  </div>
-
   <div class="disclaimer">
     This expense estimate is for planning purposes only, based on Sections 236C, 236K, and 37 (Capital Gains Tax) of the Income Tax Ordinance as amended by the Finance Act 2025, plus commonly reported provincial stamp duty and registration fee rates as of mid-2026. Stamp duty, registration fee, mutation/town tax, and DC valuation rates change by province, property type, and specific notification &mdash; confirm current rates with your local sub-registrar, Excise &amp; Taxation Department, or the CDA before a transaction. Non-filer Capital Gains Tax is taxed at your normal income slab rate (minimum 15%), which this tool approximates rather than computes exactly. Nothing here is tax or legal advice; for an actual transaction, consult a tax practitioner or property lawyer.
   </div>
+
+</div>
+
+  <aside class="videoRail">
+    <div class="card">
+      <h2>Watch: How to Check FBR Property Valuation</h2>
+      <p class="sub">Step-by-step walkthrough in Urdu &mdash; find your city's official FBR rate and see what tax applies.</p>
+      <div class="videoFrame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/QqjYsb9aMfQ"
+          title="How to Check FBR Property Valuation (Step-by-Step in Urdu)"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </aside>
 
 </div>
 
