@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakat Calculator</title>
+<style>
+  :root{
+    --zk-bg:#f6f8f7;
+    --zk-card:#ffffff;
+    --zk-border:#dfe6e2;
+    --zk-text:#1f2a24;
+    --zk-muted:#5c6b63;
+    --zk-primary:#0f6f5c;
+    --zk-primary-dark:#0b5647;
+    --zk-primary-light:#e6f2ef;
+    --zk-accent:#c9922a;
+    --zk-danger:#b3452e;
+    --zk-radius:12px;
+    --zk-shadow:0 2px 10px rgba(15,111,92,0.08);
+  }
+  *{box-sizing:border-box;}
+  body.zk-embed-body{margin:0;padding:0;}
+  .zk-calculator{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--zk-bg);
+    color:var(--zk-text);
+    padding:28px 16px 48px;
+    line-height:1.5;
+  }
+  .zk-wrap{max-width:760px;margin:0 auto;}
+  .zk-header{text-align:center;margin-bottom:24px;}
+  .zk-header h1{font-size:1.6rem;margin:0 0 6px;color:var(--zk-primary-dark);}
+  .zk-header p{margin:0;color:var(--zk-muted);font-size:0.95rem;}
+  .zk-card{
+    background:var(--zk-card);
+    border:1px solid var(--zk-border);
+    border-radius:var(--zk-radius);
+    box-shadow:var(--zk-shadow);
+    padding:20px 20px 22px;
+    margin-bottom:18px;
+  }
+  .zk-card h2{
+    font-size:1.05rem;
+    margin:0 0 4px;
+    color:var(--zk-primary-dark);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .zk-card .zk-section-note{
+    font-size:0.85rem;
+    color:var(--zk-muted);
+    margin:0 0 16px;
+  }
+  .zk-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  @media (min-width:520px){
+    .zk-row.zk-row-2{grid-template-columns:1fr 1fr;}
+    .zk-row.zk-row-3{grid-template-columns:1fr 1fr 1fr;}
+  }
+  .zk-field label{
+    display:block;
+    font-size:0.85rem;
+    font-weight:600;
+    margin-bottom:5px;
+    color:var(--zk-text);
+  }
+  .zk-field .zk-hint{
+    display:block;
+    font-weight:400;
+    font-size:0.78rem;
+    color:var(--zk-muted);
+    margin-top:3px;
+  }
+  .zk-input, .zk-select{
+    width:100%;
+    padding:9px 11px;
+    border:1px solid var(--zk-border);
+    border-radius:8px;
+    font-size:0.95rem;
+    background:#fff;
+    color:var(--zk-text);
+    font-family:inherit;
+  }
+  .zk-input:focus, .zk-select:focus{
+    outline:none;
+    border-color:var(--zk-primary);
+    box-shadow:0 0 0 3px rgba(15,111,92,0.12);
+  }
+  .zk-divider{
+    border:none;
+    border-top:1px solid var(--zk-border);
+    margin:18px 0;
+  }
+  .zk-btn{
+    display:inline-block;
+    width:100%;
+    background:var(--zk-primary);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:13px 18px;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .zk-btn:hover{background:var(--zk-primary-dark);}
+  .zk-btn:active{transform:translateY(1px);}
+  .zk-btn-secondary{
+    background:var(--zk-primary-light);
+    color:var(--zk-primary-dark);
+  }
+  .zk-btn-secondary:hover{background:#d9ece7;}
+  .zk-btn-small{
+    width:auto;
+    padding:8px 14px;
+    font-size:0.85rem;
+  }
+  .zk-btn-outline{
+    background:#fff;
+    color:var(--zk-primary-dark);
+    border:1px solid var(--zk-primary);
+  }
+  .zk-btn-outline:hover{background:var(--zk-primary-light);}
+  .zk-results{display:none;}
+  .zk-results.zk-visible{display:block;}
+  .zk-result-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:8px 0;
+    border-bottom:1px dashed var(--zk-border);
+    font-size:0.92rem;
+    gap:12px;
+  }
+  .zk-result-line:last-of-type{border-bottom:none;}
+  .zk-result-line span:first-child{color:var(--zk-muted);}
+  .zk-result-line span:last-child{font-weight:600;text-align:right;}
+  .zk-total-box{
+    margin-top:16px;
+    padding:16px;
+    border-radius:10px;
+    text-align:center;
+  }
+  .zk-total-box.zk-due{background:var(--zk-primary-light);border:1px solid var(--zk-primary);}
+  .zk-total-box.zk-not-due{background:#f4f1e9;border:1px solid var(--zk-accent);}
+  .zk-total-box .zk-total-label{font-size:0.85rem;color:var(--zk-muted);margin-bottom:4px;}
+  .zk-total-box .zk-total-amount{font-size:1.9rem;font-weight:700;color:var(--zk-primary-dark);}
+  .zk-total-box.zk-not-due .zk-total-amount{color:#8a6414;font-size:1.15rem;}
+  .zk-note{font-size:0.82rem;color:var(--zk-muted);margin-top:10px;}
+  .zk-warning{
+    font-size:0.82rem;
+    color:#8a6414;
+    background:#faf3e3;
+    border:1px solid #e6cf9a;
+    border-radius:8px;
+    padding:8px 12px;
+    margin-top:12px;
+  }
+  .zk-hawl-result{display:none;margin-top:16px;}
+  .zk-hawl-result.zk-visible{display:block;}
+  .zk-hawl-box{
+    background:var(--zk-primary-light);
+    border:1px solid var(--zk-primary);
+    border-radius:10px;
+    padding:16px;
+  }
+  .zk-hawl-box .zk-hawl-row{
+    display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:0.92rem;flex-wrap:wrap;
+  }
+  .zk-hawl-box .zk-hawl-row span:first-child{color:var(--zk-muted);}
+  .zk-hawl-box .zk-hawl-row span:last-child{font-weight:600;text-align:right;}
+  .zk-countdown{margin-top:10px;text-align:center;font-weight:700;color:var(--zk-primary-dark);font-size:1.05rem;}
+  .zk-footer-note{font-size:0.78rem;color:var(--zk-muted);text-align:center;margin-top:18px;line-height:1.6;}
+  .zk-badge{
+    display:inline-block;font-size:0.7rem;font-weight:600;color:var(--zk-primary-dark);
+    background:var(--zk-primary-light);border:1px solid var(--zk-primary);border-radius:20px;
+    padding:2px 9px;margin-left:0;vertical-align:middle;
+  }
+  .zk-multi-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+  .zk-multi-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    align-items:center;
+    padding:10px;
+    background:var(--zk-bg);
+    border:1px solid var(--zk-border);
+    border-radius:8px;
+  }
+  @media (min-width:640px){
+    .zk-multi-row{grid-template-columns:1.2fr 1fr 1fr auto;}
+    .zk-multi-row-invest{grid-template-columns:1.3fr 0.85fr 0.95fr 0.85fr auto;}
+  }
+  .zk-remove-btn{
+    background:#fff;
+    border:1px solid var(--zk-border);
+    color:var(--zk-danger);
+    border-radius:8px;
+    width:100%;
+    padding:8px;
+    cursor:pointer;
+    font-size:0.85rem;
+  }
+  @media (min-width:640px){.zk-remove-btn{width:36px;height:36px;padding:0;}}
+  .zk-remove-btn:hover{background:#fbeae5;}
+  .zk-toggle-group{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .zk-toggle-btn{
+    flex:1;
+    min-width:140px;
+    padding:9px 12px;
+    border:1px solid var(--zk-border);
+    background:#fff;
+    border-radius:8px;
+    font-size:0.88rem;
+    font-weight:600;
+    color:var(--zk-muted);
+    cursor:pointer;
+  }
+  .zk-toggle-btn.zk-active{
+    background:var(--zk-primary);
+    border-color:var(--zk-primary);
+    color:#fff;
+  }
+  .zk-hijri-row{display:grid;grid-template-columns:1fr;gap:10px;}
+  @media (min-width:520px){.zk-hijri-row{grid-template-columns:1fr 1.4fr 1fr;}}
+  .zk-live-status{
+    font-size:0.82rem;
+    color:var(--zk-muted);
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .zk-live-dot{
+    width:8px;height:8px;border-radius:50%;background:#aab;
+    display:inline-block;flex-shrink:0;
+  }
+  .zk-live-dot.zk-ok{background:var(--zk-primary);}
+  .zk-live-dot.zk-err{background:var(--zk-danger);}
+</style>
+</head>
+<body class="zk-embed-body">
+<div class="zk-calculator">
+  <div class="zk-wrap">
+
+    <div class="zk-header">
+      <h1>Zakat Calculator</h1>
+      <p>Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
+    </div>
+
+    <!-- COUNTRY / CURRENCY / LIVE RATES -->
+    <div class="zk-card">
+      <h2>Country &amp; Reporting Currency</h2>
+      <p class="zk-section-note">Choose your country of residence to set your reporting currency, then fetch live exchange and metal rates — or enter them yourself.</p>
+
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkCountry">Country of residence</label>
+          <select id="zkCountry" class="zk-select"></select>
+        </div>
+        <div class="zk-field">
+          <label for="zkReportingCurrency">Reporting currency
+            <span class="zk-hint">Your final Zakat amount will be shown in this currency</span>
+          </label>
+          <select id="zkReportingCurrency" class="zk-select"></select>
+        </div>
+      </div>
+
+      <button type="button" class="zk-btn zk-btn-outline" id="zkFetchRatesBtn">Fetch Live Exchange &amp; Metal Rates</button>
+      <div class="zk-live-status" id="zkLiveStatus"><span class="zk-live-dot" id="zkLiveDot"></span><span id="zkLiveStatusText">Live rates not fetched yet — you can also enter prices manually below.</span></div>
+
+      <hr class="zk-divider">
+
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkSilverPriceUnit">Silver price
+            <span class="zk-hint">Per unit selected below — used for your silver holdings and the Nisab threshold</span>
+          </label>
+          <input type="number" id="zkSilverPriceUnit" class="zk-input" min="0" step="0.0001" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkGoldPriceUnit">Gold price
+            <span class="zk-hint">Per unit selected below — only needed if you hold gold</span>
+          </label>
+          <input type="number" id="zkGoldPriceUnit" class="zk-input" min="0" step="0.0001" placeholder="0.00">
+        </div>
+      </div>
+    </div>
+
+    <!-- BANK ACCOUNTS -->
+    <div class="zk-card">
+      <h2>Bank Accounts</h2>
+      <p class="zk-section-note">Add every account, in whatever currency it's held. Each is converted to your reporting currency automatically once live rates are fetched.</p>
+      <div class="zk-multi-list" id="zkBankList"></div>
+      <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddBankBtn">+ Add bank account</button>
+    </div>
+
+    <!-- CASH IN HAND -->
+    <div class="zk-card">
+      <h2>Cash in Hand</h2>
+      <p class="zk-section-note">Physical cash you hold, in any currency.</p>
+      <div class="zk-multi-list" id="zkCashList"></div>
+      <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddCashBtn">+ Add cash entry</button>
+    </div>
+
+    <!-- STOCKS -->
+    <div class="zk-card">
+      <h2>Stocks</h2>
+      <p class="zk-section-note">Add each holding by company, how many shares you hold, and the current price per share. Leave empty if you don't hold any.</p>
+      <div class="zk-multi-list" id="zkStockList"></div>
+      <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddStockBtn">+ Add stock</button>
+    </div>
+
+    <!-- FUNDS -->
+    <div class="zk-card">
+      <h2>Funds</h2>
+      <p class="zk-section-note">Mutual funds, ETFs, or similar — fund name, units held, and current price (NAV) per unit. Leave empty if you don't hold any.</p>
+      <div class="zk-multi-list" id="zkFundList"></div>
+      <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddFundBtn">+ Add fund</button>
+    </div>
+
+    <!-- GOLD, SILVER & OTHER ASSETS -->
+    <div class="zk-card">
+      <h2>Gold, Silver &amp; Other Assets</h2>
+      <p class="zk-section-note">Enter gold and silver in whichever unit you're used to — grams, tola, troy ounce, or kilograms. Don't hold either? Leave the weight at 0 — you'll still need a current silver price below so the calculator can check your wealth against Nisab.</p>
+
+      <div class="zk-row zk-row-3">
+        <div class="zk-field">
+          <label for="zkGoldWeight">Gold owned</label>
+          <input type="number" id="zkGoldWeight" class="zk-input" min="0" step="0.001" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkGoldUnit">Unit</label>
+          <select id="zkGoldUnit" class="zk-select">
+            <option value="g">Grams (g)</option>
+            <option value="tola">Tola</option>
+            <option value="ozt">Troy ounce (oz t)</option>
+            <option value="kg">Kilograms (kg)</option>
+          </select>
+        </div>
+        <div class="zk-field">
+          <label>&nbsp;<span class="zk-hint">1 tola = 11.6638g · 1 troy oz = 31.1035g</span></label>
+        </div>
+      </div>
+
+      <div class="zk-row zk-row-3">
+        <div class="zk-field">
+          <label for="zkSilverWeight">Silver owned</label>
+          <input type="number" id="zkSilverWeight" class="zk-input" min="0" step="0.001" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkSilverUnit">Unit</label>
+          <select id="zkSilverUnit" class="zk-select">
+            <option value="g">Grams (g)</option>
+            <option value="tola">Tola</option>
+            <option value="ozt">Troy ounce (oz t)</option>
+            <option value="kg">Kilograms (kg)</option>
+          </select>
+        </div>
+        <div class="zk-field"></div>
+      </div>
+
+      <hr class="zk-divider">
+
+      <div class="zk-row">
+        <div class="zk-field">
+          <label for="zkInvestments">Crypto &amp; other investments
+            <span class="zk-hint">Anything not covered by Stocks/Funds above — current market value, in your reporting currency</span>
+          </label>
+          <input type="number" id="zkInvestments" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkBusiness">Business cash &amp; inventory
+            <span class="zk-hint">Zakatable value of stock-in-trade</span>
+          </label>
+          <input type="number" id="zkBusiness" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkReceivables">Receivables owed to you
+            <span class="zk-hint">Money you reasonably expect to collect</span>
+          </label>
+          <input type="number" id="zkReceivables" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <hr class="zk-divider">
+
+      <div class="zk-row">
+        <div class="zk-field">
+          <label for="zkDebts">Debts &amp; bills payable
+            <span class="zk-hint">Short-term liabilities due now — deducted from your total, in your reporting currency</span>
+          </label>
+          <input type="number" id="zkDebts" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <button type="button" class="zk-btn" id="zkCalcBtn">Calculate Zakat</button>
+
+      <div class="zk-results" id="zkResults">
+        <hr class="zk-divider">
+        <div class="zk-result-line"><span>Total assets</span><span id="zkOutTotalAssets">—</span></div>
+        <div class="zk-result-line"><span>Less: debts payable</span><span id="zkOutDebts">—</span></div>
+        <div class="zk-result-line"><span>Net zakatable wealth</span><span id="zkOutNet">—</span></div>
+        <div class="zk-result-line"><span id="zkOutNisabLabel">Nisab threshold (612.36g silver)</span><span id="zkOutNisab">—</span></div>
+
+        <div class="zk-total-box" id="zkTotalBox">
+          <div class="zk-total-label" id="zkTotalLabel">Zakat due (2.5%)</div>
+          <div class="zk-total-amount" id="zkTotalAmount">—</div>
+        </div>
+        <div class="zk-warning" id="zkConvertWarning" style="display:none;"></div>
+      </div>
+
+      <p class="zk-note">This uses the silver standard for Nisab (the more precautionary threshold most scholars use), except when gold is your <em>only</em> zakatable asset — then Nisab is assessed by gold's own weight (7.5 tola / 87.48g), not its market value, per the Hanafi position. As soon as any other zakatable wealth is added, everything is combined and measured against the silver-value standard again. Zakat is calculated on the current value of your wealth at the time you calculate/pay it — not its value on the day you first reached Nisab.</p>
+    </div>
+
+    <!-- HAWL / SAHIB-E-NISAB DATE TRACKER -->
+    <div class="zk-card">
+      <h2>Hawl Tracker <span class="zk-badge">Islamic calendar</span></h2>
+      <p class="zk-section-note">Enter the date your wealth first reached (or exceeded) the Nisab threshold — the day you became "Sahib-e-Nisab." Zakat becomes due once a full Hawl (Islamic lunar year) has passed, as long as your wealth stays at or above Nisab throughout.</p>
+
+      <div class="zk-toggle-group">
+        <button type="button" class="zk-toggle-btn zk-active" id="zkModeGregBtn">Enter Gregorian date</button>
+        <button type="button" class="zk-toggle-btn" id="zkModeHijriBtn">Enter Islamic (Hijri) date</button>
+      </div>
+
+      <div id="zkGregInputWrap">
+        <div class="zk-row">
+          <div class="zk-field">
+            <label for="zkSahibDate">Date you became Sahib-e-Nisab</label>
+            <input type="date" id="zkSahibDate" class="zk-input">
+          </div>
+        </div>
+      </div>
+
+      <div id="zkHijriInputWrap" style="display:none;">
+        <div class="zk-hijri-row">
+          <div class="zk-field">
+            <label for="zkHijriDay">Day</label>
+            <select id="zkHijriDay" class="zk-select"></select>
+          </div>
+          <div class="zk-field">
+            <label for="zkHijriMonth">Islamic month</label>
+            <select id="zkHijriMonth" class="zk-select"></select>
+          </div>
+          <div class="zk-field">
+            <label for="zkHijriYear">Hijri year (AH)</label>
+            <input type="number" id="zkHijriYear" class="zk-input" placeholder="e.g. 1447">
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="zk-btn zk-btn-secondary" id="zkHawlBtn">Find My Zakat Due Date</button>
+
+      <div class="zk-hawl-result" id="zkHawlResult">
+        <div class="zk-hawl-box">
+          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Gregorian)</span><span id="zkOutSahibGreg">—</span></div>
+          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Hijri)</span><span id="zkOutSahibHijri">—</span></div>
+          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Gregorian)</span><span id="zkOutDueGreg">—</span></div>
+          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Hijri)</span><span id="zkOutDueHijri">—</span></div>
+        </div>
+        <div class="zk-countdown" id="zkOutCountdown"></div>
+        <p class="zk-note" id="zkHijriFallbackNote" style="display:none;">Your browser couldn't provide precise Hijri conversion, so dates shown are estimated using a 354-day lunar year. Actual moon-sighting dates may vary by a day or two.</p>
+
+        <hr class="zk-divider">
+        <p class="zk-section-note" style="margin-bottom:10px;">Curious what gold, silver and exchange rates were on the day you became Sahib-e-Nisab? You can look them up below. (Zakat itself is normally calculated on today's values, not this date — see the note at the bottom of the page.)</p>
+        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkFetchHawlRatesBtn">Fetch Rates for This Date</button>
+        <div class="zk-live-status" id="zkHawlRatesStatus"></div>
+        <div class="zk-hawl-box" id="zkHawlRatesResult" style="display:none; margin-top:10px;">
+          <div class="zk-hawl-row"><span>Gold price on this date</span><span id="zkHawlGoldPrice">—</span></div>
+          <div class="zk-hawl-row"><span>Silver price on this date</span><span id="zkHawlSilverPrice">—</span></div>
+          <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkApplyHawlRatesBtn" style="margin-top:10px;">Use These Rates in My Calculation Above</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="zk-footer-note">
+      Live and historical exchange, gold and silver rates are fetched from a third-party public API (frankfurter.dev) at the moment you click a "Fetch Rates" button. They are provided for convenience and may occasionally be unavailable or slightly delayed — always spot-check against another source before paying a large amount of Zakat. This tool gives a general estimate for guidance only and is not a religious ruling (fatwa). Rules on jewelry, business valuation, and specific asset classes vary between schools of thought — please consult a knowledgeable scholar or your local imam for your specific situation.
+    </p>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var NISAB_SILVER_GRAMS = 612.36;
+  var NISAB_GOLD_GRAMS = 87.48; // 7.5 tola — applies only when gold is the sole zakatable asset
+  var ZAKAT_RATE = 0.025;
+  var GRAMS_PER_UNIT = {g:1, kg:1000, tola:11.6638038, ozt:31.1034768};
+  var UNIT_LABELS = {g:"gram", kg:"kilogram", tola:"tola", ozt:"troy oz"};
+
+  var CURRENCIES = {
+    USD:{name:"US Dollar", symbol:"$"}, EUR:{name:"Euro", symbol:"€"}, GBP:{name:"British Pound", symbol:"£"},
+    SAR:{name:"Saudi Riyal", symbol:"SAR"}, AED:{name:"UAE Dirham", symbol:"AED"}, QAR:{name:"Qatari Riyal", symbol:"QAR"},
+    KWD:{name:"Kuwaiti Dinar", symbol:"KWD"}, BHD:{name:"Bahraini Dinar", symbol:"BHD"}, OMR:{name:"Omani Rial", symbol:"OMR"},
+    JOD:{name:"Jordanian Dinar", symbol:"JOD"}, LBP:{name:"Lebanese Pound", symbol:"LBP"}, SYP:{name:"Syrian Pound", symbol:"SYP"},
+    IQD:{name:"Iraqi Dinar", symbol:"IQD"}, IRR:{name:"Iranian Rial", symbol:"IRR"}, YER:{name:"Yemeni Rial", symbol:"YER"},
+    EGP:{name:"Egyptian Pound", symbol:"E£"}, LYD:{name:"Libyan Dinar", symbol:"LYD"}, TND:{name:"Tunisian Dinar", symbol:"TND"},
+    DZD:{name:"Algerian Dinar", symbol:"DZD"}, MAD:{name:"Moroccan Dirham", symbol:"MAD"}, SDG:{name:"Sudanese Pound", symbol:"SDG"},
+    SOS:{name:"Somali Shilling", symbol:"SOS"}, PKR:{name:"Pakistani Rupee", symbol:"₨"}, INR:{name:"Indian Rupee", symbol:"₹"},
+    BDT:{name:"Bangladeshi Taka", symbol:"৳"}, LKR:{name:"Sri Lankan Rupee", symbol:"LKR"}, MVR:{name:"Maldivian Rufiyaa", symbol:"MVR"},
+    AFN:{name:"Afghan Afghani", symbol:"AFN"}, MYR:{name:"Malaysian Ringgit", symbol:"RM"}, IDR:{name:"Indonesian Rupiah", symbol:"Rp"},
+    BND:{name:"Brunei Dollar", symbol:"BND"}, PHP:{name:"Philippine Peso", symbol:"₱"}, THB:{name:"Thai Baht", symbol:"฿"},
+    SGD:{name:"Singapore Dollar", symbol:"S$"}, HKD:{name:"Hong Kong Dollar", symbol:"HK$"}, CNY:{name:"Chinese Yuan", symbol:"¥"},
+    JPY:{name:"Japanese Yen", symbol:"¥"}, KRW:{name:"South Korean Won", symbol:"₩"}, TRY:{name:"Turkish Lira", symbol:"₺"},
+    KZT:{name:"Kazakhstani Tenge", symbol:"KZT"}, UZS:{name:"Uzbekistani Som", symbol:"UZS"}, TJS:{name:"Tajikistani Somoni", symbol:"TJS"},
+    TMT:{name:"Turkmenistani Manat", symbol:"TMT"}, NGN:{name:"Nigerian Naira", symbol:"₦"}, GHS:{name:"Ghanaian Cedi", symbol:"GHS"},
+    KES:{name:"Kenyan Shilling", symbol:"KES"}, TZS:{name:"Tanzanian Shilling", symbol:"TZS"}, UGX:{name:"Ugandan Shilling", symbol:"UGX"},
+    ETB:{name:"Ethiopian Birr", symbol:"ETB"}, XOF:{name:"West African CFA Franc", symbol:"XOF"}, XAF:{name:"Central African CFA Franc", symbol:"XAF"},
+    ZAR:{name:"South African Rand", symbol:"R"}, RUB:{name:"Russian Ruble", symbol:"₽"}, PLN:{name:"Polish Zloty", symbol:"PLN"},
+    SEK:{name:"Swedish Krona", symbol:"SEK"}, NOK:{name:"Norwegian Krone", symbol:"NOK"}, DKK:{name:"Danish Krone", symbol:"DKK"},
+    CHF:{name:"Swiss Franc", symbol:"CHF"}, CAD:{name:"Canadian Dollar", symbol:"$"}, AUD:{name:"Australian Dollar", symbol:"$"},
+    NZD:{name:"New Zealand Dollar", symbol:"$"}, MXN:{name:"Mexican Peso", symbol:"$"}, BRL:{name:"Brazilian Real", symbol:"R$"},
+    ARS:{name:"Argentine Peso", symbol:"$"}
+  };
+
+  var COUNTRIES = [
+    ["Afghanistan","AFN"],["Algeria","DZD"],["Argentina","ARS"],["Australia","AUD"],["Austria","EUR"],
+    ["Bahrain","BHD"],["Bangladesh","BDT"],["Belgium","EUR"],["Brazil","BRL"],["Brunei","BND"],
+    ["Canada","CAD"],["China","CNY"],["Denmark","DKK"],["Egypt","EGP"],["Ethiopia","ETB"],
+    ["Finland","EUR"],["France","EUR"],["Germany","EUR"],["Ghana","GHS"],["Greece","EUR"],
+    ["Hong Kong","HKD"],["India","INR"],["Indonesia","IDR"],["Iran","IRR"],["Iraq","IQD"],
+    ["Ireland","EUR"],["Italy","EUR"],["Japan","JPY"],["Jordan","JOD"],["Kazakhstan","KZT"],
+    ["Kenya","KES"],["Kuwait","KWD"],["Lebanon","LBP"],["Libya","LYD"],["Malaysia","MYR"],
+    ["Maldives","MVR"],["Mexico","MXN"],["Morocco","MAD"],["Netherlands","EUR"],["New Zealand","NZD"],
+    ["Niger","XOF"],["Nigeria","NGN"],["Norway","NOK"],["Oman","OMR"],["Pakistan","PKR"],
+    ["Philippines","PHP"],["Poland","PLN"],["Portugal","EUR"],["Qatar","QAR"],["Russia","RUB"],
+    ["Saudi Arabia","SAR"],["Senegal","XOF"],["Singapore","SGD"],["Somalia","SOS"],["South Africa","ZAR"],
+    ["South Korea","KRW"],["Spain","EUR"],["Sri Lanka","LKR"],["Sudan","SDG"],["Sweden","SEK"],
+    ["Switzerland","CHF"],["Syria","SYP"],["Tajikistan","TJS"],["Tanzania","TZS"],["Thailand","THB"],
+    ["Tunisia","TND"],["Turkey","TRY"],["Turkmenistan","TMT"],["Uganda","UGX"],["United Arab Emirates","AED"],
+    ["United Kingdom","GBP"],["United States","USD"],["Uzbekistan","UZS"],["Yemen","YER"]
+  ];
+
+  var HIJRI_MONTHS = ["Muharram","Safar","Rabi' al-awwal","Rabi' al-thani","Jumada al-awwal","Jumada al-thani",
+    "Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qa'dah","Dhu al-Hijjah"];
+
+  // ---------- Populate static selects ----------
+
+  function currencyOptionsHTML(selected){
+    var codes = Object.keys(CURRENCIES).sort();
+    var html = "";
+    codes.forEach(function(code){
+      var sel = (code === selected) ? " selected" : "";
+      html += '<option value="'+code+'"'+sel+'>'+code+' — '+CURRENCIES[code].name+'</option>';
+    });
+    return html;
+  }
+
+  var countrySelect = document.getElementById("zkCountry");
+  var countryHtml = '<option value="">Select your country…</option>';
+  COUNTRIES.forEach(function(c){
+    countryHtml += '<option value="'+c[1]+'">'+c[0]+'</option>';
+  });
+  countryHtml += '<option value="">Other / not listed</option>';
+  countrySelect.innerHTML = countryHtml;
+
+  var reportingSelect = document.getElementById("zkReportingCurrency");
+  reportingSelect.innerHTML = currencyOptionsHTML("USD");
+
+  var hijriDaySelect = document.getElementById("zkHijriDay");
+  var dayHtml = "";
+  for(var d=1; d<=30; d++){ dayHtml += '<option value="'+d+'">'+d+'</option>'; }
+  hijriDaySelect.innerHTML = dayHtml;
+
+  var hijriMonthSelect = document.getElementById("zkHijriMonth");
+  var monthHtml = "";
+  HIJRI_MONTHS.forEach(function(m, i){ monthHtml += '<option value="'+(i+1)+'">'+m+'</option>'; });
+  hijriMonthSelect.innerHTML = monthHtml;
+
+  function getReportingCurrency(){ return reportingSelect.value || "USD"; }
+  function getCurrencySymbol(code){
+    return (CURRENCIES[code] && CURRENCIES[code].symbol) ? CURRENCIES[code].symbol : (code + " ");
+  }
+  function fmt(n){
+    var num = isFinite(n) ? n : 0;
+    return getCurrencySymbol(getReportingCurrency()) + num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  countrySelect.addEventListener("change", function(){
+    if(countrySelect.value){
+      reportingSelect.value = countrySelect.value;
+      onReportingCurrencyChanged();
+    }
+  });
+
+  // ---------- Multi-currency rows (bank accounts & cash) ----------
+
+  function makeMultiRow(kind, placeholderLabel){
+    var row = document.createElement("div");
+    row.className = "zk-multi-row";
+    row.innerHTML =
+      '<input type="text" class="zk-input zk-'+kind+'-label" placeholder="'+placeholderLabel+'">' +
+      '<input type="number" class="zk-input zk-'+kind+'-amount" min="0" step="0.01" placeholder="Amount">' +
+      '<select class="zk-select zk-'+kind+'-currency">'+currencyOptionsHTML(getReportingCurrency())+'</select>' +
+      '<button type="button" class="zk-remove-btn" title="Remove">✕</button>';
+    row.querySelector(".zk-remove-btn").addEventListener("click", function(){ row.remove(); });
+    return row;
+  }
+
+  var bankList = document.getElementById("zkBankList");
+  var cashList = document.getElementById("zkCashList");
+
+  document.getElementById("zkAddBankBtn").addEventListener("click", function(){
+    bankList.appendChild(makeMultiRow("bank", "Bank name (optional)"));
+  });
+  document.getElementById("zkAddCashBtn").addEventListener("click", function(){
+    cashList.appendChild(makeMultiRow("cash", "Label (optional)"));
+  });
+
+  // start with one row each
+  bankList.appendChild(makeMultiRow("bank", "Bank name (optional)"));
+  cashList.appendChild(makeMultiRow("cash", "Label (optional)"));
+
+  function readMultiRows(container, kind){
+    var rows = container.querySelectorAll(".zk-multi-row");
+    var out = [];
+    rows.forEach(function(row){
+      var amt = parseFloat(row.querySelector(".zk-"+kind+"-amount").value);
+      var cur = row.querySelector(".zk-"+kind+"-currency").value;
+      if(isFinite(amt) && amt > 0){ out.push({amount: amt, currency: cur}); }
+    });
+    return out;
+  }
+
+  // ---------- Stocks & Funds (name + units held + price per unit) ----------
+
+  function makeInvestmentRow(kind, namePlaceholder, unitsPlaceholder, pricePlaceholder){
+    var row = document.createElement("div");
+    row.className = "zk-multi-row zk-multi-row-invest";
+    row.innerHTML =
+      '<input type="text" class="zk-input zk-'+kind+'-name" placeholder="'+namePlaceholder+'">' +
+      '<input type="number" class="zk-input zk-'+kind+'-units" min="0" step="0.0001" placeholder="'+unitsPlaceholder+'">' +
+      '<input type="number" class="zk-input zk-'+kind+'-price" min="0" step="0.0001" placeholder="'+pricePlaceholder+'">' +
+      '<select class="zk-select zk-'+kind+'-currency">'+currencyOptionsHTML(getReportingCurrency())+'</select>' +
+      '<button type="button" class="zk-remove-btn" title="Remove">✕</button>';
+    row.querySelector(".zk-remove-btn").addEventListener("click", function(){ row.remove(); });
+    return row;
+  }
+
+  var stockList = document.getElementById("zkStockList");
+  var fundList = document.getElementById("zkFundList");
+
+  document.getElementById("zkAddStockBtn").addEventListener("click", function(){
+    stockList.appendChild(makeInvestmentRow("stock", "Company name", "Shares held", "Price/share"));
+  });
+  document.getElementById("zkAddFundBtn").addEventListener("click", function(){
+    fundList.appendChild(makeInvestmentRow("fund", "Fund name", "Units held", "Price/unit"));
+  });
+
+  stockList.appendChild(makeInvestmentRow("stock", "Company name", "Shares held", "Price/share"));
+  fundList.appendChild(makeInvestmentRow("fund", "Fund name", "Units held", "Price/unit"));
+
+  function readInvestmentRows(container, kind){
+    var rows = container.querySelectorAll(".zk-multi-row-invest");
+    var out = [];
+    rows.forEach(function(row){
+      var units = parseFloat(row.querySelector(".zk-"+kind+"-units").value);
+      var price = parseFloat(row.querySelector(".zk-"+kind+"-price").value);
+      var cur = row.querySelector(".zk-"+kind+"-currency").value;
+      if(isFinite(units) && units > 0 && isFinite(price) && price > 0){
+        out.push({amount: units * price, currency: cur});
+      }
+    });
+    return out;
+  }
+
+  // ---------- Live rates ----------
+
+  var fxRates = null;        // {CODE: rate relative to USD}
+  var rawGoldUSDPerOz = null;
+  var rawSilverUSDPerOz = null;
+  var goldPricePerGramState = 0;   // always in reporting currency, per gram
+  var silverPricePerGramState = 0; // always in reporting currency, per gram
+
+  var lastSahibStartDate = null;   // Date the Hawl Tracker last computed as the Sahib-e-Nisab date
+  var lastHawlGoldPerGram = null;  // historical gold price per gram (reporting currency) on that date
+  var lastHawlSilverPerGram = null;
+
+  var goldPriceField = document.getElementById("zkGoldPriceUnit");
+  var silverPriceField = document.getElementById("zkSilverPriceUnit");
+  var goldUnitSelect = document.getElementById("zkGoldUnit");
+  var silverUnitSelect = document.getElementById("zkSilverUnit");
+
+  function updateGoldFieldDisplay(){
+    var v = goldPricePerGramState * GRAMS_PER_UNIT[goldUnitSelect.value];
+    goldPriceField.value = v ? v.toFixed(4).replace(/0+$/,"").replace(/\.$/,"") : "";
+  }
+  function updateSilverFieldDisplay(){
+    var v = silverPricePerGramState * GRAMS_PER_UNIT[silverUnitSelect.value];
+    silverPriceField.value = v ? v.toFixed(4).replace(/0+$/,"").replace(/\.$/,"") : "";
+  }
+
+  goldPriceField.addEventListener("input", function(){
+    var v = parseFloat(goldPriceField.value);
+    goldPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[goldUnitSelect.value] : 0;
+  });
+  silverPriceField.addEventListener("input", function(){
+    var v = parseFloat(silverPriceField.value);
+    silverPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[silverUnitSelect.value] : 0;
+  });
+  goldUnitSelect.addEventListener("change", updateGoldFieldDisplay);
+  silverUnitSelect.addEventListener("change", updateSilverFieldDisplay);
+
+  function onReportingCurrencyChanged(){
+    if(fxRates){ refreshMetalFieldsFromLive(); }
+    // re-render currency options selected default for NEW rows only; existing rows keep user's choice
+  }
+  reportingSelect.addEventListener("change", onReportingCurrencyChanged);
+
+  function refreshMetalFieldsFromLive(){
+    var rc = getReportingCurrency();
+    var fxToReporting = (fxRates && fxRates[rc]) ? fxRates[rc] : null;
+    if(fxToReporting && rawGoldUSDPerOz != null){
+      goldPricePerGramState = (rawGoldUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
+      updateGoldFieldDisplay();
+    }
+    if(fxToReporting && rawSilverUSDPerOz != null){
+      silverPricePerGramState = (rawSilverUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
+      updateSilverFieldDisplay();
+    }
+  }
+
+  function setLiveStatus(text, state){
+    document.getElementById("zkLiveStatusText").textContent = text;
+    var dot = document.getElementById("zkLiveDot");
+    dot.className = "zk-live-dot" + (state === "ok" ? " zk-ok" : state === "err" ? " zk-err" : "");
+  }
+
+  // Single shared fetcher: Frankfurter gives FX + gold(XAU) + silver(XAG) in one call,
+  // for either "latest" (dateStr omitted) or a specific historical date (dateStr = "YYYY-MM-DD").
+  function fetchFrankfurterRates(dateStr){
+    var url = "https://api.frankfurter.dev/v2/rates?base=USD" + (dateStr ? ("&date=" + dateStr) : "");
+    return fetch(url).then(function(r){
+      if(!r.ok){ throw new Error("HTTP " + r.status); }
+      return r.json();
+    }).then(function(arr){
+      if(!Array.isArray(arr) || !arr.length){ throw new Error("Unexpected response"); }
+      var map = {USD: 1};
+      arr.forEach(function(item){ map[item.quote] = item.rate; });
+      if(!map.XAU || !map.XAG){ throw new Error("Missing gold/silver rate"); }
+      return {
+        rates: map,
+        goldUSDPerOz: 1 / map.XAU,
+        silverUSDPerOz: 1 / map.XAG,
+        date: arr[0].date || dateStr
+      };
+    });
+  }
+
+  document.getElementById("zkFetchRatesBtn").addEventListener("click", function(){
+    setLiveStatus("Fetching live rates…", "");
+    fetchFrankfurterRates(null).then(function(data){
+      fxRates = data.rates;
+      rawGoldUSDPerOz = data.goldUSDPerOz;
+      rawSilverUSDPerOz = data.silverUSDPerOz;
+      refreshMetalFieldsFromLive();
+      setLiveStatus("Live rates fetched for " + data.date + " (via Frankfurter — includes FX and XAU/XAG gold/silver spot).", "ok");
+    }).catch(function(err){
+      setLiveStatus("Couldn't fetch live rates automatically (network/API issue). Enter gold, silver and currency amounts manually below.", "err");
+    });
+  });
+
+  // ---------- Currency conversion ----------
+
+  function convertToReporting(amount, fromCurrency){
+    var rc = getReportingCurrency();
+    if(fromCurrency === rc){ return {value: amount, converted: true}; }
+    if(fxRates && fxRates[fromCurrency] && fxRates[rc]){
+      var usd = amount / fxRates[fromCurrency];
+      return {value: usd * fxRates[rc], converted: true};
+    }
+    return {value: amount, converted: false};
+  }
+
+  // ---------- Zakat calculation ----------
+
+  function num(id){
+    var el = document.getElementById(id);
+    var v = parseFloat(el.value);
+    return isFinite(v) && v > 0 ? v : 0;
+  }
+
+  document.getElementById("zkCalcBtn").addEventListener("click", function(){
+    var anyUnconverted = false;
+
+    var bankEntries = readMultiRows(bankList, "bank");
+    var cashEntries = readMultiRows(cashList, "cash");
+
+    var bankTotal = 0;
+    bankEntries.forEach(function(e){
+      var r = convertToReporting(e.amount, e.currency);
+      if(!r.converted) anyUnconverted = true;
+      bankTotal += r.value;
+    });
+
+    var cashTotal = 0;
+    cashEntries.forEach(function(e){
+      var r = convertToReporting(e.amount, e.currency);
+      if(!r.converted) anyUnconverted = true;
+      cashTotal += r.value;
+    });
+
+    var stockEntries = readInvestmentRows(stockList, "stock");
+    var fundEntries = readInvestmentRows(fundList, "fund");
+
+    var stockTotal = 0;
+    stockEntries.forEach(function(e){
+      var r = convertToReporting(e.amount, e.currency);
+      if(!r.converted) anyUnconverted = true;
+      stockTotal += r.value;
+    });
+
+    var fundTotal = 0;
+    fundEntries.forEach(function(e){
+      var r = convertToReporting(e.amount, e.currency);
+      if(!r.converted) anyUnconverted = true;
+      fundTotal += r.value;
+    });
+
+    var goldWeight = num("zkGoldWeight");
+    var goldUnit = goldUnitSelect.value;
+    var goldGrams = goldWeight * GRAMS_PER_UNIT[goldUnit];
+    var goldValue = goldGrams * goldPricePerGramState;
+
+    var silverWeight = num("zkSilverWeight");
+    var silverUnit = silverUnitSelect.value;
+    var silverGrams = silverWeight * GRAMS_PER_UNIT[silverUnit];
+    var silverValue = silverGrams * silverPricePerGramState;
+
+    var investments = num("zkInvestments");
+    var business = num("zkBusiness");
+    var receivables = num("zkReceivables");
+    var debts = num("zkDebts");
+
+    var totalAssets = bankTotal + cashTotal + stockTotal + fundTotal + goldValue + silverValue + investments + business + receivables;
+    var netWealth = totalAssets - debts;
+    if(netWealth < 0) netWealth = 0;
+
+    document.getElementById("zkOutTotalAssets").textContent = fmt(totalAssets);
+    document.getElementById("zkOutDebts").textContent = "− " + fmt(debts);
+    document.getElementById("zkOutNet").textContent = fmt(netWealth);
+
+    var box = document.getElementById("zkTotalBox");
+    var label = document.getElementById("zkTotalLabel");
+    var amount = document.getElementById("zkTotalAmount");
+    var nisabLabelEl = document.getElementById("zkOutNisabLabel");
+    var nisabValEl = document.getElementById("zkOutNisab");
+
+    // Gold is assessed by its own weight-based Nisab (7.5 tola / 87.48g) ONLY when it's
+    // the sole zakatable asset held. The moment anything else zakatable is present
+    // (silver, cash, stocks, funds, investments, business goods, receivables), everything
+    // is combined and measured against the silver-value Nisab instead.
+    var hasGold = goldGrams > 0;
+    var hasOtherZakatable = (silverGrams > 0) || bankTotal > 0 || cashTotal > 0 || stockTotal > 0 ||
+      fundTotal > 0 || investments > 0 || business > 0 || receivables > 0;
+    var goldOnlyCase = hasGold && !hasOtherZakatable;
+
+    if(goldOnlyCase){
+      nisabLabelEl.textContent = "Nisab threshold (7.5 tola / 87.48g gold)";
+      var goldTola = goldGrams / GRAMS_PER_UNIT.tola;
+      nisabValEl.textContent = goldGrams.toFixed(2) + "g held (" + goldTola.toFixed(3) + " tola) — need 87.48g (7.5 tola)";
+
+      if(goldGrams >= NISAB_GOLD_GRAMS && netWealth > 0){
+        var zakatDueGold = netWealth * ZAKAT_RATE;
+        box.className = "zk-total-box zk-due";
+        label.textContent = "Zakat due (2.5% of net wealth)";
+        amount.textContent = fmt(zakatDueGold);
+      } else {
+        box.className = "zk-total-box zk-not-due";
+        label.textContent = "Below the 7.5-tola gold Nisab — Zakat is not obligatory on this gold, regardless of its value";
+        amount.textContent = "";
+      }
+    } else {
+      var nisabThreshold = NISAB_SILVER_GRAMS * silverPricePerGramState;
+      nisabLabelEl.textContent = "Nisab threshold (612.36g silver)";
+      nisabValEl.textContent = silverPricePerGramState > 0 ? fmt(nisabThreshold) : "Enter or fetch a silver price above";
+
+      if(silverPricePerGramState <= 0){
+        box.className = "zk-total-box zk-not-due";
+        label.textContent = "Enter or fetch a silver price to calculate Nisab";
+        amount.textContent = "—";
+      } else if(netWealth >= nisabThreshold && netWealth > 0){
+        var zakatDue = netWealth * ZAKAT_RATE;
+        box.className = "zk-total-box zk-due";
+        label.textContent = "Zakat due (2.5% of net wealth)";
+        amount.textContent = fmt(zakatDue);
+      } else {
+        box.className = "zk-total-box zk-not-due";
+        label.textContent = "Below Nisab — Zakat is not obligatory this year";
+        amount.textContent = "";
+      }
+    }
+
+    var warn = document.getElementById("zkConvertWarning");
+    if(anyUnconverted){
+      warn.style.display = "block";
+      warn.textContent = "⚠ Live exchange rates aren't loaded, so one or more entries in a different currency were added at face value (not converted). Click \"Fetch Live Exchange & Metal Rates\" above for an accurate total, or enter amounts already in " + getReportingCurrency() + ".";
+    } else {
+      warn.style.display = "none";
+    }
+
+    document.getElementById("zkResults").classList.add("zk-visible");
+  });
+
+  // ---------- Hawl / Hijri date tracking ----------
+
+  var hijriFormatterNumeric = null;
+  var hijriFormatterLong = null;
+  var hijriSupported = true;
+  try{
+    hijriFormatterNumeric = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {year:"numeric", month:"numeric", day:"numeric"});
+    hijriFormatterLong = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {year:"numeric", month:"long", day:"numeric"});
+    var testParts = hijriFormatterNumeric.formatToParts(new Date());
+    var testYear = parseInt(testParts.filter(function(p){return p.type==="year";})[0].value, 10);
+    if(!(testYear > 1200 && testYear < 1700)){ hijriSupported = false; }
+  } catch(e){ hijriSupported = false; }
+
+  function getHijriParts(date){
+    var parts = hijriFormatterNumeric.formatToParts(date);
+    var y, m, d;
+    parts.forEach(function(p){
+      if(p.type === "year") y = parseInt(p.value, 10);
+      if(p.type === "month") m = parseInt(p.value, 10);
+      if(p.type === "day") d = parseInt(p.value, 10);
+    });
+    return {y:y, m:m, d:d};
+  }
+
+  function addDays(date, days){
+    var d = new Date(date.getTime());
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function formatGregorian(date){
+    return date.toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
+  }
+
+  function hijriToGregorian(hy, hm, hd){
+    if(!hijriSupported){ return {date: null, found:false}; }
+    var todayDate = new Date(); todayDate.setHours(0,0,0,0);
+    var todayHijri = getHijriParts(todayDate);
+    var yearDiff = hy - todayHijri.y;
+    var monthDiff = hm - todayHijri.m;
+    var dayDiff = hd - todayHijri.d;
+    var approxDays = yearDiff*354.367 + monthDiff*29.5306 + dayDiff;
+    var estimate = addDays(todayDate, Math.round(approxDays));
+    var radii = [10, 20, 40];
+    for(var ri=0; ri<radii.length; ri++){
+      var radius = radii[ri];
+      for(var offset=-radius; offset<=radius; offset++){
+        var candidate = addDays(estimate, offset);
+        var hp = getHijriParts(candidate);
+        if(hp.y===hy && hp.m===hm && hp.d===hd){ return {date: candidate, found:true}; }
+      }
+    }
+    return {date: estimate, found:false};
+  }
+
+  function findHawlCompletionDate(startDate){
+    if(!hijriSupported){
+      return {date: addDays(startDate, 354), approximate: true};
+    }
+    var startHijri = getHijriParts(startDate);
+    var targetY = startHijri.y + 1, targetM = startHijri.m, targetD = startHijri.d;
+    var estimate = addDays(startDate, 354);
+    var best = estimate, found = false;
+    var radii = [6, 15, 30];
+    for(var ri=0; ri<radii.length; ri++){
+      var radius = radii[ri];
+      for(var offset=-radius; offset<=radius; offset++){
+        var candidate = addDays(estimate, offset);
+        var hp = getHijriParts(candidate);
+        if(hp.y===targetY && hp.m===targetM && hp.d===targetD){ best = candidate; found = true; break; }
+      }
+      if(found) break;
+    }
+    return {date: best, approximate: !found};
+  }
+
+  // Toggle Gregorian / Hijri input mode
+  var modeGregBtn = document.getElementById("zkModeGregBtn");
+  var modeHijriBtn = document.getElementById("zkModeHijriBtn");
+  var gregWrap = document.getElementById("zkGregInputWrap");
+  var hijriWrap = document.getElementById("zkHijriInputWrap");
+  var hawlMode = "greg";
+
+  modeGregBtn.addEventListener("click", function(){
+    hawlMode = "greg";
+    modeGregBtn.classList.add("zk-active");
+    modeHijriBtn.classList.remove("zk-active");
+    gregWrap.style.display = "block";
+    hijriWrap.style.display = "none";
+  });
+  modeHijriBtn.addEventListener("click", function(){
+    hawlMode = "hijri";
+    modeHijriBtn.classList.add("zk-active");
+    modeGregBtn.classList.remove("zk-active");
+    gregWrap.style.display = "none";
+    hijriWrap.style.display = "block";
+  });
+
+  document.getElementById("zkHawlBtn").addEventListener("click", function(){
+    var startDate = null;
+
+    if(hawlMode === "greg"){
+      var input = document.getElementById("zkSahibDate").value;
+      if(!input){ alert("Please choose the date your wealth first reached Nisab."); return; }
+      var parts = input.split("-");
+      startDate = new Date(parseInt(parts[0],10), parseInt(parts[1],10) - 1, parseInt(parts[2],10));
+    } else {
+      var hy = parseInt(document.getElementById("zkHijriYear").value, 10);
+      var hm = parseInt(hijriMonthSelect.value, 10);
+      var hd = parseInt(hijriDaySelect.value, 10);
+      if(!hy || hy < 1300 || hy > 1600){ alert("Please enter a valid Hijri year (e.g. 1447)."); return; }
+      var conv = hijriToGregorian(hy, hm, hd);
+      if(!conv.found || !conv.date){ alert("Couldn't convert that Hijri date precisely in this browser. Please try the Gregorian date option instead."); return; }
+      startDate = conv.date;
+    }
+
+    lastSahibStartDate = startDate;
+    document.getElementById("zkHawlRatesResult").style.display = "none";
+    document.getElementById("zkHawlRatesStatus").textContent = "";
+
+    var result = findHawlCompletionDate(startDate);
+    var dueDate = result.date;
+
+    document.getElementById("zkOutSahibGreg").textContent = formatGregorian(startDate);
+    document.getElementById("zkOutDueGreg").textContent = formatGregorian(dueDate);
+
+    if(hijriSupported){
+      document.getElementById("zkOutSahibHijri").textContent = hijriFormatterLong.format(startDate);
+      document.getElementById("zkOutDueHijri").textContent = hijriFormatterLong.format(dueDate);
+      document.getElementById("zkHijriFallbackNote").style.display = "none";
+    } else {
+      document.getElementById("zkOutSahibHijri").textContent = "Unavailable in this browser";
+      document.getElementById("zkOutDueHijri").textContent = "Unavailable in this browser";
+      document.getElementById("zkHijriFallbackNote").style.display = "block";
+    }
+
+    var today = new Date(); today.setHours(0,0,0,0);
+    var dueMidnight = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+    var msPerDay = 24*60*60*1000;
+    var diffDays = Math.round((dueMidnight - today) / msPerDay);
+
+    var countdownEl = document.getElementById("zkOutCountdown");
+    if(diffDays > 0){
+      countdownEl.textContent = diffDays + " day" + (diffDays === 1 ? "" : "s") + " until your Zakat is due";
+    } else if(diffDays === 0){
+      countdownEl.textContent = "Today is your Zakat due date";
+    } else {
+      countdownEl.textContent = "Your Hawl completed " + Math.abs(diffDays) + " day" + (Math.abs(diffDays) === 1 ? "" : "s") + " ago — Zakat is due now";
+    }
+
+    document.getElementById("zkHawlResult").classList.add("zk-visible");
+  });
+
+  // ---------- Historical rates as of the Sahib-e-Nisab date ----------
+
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+  function formatISODate(d){ return d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate()); }
+
+  document.getElementById("zkFetchHawlRatesBtn").addEventListener("click", function(){
+    if(!lastSahibStartDate){
+      alert("Please click \"Find My Zakat Due Date\" above first, so I know which date to look up.");
+      return;
+    }
+    var dateStr = formatISODate(lastSahibStartDate);
+    var statusEl = document.getElementById("zkHawlRatesStatus");
+    statusEl.textContent = "Fetching rates for " + dateStr + "…";
+
+    fetchFrankfurterRates(dateStr).then(function(data){
+      var rc = getReportingCurrency();
+      var fxToReporting = data.rates[rc];
+      if(!fxToReporting){ throw new Error("No rate available for " + rc + " on that date"); }
+
+      lastHawlGoldPerGram = (data.goldUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
+      lastHawlSilverPerGram = (data.silverUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
+
+      document.getElementById("zkHawlGoldPrice").textContent = fmt(lastHawlGoldPerGram) + " / gram";
+      document.getElementById("zkHawlSilverPrice").textContent = fmt(lastHawlSilverPerGram) + " / gram";
+      document.getElementById("zkHawlRatesResult").style.display = "block";
+      statusEl.textContent = "Rates as of " + data.date + ", converted to " + rc + " (via Frankfurter).";
+    }).catch(function(err){
+      statusEl.textContent = "Couldn't fetch historical rates for that date (network/API issue, or no data that far back for this currency).";
+    });
+  });
+
+  document.getElementById("zkApplyHawlRatesBtn").addEventListener("click", function(){
+    if(lastHawlGoldPerGram == null || lastHawlSilverPerGram == null){ return; }
+    goldPricePerGramState = lastHawlGoldPerGram;
+    silverPricePerGramState = lastHawlSilverPerGram;
+    updateGoldFieldDisplay();
+    updateSilverFieldDisplay();
+    document.getElementById("zkHawlRatesStatus").textContent = "Applied to your Gold/Silver price fields above — click \"Calculate Zakat\" to see the result using these rates.";
+  });
+
+})();
+</script>
+</body>
+</html>
