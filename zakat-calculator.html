@@ -655,7 +655,8 @@ header.site-header .headerTop h1{
     flex-shrink:0;
     display:flex;
     align-items:center;
-    padding:0 10px;
+    gap:3px;
+    padding:0 8px 0 10px;
     font-size:0.82rem;
     font-weight:600;
     color:var(--zk-primary-dark);
@@ -665,6 +666,17 @@ header.site-header .headerTop h1{
     border-bottom-right-radius:8px;
     white-space:nowrap;
   }
+  .zk-unit-select-inline{
+    border:none;
+    background:transparent;
+    font:inherit;
+    font-weight:700;
+    color:inherit;
+    padding:0;
+    margin:0;
+    cursor:pointer;
+  }
+  .zk-unit-select-inline:focus{ outline:none; text-decoration:underline; }
   .zk-divider{
     border:none;
     border-top:1px solid var(--zk-border);
@@ -818,6 +830,26 @@ header.site-header .headerTop h1{
   }
   .zk-live-dot.zk-ok{background:var(--zk-primary);}
   .zk-live-dot.zk-err{background:var(--zk-danger);}
+
+  /* ---- Find Your Zakat Due Date panel: pinned to the right side on wide screens ----
+     Main content narrows a bit at this breakpoint so the pinned panel never overlaps it
+     (and stays clear of the site's own fixed left "All Calculators" sidebar too). */
+  @media (min-width:1280px){
+    .zk-wrap{ max-width:600px; }
+    .zk-hawl-panel{
+      position:fixed;
+      top:130px;
+      right:24px;
+      width:290px;
+      max-height:calc(100vh - 150px);
+      overflow-y:auto;
+      z-index:40;
+      margin:0;
+    }
+    .zk-hawl-panel .zk-toggle-group{ flex-direction:column; }
+    .zk-hawl-panel .zk-toggle-btn{ min-width:0; }
+    .zk-hawl-panel .zk-hijri-row{ grid-template-columns:1fr; }
+  }
 </style>
 </head>
 <body>
@@ -928,6 +960,74 @@ header.site-header .headerTop h1{
       <p>Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
     </div>
 
+    <!-- ZAKAT YEAR CALCULATOR (Hawl / Sahib-e-Nisab date tracker) -->
+    <aside class="zk-card zk-hawl-panel" id="zkHawlPanel">
+      <h2>Find Your Zakat Due Date <span class="zk-badge">Islamic calendar</span></h2>
+      <p class="zk-section-note">Enter the date your wealth first reached (or exceeded) the Nisab threshold — the day you became "Sahib-e-Nisab." Zakat becomes due once a full Hawl (Islamic lunar year) has passed, as long as your wealth stays at or above Nisab throughout.</p>
+
+      <div class="zk-toggle-group">
+        <button type="button" class="zk-toggle-btn zk-active" id="zkModeGregBtn">Enter Gregorian date</button>
+        <button type="button" class="zk-toggle-btn" id="zkModeHijriBtn">Enter Islamic (Hijri) date</button>
+      </div>
+
+      <div id="zkGregInputWrap">
+        <div class="zk-row">
+          <div class="zk-field">
+            <label for="zkSahibDate">Date you became Sahib-e-Nisab</label>
+            <input type="date" id="zkSahibDate" class="zk-input">
+          </div>
+        </div>
+      </div>
+
+      <div id="zkHijriInputWrap" style="display:none;">
+        <div class="zk-hijri-row">
+          <div class="zk-field">
+            <label for="zkHijriDay">Day</label>
+            <select id="zkHijriDay" class="zk-select"></select>
+          </div>
+          <div class="zk-field">
+            <label for="zkHijriMonth">Islamic month</label>
+            <select id="zkHijriMonth" class="zk-select"></select>
+          </div>
+          <div class="zk-field">
+            <label for="zkHijriYear">Hijri year (AH)</label>
+            <input type="number" id="zkHijriYear" class="zk-input" placeholder="e.g. 1447">
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="zk-btn zk-btn-secondary" id="zkHawlBtn">Find My Zakat Due Date</button>
+
+      <div class="zk-hawl-result" id="zkHawlResult">
+        <div class="zk-hawl-box">
+          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Gregorian)</span><span id="zkOutSahibGreg">—</span></div>
+          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Hijri)</span><span id="zkOutSahibHijri">—</span></div>
+          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Gregorian)</span><span id="zkOutDueGreg">—</span></div>
+          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Hijri)</span><span id="zkOutDueHijri">—</span></div>
+        </div>
+        <div class="zk-countdown" id="zkOutCountdown"></div>
+        <p class="zk-note" id="zkHijriFallbackNote" style="display:none;">Your browser couldn't provide precise Hijri conversion, so dates shown are estimated using a 354-day lunar year. Actual moon-sighting dates may vary by a day or two.</p>
+      </div>
+
+      <hr class="zk-divider">
+
+      <div class="zk-field">
+        <label for="zkDueDateInput">Zakat due date
+          <span class="zk-hint">Auto-filled once you find your due date above — or pick/override it directly here if you already know it</span>
+        </label>
+        <input type="date" id="zkDueDateInput" class="zk-input">
+      </div>
+
+      <p class="zk-section-note" style="margin-bottom:10px;">Look up what gold, silver and exchange rates were on this due date. (Zakat itself is normally paid on today's values, not a past date — see the note at the bottom of the page.)</p>
+      <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkFetchHawlRatesBtn">Fetch Rates for Due Date</button>
+      <div class="zk-live-status" id="zkHawlRatesStatus"></div>
+      <div class="zk-hawl-box" id="zkHawlRatesResult" style="display:none; margin-top:10px;">
+        <div class="zk-hawl-row"><span>Gold price on this date</span><span id="zkHawlGoldPrice">—</span></div>
+        <div class="zk-hawl-row"><span>Silver price on this date</span><span id="zkHawlSilverPrice">—</span></div>
+        <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkApplyHawlRatesBtn" style="margin-top:10px;">Use These Rates in My Calculation Above</button>
+      </div>
+    </aside>
+
     <!-- COUNTRY / CURRENCY / LIVE RATES -->
     <div class="zk-card">
       <h2>Country &amp; Reporting Currency</h2>
@@ -954,20 +1054,36 @@ header.site-header .headerTop h1{
       <div class="zk-row zk-row-2">
         <div class="zk-field">
           <label for="zkSilverPriceUnit">Silver price
-            <span class="zk-hint">Used for your silver holdings and the Nisab threshold</span>
+            <span class="zk-hint">Used for your silver holdings and the Nisab threshold — pick whichever unit your rate is quoted in</span>
           </label>
           <div class="zk-input-with-suffix">
             <input type="number" id="zkSilverPriceUnit" class="zk-input" min="0" step="0.0001" placeholder="0.00">
-            <span class="zk-input-suffix" id="zkSilverPriceSuffix">USD / g</span>
+            <span class="zk-input-suffix">
+              <span id="zkSilverPriceCurrency">USD</span> /
+              <select class="zk-unit-select-inline" id="zkSilverRateUnit">
+                <option value="g">g</option>
+                <option value="tola">tola</option>
+                <option value="ozt">oz t</option>
+                <option value="kg">kg</option>
+              </select>
+            </span>
           </div>
         </div>
         <div class="zk-field">
           <label for="zkGoldPriceUnit">Gold price
-            <span class="zk-hint">Only needed if you hold gold</span>
+            <span class="zk-hint">Only needed if you hold gold — pick whichever unit your rate is quoted in</span>
           </label>
           <div class="zk-input-with-suffix">
             <input type="number" id="zkGoldPriceUnit" class="zk-input" min="0" step="0.0001" placeholder="0.00">
-            <span class="zk-input-suffix" id="zkGoldPriceSuffix">USD / g</span>
+            <span class="zk-input-suffix">
+              <span id="zkGoldPriceCurrency">USD</span> /
+              <select class="zk-unit-select-inline" id="zkGoldRateUnit">
+                <option value="g">g</option>
+                <option value="tola">tola</option>
+                <option value="ozt">oz t</option>
+                <option value="kg">kg</option>
+              </select>
+            </span>
           </div>
         </div>
       </div>
@@ -1091,6 +1207,7 @@ header.site-header .headerTop h1{
         <div class="zk-result-line"><span>Less: debts payable</span><span id="zkOutDebts">—</span></div>
         <div class="zk-result-line"><span>Net zakatable wealth</span><span id="zkOutNet">—</span></div>
         <div class="zk-result-line"><span id="zkOutNisabLabel">Nisab threshold (612.36g silver)</span><span id="zkOutNisab">—</span></div>
+        <div class="zk-result-line"><span>Gold/silver rate used</span><span id="zkOutRateDate">—</span></div>
 
         <div class="zk-total-box" id="zkTotalBox">
           <div class="zk-total-label" id="zkTotalLabel">Zakat due (2.5%)</div>
@@ -1100,66 +1217,6 @@ header.site-header .headerTop h1{
       </div>
 
       <p class="zk-note">This uses the silver standard for Nisab (the more precautionary threshold most scholars use), except when gold is your <em>only</em> zakatable asset — then Nisab is assessed by gold's own weight (7.5 tola / 87.48g), not its market value, per the Hanafi position. As soon as any other zakatable wealth is added, everything is combined and measured against the silver-value standard again. Zakat is calculated on the current value of your wealth at the time you calculate/pay it — not its value on the day you first reached Nisab.</p>
-    </div>
-
-    <!-- HAWL / SAHIB-E-NISAB DATE TRACKER -->
-    <div class="zk-card">
-      <h2>Hawl Tracker <span class="zk-badge">Islamic calendar</span></h2>
-      <p class="zk-section-note">Enter the date your wealth first reached (or exceeded) the Nisab threshold — the day you became "Sahib-e-Nisab." Zakat becomes due once a full Hawl (Islamic lunar year) has passed, as long as your wealth stays at or above Nisab throughout.</p>
-
-      <div class="zk-toggle-group">
-        <button type="button" class="zk-toggle-btn zk-active" id="zkModeGregBtn">Enter Gregorian date</button>
-        <button type="button" class="zk-toggle-btn" id="zkModeHijriBtn">Enter Islamic (Hijri) date</button>
-      </div>
-
-      <div id="zkGregInputWrap">
-        <div class="zk-row">
-          <div class="zk-field">
-            <label for="zkSahibDate">Date you became Sahib-e-Nisab</label>
-            <input type="date" id="zkSahibDate" class="zk-input">
-          </div>
-        </div>
-      </div>
-
-      <div id="zkHijriInputWrap" style="display:none;">
-        <div class="zk-hijri-row">
-          <div class="zk-field">
-            <label for="zkHijriDay">Day</label>
-            <select id="zkHijriDay" class="zk-select"></select>
-          </div>
-          <div class="zk-field">
-            <label for="zkHijriMonth">Islamic month</label>
-            <select id="zkHijriMonth" class="zk-select"></select>
-          </div>
-          <div class="zk-field">
-            <label for="zkHijriYear">Hijri year (AH)</label>
-            <input type="number" id="zkHijriYear" class="zk-input" placeholder="e.g. 1447">
-          </div>
-        </div>
-      </div>
-
-      <button type="button" class="zk-btn zk-btn-secondary" id="zkHawlBtn">Find My Zakat Due Date</button>
-
-      <div class="zk-hawl-result" id="zkHawlResult">
-        <div class="zk-hawl-box">
-          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Gregorian)</span><span id="zkOutSahibGreg">—</span></div>
-          <div class="zk-hawl-row"><span>Sahib-e-Nisab date (Hijri)</span><span id="zkOutSahibHijri">—</span></div>
-          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Gregorian)</span><span id="zkOutDueGreg">—</span></div>
-          <div class="zk-hawl-row"><span>Hawl complete — Zakat due (Hijri)</span><span id="zkOutDueHijri">—</span></div>
-        </div>
-        <div class="zk-countdown" id="zkOutCountdown"></div>
-        <p class="zk-note" id="zkHijriFallbackNote" style="display:none;">Your browser couldn't provide precise Hijri conversion, so dates shown are estimated using a 354-day lunar year. Actual moon-sighting dates may vary by a day or two.</p>
-
-        <hr class="zk-divider">
-        <p class="zk-section-note" style="margin-bottom:10px;">Curious what gold, silver and exchange rates were on the day you became Sahib-e-Nisab? You can look them up below. (Zakat itself is normally calculated on today's values, not this date — see the note at the bottom of the page.)</p>
-        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkFetchHawlRatesBtn">Fetch Rates for This Date</button>
-        <div class="zk-live-status" id="zkHawlRatesStatus"></div>
-        <div class="zk-hawl-box" id="zkHawlRatesResult" style="display:none; margin-top:10px;">
-          <div class="zk-hawl-row"><span>Gold price on this date</span><span id="zkHawlGoldPrice">—</span></div>
-          <div class="zk-hawl-row"><span>Silver price on this date</span><span id="zkHawlSilverPrice">—</span></div>
-          <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkApplyHawlRatesBtn" style="margin-top:10px;">Use These Rates in My Calculation Above</button>
-        </div>
-      </div>
     </div>
 
     <p class="zk-footer-note">
@@ -1424,6 +1481,7 @@ document.addEventListener('click', (e)=>{
   var rawSilverUSDPerOz = null;
   var goldPricePerGramState = 0;   // always in reporting currency, per gram
   var silverPricePerGramState = 0; // always in reporting currency, per gram
+  var activeRateDateLabel = null;  // human-readable note on which date's gold/silver rate is currently loaded
 
   var lastSahibStartDate = null;   // Date the Hawl Tracker last computed as the Sahib-e-Nisab date
   var lastHawlGoldPerGram = null;  // historical gold price per gram (reporting currency) on that date
@@ -1431,41 +1489,49 @@ document.addEventListener('click', (e)=>{
 
   var goldPriceField = document.getElementById("zkGoldPriceUnit");
   var silverPriceField = document.getElementById("zkSilverPriceUnit");
-  var goldUnitSelect = document.getElementById("zkGoldUnit");
-  var silverUnitSelect = document.getElementById("zkSilverUnit");
-
-  var UNIT_SUFFIX = {g:"g", kg:"kg", tola:"tola", ozt:"oz t"};
-
-  function updateSuffix(el, unitKey){
-    el.textContent = getReportingCurrency() + " / " + UNIT_SUFFIX[unitKey];
-  }
+  var goldUnitSelect = document.getElementById("zkGoldUnit");       // WEIGHT unit for gold you hold
+  var silverUnitSelect = document.getElementById("zkSilverUnit");   // WEIGHT unit for silver you hold
+  var goldRateUnitSelect = document.getElementById("zkGoldRateUnit");     // unit the gold RATE is quoted in (independent of weight unit)
+  var silverRateUnitSelect = document.getElementById("zkSilverRateUnit"); // unit the silver RATE is quoted in (independent of weight unit)
 
   function updateGoldFieldDisplay(){
-    var v = goldPricePerGramState * GRAMS_PER_UNIT[goldUnitSelect.value];
+    var v = goldPricePerGramState * GRAMS_PER_UNIT[goldRateUnitSelect.value];
     goldPriceField.value = v ? v.toFixed(4).replace(/0+$/,"").replace(/\.$/,"") : "";
-    updateSuffix(document.getElementById("zkGoldPriceSuffix"), goldUnitSelect.value);
+    document.getElementById("zkGoldPriceCurrency").textContent = getReportingCurrency();
   }
   function updateSilverFieldDisplay(){
-    var v = silverPricePerGramState * GRAMS_PER_UNIT[silverUnitSelect.value];
+    var v = silverPricePerGramState * GRAMS_PER_UNIT[silverRateUnitSelect.value];
     silverPriceField.value = v ? v.toFixed(4).replace(/0+$/,"").replace(/\.$/,"") : "";
-    updateSuffix(document.getElementById("zkSilverPriceSuffix"), silverUnitSelect.value);
+    document.getElementById("zkSilverPriceCurrency").textContent = getReportingCurrency();
   }
 
   goldPriceField.addEventListener("input", function(){
     var v = parseFloat(goldPriceField.value);
-    goldPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[goldUnitSelect.value] : 0;
+    goldPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[goldRateUnitSelect.value] : 0;
+    activeRateDateLabel = "manually entered (not tied to a specific date)";
   });
   silverPriceField.addEventListener("input", function(){
     var v = parseFloat(silverPriceField.value);
-    silverPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[silverUnitSelect.value] : 0;
+    silverPricePerGramState = isFinite(v) ? v / GRAMS_PER_UNIT[silverRateUnitSelect.value] : 0;
+    activeRateDateLabel = "manually entered (not tied to a specific date)";
   });
-  goldUnitSelect.addEventListener("change", updateGoldFieldDisplay);
-  silverUnitSelect.addEventListener("change", updateSilverFieldDisplay);
+  // Changing the RATE unit re-displays the same underlying price converted into the new unit.
+  goldRateUnitSelect.addEventListener("change", updateGoldFieldDisplay);
+  silverRateUnitSelect.addEventListener("change", updateSilverFieldDisplay);
 
   function onReportingCurrencyChanged(){
     if(fxRates){
       refreshMetalFieldsFromLive();
     } else {
+      // No live rate data loaded yet — a price you typed manually in the OLD currency
+      // can't be silently relabeled as the NEW currency, that would be numerically wrong.
+      // Clear it and prompt for a re-entry or a live fetch instead.
+      if(goldPricePerGramState > 0 || silverPricePerGramState > 0){
+        goldPricePerGramState = 0;
+        silverPricePerGramState = 0;
+        activeRateDateLabel = null;
+        setLiveStatus("Reporting currency changed to " + getReportingCurrency() + " — please re-enter your gold/silver prices in this currency, or fetch live rates below.", "");
+      }
       updateGoldFieldDisplay();
       updateSilverFieldDisplay();
     }
@@ -1523,6 +1589,7 @@ document.addEventListener('click', (e)=>{
       rawGoldUSDPerOz = data.goldUSDPerOz;
       rawSilverUSDPerOz = data.silverUSDPerOz;
       refreshMetalFieldsFromLive();
+      activeRateDateLabel = data.date + " (today's live rate)";
       setLiveStatus("Live rates fetched for " + data.date + " (via Frankfurter — includes FX and XAU/XAG gold/silver spot).", "ok");
     }).catch(function(err){
       setLiveStatus("Couldn't fetch live rates automatically (network/API issue). Enter gold, silver and currency amounts manually below.", "err");
@@ -1608,6 +1675,7 @@ document.addEventListener('click', (e)=>{
     document.getElementById("zkOutTotalAssets").textContent = fmt(totalAssets);
     document.getElementById("zkOutDebts").textContent = "− " + fmt(debts);
     document.getElementById("zkOutNet").textContent = fmt(netWealth);
+    document.getElementById("zkOutRateDate").textContent = activeRateDateLabel || "not set — enter or fetch a gold/silver rate above";
 
     var box = document.getElementById("zkTotalBox");
     var label = document.getElementById("zkTotalLabel");
@@ -1794,6 +1862,10 @@ document.addEventListener('click', (e)=>{
     var result = findHawlCompletionDate(startDate);
     var dueDate = result.date;
 
+    // Auto-fill the Zakat due date field so the rate lookup below defaults to it —
+    // the user can still pick/override a different due date directly if they prefer.
+    document.getElementById("zkDueDateInput").value = formatISODate(dueDate);
+
     document.getElementById("zkOutSahibGreg").textContent = formatGregorian(startDate);
     document.getElementById("zkOutDueGreg").textContent = formatGregorian(dueDate);
 
@@ -1824,27 +1896,34 @@ document.addEventListener('click', (e)=>{
     document.getElementById("zkHawlResult").classList.add("zk-visible");
   });
 
-  // ---------- Historical rates as of the Sahib-e-Nisab date ----------
+  // ---------- Historical rates as of the Zakat due date ----------
 
   function pad2(n){ return (n < 10 ? "0" : "") + n; }
   function formatISODate(d){ return d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate()); }
 
+  var lastHawlFetchedDate = null; // the actual date string (from the API response) the historical rates above belong to
+
   document.getElementById("zkFetchHawlRatesBtn").addEventListener("click", function(){
-    if(!lastSahibStartDate){
-      alert("Please click \"Find My Zakat Due Date\" above first, so I know which date to look up.");
+    var dateStr = document.getElementById("zkDueDateInput").value;
+    if(!dateStr){
+      alert("Please pick a Zakat due date above (or click \"Find My Zakat Due Date\" first to fill it in automatically).");
       return;
     }
-    var dateStr = formatISODate(lastSahibStartDate);
     var statusEl = document.getElementById("zkHawlRatesStatus");
     statusEl.textContent = "Fetching rates for " + dateStr + "…";
 
-    fetchFrankfurterRates(dateStr).then(function(data){
+    // If the due date IS today, query the same "latest" endpoint the live-rates button uses
+    // (rather than an explicit &date=today), so the two never drift apart from each other
+    // due to the data provider's own publish timing — same request, same answer, guaranteed.
+    var isToday = (dateStr === formatISODate(new Date()));
+    fetchFrankfurterRates(isToday ? null : dateStr).then(function(data){
       var rc = getReportingCurrency();
       var fxToReporting = data.rates[rc];
       if(!fxToReporting){ throw new Error("No rate available for " + rc + " on that date"); }
 
       lastHawlGoldPerGram = (data.goldUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
       lastHawlSilverPerGram = (data.silverUSDPerOz / GRAMS_PER_UNIT.ozt) * fxToReporting;
+      lastHawlFetchedDate = data.date;
 
       document.getElementById("zkHawlGoldPrice").textContent = fmt(lastHawlGoldPerGram) + " / gram";
       document.getElementById("zkHawlSilverPrice").textContent = fmt(lastHawlSilverPerGram) + " / gram";
@@ -1859,6 +1938,7 @@ document.addEventListener('click', (e)=>{
     if(lastHawlGoldPerGram == null || lastHawlSilverPerGram == null){ return; }
     goldPricePerGramState = lastHawlGoldPerGram;
     silverPricePerGramState = lastHawlSilverPerGram;
+    activeRateDateLabel = (lastHawlFetchedDate || document.getElementById("zkDueDateInput").value) + " (your Zakat due date)";
     updateGoldFieldDisplay();
     updateSilverFieldDisplay();
     document.getElementById("zkHawlRatesStatus").textContent = "Applied to your Gold/Silver price fields above — click \"Calculate Zakat\" to see the result using these rates.";
