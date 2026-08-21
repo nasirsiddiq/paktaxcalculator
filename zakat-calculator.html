@@ -1520,6 +1520,18 @@ document.addEventListener('click', (e)=>{
   silverRateUnitSelect.addEventListener("change", updateSilverFieldDisplay);
 
   function onReportingCurrencyChanged(){
+    // Any rates already fetched for the Zakat due date are priced in the OLD currency —
+    // showing them next to the new currency's numbers would silently mislabel them
+    // (e.g. a "$" figure sitting next to everything else in "₨"). Invalidate and prompt a re-fetch.
+    if(lastHawlGoldPerGram != null || lastHawlSilverPerGram != null){
+      lastHawlGoldPerGram = null;
+      lastHawlSilverPerGram = null;
+      lastHawlFetchedDate = null;
+      var hawlResultBox = document.getElementById("zkHawlRatesResult");
+      if(hawlResultBox){ hawlResultBox.style.display = "none"; }
+      var hawlStatusEl = document.getElementById("zkHawlRatesStatus");
+      if(hawlStatusEl){ hawlStatusEl.textContent = "Reporting currency changed — click \"Fetch Rates for Due Date\" again to get rates in " + getReportingCurrency() + "."; }
+    }
     if(fxRates){
       refreshMetalFieldsFromLive();
     } else {
