@@ -17,12 +17,15 @@
 <meta property="og:site_name" content="Pakistan Tax Calculator">
 <meta property="og:title" content="Zakat Calculator &mdash; Cash, Gold, Silver, Stocks &amp; Hawl Tracker">
 <meta property="og:description" content="Free Zakat calculator covering cash, gold, silver, stocks, funds and business assets in any currency, with a Hawl tracker and live/historical gold, silver and exchange rates.">
-<meta property="og:image" content="https://paktaxcalculator.net/og-image.png">
+<meta property="og:image" content="https://paktaxcalculator.net/zakat-calculator-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zakat Calculator — Calculate Your Zakat &amp; Eligibility">
 <meta property="og:url" content="https://paktaxcalculator.net/zakat-calculator.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zakat Calculator &mdash; Cash, Gold, Silver, Stocks &amp; Hawl Tracker">
 <meta name="twitter:description" content="Free Zakat calculator covering cash, gold, silver, stocks, funds and business assets in any currency, with a Hawl tracker and live/historical gold, silver and exchange rates.">
-<meta name="twitter:image" content="https://paktaxcalculator.net/og-image.png">
+<meta name="twitter:image" content="https://paktaxcalculator.net/zakat-calculator-og.png">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
@@ -768,6 +771,15 @@ header.site-header .headerTop h1{
     background:var(--zk-primary-light);border:1px solid var(--zk-primary);border-radius:20px;
     padding:2px 9px;margin-left:0;vertical-align:middle;
   }
+  .zk-elig-question{margin-bottom:16px;}
+  .zk-elig-question:last-of-type{margin-bottom:12px;}
+  .zk-elig-q-text{font-size:0.92rem;margin:0 0 8px;line-height:1.5;}
+  .zk-elig-toggle{margin-bottom:0;}
+  .zk-elig-result-box{border-radius:10px;padding:16px;margin-top:14px;font-size:0.9rem;line-height:1.6;}
+  .zk-elig-result-box.zk-elig-yes{background:var(--zk-primary-light);border:1px solid var(--zk-primary);}
+  .zk-elig-result-box.zk-elig-no{background:#faf3e3;border:1px solid #e6cf9a;color:#5c4a12;}
+  .zk-elig-result-box strong{display:block;margin-bottom:6px;font-size:0.98rem;color:var(--zk-primary-dark);}
+  .zk-elig-result-box.zk-elig-no strong{color:#5c4a12;}
   .zk-multi-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
   .zk-multi-row{
     display:grid;
@@ -958,6 +970,100 @@ header.site-header .headerTop h1{
     <div class="zk-header">
       <h1>Zakat Calculator</h1>
       <p>Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
+    </div>
+
+    <!-- ZAKAT ELIGIBILITY CHECK -->
+    <div class="zk-card" id="zkEligCard">
+      <h2>Check Your Zakat Eligibility</h2>
+      <p class="zk-section-note">Based on the Shariah conditions for Zakat becoming obligatory (Hanafi fiqh), as compiled in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>. Answer these questions to see whether Zakat is due on you this year.</p>
+
+      <div class="zk-elig-question" data-elig-q="1">
+        <p class="zk-elig-q-text"><strong>1.</strong> Are you Muslim, of sound mind (ʿĀqil), and have you reached adulthood / puberty (Bāligh)?</p>
+        <div class="zk-toggle-group zk-elig-toggle" data-elig-group="1">
+          <button type="button" class="zk-toggle-btn" data-elig-answer="yes">Yes</button>
+          <button type="button" class="zk-toggle-btn" data-elig-answer="no">No</button>
+        </div>
+      </div>
+
+      <div class="zk-elig-question" data-elig-q="2">
+        <p class="zk-elig-q-text"><strong>2.</strong> Do you have full, exclusive ownership of this wealth — not something held in trust for someone else, or not yet in your possession?</p>
+        <div class="zk-toggle-group zk-elig-toggle" data-elig-group="2">
+          <button type="button" class="zk-toggle-btn" data-elig-answer="yes">Yes</button>
+          <button type="button" class="zk-toggle-btn" data-elig-answer="no">No</button>
+        </div>
+      </div>
+
+      <div class="zk-elig-question" data-elig-q="3">
+        <p class="zk-elig-q-text"><strong>3.</strong> Is this wealth of a "growing" nature — cash, gold/silver, trade goods, or investments — rather than personal-use items like your home, car, or furniture?</p>
+        <div class="zk-toggle-group zk-elig-toggle" data-elig-group="3">
+          <button type="button" class="zk-toggle-btn" data-elig-answer="yes">Yes</button>
+          <button type="button" class="zk-toggle-btn" data-elig-answer="no">No</button>
+        </div>
+      </div>
+
+      <div class="zk-elig-question" data-elig-q="4">
+        <p class="zk-elig-q-text"><strong>4.</strong> Enter what you actually hold — we'll check it against the Nisab threshold for you (after subtracting debts and basic living needs).</p>
+
+        <div class="zk-row zk-row-2">
+          <div class="zk-field">
+            <label for="zkEligCash">Cash &amp; bank balance</label>
+            <input type="number" id="zkEligCash" class="zk-input" min="0" step="any" placeholder="0.00">
+          </div>
+          <div class="zk-field">
+            <label for="zkEligDebts">Debts &amp; essential needs <span class="zk-hint">(subtracted)</span></label>
+            <input type="number" id="zkEligDebts" class="zk-input" min="0" step="any" placeholder="0.00">
+          </div>
+        </div>
+
+        <div class="zk-row zk-row-2">
+          <div class="zk-field">
+            <label for="zkEligGoldQty">Gold you hold</label>
+            <div class="zk-row" style="grid-template-columns:1.4fr 1fr;gap:8px;">
+              <input type="number" id="zkEligGoldQty" class="zk-input" min="0" step="any" placeholder="0.00">
+              <select id="zkEligGoldUnit" class="zk-select">
+                <option value="g">Grams (g)</option>
+                <option value="tola">Tola</option>
+                <option value="ozt">Troy oz</option>
+                <option value="kg">Kilograms</option>
+              </select>
+            </div>
+          </div>
+          <div class="zk-field">
+            <label for="zkEligSilverQty">Silver you hold <span class="zk-hint">(optional)</span></label>
+            <div class="zk-row" style="grid-template-columns:1.4fr 1fr;gap:8px;">
+              <input type="number" id="zkEligSilverQty" class="zk-input" min="0" step="any" placeholder="0.00">
+              <select id="zkEligSilverUnit" class="zk-select">
+                <option value="g">Grams (g)</option>
+                <option value="tola">Tola</option>
+                <option value="ozt">Troy oz</option>
+                <option value="kg">Kilograms</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="zk-live-status" id="zkEligRateStatus"><span class="zk-live-dot" id="zkEligLiveDot"></span><span id="zkEligRateStatusText"></span></div>
+        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkEligFetchRateBtn">Fetch Live Gold, Silver &amp; Exchange Rate</button>
+        <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkEligNisabCheckBtn">Check Against Nisab</button>
+        <p class="zk-note" id="zkEligNisabNote">Gold, silver and exchange rates always come from a single lookup for the same date, so they never drift apart. Already fetched rates below? This reuses them — no need to fetch twice.</p>
+        <div class="zk-note" id="zkEligNisabResult" style="font-weight:600;"></div>
+      </div>
+
+      <div class="zk-elig-question" data-elig-q="5">
+        <p class="zk-elig-q-text"><strong>5.</strong> Has a full Islamic (Hijri) year — a Hawl — passed since your wealth first reached Nisab, staying at or above it throughout?</p>
+        <div class="zk-toggle-group zk-elig-toggle" data-elig-group="5">
+          <button type="button" class="zk-toggle-btn" data-elig-answer="yes">Yes</button>
+          <button type="button" class="zk-toggle-btn" data-elig-answer="no">No</button>
+        </div>
+      </div>
+
+      <button type="button" class="zk-btn zk-btn-secondary" id="zkEligCheckBtn">Check My Eligibility</button>
+
+      <div class="zk-elig-result-box" id="zkEligResult" style="display:none;">
+        <div id="zkEligResultText"></div>
+      </div>
+
+      <p class="zk-note">Source: conditions of Zakat obligation (Shurut al-Wujub) as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>, quoting <em>Tanwir al-Absar</em>: "The conditions of its obligation are: sanity, puberty, Islam, freedom, ownership of Nisab for a full year — free of debt and basic necessities — and the wealth being of a growing nature." A separate historical condition of personal freedom (not being enslaved) is universally met today and isn't asked above.</p>
     </div>
 
     <!-- ZAKAT YEAR CALCULATOR (Hawl / Sahib-e-Nisab date tracker) -->
@@ -1571,6 +1677,12 @@ document.addEventListener('click', (e)=>{
     document.getElementById("zkLiveStatusText").textContent = text;
     var dot = document.getElementById("zkLiveDot");
     dot.className = "zk-live-dot" + (state === "ok" ? " zk-ok" : state === "err" ? " zk-err" : "");
+    // Mirror into the eligibility check's own status line, if present — both buttons
+    // trigger the exact same fetch, so both displays should always agree.
+    var eligText = document.getElementById("zkEligRateStatusText");
+    var eligDot = document.getElementById("zkEligLiveDot");
+    if(eligText){ eligText.textContent = text; }
+    if(eligDot){ eligDot.className = "zk-live-dot" + (state === "ok" ? " zk-ok" : state === "err" ? " zk-err" : ""); }
   }
 
   // Single shared fetcher: Frankfurter gives FX + gold(XAU) + silver(XAG) in one call,
@@ -1594,7 +1706,10 @@ document.addEventListener('click', (e)=>{
     });
   }
 
-  document.getElementById("zkFetchRatesBtn").addEventListener("click", function(){
+  // Shared by both "Fetch Live Exchange & Metal Rates" (main card) and the eligibility
+  // check's "Fetch Live Gold, Silver & Exchange Rate" button — a single Frankfurter call
+  // returns FX and gold/silver spot for the same date, so both places always agree.
+  function fetchLiveRatesShared(){
     setLiveStatus("Fetching live rates…", "");
     fetchFrankfurterRates(null).then(function(data){
       fxRates = data.rates;
@@ -1606,7 +1721,9 @@ document.addEventListener('click', (e)=>{
     }).catch(function(err){
       setLiveStatus("Couldn't fetch live rates automatically (network/API issue). Enter gold, silver and currency amounts manually below.", "err");
     });
-  });
+  }
+
+  document.getElementById("zkFetchRatesBtn").addEventListener("click", fetchLiveRatesShared);
 
   // ---------- Currency conversion ----------
 
@@ -1955,6 +2072,114 @@ document.addEventListener('click', (e)=>{
     updateSilverFieldDisplay();
     document.getElementById("zkHawlRatesStatus").textContent = "Applied to your Gold/Silver price fields above — click \"Calculate Zakat\" to see the result using these rates.";
   });
+
+  /* ---- Zakat eligibility check (shares gold/silver rate state + Nisab constants above) ---- */
+  var eligAnswers = {"1":null,"2":null,"3":null,"4":null,"5":null};
+
+  var eligGroups = document.querySelectorAll(".zk-elig-toggle");
+  eligGroups.forEach(function(group){
+    var qNum = group.getAttribute("data-elig-group");
+    var btns = group.querySelectorAll(".zk-toggle-btn");
+    btns.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        btns.forEach(function(b){ b.classList.remove("zk-active"); });
+        btn.classList.add("zk-active");
+        eligAnswers[qNum] = btn.getAttribute("data-elig-answer");
+      });
+    });
+  });
+
+  var eligReasons = {
+    "1": "Zakat is only obligatory on a Muslim who is of sound mind and has reached adulthood — in Hanafi fiqh, a minor's or an insane person's wealth is not zakatable even if it reaches Nisab.",
+    "2": "Zakat only applies to wealth you fully and exclusively own and possess — not wealth held in trust for someone else, or not yet in your control.",
+    "3": "Zakat only applies to wealth of a “growing” nature (cash, gold/silver, trade goods, investments). Personal-use items like your home, car, or furniture aren't zakatable, however valuable.",
+    "4": "Based on what you entered, your wealth (after debts and essential needs) doesn't reach the Nisab threshold.",
+    "5": "Zakat becomes due only after a full Hawl (Islamic lunar year) spent at or above Nisab. Use the “Find Your Zakat Due Date” tool above to track this."
+  };
+
+  function eligNum(id){
+    var v = parseFloat(document.getElementById(id).value);
+    return isFinite(v) && v > 0 ? v : 0;
+  }
+
+  var eligFetchRateBtn = document.getElementById("zkEligFetchRateBtn");
+  if(eligFetchRateBtn){
+    eligFetchRateBtn.addEventListener("click", fetchLiveRatesShared);
+  }
+
+  var eligNisabCheckBtn = document.getElementById("zkEligNisabCheckBtn");
+  if(eligNisabCheckBtn){
+    eligNisabCheckBtn.addEventListener("click", function(){
+      var cash = eligNum("zkEligCash");
+      var debts = eligNum("zkEligDebts");
+
+      var goldGrams = eligNum("zkEligGoldQty") * GRAMS_PER_UNIT[document.getElementById("zkEligGoldUnit").value];
+      var silverGrams = eligNum("zkEligSilverQty") * GRAMS_PER_UNIT[document.getElementById("zkEligSilverUnit").value];
+      var goldValue = goldGrams * goldPricePerGramState;
+      var silverValue = silverGrams * silverPricePerGramState;
+
+      var netWealth = (cash + goldValue + silverValue) - debts;
+      if(netWealth < 0) netWealth = 0;
+
+      var resultEl = document.getElementById("zkEligNisabResult");
+      var goldOnlyCase = (goldGrams > 0) && silverGrams <= 0 && cash <= 0;
+      var noRatesAvailable = (goldGrams > 0 || silverGrams > 0) && goldPricePerGramState <= 0 && silverPricePerGramState <= 0;
+
+      if(noRatesAvailable){
+        resultEl.textContent = "Enter a gold/silver rate in the \"Country & Reporting Currency\" card below (fetch live or type manually), then check again — metal value can't be priced yet.";
+        eligAnswers["4"] = null;
+        return;
+      }
+
+      var meetsNisab;
+      if(goldOnlyCase){
+        meetsNisab = goldGrams >= NISAB_GOLD_GRAMS;
+        resultEl.textContent = "Gold held: " + goldGrams.toFixed(2) + "g — needs 87.48g (7.5 tola) for the gold-only Nisab. " +
+          (meetsNisab ? "Nisab is met." : "Below Nisab.");
+      } else {
+        var nisabThreshold = NISAB_SILVER_GRAMS * silverPricePerGramState;
+        meetsNisab = silverPricePerGramState > 0 && netWealth >= nisabThreshold;
+        resultEl.textContent = "Your net wealth: " + fmt(netWealth) + " — Nisab threshold (612.36g silver): " +
+          (silverPricePerGramState > 0 ? fmt(nisabThreshold) : "enter a silver rate below") + ". " +
+          (silverPricePerGramState > 0 ? (meetsNisab ? "Nisab is met." : "Below Nisab.") : "");
+      }
+
+      eligAnswers["4"] = meetsNisab ? "yes" : "no";
+    });
+  }
+
+  var eligCheckBtn = document.getElementById("zkEligCheckBtn");
+  if(eligCheckBtn){
+    eligCheckBtn.addEventListener("click", function(){
+      var resultBox = document.getElementById("zkEligResult");
+      var resultText = document.getElementById("zkEligResultText");
+      var keys = Object.keys(eligAnswers);
+      var unanswered = keys.filter(function(k){ return eligAnswers[k] == null; });
+
+      resultBox.style.display = "block";
+
+      if(unanswered.length){
+        resultBox.className = "zk-elig-result-box zk-elig-no";
+        var msg = unanswered.indexOf("4") !== -1
+          ? "Please enter your wealth above and click \"Check Against Nisab\", and answer the other questions, to check your eligibility."
+          : "Please answer all " + keys.length + " questions above to check your eligibility.";
+        resultText.innerHTML = msg;
+        return;
+      }
+
+      var failedQs = keys.filter(function(k){ return eligAnswers[k] === "no"; });
+
+      if(failedQs.length === 0){
+        resultBox.className = "zk-elig-result-box zk-elig-yes";
+        resultText.innerHTML = "<strong>Zakat (Fard) is obligatory on you this year.</strong> All the Shariah conditions for Zakat are met. Use the calculator below to work out the exact amount due.";
+      } else {
+        resultBox.className = "zk-elig-result-box zk-elig-no";
+        var html = "<strong>Zakat is not currently obligatory on you.</strong> ";
+        html += failedQs.map(function(k){ return eligReasons[k]; }).join(" ");
+        resultText.innerHTML = html;
+      }
+    });
+  }
 
 })();
 </script>
