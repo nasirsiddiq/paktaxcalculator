@@ -1269,5 +1269,251 @@ document.addEventListener('click', (e)=>{
   });
 })();
 </script>
+<!-- ===== PTC MINI CHATBOT (FAQ ASSISTANT) ===== -->
+<style>
+#ptcChatToggle{
+  position:fixed; right:18px; bottom:18px; z-index:9999;
+  width:56px; height:56px; border-radius:50%; border:none;
+  background:#01411C; color:#fff; font-size:1.5rem; cursor:pointer;
+  box-shadow:0 4px 14px rgba(1,65,28,0.35);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease;
+}
+#ptcChatToggle:hover{ transform:scale(1.06); }
+#ptcChatPanel{
+  position:fixed; right:18px; bottom:86px; z-index:9999;
+  width:340px; max-width:calc(100vw - 32px);
+  height:460px; max-height:calc(100vh - 120px);
+  background:#fff; border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.22);
+  display:none; flex-direction:column; overflow:hidden;
+  border:1px solid #dde5e0;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+}
+#ptcChatPanel.ptcOpen{ display:flex; }
+.ptcChatHead{
+  background:#01411C; color:#fff; padding:12px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-weight:700; font-size:0.95rem; flex:0 0 auto;
+}
+#ptcChatClose{ background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer; line-height:1; padding:0 4px; }
+.ptcChatBody{ flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:10px; background:#f4f7f5; }
+.ptcChatMsg{ max-width:88%; padding:9px 12px; border-radius:12px; font-size:0.85rem; line-height:1.5; word-wrap:break-word; }
+.ptcChatMsg.ptcBot{ background:#fff; border:1px solid #dde5e0; color:#1c2a22; align-self:flex-start; border-bottom-left-radius:2px; }
+.ptcChatMsg.ptcUser{ background:#01411C; color:#fff; align-self:flex-end; border-bottom-right-radius:2px; }
+.ptcChatMsg a{ color:#0a6b34; font-weight:700; }
+.ptcChatSuggestions{ display:flex; flex-wrap:wrap; gap:6px; }
+.ptcChatChip{
+  background:#e8f3ec; border:1px solid #cfe3d6; color:#01411C;
+  border-radius:999px; padding:6px 11px; font-size:0.76rem; cursor:pointer; text-align:left;
+}
+.ptcChatChip:hover{ background:#d9ecdf; }
+.ptcChatInputRow{ display:flex; gap:8px; padding:10px; border-top:1px solid #dde5e0; background:#fff; flex:0 0 auto; }
+#ptcChatInput{ flex:1; border:1px solid #dde5e0; border-radius:20px; padding:9px 14px; font:inherit; font-size:0.85rem; outline:none; min-width:0; }
+#ptcChatInput:focus{ border-color:#0a6b34; }
+.ptcChatInputRow button{ width:38px; height:38px; border-radius:50%; border:none; background:#01411C; color:#fff; font-size:1rem; cursor:pointer; flex:0 0 auto; }
+.ptcChatFooterNote{ font-size:0.68rem; color:#8a978f; text-align:center; padding:0 10px 8px; flex:0 0 auto; }
+@media (max-width:480px){
+  #ptcChatPanel{ right:8px; left:8px; width:auto; bottom:78px; height:min(460px, calc(100vh - 110px)); }
+  #ptcChatToggle{ right:12px; bottom:12px; }
+}
+</style>
+
+<button type="button" id="ptcChatToggle" aria-label="Ask a question" aria-expanded="false" title="Ask a question">&#128172;</button>
+<div id="ptcChatPanel" role="dialog" aria-label="Ask a question" aria-hidden="true">
+  <div class="ptcChatHead">
+    <span>Ask a Question</span>
+    <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="ptcChatBody" id="ptcChatBody">
+    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
+  </div>
+  <form class="ptcChatInputRow" id="ptcChatForm">
+    <input type="text" id="ptcChatInput" placeholder="Type your question…" autocomplete="off" aria-label="Type your question">
+    <button type="submit" aria-label="Send">&#10148;</button>
+  </form>
+  <div class="ptcChatFooterNote">Answers are drawn from this site's FAQs — not a substitute for professional advice.</div>
+</div>
+
+<script>
+(function(){
+  var toggle = document.getElementById('ptcChatToggle');
+  var panel = document.getElementById('ptcChatPanel');
+  var closeBtn = document.getElementById('ptcChatClose');
+  var body = document.getElementById('ptcChatBody');
+  var form = document.getElementById('ptcChatForm');
+  var input = document.getElementById('ptcChatInput');
+  var suggestionsWrap = document.getElementById('ptcChatSuggestions');
+  if(!toggle || !panel || !form) return;
+
+  /* ---- Build FAQ index from whatever is on THIS page ---- */
+  var faqIndex = [];
+  document.querySelectorAll('.faq-item, .zk-faq-item').forEach(function(det){
+    var summary = det.querySelector('summary');
+    if(!summary) return;
+    var qEl = summary.querySelector('.lang-en');
+    var qText = (qEl ? qEl.textContent : summary.textContent).replace(/\s+/g,' ').trim();
+    var answerParts = [];
+    det.querySelectorAll('p').forEach(function(p){
+      if(p.classList.contains('zk-faq-citation')) return;
+      if(p.classList.contains('lang-ur')) return;
+      var t = p.textContent.replace(/\s+/g,' ').trim();
+      if(t) answerParts.push(t);
+    });
+    var aText = answerParts.join(' ');
+    if(qText && aText){ faqIndex.push({ q:qText, a:aText, el:det }); }
+  });
+
+  /* ---- Fall back to the site-wide page/search index, if present ---- */
+  var pageIndex = [
+    {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs"},
+    {title:"Withholding Tax (WHT)", url:"withholding-tax.html", desc:"Withholding tax rates and sections"},
+    {title:"Invoice Withholding", url:"invoice-withholding.html", desc:"All-in-one invoice withholding calculator"},
+    {title:"Sales Tax on Goods (GST)", url:"sales-tax-gst.html", desc:"Federal GST rates on goods"},
+    {title:"Sales Tax Withholding", url:"sales-tax-withholding.html", desc:"Sales tax withholding calculator"},
+    {title:"Property Expense Calculator", url:"property-expense-calculator.html", desc:"Property tax and expense calculator"},
+    {title:"FBR Property Valuation", url:"fbr-property-valuation.html", desc:"FBR property valuation rates directory"},
+    {title:"Punjab Sales Tax (PRA)", url:"sales-tax-punjab.html", desc:"Punjab sales tax on services"},
+    {title:"Sindh Sales Tax (SRB)", url:"sales-tax-sindh.html", desc:"Sindh sales tax on services"},
+    {title:"KPK Sales Tax (KPRA)", url:"sales-tax-kpk.html", desc:"Khyber Pakhtunkhwa sales tax on services"},
+    {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
+    {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
+    {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
+  ];
+
+  var STOPWORDS = {the:1,is:1,a:1,an:1,of:1,to:1,in:1,on:1,for:1,and:1,or:1,do:1,does:1,did:1,i:1,my:1,me:1,it:1,be:1,are:1,was:1,were:1,what:1,how:1,can:1,could:1,should:1,will:1,would:1,you:1,your:1,this:1,that:1,these:1,those:1,with:1,from:1,at:1,as:1,if:1,about:1,into:1,also:1,not:1,so:1};
+
+  function tokenize(str){
+    return (String(str).toLowerCase().match(/[a-z0-9%]+/g) || []).filter(function(w){ return w.length > 1 && !STOPWORDS[w]; });
+  }
+
+  function scoreFaq(queryTokens, item){
+    var qTokens = tokenize(item.q), aTokens = tokenize(item.a), score = 0;
+    queryTokens.forEach(function(t){
+      if(qTokens.indexOf(t) > -1) score += 3;
+      else if(aTokens.indexOf(t) > -1) score += 1;
+    });
+    return score;
+  }
+  function scorePage(queryTokens, page){
+    var hay = tokenize((page.title || '') + ' ' + (page.desc || '')), score = 0;
+    queryTokens.forEach(function(t){ if(hay.indexOf(t) > -1) score += 2; });
+    return score;
+  }
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function addMsg(text, cls, isHtml){
+    var div = document.createElement('div');
+    div.className = 'ptcChatMsg ' + cls;
+    if(isHtml){ div.innerHTML = text; } else { div.textContent = text; }
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function answerQuery(raw){
+    var qTokens = tokenize(raw);
+    if(!qTokens.length){
+      addMsg("Could you rephrase that as a question?", 'ptcBot');
+      return;
+    }
+    var bestFaq = null, bestFaqScore = 0;
+    faqIndex.forEach(function(item){
+      var s = scoreFaq(qTokens, item);
+      if(s > bestFaqScore){ bestFaqScore = s; bestFaq = item; }
+    });
+    var bestPage = null, bestPageScore = 0;
+    pageIndex.forEach(function(p){
+      var s = scorePage(qTokens, p);
+      if(s > bestPageScore){ bestPageScore = s; bestPage = p; }
+    });
+
+    if(bestFaq && bestFaqScore >= 3){
+      addMsg(esc(bestFaq.a), 'ptcBot');
+      var linkDiv = addMsg('<a href="#" class="ptcJumpLink">See full answer on this page &rarr;</a>', 'ptcBot', true);
+      var a = linkDiv.querySelector('a');
+      if(a){
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          bestFaq.el.setAttribute('open','');
+          bestFaq.el.scrollIntoView({ behavior:'smooth', block:'center' });
+          panel.classList.remove('ptcOpen');
+          toggle.setAttribute('aria-expanded','false');
+        });
+      }
+    } else if(bestPage && bestPageScore >= 2){
+      addMsg("I couldn't find an exact match here, but this might help: <a href=\"" + esc(bestPage.url) + "\">" + esc(bestPage.title) + "</a> &mdash; " + esc(bestPage.desc), 'ptcBot', true);
+    } else {
+      addMsg("I'm not sure — I can only answer from this site's FAQs. Try rephrasing, use the search bar at the top, or reach out via the Contact / Feedback page.", 'ptcBot');
+    }
+  }
+
+  function buildSuggestions(){
+    suggestionsWrap.innerHTML = '';
+    var picks = faqIndex.slice(0, 4);
+    if(!picks.length){
+      var fallbackUrls = ['income-tax.html','sales-tax-gst.html','withholding-tax.html','zakat-calculator.html'];
+      picks = pageIndex.filter(function(p){ return fallbackUrls.indexOf(p.url) > -1; });
+      picks.forEach(function(p){
+        var chip = document.createElement('button');
+        chip.type = 'button'; chip.className = 'ptcChatChip';
+        chip.textContent = p.title;
+        chip.addEventListener('click', function(){
+          addMsg(p.title, 'ptcUser');
+          window.location.href = p.url;
+        });
+        suggestionsWrap.appendChild(chip);
+      });
+      return;
+    }
+    picks.forEach(function(item){
+      var chip = document.createElement('button');
+      chip.type = 'button'; chip.className = 'ptcChatChip';
+      chip.textContent = item.q;
+      chip.addEventListener('click', function(){
+        addMsg(item.q, 'ptcUser');
+        answerQuery(item.q);
+      });
+      suggestionsWrap.appendChild(chip);
+    });
+  }
+
+  function openPanel(){
+    panel.classList.add('ptcOpen');
+    toggle.setAttribute('aria-expanded','true');
+    panel.setAttribute('aria-hidden','false');
+    input.focus();
+  }
+  function closePanel(){
+    panel.classList.remove('ptcOpen');
+    toggle.setAttribute('aria-expanded','false');
+    panel.setAttribute('aria-hidden','true');
+  }
+
+  toggle.addEventListener('click', function(){
+    if(panel.classList.contains('ptcOpen')){ closePanel(); } else { openPanel(); }
+  });
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && panel.classList.contains('ptcOpen')) closePanel();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = input.value.trim();
+    if(!val) return;
+    addMsg(val, 'ptcUser');
+    input.value = '';
+    setTimeout(function(){ answerQuery(val); }, 150);
+  });
+
+  buildSuggestions();
+})();
+</script>
+<!-- ===== END PTC MINI CHATBOT ===== -->
+
 </body>
 </html>
