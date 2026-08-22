@@ -771,6 +771,8 @@ header.site-header .headerTop h1{
     background:var(--zk-primary-light);border:1px solid var(--zk-primary);border-radius:20px;
     padding:2px 9px;margin-left:0;vertical-align:middle;
   }
+  .zk-elig-nisab-conditions{margin:0 0 12px;padding-left:20px;font-size:0.88rem;color:var(--zk-muted);line-height:1.6;}
+  .zk-elig-nisab-conditions li{margin-bottom:4px;}
   .zk-elig-question{margin-bottom:16px;}
   .zk-elig-question:last-of-type{margin-bottom:12px;}
   .zk-elig-q-text{font-size:0.92rem;margin:0 0 8px;line-height:1.5;}
@@ -1002,7 +1004,14 @@ header.site-header .headerTop h1{
       </div>
 
       <div class="zk-elig-question" data-elig-q="4">
-        <p class="zk-elig-q-text"><strong>4.</strong> Enter what you actually hold — we'll check it against the Nisab threshold for you (after subtracting debts and basic living needs).</p>
+        <p class="zk-elig-q-text"><strong>4.</strong> Does your wealth reach Nisab? Zakat becomes due if <strong>any one</strong> of these four is true:</p>
+        <ol class="zk-elig-nisab-conditions">
+          <li>You hold gold alone reaching its own Nisab — 87.48g (7.5 tola)</li>
+          <li>You hold silver alone reaching its own Nisab — 612.36g</li>
+          <li>You hold cash/bank balance alone worth the value of 612.36g of silver, at today's price</li>
+          <li>You hold a <em>mix</em> of gold, silver and/or cash — none reaching its own threshold alone — but their combined value still reaches the value of 612.36g of silver</li>
+        </ol>
+        <p class="zk-section-note">Enter what you actually hold below (after subtracting debts and basic living needs) and we'll check which condition, if any, applies — with the amounts shown in your reporting currency.</p>
 
         <div class="zk-row zk-row-2">
           <div class="zk-field">
@@ -2122,28 +2131,48 @@ document.addEventListener('click', (e)=>{
       if(netWealth < 0) netWealth = 0;
 
       var resultEl = document.getElementById("zkEligNisabResult");
-      var goldOnlyCase = (goldGrams > 0) && silverGrams <= 0 && cash <= 0;
-      var noRatesAvailable = (goldGrams > 0 || silverGrams > 0) && goldPricePerGramState <= 0 && silverPricePerGramState <= 0;
+      var hasGold = goldGrams > 0;
+      var hasSilver = silverGrams > 0;
+      var hasCash = cash > 0;
+      var typesHeld = [hasGold, hasSilver, hasCash].filter(Boolean).length;
+      var goldOnlyCase = hasGold && !hasSilver && !hasCash;
 
+      var noRatesAvailable = (goldGrams > 0 || silverGrams > 0) && goldPricePerGramState <= 0 && silverPricePerGramState <= 0;
       if(noRatesAvailable){
-        resultEl.textContent = "Enter a gold/silver rate in the \"Country & Reporting Currency\" card below (fetch live or type manually), then check again — metal value can't be priced yet.";
+        resultEl.textContent = "Enter a gold/silver rate above (fetch live, or type one manually in the \"Country & Reporting Currency\" card below), then check again — metal value can't be priced yet.";
         eligAnswers["4"] = null;
         return;
       }
 
-      var meetsNisab;
+      var meetsNisab, message;
+
       if(goldOnlyCase){
+        // Condition 1: gold alone, weighed against its own Nisab (87.48g / 7.5 tola)
         meetsNisab = goldGrams >= NISAB_GOLD_GRAMS;
-        resultEl.textContent = "Gold held: " + goldGrams.toFixed(2) + "g — needs 87.48g (7.5 tola) for the gold-only Nisab. " +
-          (meetsNisab ? "Nisab is met." : "Below Nisab.");
+        message = "<strong>Condition 1 (gold alone):</strong> you hold " + goldGrams.toFixed(2) + "g of gold — the gold-only Nisab is 87.48g (7.5 tola). " +
+          (meetsNisab ? "Nisab is met — this gold alone makes Zakat obligatory." : "Below the gold Nisab.");
       } else {
         var nisabThreshold = NISAB_SILVER_GRAMS * silverPricePerGramState;
         meetsNisab = silverPricePerGramState > 0 && netWealth >= nisabThreshold;
-        resultEl.textContent = "Your net wealth: " + fmt(netWealth) + " — Nisab threshold (612.36g silver): " +
-          (silverPricePerGramState > 0 ? fmt(nisabThreshold) : "enter a silver rate below") + ". " +
-          (silverPricePerGramState > 0 ? (meetsNisab ? "Nisab is met." : "Below Nisab.") : "");
+        var thresholdStr = silverPricePerGramState > 0 ? fmt(nisabThreshold) : "enter a silver rate below";
+
+        if(hasSilver && !hasGold && !hasCash){
+          // Condition 2: silver alone, weighed against its own Nisab (612.36g)
+          message = "<strong>Condition 2 (silver alone):</strong> you hold " + silverGrams.toFixed(2) + "g of silver — the silver Nisab is 612.36g, worth " + thresholdStr + " at today's price. ";
+        } else if(hasCash && !hasGold && !hasSilver){
+          // Condition 3: cash alone, weighed against the value of silver Nisab
+          message = "<strong>Condition 3 (cash alone):</strong> your net cash/bank balance is " + fmt(netWealth) + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
+        } else if(typesHeld >= 2){
+          // Condition 4: a mix, none reaching its own threshold alone, but combined value does
+          message = "<strong>Condition 4 (combined mix):</strong> your gold, silver and cash together are worth " + fmt(netWealth) + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
+        } else {
+          message = "Nothing entered yet — enter your cash, gold and/or silver above to check.";
+        }
+
+        message += (silverPricePerGramState > 0 ? (meetsNisab ? "Nisab is met." : "Below Nisab.") : "");
       }
 
+      resultEl.innerHTML = message;
       eligAnswers["4"] = meetsNisab ? "yes" : "no";
     });
   }
