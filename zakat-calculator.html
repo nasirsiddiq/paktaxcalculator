@@ -1208,9 +1208,26 @@ header.site-header .headerTop h1{
     <!-- BANK ACCOUNTS -->
     <div class="zk-card">
       <h2>Bank Accounts</h2>
-      <p class="zk-section-note">Add every account, in whatever currency it's held. Each is converted to your reporting currency automatically once live rates are fetched. Use the label field for anything else zakatable that sits like a bank balance too — Prize Bonds, Provident Fund balance, or Committee (Bisi) installments already paid in.</p>
+      <p class="zk-section-note">Add every account, in whatever currency it's held. Each is converted to your reporting currency automatically once live rates are fetched.</p>
       <div class="zk-multi-list" id="zkBankList"></div>
       <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddBankBtn">+ Add bank account</button>
+
+      <hr class="zk-divider">
+      <p class="zk-section-note">Other zakatable currency-equivalent holdings <span class="zk-hint">(in your reporting currency)</span>:</p>
+      <div class="zk-row zk-row-3">
+        <div class="zk-field">
+          <label for="zkPrizeBonds">Prize Bonds</label>
+          <input type="number" id="zkPrizeBonds" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkProvidentFund">Provident fund balance</label>
+          <input type="number" id="zkProvidentFund" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkCommitteeDeposits">Committee (Bisi) <span class="zk-hint">paid in so far</span></label>
+          <input type="number" id="zkCommitteeDeposits" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
     </div>
 
     <!-- CASH IN HAND -->
@@ -1289,13 +1306,29 @@ header.site-header .headerTop h1{
         </div>
       </div>
 
+      <p class="zk-section-note" style="margin-top:14px;">Business &amp; merchandise (stock-in-trade) <span class="zk-hint">— enter each category you hold, in your reporting currency</span>:</p>
       <div class="zk-row zk-row-2">
         <div class="zk-field">
-          <label for="zkBusiness">Business cash &amp; inventory
-            <span class="zk-hint">Zakatable value of stock-in-trade — raw materials, finished goods, trading property, and your share of any business partnership assets</span>
-          </label>
-          <input type="number" id="zkBusiness" class="zk-input" min="0" step="0.01" placeholder="0.00">
+          <label for="zkBizRawMaterials">Raw materials <span class="zk-hint">in factory, etc.</span></label>
+          <input type="number" id="zkBizRawMaterials" class="zk-input" min="0" step="0.01" placeholder="0.00">
         </div>
+        <div class="zk-field">
+          <label for="zkBizFinishedGoods">Manufactured / finished goods <span class="zk-hint">in factory or shop</span></label>
+          <input type="number" id="zkBizFinishedGoods" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkBizTradingProperty">Trading property <span class="zk-hint">plots, houses, flats held for resale</span></label>
+          <input type="number" id="zkBizTradingProperty" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkBizPartnership">Business partnership assets <span class="zk-hint">your zakatable share</span></label>
+          <input type="number" id="zkBizPartnership" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="zk-row">
         <div class="zk-field">
           <label for="zkReceivables">Receivables owed to you
             <span class="zk-hint">Money you reasonably expect to collect</span>
@@ -1306,13 +1339,41 @@ header.site-header .headerTop h1{
 
       <hr class="zk-divider">
 
+      <p class="zk-section-note">Liabilities <span class="zk-hint">(deducted from your zakatable wealth — enter each you have, in your reporting currency)</span>:</p>
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkLoan">Loans owed</label>
+          <input type="number" id="zkLoan" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkInstallments">Installments due <span class="zk-hint">house, shop, goods</span></label>
+          <input type="number" id="zkInstallments" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkCommitteePayable">Committee (Bisi) remaining payable</label>
+          <input type="number" id="zkCommitteePayable" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkUtilityBills">Utility bills <span class="zk-hint">received, unpaid, before year-end</span></label>
+          <input type="number" id="zkUtilityBills" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="zk-row zk-row-2">
+        <div class="zk-field">
+          <label for="zkDealerPayables">Payables to dealers/suppliers</label>
+          <input type="number" id="zkDealerPayables" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="zk-field">
+          <label for="zkSalariesPayable">Salaries of employees <span class="zk-hint">unpaid</span></label>
+          <input type="number" id="zkSalariesPayable" class="zk-input" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
       <div class="zk-row">
         <div class="zk-field">
-          <label for="zkDebts">Debts &amp; bills payable
-            <span class="zk-hint">Short-term liabilities due now — deducted from your total, in your reporting currency</span>
-          </label>
-          <input type="number" id="zkDebts" class="zk-input" min="0" step="0.01" placeholder="0.00">
-          <p class="zk-note" style="margin-top:6px;">Include things like: loan and installment payments due, remaining committee (Bisi) balance owed, utility bills already received but unpaid, amounts payable to suppliers/dealers, unpaid staff salaries, and any previous year's Zakat you still haven't paid.</p>
+          <label for="zkPriorYearZakat">Previous year's unpaid Zakat</label>
+          <input type="number" id="zkPriorYearZakat" class="zk-input" min="0" step="0.01" placeholder="0.00">
         </div>
       </div>
 
@@ -1830,11 +1891,27 @@ document.addEventListener('click', (e)=>{
     var silverValue = silverGrams * silverPricePerGramState;
 
     var investments = num("zkInvestments");
-    var business = num("zkBusiness");
-    var receivables = num("zkReceivables");
-    var debts = num("zkDebts");
+    var prizeBonds = num("zkPrizeBonds");
+    var providentFund = num("zkProvidentFund");
+    var committeeDeposits = num("zkCommitteeDeposits");
 
-    var totalAssets = bankTotal + cashTotal + stockTotal + fundTotal + goldValue + silverValue + investments + business + receivables;
+    var bizRawMaterials = num("zkBizRawMaterials");
+    var bizFinishedGoods = num("zkBizFinishedGoods");
+    var bizTradingProperty = num("zkBizTradingProperty");
+    var bizPartnership = num("zkBizPartnership");
+    var business = bizRawMaterials + bizFinishedGoods + bizTradingProperty + bizPartnership;
+    var receivables = num("zkReceivables");
+
+    var loan = num("zkLoan");
+    var installments = num("zkInstallments");
+    var committeePayable = num("zkCommitteePayable");
+    var utilityBills = num("zkUtilityBills");
+    var dealerPayables = num("zkDealerPayables");
+    var salariesPayable = num("zkSalariesPayable");
+    var priorYearZakat = num("zkPriorYearZakat");
+    var debts = loan + installments + committeePayable + utilityBills + dealerPayables + salariesPayable + priorYearZakat;
+
+    var totalAssets = bankTotal + cashTotal + stockTotal + fundTotal + goldValue + silverValue + investments + prizeBonds + providentFund + committeeDeposits + business + receivables;
     var netWealth = totalAssets - debts;
     if(netWealth < 0) netWealth = 0;
 
@@ -2305,6 +2382,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan Revenue Authority rates"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"ICT sales tax on services"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"},
+    {title:"FBR Sales Tax Rules for Five Categories (2026)", url:"fbr-sales-tax-five-categories-2026.html", desc:"STGO 19 of 2026: footwear & POS-retail valuation changes"},
     {title:"FBR's Rs. 5/Unit Electricity Tax on Steel", url:"fbr-electricity-tax-steel-2026.html", desc:"Who pays the new steel-sector electricity tax"},
     {title:"FBR's AI Tax Audit System", url:"fbr-ai-tax-audit-pakistan-2026.html", desc:"How FBR's AI risk-engine audit works"},
     {title:"Shabbar Zaidi: Rs1bn Defamation Notice", url:"shabbar-zaidi-defamation-notice-2026.html", desc:"Ex-FBR chief hit with JI legal notice"},
