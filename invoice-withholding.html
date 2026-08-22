@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1131,6 +1144,61 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Federal GST on goods and provincial sales tax on services are levied on <em>different</em> supplies, so <strong>Separate amounts</strong> is the accurate choice for a mixed invoice: enter the goods portion and the services portion, and each tax is applied only to its own portion. <strong>One amount for both</strong> applies both taxes to the same figure, which suits a single value you want tested against both levies but will overstate the tax on a genuinely mixed invoice. Each tax is worked out under the general withholding rule using its own supplier status &mdash; an agent deducts 1/5th (20%) of the tax from a registered, ATL-active supplier, and the whole (100%) applicable tax from an unregistered one. Because an unregistered supplier issues no tax invoice showing tax separately, an amount whose supplier is unregistered is treated as already including that tax, which is extracted with the tax fraction rate/(100+rate); tax for a registered supplier is added on top instead. Several categories depart from the 20%/100% rule (advertisement services withheld in full regardless of registration, federal wholesalers/dealers at 1/10th, Punjab telecom/banking/insurance at 80%, and others) &mdash; for those, use the detailed <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, which models each category separately. Income tax withholding under s.153 is deducted from the same payment but is not included here &mdash; see the <a href="withholding-tax.html">Withholding Tax (WHT)</a> calculator. Rates change frequently; confirm with FBR or the relevant provincial authority before relying on these figures for filing.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: A Mixed Goods + Services Invoice</h2>
+    <p class="sub">A registered, ATL-active supplier in Punjab invoices Rs. 400,000 for goods and Rs. 100,000 for services on the same bill.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Goods portion &times; 18% GST</span><span>Rs. 72,000</span></div>
+      <div class="ex-line"><span>Services portion &times; 16% Punjab sales tax</span><span>Rs. 16,000</span></div>
+      <div class="ex-line total"><span>Gross invoice (500,000 + 88,000 tax)</span><span>Rs. 588,000</span></div>
+      <div class="ex-line"><span>Withheld: 1/5th of GST (registered supplier)</span><span>Rs. 14,400</span></div>
+      <div class="ex-line"><span>Withheld: 1/5th of Punjab tax (registered)</span><span>Rs. 3,200</span></div>
+      <div class="ex-line total"><span>Net payment to supplier</span><span>Rs. 570,400</span></div>
+      <p class="ex-note">The withheld Rs. 17,600 is deposited by the paying agent directly with FBR and the Punjab Revenue Authority on the supplier's behalf, and is creditable against the supplier's own return.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>Why does this invoice have two different sales taxes on it?</summary>
+      <p>Goods and services are taxed under separate laws in Pakistan: goods fall under the federal Sales Tax Act, 1990 (GST), while services fall under whichever provincial or territorial sales tax law applies to where the service is rendered (PRA, SRB, KPRA, BRA, or ICT). A single invoice covering both a product and a service genuinely owes both taxes, each on its own portion.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>When should I use "Separate amounts" instead of "One amount for both"?</summary>
+      <p>Use "Separate amounts" whenever you can split the invoice into a goods value and a services value &mdash; it's the accurate calculation. "One amount for both" is only useful as a quick check of what each tax would be if the whole amount were goods, or if it were services; applying it to a real mixed invoice overstates the total tax due.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why is only 20% of the tax withheld, not the whole amount?</summary>
+      <p>The general sales-tax-withholding rule (used by FBR and every provincial authority) has the paying agent withhold only 1/5th (20%) of the tax shown on the invoice when the supplier is registered and active on the Active Taxpayer List &mdash; the supplier remits the remaining 4/5th itself through its own monthly return. The full 100% is withheld only when the supplier is unregistered or ATL-inactive.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does this tool include income tax withholding too?</summary>
+      <p>No &mdash; this calculator covers sales tax (GST and provincial) only. Income tax withholding under Section 153 of the Income Tax Ordinance is deducted from the same payment separately; use the <a href="withholding-tax.html">Withholding Tax (WHT)</a> calculator to work that out and combine it with the sales tax figures here for the full picture.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if my category isn't a standard 20%/100% withholding case?</summary>
+      <p>A handful of categories deviate from the general rule &mdash; advertisement services are withheld in full regardless of registration, federal wholesalers/dealers get a reduced 1/10th rate, and Punjab's telecom/banking/insurance sector is withheld at 80%. For those, use the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, which models each category individually.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Why can one invoice in Pakistan have two different sales taxes?","acceptedAnswer":{"@type":"Answer","text":"Goods are taxed under the federal Sales Tax Act (GST) while services are taxed under the relevant provincial sales tax law, so a mixed invoice can genuinely owe both taxes on their respective portions."}},
+        {"@type":"Question","name":"Why is only 20% of sales tax withheld on an invoice?","acceptedAnswer":{"@type":"Answer","text":"The general withholding rule has the paying agent withhold 1/5th (20%) of the tax when the supplier is registered and ATL-active; the full 100% is withheld only when the supplier is unregistered or inactive."}},
+        {"@type":"Question","name":"Does the invoice withholding calculator include income tax withholding?","acceptedAnswer":{"@type":"Answer","text":"No, it covers sales tax (GST and provincial) only. Income tax withholding under Section 153 must be calculated separately."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

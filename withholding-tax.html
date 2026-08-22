@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1093,6 +1106,64 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     WHT under the Income Tax Ordinance, 2001 has many category-specific rates and exemptions beyond what is listed here. Most rates shown are minimum/adjustable tax (creditable against final liability); dividend and profit-on-debt rates are generally final tax. TY2025-26 rates are sourced from FBR's official Withholding Tax Rate Card updated to 30 June 2025 (Finance Act 2025); TY2026-27 rates reflect Finance Act 2026 changes. Both tax years show the same 14 categories, but the line items inside a category can differ, because some charges did not exist in both years &mdash; social-media/digital platform revenue (s.154B) and life-insurance payout gains (s.151B) were introduced by the Finance Act 2026 and therefore have no TY2025-26 equivalent, while the graduated property-transfer slabs under s.236C and s.236K were replaced by flat rates from TY2026-27. Note also that FBR had not published an official TY2026-27 rate card at the time of writing, so TY2026-27 figures are drawn from professional-firm commentary on the Finance Act; the non-filer rates for s.236C and s.236K in particular are not officially confirmed and are shown on the assumption that the previous non-filer rates carry over. Verify the exact clause applicable to your transaction with FBR's official rate card or a tax advisor.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: WHT on a Rs. 1,000,000 Goods Payment</h2>
+    <p class="sub">A company buys Rs. 1,000,000 worth of goods (other than rice/cotton-seed/edible oil) from a supplier under Section 153, tax year 2025-26.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Gross payment for goods</span><span>Rs. 1,000,000</span></div>
+      <div class="ex-line"><span>Supplier is a filer &mdash; rate 5.5%</span><span>Rs. 55,000 withheld</span></div>
+      <div class="ex-line total"><span>Net payment to filer supplier</span><span>Rs. 945,000</span></div>
+      <p class="ex-note">If the same supplier is a <strong>non-filer</strong>, the rate roughly doubles to 11% (Rs. 110,000 withheld), leaving a net payment of Rs. 890,000. This is why staying on the Active Taxpayer List (ATL) matters &mdash; it's a large, immediate difference on every payment.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is Withholding Tax (WHT) and how is it different from GST?</summary>
+      <p>WHT is an advance collection of the <em>recipient's</em> income tax, deducted by the payer at the time of payment under provisions like Section 153 (goods/services/contracts), 155 (rent), or 150 (dividends). It's separate from GST/sales tax, which taxes the supply itself under a different law &mdash; a single transaction can attract both.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the difference between filer and non-filer WHT rates?</summary>
+      <p>Almost every WHT category has two rates: a lower one for taxpayers who appear on FBR's Active Taxpayer List (ATL, i.e. "filers"), and a higher one &mdash; often roughly double &mdash; for those who don't. The non-filer rate is meant to encourage return filing and ATL registration, not to punish genuinely exempt persons.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is WHT a final tax, or can I adjust it against my return?</summary>
+      <p>It depends on the category. Most WHT under Section 153 (goods, services, contracts) is <em>minimum or adjustable tax</em> &mdash; it counts as a credit against your final income tax liability when you file. Dividend and profit-on-debt withholding, however, is generally a <em>final tax</em>, meaning no further tax is due (or refundable) on that income regardless of your overall tax bracket.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is WHT calculated on rent of property?</summary>
+      <p>Rent under Section 155 uses its own slab structure rather than a flat percentage, with the rate increasing as annual rent rises, and typically no distinction between company and individual landlords in the way goods/services withholding does. Select "Rent of Property" above and enter the annual rent to see the applicable slab.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if I don't know whether the other party is a filer?</summary>
+      <p>You can check any CNIC or NTN against FBR's Active Taxpayer List online (the ATL is updated regularly) before finalising a payment. If you can't verify status in time, applying the higher non-filer rate is the safer default &mdash; the affected party can always claim a refund or adjustment later once their filer status is confirmed.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does this calculator cover every WHT section in the Income Tax Ordinance?</summary>
+      <p>It covers the most commonly encountered categories &mdash; goods, services, contracts, rent, dividends, imports, exports, property transactions, and several others &mdash; but the Ordinance contains additional narrower provisions and periodic SRO changes not listed here. Confirm the exact section applicable to an unusual transaction with FBR's official rate card or a tax advisor.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is Withholding Tax (WHT) in Pakistan and how does it differ from GST?","acceptedAnswer":{"@type":"Answer","text":"WHT is an advance collection of the recipient's income tax, deducted by the payer under sections like 153, 155, or 150. It is separate from GST, which taxes the supply itself under the Sales Tax Act."}},
+        {"@type":"Question","name":"What is the difference between filer and non-filer WHT rates?","acceptedAnswer":{"@type":"Answer","text":"Most WHT categories have a lower rate for taxpayers on FBR's Active Taxpayer List (filers) and a higher rate, often roughly double, for non-filers."}},
+        {"@type":"Question","name":"Is withholding tax a final tax or adjustable against my return in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Most WHT on goods, services and contracts under Section 153 is adjustable against final income tax liability. Dividend and profit-on-debt withholding is generally a final tax."}},
+        {"@type":"Question","name":"How is WHT calculated on rent of property under Section 155?","acceptedAnswer":{"@type":"Answer","text":"Rent withholding under Section 155 uses a slab structure where the rate increases as annual rent rises, rather than a single flat percentage."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

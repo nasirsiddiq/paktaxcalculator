@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1071,6 +1084,58 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Provincial sales tax on services is legislated separately by each provincial Finance Act and revised annually with dozens of category-specific rates. The rates here cover the most common categories for Punjab; confirm the exact tariff heading for your service with the Punjab Revenue Authority (PRA). For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: A Punjab Marketing Services Invoice</h2>
+    <p class="sub">A digital marketing agency in Lahore invoices a client Rs. 250,000 for its services, at Punjab's 16% standard rate.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Service value (excl. tax)</span><span>Rs. 250,000</span></div>
+      <div class="ex-line"><span>Punjab sales tax (16%)</span><span>Rs. 40,000</span></div>
+      <div class="ex-line total"><span>Total invoice value</span><span>Rs. 290,000</span></div>
+      <p class="ex-note">If the client is a company or other withholding agent paying a registered, ATL-active agency, it would typically withhold 1/5th of that Rs. 40,000 (Rs. 8,000) and pay the rest &mdash; see the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is the standard Punjab sales tax rate on services?</summary>
+      <p>Punjab's standard rate under the Punjab Sales Tax on Services Act, 2012 is 16%, applied to most services rendered or provided in Punjab, unless a specific category has its own notified rate.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is Punjab sales tax the same as federal GST?</summary>
+      <p>No. Federal GST (18%) taxes goods under the Sales Tax Act, 1990, while Punjab sales tax on services is a separate provincial levy administered by the Punjab Revenue Authority (PRA) under its own Act. A business dealing in both goods and services can owe both taxes on different parts of the same transaction.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I know if my specific service has a different rate than 16%?</summary>
+      <p>The Punjab Sales Tax on Services Act schedules list dozens of category-specific rates and exemptions that are revised through the annual Punjab Finance Act. Use the category dropdown above to check whether your specific service has a notified rate different from the 16% default, and confirm with the PRA for anything unusual.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does withholding apply to Punjab sales tax invoices?</summary>
+      <p>Yes &mdash; when a company or other designated withholding agent pays a registered, ATL-active service provider, it generally withholds 1/5th (20%) of the Punjab sales tax shown on the invoice and remits it directly to the PRA, with the provider depositing the rest itself. The full 100% is withheld if the provider is unregistered or inactive.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if I provide a service that isn't listed in the Punjab schedule?</summary>
+      <p>Services genuinely outside the scope of the Punjab Sales Tax on Services Act aren't subject to it at all. If your service is covered but simply not listed here, treat the 16% standard rate as a starting assumption and confirm the exact tariff heading with the PRA, since new categories are added periodically.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is the standard Punjab sales tax rate on services?","acceptedAnswer":{"@type":"Answer","text":"Punjab's standard rate under the Punjab Sales Tax on Services Act, 2012 is 16%, applied to most services rendered in Punjab unless a specific category has its own rate."}},
+        {"@type":"Question","name":"Is Punjab sales tax the same as federal GST?","acceptedAnswer":{"@type":"Answer","text":"No, federal GST taxes goods under the Sales Tax Act, 1990, while Punjab sales tax on services is a separate provincial levy administered by the Punjab Revenue Authority."}},
+        {"@type":"Question","name":"Does withholding apply to Punjab sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Yes, a withholding agent generally deducts 1/5th of the Punjab sales tax shown on an invoice from a registered, ATL-active provider, and the full amount from an unregistered one."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

@@ -941,6 +941,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1195,6 +1208,70 @@ header.site-header .headerTop h1{
     <div class="disclaimer">
       Based on Section 82 of the Income Tax Ordinance, 2001: (a) present 183+ days in the tax year; (b) present 120+ days in the tax year <em>and</em> 365+ days cumulatively in the preceding 4 tax years; (c) a Federal/Provincial Government employee posted abroad; or (d) a Pakistani citizen not resident/183+ days present in any other country in the tax year (added by the Finance Act 2022, aimed at Pakistanis not tax-resident anywhere). Meeting <em>any one</em> test is sufficient for residency. This is a simplified guide &mdash; edge cases (part-year moves, tax treaties, tie-breaker rules) should be confirmed with a tax advisor or FBR.
     </div>
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: Tax on a Rs. 250,000/Month Salary</h2>
+    <p class="sub">Here's exactly how the calculator gets its number for a salaried employee earning Rs. 250,000 a month (Rs. 3,000,000 a year) in tax year 2025-26.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Monthly salary</span><span>Rs. 250,000</span></div>
+      <div class="ex-line"><span>Annualised income (&times;12)</span><span>Rs. 3,000,000</span></div>
+      <div class="ex-line"><span>Applicable slab</span><span>Rs. 2,200,000 &ndash; 3,200,000 @ 23%</span></div>
+      <div class="ex-line"><span>Base tax on slab entry</span><span>Rs. 116,000</span></div>
+      <div class="ex-line"><span>Plus 23% of (3,000,000 &minus; 2,200,000)</span><span>Rs. 184,000</span></div>
+      <div class="ex-line total"><span>Annual tax payable</span><span>Rs. 300,000</span></div>
+      <div class="ex-line"><span>Monthly tax (withheld by employer)</span><span>Rs. 25,000</span></div>
+      <div class="ex-line"><span>Monthly take-home pay</span><span>Rs. 225,000</span></div>
+      <p class="ex-note">Effective tax rate: 10% of gross income. For the same Rs. 3,000,000 income in <strong>tax year 2026-27</strong>, the same slab is taxed at 20% instead of 23%, bringing annual tax down to Rs. 276,000 &mdash; Rs. 24,000 less per year.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>How is income tax calculated on salary in Pakistan?</summary>
+      <p>Pakistan uses a slab (progressive) system for salaried individuals under the First Schedule to the Income Tax Ordinance, 2001. Your annual taxable salary is matched to a slab, and tax is calculated as a fixed base amount for that slab plus a percentage of the amount above the slab's starting point &mdash; not a flat percentage of your whole income. This calculator does that slab lookup and math for you automatically.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What income is completely tax-free?</summary>
+      <p>For both tax years 2025-26 and 2026-27, salaried and business/AOP income up to Rs. 600,000 a year (Rs. 50,000/month) falls in the 0% slab and is not taxed at all.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the difference between the "Salaried" and "Business/AOP" slabs?</summary>
+      <p>Business individuals and Associations of Persons (AOPs) are taxed on a separate, generally steeper slab table than salaried employees &mdash; for example, the first taxable slab above Rs. 600,000 is 15% for business income versus just 1% for salaried income. This reflects that salaried income already has tax withheld at source each month, while business income is typically assessed and paid at return-filing time.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need to pay super tax on top of the regular slab tax?</summary>
+      <p>Super tax under Section 4C applies only once your annual taxable income exceeds Rs. 150 million, starting at 1% and rising in slabs to 10% for income above Rs. 500 million. It applies in addition to the normal slab tax and to companies as well as individuals. Most salaried and small business taxpayers will never reach this threshold.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the calculator ask for "Monthly Salary" and then multiply by 12?</summary>
+      <p>Pakistan's income tax slabs are defined on an annual basis, but most people know their pay as a monthly figure. Choosing "Monthly Salary" simply annualises what you enter (&times;12) so it can be matched against the correct yearly slab &mdash; the tax shown is then divided back down to show your monthly withholding.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use this calculator to file my actual tax return?</summary>
+      <p>This calculator gives a reliable estimate for planning purposes based on the published slab rates, but it doesn't account for every possible deduction, tax credit, or exemption (e.g. donations, Sehat Card premiums, specific allowances) that could apply to your individual return. Use it to understand roughly what you owe, then confirm the final figure with FBR's IRIS portal or a tax practitioner before filing.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"How is income tax calculated on salary in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Pakistan uses a slab (progressive) system for salaried individuals under the First Schedule to the Income Tax Ordinance, 2001. Annual taxable salary is matched to a slab, and tax is a fixed base amount for that slab plus a percentage of the amount above the slab's starting point."}},
+        {"@type":"Question","name":"What income is completely tax-free in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"For tax years 2025-26 and 2026-27, salaried and business/AOP income up to Rs. 600,000 a year (Rs. 50,000/month) falls in the 0% slab and is not taxed."}},
+        {"@type":"Question","name":"What's the difference between Salaried and Business/AOP tax slabs in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Business individuals and AOPs are taxed on a steeper slab table than salaried employees — the first taxable slab above Rs. 600,000 is 15% for business income versus 1% for salaried income."}},
+        {"@type":"Question","name":"When does super tax apply in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Super tax under Section 4C applies once annual taxable income exceeds Rs. 150 million, starting at 1% and rising to 10% above Rs. 500 million, in addition to normal slab tax."}},
+        {"@type":"Question","name":"Can this calculator be used to file an actual Pakistan tax return?","acceptedAnswer":{"@type":"Answer","text":"It gives a reliable estimate based on published slab rates but does not account for every deduction, credit, or exemption. Confirm the final figure with FBR's IRIS portal or a tax practitioner before filing."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

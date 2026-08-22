@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1113,6 +1126,66 @@ header.site-header .headerTop h1{
     </table>
     <div class="note">Rates reflect the Sales Tax Act, 1990 as amended by the Finance Act 2025 / 2026-27. This list covers the most commonly referenced categories only &mdash; the Third, Sixth, Eighth, Tenth &amp; Eleventh Schedules contain many more item- and HS-code-specific rates that are frequently revised by SRO. Always confirm the exact rate for your item/HS code on <a href="https://www.fbr.gov.pk/sales-tax/142263/131269" target="_blank" rel="noopener">fbr.gov.pk</a>.</div>
     <div class="note">Recent update: FBR's Sales Tax General Order 19 of 2026 clarified the valuation basis for footwear and related Third Schedule Serial 65 goods sold through POS-integrated retail chains, retrospective to 1 July 2026. <a href="fbr-sales-tax-five-categories-2026.html">Read what changed &rarr;</a></div>
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: GST on a Rs. 500,000 Goods Invoice</h2>
+    <p class="sub">A registered manufacturer sells Rs. 500,000 worth of taxable goods (standard rate, not a Third Schedule item). Here's the tax at each stage.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Value of goods (excl. tax)</span><span>Rs. 500,000</span></div>
+      <div class="ex-line"><span>Sold to a registered, ATL-active buyer</span><span>18% GST</span></div>
+      <div class="ex-line total"><span>GST charged</span><span>Rs. 90,000</span></div>
+      <div class="ex-line"><span>Total invoice value</span><span>Rs. 590,000</span></div>
+      <p class="ex-note">If the same goods were instead sold to an <strong>unregistered</strong> person, an additional 4% further tax under Section 3(1A) applies &mdash; GST becomes 22% (Rs. 110,000), for a total invoice of Rs. 610,000.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is the standard GST rate on goods in Pakistan?</summary>
+      <p>The standard rate of sales tax (GST) on goods under the Sales Tax Act, 1990 is 18%, applied to the value of taxable supplies and imports. Certain categories carry reduced, zero, or exempt rates instead &mdash; see the full rate list above.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is "further tax" and when does it apply?</summary>
+      <p>Further tax under Section 3(1A) adds an extra 4% on top of the standard 18% rate when a registered person sells taxable goods to a buyer who is <em>not</em> registered for sales tax &mdash; bringing the effective rate to 22%. It's designed to encourage buyers to register and doesn't apply to sales between two registered persons.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What goods are exempt from GST?</summary>
+      <p>The Sixth Schedule exempts a defined list of essentials: fresh milk, plain atta/flour, rice and pulses, fresh fruits and vegetables, eggs, live animals and poultry, unbranded/unpacked meat, books and newspapers, most medicines and pharmaceutical raw materials, and specified agricultural inputs. Branded or packaged versions of some of these (like packaged meat) can lose the exemption.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is GST charged on Third Schedule retail-price items differently from other goods?</summary>
+      <p>Third Schedule items (biscuits, aerated and mineral water, juices, tea, cereals, ice cream, toiletries, detergents, cosmetics, and similar consumer goods, plus footwear and related goods under Serial 65) are taxed on the <em>printed retail price</em> rather than the manufacturer's ex-factory value, and the tax is collected once at the manufacturer/importer stage rather than at every point of sale down the supply chain.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is GST the same as income tax withholding?</summary>
+      <p>No. GST (sales tax) taxes the supply of goods itself and is governed by the Sales Tax Act, 1990. Income tax withholding (e.g. under Section 153) is a separate, advance deduction of the <em>buyer's</em> income tax obligation on the same payment. A single invoice can attract both &mdash; see the <a href="withholding-tax.html">Withholding Tax</a> calculator for that side of it.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How often do GST rates change?</summary>
+      <p>The standard 18% rate is relatively stable, but item-specific and Schedule-based rates (Third, Sixth, Eighth, Tenth and Eleventh Schedules) are revised frequently through the annual Finance Act and via SRO notifications between budgets &mdash; the footwear/POS-retail valuation update above is an example of an in-year change. Always confirm the current rate for your specific item on fbr.gov.pk before filing.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is the standard GST rate on goods in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"The standard rate of sales tax (GST) on goods under the Sales Tax Act, 1990 is 18%, applied to the value of taxable supplies and imports."}},
+        {"@type":"Question","name":"What is further tax under Section 3(1A) of the Sales Tax Act?","acceptedAnswer":{"@type":"Answer","text":"Further tax adds an extra 4% on top of the standard 18% GST rate when a registered person sells taxable goods to an unregistered buyer, bringing the effective rate to 22%."}},
+        {"@type":"Question","name":"What goods are exempt from GST in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"The Sixth Schedule exempts fresh milk, plain atta/flour, rice and pulses, fresh fruits and vegetables, eggs, live animals and poultry, unbranded meat, books and newspapers, most medicines, and specified agricultural inputs."}},
+        {"@type":"Question","name":"How is GST charged on Third Schedule retail-price items?","acceptedAnswer":{"@type":"Answer","text":"Third Schedule items are taxed on the printed retail price rather than ex-factory value, with tax collected once at the manufacturer or importer stage."}},
+        {"@type":"Question","name":"Is GST the same as income tax withholding in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"No. GST taxes the supply of goods under the Sales Tax Act, 1990, while income tax withholding under Section 153 is a separate advance deduction of the buyer's income tax obligation on the same payment."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

@@ -550,6 +550,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -754,6 +767,65 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     This calculator gives an estimate for planning purposes only, based on Sections 236C, 236K, and 37 (Capital Gains Tax) of the Income Tax Ordinance as amended by the Finance Act 2025, plus commonly reported provincial stamp duty and registration fee rates as of mid-2026. Stamp duty, registration fee, mutation/town tax, and DC valuation rates change by province, property type, and specific notification &mdash; confirm current rates with your local sub-registrar, Excise &amp; Taxation Department, or the CDA before a transaction. Non-filer Capital Gains Tax is taxed at your normal income slab rate (minimum 15%), which this tool approximates rather than computes exactly. Nothing here is tax or legal advice; for an actual transaction, consult a tax practitioner or property lawyer.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: Buying a Rs. 30,000,000 Property in Punjab</h2>
+    <p class="sub">A filer buys a plot valued at Rs. 30,000,000 in Punjab (province defaults: 1.0% stamp duty, 1.0% registration fee).</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Stamp duty (1.0%)</span><span>Rs. 300,000</span></div>
+      <div class="ex-line"><span>Registration fee (1.0%)</span><span>Rs. 300,000</span></div>
+      <div class="ex-line"><span>Section 236K advance tax, filer (value &le; Rs. 50m &rarr; 1.5%)</span><span>Rs. 450,000</span></div>
+      <div class="ex-line total"><span>Total on top of purchase price</span><span>Rs. 1,050,000</span></div>
+      <p class="ex-note">If the same buyer were a <strong>non-filer</strong>, the 236K rate jumps to 10.5% at this value band &mdash; Rs. 3,150,000 instead of Rs. 450,000, a difference of Rs. 2.7 million on the same transaction. This is the single biggest reason to be on the Active Taxpayer List before buying property.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What's the difference between Section 236C and 236K?</summary>
+      <p>Section 236K is advance tax collected from the <em>buyer</em> at the time of purchase/transfer. Section 236C is advance tax collected from the <em>seller</em> at the time of sale. Both are calculated as a percentage of the property's declared/FBR value, with the percentage depending on the value band and whether the person is a filer.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do 236C and 236K apply to overseas Pakistanis?</summary>
+      <p>Yes, but FBR applies the lower filer rate to overseas Pakistanis holding a valid POC (Pakistan Origin Card) or NICOP, even if they aren't on Pakistan's Active Taxpayer List &mdash; recognising that many aren't required to file a Pakistani return. Check the "Overseas Pakistani" option above to apply this.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is Capital Gains Tax (CGT) calculated on property?</summary>
+      <p>For property acquired on or after 1 July 2024, CGT is a flat 15% of the gain regardless of how long it was held. For property acquired before that date, the older holding-period scale applies instead &mdash; the rate steps down the longer you hold, from 15% for under a year to 0% once you've held it 6 years or more.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why did the holding-period CGT scale change in 2024?</summary>
+      <p>The Finance Act 2024 simplified CGT on immovable property by replacing the old sliding scale (which rewarded longer holding periods with a lower rate) with a flat 15% rate for anything acquired from 1 July 2024 onward. Property bought before that date keeps the benefit of the older scale.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do stamp duty rates differ by property type or location?</summary>
+      <p>Yes &mdash; the rates shown here are general provincial defaults, but actual stamp duty, registration fee, and mutation/town tax can vary by property type (residential, commercial, agricultural), specific district, and notifications issued by the local Excise & Taxation Department or the Capital Development Authority (CDA) for Islamabad. Always confirm the exact rate with your sub-registrar before a transaction.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is the 236C/236K advance tax refundable?</summary>
+      <p>236C and 236K are <em>advance</em> collections of income tax, not a separate final charge &mdash; they are adjustable against the payer's overall income tax liability when they file their annual return, and can be refunded if the total tax paid during the year exceeds what's actually owed.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What's the difference between Section 236C and 236K in Pakistan property transactions?","acceptedAnswer":{"@type":"Answer","text":"Section 236K is advance tax collected from the buyer at purchase; Section 236C is advance tax collected from the seller at sale. Both scale with property value and filer status."}},
+        {"@type":"Question","name":"Do 236C and 236K apply to overseas Pakistanis?","acceptedAnswer":{"@type":"Answer","text":"Yes, but FBR applies the lower filer rate to overseas Pakistanis with a valid POC or NICOP even if they are not on Pakistan's Active Taxpayer List."}},
+        {"@type":"Question","name":"How is Capital Gains Tax calculated on property in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Property acquired on or after 1 July 2024 is taxed at a flat 15% CGT rate. Property acquired earlier uses a holding-period scale that steps down to 0% after 6 years."}},
+        {"@type":"Question","name":"Is Section 236C/236K advance tax refundable in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Yes, both are advance collections of income tax that are adjustable against the payer's annual tax liability and refundable if total tax paid exceeds what is owed."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1071,6 +1084,58 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
 The default/standard rate for services in Khyber Pakhtunkhwa is 15% under the KP Finance Act (Sales Tax on Services). This calculator additionally reflects the specific rate changes notified via amendments to the KP Sales Tax on Services Act 2022's First &amp; Second Schedules (notification dated May 2026) for a limited set of categories &mdash; rental/leasing, real estate, foreign exchange dealing, motor vehicle insurance, IP licensing, publishing, health-related services, digital-payment restaurant/hotel bills, and annual developmental projects. We were not provided the full, consolidated First &amp; Second Schedule for KP, so categories not explicitly listed above should be assumed to fall under the 15% standard rate, but please confirm your exact tariff heading and current rate with the Khyber Pakhtunkhwa Revenue Authority (KPRA) or a tax advisor, as KPRA revises schedules periodically. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: A KPK Consulting Services Invoice</h2>
+    <p class="sub">A Peshawar-based consulting firm invoices a client Rs. 300,000 at KPK's 15% standard rate.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Service value (excl. tax)</span><span>Rs. 300,000</span></div>
+      <div class="ex-line"><span>KPK sales tax (15%)</span><span>Rs. 45,000</span></div>
+      <div class="ex-line total"><span>Total invoice value</span><span>Rs. 345,000</span></div>
+      <p class="ex-note">A handful of categories &mdash; rental/leasing, real estate, foreign exchange dealing, motor vehicle insurance, IP licensing, publishing, and digital-payment restaurant/hotel bills &mdash; carry their own notified rate instead of this 15% default; check the category dropdown above for your specific service.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is the standard sales tax rate on services in KPK?</summary>
+      <p>The default rate under the KP Sales Tax on Services Act is 15%, applying to services not covered by one of the specific category rates notified separately by the Khyber Pakhtunkhwa Revenue Authority (KPRA).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why do only some categories have a different rate listed?</summary>
+      <p>KPRA periodically amends the First and Second Schedules of the KP Sales Tax on Services Act 2022 to set specific rates for particular categories &mdash; this calculator reflects the categories we could source rate changes for as of the May 2026 notification. Any category not explicitly listed should be treated as falling under the 15% standard rate unless you confirm otherwise with KPRA.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is KPK sales tax on services different from federal GST?</summary>
+      <p>Yes &mdash; federal GST (18%) applies to goods under the Sales Tax Act, 1990, while KPK's sales tax on services is a separate provincial levy on services rendered in Khyber Pakhtunkhwa, administered by KPRA under its own legislation.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does withholding apply to KPK sales tax invoices?</summary>
+      <p>Generally yes, following the pattern used across FBR and the provincial authorities &mdash; a withholding agent typically deducts a portion of the sales tax shown on an invoice from a registered service provider. KPRA regulations also separately reference a 50% residual withholding rate for some non-standard categories, so confirm which rule applies to your specific service.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How current are the KPK rates shown here?</summary>
+      <p>We were not provided the full, consolidated First and Second Schedule for KPK, so this calculator reflects the specific rate changes we could source plus the 15% default for everything else. KPRA revises its schedules periodically &mdash; confirm your exact tariff heading and current rate with KPRA or a tax advisor before filing.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is the standard sales tax rate on services in Khyber Pakhtunkhwa?","acceptedAnswer":{"@type":"Answer","text":"The default rate under the KP Sales Tax on Services Act is 15%, applying to services not covered by a specific category rate notified by KPRA."}},
+        {"@type":"Question","name":"Is KPK sales tax on services different from federal GST?","acceptedAnswer":{"@type":"Answer","text":"Yes, federal GST applies to goods under the Sales Tax Act, 1990, while KPK sales tax on services is a separate provincial levy administered by KPRA."}},
+        {"@type":"Question","name":"Does withholding apply to KPK sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Generally yes, a withholding agent deducts a portion of the sales tax shown from a registered service provider, though KPRA separately references a 50% residual rate for some non-standard categories."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

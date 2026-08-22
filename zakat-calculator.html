@@ -12,6 +12,9 @@
 <link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0a4f2c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
@@ -864,6 +867,64 @@ header.site-header .headerTop h1{
     .zk-hawl-panel .zk-toggle-btn{ min-width:0; }
     .zk-hawl-panel .zk-hijri-row{ grid-template-columns:1fr; }
   }
+
+  /* ---- English / Urdu language toggle ---- */
+  .lang-ur{
+    display:none;
+    font-family:'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+    direction:rtl;
+    text-align:right;
+    line-height:2.1;
+  }
+  html[data-lang="ur"] .lang-en{ display:none; }
+  html[data-lang="ur"] .lang-ur{ display:block; }
+  html[data-lang="ur"] span.lang-ur{ display:inline; }
+  .zk-lang-switch{
+    position:sticky;
+    top:8px;
+    z-index:80;
+    display:flex;
+    justify-content:flex-end;
+    gap:6px;
+    margin:0 0 12px;
+  }
+  .zk-lang-btn{
+    font:inherit;
+    font-size:0.82rem;
+    font-weight:700;
+    padding:6px 14px;
+    border-radius:999px;
+    border:1px solid var(--zk-border, #dfe6e2);
+    background:#fff;
+    color:var(--zk-primary, #0f6f5c);
+    cursor:pointer;
+    box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  }
+  .zk-lang-btn.active{
+    background:var(--zk-primary, #0f6f5c);
+    color:#fff;
+    border-color:var(--zk-primary, #0f6f5c);
+  }
+  .zk-faq-item{ border-bottom:1px solid var(--zk-border, #dfe6e2); padding:14px 2px; }
+  .zk-faq-item:last-child{ border-bottom:none; }
+  .zk-faq-item summary{
+    cursor:pointer;
+    font-weight:700;
+    color:var(--zk-primary-dark, #0b5647);
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    font-size:1rem;
+  }
+  html[data-lang="ur"] .zk-faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; font-size:1.15rem; }
+  .zk-faq-item summary::-webkit-details-marker{ display:none; }
+  .zk-faq-item summary::after{ content:'+'; font-weight:700; color:var(--zk-muted,#5c6b63); flex:0 0 auto; }
+  .zk-faq-item[open] summary::after{ content:'\2212'; }
+  .zk-faq-item .zk-faq-a{ margin:10px 0 0; line-height:1.7; }
+  .zk-faq-citation{ font-size:0.82rem; color:var(--zk-muted,#5c6b63); margin-top:6px; font-style:italic; }
+  html[data-lang="ur"] .zk-faq-citation{ font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; font-style:normal; font-size:0.95rem; }
 </style>
 </head>
 <body>
@@ -969,9 +1030,15 @@ header.site-header .headerTop h1{
 <div class="zk-calculator">
   <div class="zk-wrap">
 
+    <div class="zk-lang-switch" role="group" aria-label="Language / زبان">
+      <button type="button" class="zk-lang-btn active" id="zkLangEn" onclick="zkSetLang('en')">English</button>
+      <button type="button" class="zk-lang-btn" id="zkLangUr" onclick="zkSetLang('ur')">اردو</button>
+    </div>
+
     <div class="zk-header">
-      <h1>Zakat Calculator</h1>
-      <p>Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
+      <h1><span class="lang-en">Zakat Calculator</span><span class="lang-ur">زکوٰۃ کیلکولیٹر</span></h1>
+      <p class="lang-en">Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
+      <p class="lang-ur">اپنے زکوٰۃ کے قابل مال کا اندازہ لگائیں، اپنا حول (اسلامی سال) ٹریک کریں، اور اپنی کرنسی میں واجب الادا زکوٰۃ معلوم کریں۔</p>
     </div>
 
     <!-- ZAKAT ELIGIBILITY CHECK -->
@@ -1418,6 +1485,158 @@ header.site-header .headerTop h1{
       <p class="zk-section-note"><strong>Madani Pearl:</strong> if you yourself don't qualify as a Zakat recipient, your Zakat can still be given to your adult children or spouse if they independently meet the eligibility criteria above (e.g. an adult child who is poor and owns no Nisab of their own).</p>
       <p class="zk-note">Sources: eligible categories per Quran 9:60 (a historical 7th category, for freeing slaves, no longer applies today); exclusions and the Madani Pearl per Dawat-e-Islami's own Zakat calculator (events.dawateislami.net) and the Hanafi position cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
     </div>
+
+    <!-- FAQ FROM FATAWA-E-AHLESUNNAT: AHKAM-E-ZAKAT -->
+    <div class="zk-card">
+      <h2><span class="lang-en">Frequently Asked Questions</span><span class="lang-ur">اکثر پوچھے گئے سوالات</span></h2>
+      <p class="zk-section-note">
+        <span class="lang-en">Answers below are drawn from classical Hanafi fiqh as compiled in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>, with citations to the underlying primary sources.</span>
+        <span class="lang-ur">ذیل کے جوابات کتاب <em>فتاویٰ اہلسنت: احکامِ زکوٰۃ</em> میں مرتب شدہ حنفی فقہ سے لیے گئے ہیں، اصل مصادر کے حوالہ جات کے ساتھ۔</span>
+      </p>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Do my debts reduce the Zakat I owe?</span><span class="lang-ur">کیا میرا قرض میری زکوٰۃ کم کرتا ہے؟</span></summary>
+        <p class="zk-faq-a lang-en">Yes. Any debt you owe — to a person, a bank, or a business — is deducted from your total zakatable wealth before Zakat is calculated on what remains. For example, if your zakatable assets total Rs. 10,00,000 and you also owe Rs. 10,00,000 or more in debts, the debt fully offsets your zakatable wealth, and no Zakat is due at all that year.</p>
+        <p class="zk-faq-a lang-ur">جی ہاں۔ آپ پر واجب الادا کوئی بھی قرض — چاہے کسی شخص کا ہو، بینک کا ہو یا کاروبار کا — زکوٰۃ کا حساب لگانے سے پہلے آپ کے کل زکوٰۃ کے قابل مال میں سے منہا کیا جاتا ہے۔ مثال کے طور پر اگر آپ کا زکوٰۃ کے قابل مال روپے 10,00,000 ہے اور آپ پر روپے 10,00,000 یا اس سے زیادہ قرض بھی ہے، تو قرض آپ کے پورے زکوٰۃ کے قابل مال کو ختم کر دیتا ہے، اور اس سال آپ پر زکوٰۃ واجب نہیں رہتی۔</p>
+        <p class="zk-faq-citation">Fatawa Aalamgiri, Vol. 1, p. 172 (Dar al-Fikr, Beirut) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Should I include bank interest in my Zakat calculation?</span><span class="lang-ur">کیا بینک کے سود کو زکوٰۃ کے حساب میں شامل کروں؟</span></summary>
+        <p class="zk-faq-a lang-en">No. Interest (sood/riba) is not permissible wealth in Islam, so it cannot be counted as part of your zakatable assets, nor can Zakat be paid out of it. If interest has already accumulated in your account, it should be given away to the poor without hope of religious reward (it does not count as Zakat or charity in that sense) — and it should be excluded entirely from this calculator. Count only your principal and any halal profit.</p>
+        <p class="zk-faq-a lang-ur">نہیں۔ سود اسلام میں جائز مال نہیں، اس لیے نہ اسے آپ کے زکوٰۃ کے قابل اثاثوں میں شمار کیا جا سکتا ہے اور نہ ہی اس میں سے زکوٰۃ ادا کی جا سکتی ہے۔ اگر سود کی رقم آپ کے اکاؤنٹ میں جمع ہو چکی ہے تو اسے ثوابِ آخرت کی نیت کے بغیر غرباء میں دے دینا چاہیے (یہ زکوٰۃ یا صدقہ شمار نہیں ہوتی) — اور اسے اس کیلکولیٹر کے حساب سے مکمل طور پر خارج رکھیں۔ صرف اصل رقم اور حلال منافع کو شمار کریں۔</p>
+        <p class="zk-faq-citation">Fatawa Radawiyyah, Vol. 23, pp. 541–542 (Raza Foundation, Lahore) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Do I have to pay Zakat on pearls, gemstones, or personal-use items?</span><span class="lang-ur">کیا موتیوں، جواہرات یا ذاتی استعمال کی اشیاء پر زکوٰۃ ہے؟</span></summary>
+        <p class="zk-faq-a lang-en">No, not on their own. Pearls, diamonds, and other gemstones are not zakatable — even in large quantity — unless they were specifically purchased for resale (trade stock). The same applies to personal-use items: furniture, utensils, clothing, and household goods used for your own need are exempt from Zakat regardless of their value. Only gold, silver, cash, and goods held for business or resale are subject to Zakat.</p>
+        <p class="zk-faq-a lang-ur">نہیں، از خود ان پر زکوٰۃ نہیں۔ موتی، ہیرے اور دیگر جواہرات زکوٰۃ کے قابل نہیں — چاہے کتنی ہی مقدار میں ہوں — الا یہ کہ خاص تجارت کی نیت سے خریدے گئے ہوں۔ یہی حکم ذاتی استعمال کی اشیاء کا ہے: فرنیچر، برتن، کپڑے اور گھریلو سامان جو آپ کی اپنی ضرورت کے لیے ہوں، ان کی مالیت خواہ کچھ بھی ہو، زکوٰۃ سے مستثنیٰ ہیں۔ صرف سونا، چاندی، نقدی، اور تجارت کے لیے رکھا گیا مال ہی زکوٰۃ کے حساب میں آتا ہے۔</p>
+        <p class="zk-faq-citation">Bahar-e-Shariat, Vol. 1, p. 907, and Fatawa Aalamgiri, Vol. 1, p. 179 — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Can I give my Zakat to relatives like aunts, uncles, or siblings?</span><span class="lang-ur">کیا میں اپنی زکوٰۃ رشتہ داروں جیسے خالہ، چچا یا بہن بھائیوں کو دے سکتا ہوں؟</span></summary>
+        <p class="zk-faq-a lang-en">Yes — and it's actually preferable. Zakat cannot go to your own parents, grandparents, children, grandchildren, or spouse (you're already responsible for them), but giving it to other eligible relatives — siblings, aunts, uncles, nieces, nephews, in-laws — who genuinely qualify is not just permitted but recommended, since it fulfills two good deeds at once: paying your Zakat and upholding family ties (silat-ur-rahmi).</p>
+        <p class="zk-faq-a lang-ur">جی ہاں — بلکہ یہ زیادہ بہتر ہے۔ زکوٰۃ اپنے والدین، دادا دادی، اولاد، پوتے پوتیوں یا شریکِ حیات کو نہیں دی جا سکتی (کیونکہ ان کی کفالت پہلے ہی آپ کے ذمہ ہے)، لیکن دیگر اہل رشتہ داروں — بہن بھائی، خالہ، چچا، بھتیجے بھتیجیاں، سسرالی رشتہ دار — کو دینا، جو واقعی مستحق ہوں، نہ صرف جائز بلکہ مستحب ہے، کیونکہ اس میں زکوٰۃ کی ادائیگی اور صلہ رحمی دونوں نیکیاں اکٹھی ہو جاتی ہیں۔</p>
+        <p class="zk-faq-citation">Bahr al-Ra'iq, Vol. 2, p. 425 (Quetta edition) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Is Zakat due on a rented-out shop, car, or equipment itself — or only on the rental income?</span><span class="lang-ur">کیا کرائے پر دی گئی دکان، گاڑی یا مشینری خود زکوٰۃ کے قابل ہے، یا صرف اس کا کرایہ؟</span></summary>
+        <p class="zk-faq-a lang-en">Zakat is not due on the value of an asset you own purely to rent out — such as a shop, car, machinery, or a computer/LCD system — because renting it out doesn't make the asset itself "trade goods" for resale. What is zakatable is the rental income you collect and keep: once that accumulated rent, on its own or combined with your other cash, reaches Nisab and a full Islamic year passes on it, Zakat becomes due on it like any other cash holding.</p>
+        <p class="zk-faq-a lang-ur">جس اثاثے کو آپ نے صرف کرائے پر چلانے کے لیے رکھا ہو — جیسے دکان، گاڑی، مشینری، یا کمپیوٹر/LCD سسٹم — اس کی مالیت پر زکوٰۃ فرض نہیں، کیونکہ کرائے پر دینے سے وہ چیز خود مالِ تجارت نہیں بن جاتی۔ زکوٰۃ کے قابل وہ کرایہ ہے جو آپ وصول کر کے اپنے پاس جمع رکھتے ہیں: جب یہ جمع شدہ کرایہ، خود یا آپ کی دیگر نقدی کے ساتھ مل کر، نصاب کو پہنچ جائے اور اس پر ایک مکمل اسلامی سال گزر جائے، تو اس پر بھی دیگر نقدی کی طرح زکوٰۃ واجب ہو جاتی ہے۔</p>
+        <p class="zk-faq-citation">Bahar-e-Shariat, Vol. 1, pp. 883 &amp; 908 (Maktaba tul Madina), and Waqar-ul-Fatawa, Vol. 2, pp. 388, 391–392 (Bazm-e-Waqar-ud-Din, Karachi) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Do I owe Zakat on money I'm saving up for a house or for Hajj?</span><span class="lang-ur">کیا مکان یا حج کے لیے جمع کی گئی رقم پر زکوٰۃ واجب ہے؟</span></summary>
+        <p class="zk-faq-a lang-en">Yes. Money you're setting aside for a future goal — a house, a car, or Hajj — is still ordinary zakatable cash while it sits in your account or at home. If it reaches Nisab (alone or combined with your other zakatable wealth) and a full Islamic year passes while you hold it, Zakat is due on it just like any other savings, even though you intend to spend it on something specific later. There's no exemption for money that hasn't been spent yet, however good the intended purpose.</p>
+        <p class="zk-faq-a lang-ur">جی ہاں۔ کوئی مستقبل کے مقصد کے لیے جمع کی گئی رقم — مکان، گاڑی، یا حج کے لیے — جب تک آپ کے اکاؤنٹ یا گھر میں پڑی ہے، وہ عام نقدی کی طرح زکوٰۃ کے قابل ہی رہتی ہے۔ اگر یہ رقم (اکیلے یا آپ کے دیگر زکوٰۃ کے قابل مال کے ساتھ مل کر) نصاب کو پہنچ جائے اور اس پر ایک مکمل اسلامی سال گزر جائے، تو اس پر بھی دیگر رقم کی طرح زکوٰۃ واجب ہوگی، چاہے آپ کا ارادہ اسے بعد میں کسی خاص مقصد پر خرچ کرنے کا ہو۔ نیت خواہ کتنی ہی نیک ہو، ابھی خرچ نہ ہونے والی رقم کو کوئی استثنا حاصل نہیں۔</p>
+        <p class="zk-faq-citation">Fatawa Radawiyyah, Vol. 10, p. 186 (Raza Foundation, Lahore) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">Can I pay my Zakat by covering someone's expenses directly, instead of giving them cash?</span><span class="lang-ur">کیا میں کسی کا خرچہ براہِ راست ادا کر کے اپنی زکوٰۃ نکال سکتا ہوں؟</span></summary>
+        <p class="zk-faq-a lang-en">Generally, no. Zakat requires "Tamleek" — actually transferring ownership of the wealth to an eligible person — not merely spending it for their benefit. Paying a poor person's utility bill directly, or feeding them a meal, does not by itself discharge your Zakat, because ownership of that money never passed to them. To fulfil your Zakat, hand over the cash (or an equivalent item) so the recipient genuinely owns and controls it — they can then choose to spend it however they wish, including on the same bill or meal.</p>
+        <p class="zk-faq-a lang-ur">عمومی طور پر نہیں۔ زکوٰۃ کے لیے "تملیک" ضروری ہے — یعنی مال کی ملکیت مستحقِ زکوٰۃ کو حقیقتاً منتقل کرنا — محض اس کے فائدے کے لیے خرچ کر دینا کافی نہیں۔ کسی غریب کا بجلی کا بل براہِ راست ادا کر دینا، یا اسے کھانا کھلا دینا، بذاتِ خود آپ کی زکوٰۃ ادا نہیں کرتا، کیونکہ اس رقم کی ملکیت اس کی طرف منتقل ہی نہیں ہوئی۔ اپنی زکوٰۃ ادا کرنے کے لیے رقم (یا اس کے برابر کوئی چیز) اس کے حوالے کریں تاکہ وہ حقیقی معنوں میں اس کا مالک بن جائے — پھر وہ چاہے تو اسی بل یا کھانے پر خرچ کرے، اختیار اسی کا ہوگا۔</p>
+        <p class="zk-faq-citation">Tanwir al-Absar with Durr al-Mukhtar, Vol. 3, pp. 203–206, and Hashiyat al-Tahtawi ala Maraqi al-Falah, p. 714 (Dar al-Ma'rifah, Beirut) — as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">My late father never paid Zakat he owed for several years — must the heirs pay it from his estate first?</span><span class="lang-ur">میرے مرحوم والد نے کئی سالوں کی واجب الادا زکوٰۃ ادا نہیں کی تھی — کیا وارثوں کو وہ زکوٰۃ ادا کرنا ضروری ہے؟</span></summary>
+        <p class="zk-faq-a lang-en">No — Zakat that was due from someone during their lifetime cannot be discharged as Zakat on their behalf after they've passed away; that obligation isn't carried over to the estate. However, an heir may voluntarily give an equivalent amount in charity (Sadaqah) on the deceased's behalf as Isal-e-Sawab (conveying reward to them), which is not obligatory but is a recommended (Mustahab) act of kindness toward the deceased.</p>
+        <p class="zk-faq-a lang-ur">نہیں — جو زکوٰۃ کسی کے ذمہ اس کی زندگی میں واجب ہو چکی تھی، وہ اب اس کے انتقال کے بعد اس کی طرف سے زکوٰۃ کے طور پر ادا نہیں ہو سکتی؛ یہ ذمہ داری ترکہ پر منتقل نہیں ہوتی۔ البتہ کوئی وارث چاہے تو اپنی طرف سے اتنی ہی رقم مرحوم کی طرف سے ایصالِ ثواب کی نیت سے صدقہ کر سکتا ہے، جو واجب تو نہیں مگر مستحب اور مرحوم کے حق میں ایک نیک عمل ہے۔</p>
+        <p class="zk-faq-citation">As recorded in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>, p. 239 (Fatwa #139).</p>
+      </details>
+
+      <details class="zk-faq-item">
+        <summary><span class="lang-en">I don't remember which month I first became eligible for Zakat — when should I pay?</span><span class="lang-ur">مجھے یاد نہیں کہ میں کس مہینے میں پہلی بار صاحبِ نصاب بنا تھا — زکوٰۃ کب ادا کروں؟</span></summary>
+        <p class="zk-faq-a lang-en">If you're genuinely unsure of the exact month, pay Zakat in whichever month you believe, on your best estimate (ghalib gumaan), you most likely first became a possessor of Nisab. Once you've settled on that month, keep paying your Zakat in that same month every year going forward, so you build a consistent annual date to track your Hawl by.</p>
+        <p class="zk-faq-a lang-ur">اگر آپ کو صحیح مہینہ یقینی طور پر یاد نہ ہو، تو جس مہینے کے بارے میں آپ کا غالب گمان ہو کہ آپ پہلی بار صاحبِ نصاب بنے تھے، اسی مہینے میں زکوٰۃ ادا کر دیں۔ ایک بار یہ مہینہ طے ہو جائے تو ہر سال اسی مہینے میں زکوٰۃ ادا کرتے رہیں، تاکہ آپ کے حول کا ایک مستقل، قابلِ اعتماد سالانہ حساب بن جائے۔</p>
+        <p class="zk-faq-citation">As recorded in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>, p. 294 (Fatwa #181).</p>
+      </details>
+    </div>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do my debts reduce the Zakat I owe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Any debt you owe — to a person, a bank, or a business — is deducted from your total zakatable wealth before Zakat is calculated on what remains. For example, if your zakatable assets total Rs. 10,00,000 and you also owe Rs. 10,00,000 or more in debts, the debt fully offsets your zakatable wealth, and no Zakat is due at all that year. (Fatawa Aalamgiri, Vol. 1, p. 172)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I include bank interest in my Zakat calculation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Interest (sood/riba) is not permissible wealth in Islam, so it cannot be counted as part of your zakatable assets, nor can Zakat be paid out of it. Accumulated interest should be given away to the poor without hope of religious reward and excluded entirely from your Zakat calculation. (Fatawa Radawiyyah, Vol. 23, pp. 541-542)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to pay Zakat on pearls, gemstones, or personal-use items?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, not on their own. Pearls, diamonds, and other gemstones are not zakatable unless purchased for resale. Personal-use items like furniture, utensils, clothing, and household goods are exempt regardless of value. Only gold, silver, cash, and goods held for business are zakatable. (Bahar-e-Shariat, Vol. 1, p. 907; Fatawa Aalamgiri, Vol. 1, p. 179)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I give my Zakat to relatives like aunts, uncles, or siblings?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it is preferable. Zakat cannot go to parents, grandparents, children, grandchildren, or a spouse, but giving it to other eligible relatives who qualify is recommended, since it combines paying Zakat with upholding family ties. (Bahr al-Ra'iq, Vol. 2, p. 425)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Zakat due on a rented-out shop, car, or equipment itself — or only on the rental income?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. An asset kept purely to rent out is not itself zakatable, since renting it doesn't make it trade goods. Only the rental income you collect and keep is zakatable, once it reaches Nisab and a full Islamic year passes on it. (Bahar-e-Shariat, Vol. 1, pp. 883, 908; Waqar-ul-Fatawa, Vol. 2, pp. 388, 391-392)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I owe Zakat on money I'm saving up for a house or for Hajj?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Money set aside for a future goal such as a house or Hajj remains ordinary zakatable cash. If it reaches Nisab and a full Islamic year passes while you hold it, Zakat is due on it just like any other savings. (Fatawa Radawiyyah, Vol. 10, p. 186)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I pay my Zakat by covering someone's expenses directly, instead of giving them cash?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally no. Zakat requires Tamleek — actually transferring ownership of the wealth to an eligible person — not merely spending it for their benefit. Paying someone's bill directly does not by itself discharge Zakat. (Tanwir al-Absar with Durr al-Mukhtar, Vol. 3, pp. 203-206; Hashiyat al-Tahtawi ala Maraqi al-Falah, p. 714)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My late father never paid Zakat he owed for several years — must the heirs pay it from his estate first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Zakat due from someone during their lifetime cannot be discharged as Zakat on their behalf after death; the obligation is not carried over to the estate. An heir may voluntarily give an equivalent amount in charity as Isal-e-Sawab, which is recommended but not obligatory. (Fatawa-e-Ahlesunnat: Ahkam-e-Zakat, p. 239)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I don't remember which month I first became eligible for Zakat — when should I pay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If unsure of the exact month, pay Zakat in whichever month you believe, on your best estimate, you most likely first became a possessor of Nisab, then keep paying in that same month every year going forward. (Fatawa-e-Ahlesunnat: Ahkam-e-Zakat, p. 294)"
+          }
+        }
+      ]
+    }
+    </script>
 
     <p class="zk-footer-note">
       Live and historical exchange, gold and silver rates are fetched from a third-party public API (frankfurter.dev) at the moment you click a "Fetch Rates" button. They are provided for convenience and may occasionally be unavailable or slightly delayed — always spot-check against another source before paying a large amount of Zakat. This tool gives a general estimate for guidance only and is not a religious ruling (fatwa). Rules on jewelry, business valuation, and specific asset classes vary between schools of thought — please consult a knowledgeable scholar or your local imam for your specific situation.
@@ -2442,6 +2661,23 @@ document.addEventListener('click', (e)=>{
       results.classList.remove('open'); input.blur();
     }
   });
+})();
+</script>
+
+<script>
+/* ---- English / Urdu language toggle ---- */
+function zkSetLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  var enBtn = document.getElementById('zkLangEn');
+  var urBtn = document.getElementById('zkLangUr');
+  if(enBtn) enBtn.classList.toggle('active', lang === 'en');
+  if(urBtn) urBtn.classList.toggle('active', lang === 'ur');
+  try{ localStorage.setItem('zkLang', lang); }catch(e){}
+}
+(function(){
+  var saved = 'en';
+  try{ saved = localStorage.getItem('zkLang') || 'en'; }catch(e){}
+  zkSetLang(saved);
 })();
 </script>
 </body>

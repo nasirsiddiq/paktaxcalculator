@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1071,6 +1084,58 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Rates are sourced from the SRB "Working Tariff" (amended up to 10 July 2024), which lists both the statutory rate under the Second Schedule to the Sindh Sales Tax on Services Act, 2011 and the effective/reduced rate currently in force via SRB notifications. Where a category shows both a "standard" and a "reduced/election" rate, the reduced rate typically requires the registered person to file a specific election form and/or use SRB-linked POS/e-invoicing &mdash; if you haven't made that election, the standard rate applies. Many categories also carry additional conditions (turnover thresholds, input tax credit restrictions, franchise/branch exclusions) not captured in this simplified calculator. Confirm your exact tariff heading and eligibility with the Sindh Revenue Board (SRB) or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: Standard vs SRB-Election Rate for IT Services</h2>
+    <p class="sub">A Karachi software consultancy invoices a client Rs. 500,000 for system development services.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Service value (excl. tax)</span><span>Rs. 500,000</span></div>
+      <div class="ex-line"><span>Standard SRB rate (15%)</span><span>Rs. 75,000</span></div>
+      <div class="ex-line"><span>SRB-election reduced rate (3%)</span><span>Rs. 15,000</span></div>
+      <p class="ex-note">The 3% election rate is only available if the consultancy has filed the specific SRB election and given up its right to claim input tax credit &mdash; without that election on file, SRB treats the invoice at the 15% standard rate, a Rs. 60,000 difference on this invoice alone.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>Why do some Sindh categories show two different rates?</summary>
+      <p>The Sindh Revenue Board (SRB) often offers a lower "reduced/election" rate as an alternative to the statutory "standard" rate for the same service category. The reduced rate is conditional &mdash; typically requiring the business to file a specific election with SRB and/or use SRB-linked point-of-sale or e-invoicing, and usually forgoing the ability to claim input tax credit.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which rate applies if I haven't filed an SRB election?</summary>
+      <p>The standard (higher) rate applies by default. The reduced rate is only available once the specific election has been filed with SRB &mdash; simply operating in a category that has a reduced rate option doesn't automatically qualify you for it.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is Sindh sales tax on services the same as Sindh's sales tax on goods?</summary>
+      <p>No &mdash; goods sold anywhere in Pakistan, including Sindh, are taxed under the federal Sales Tax Act, 1990 (GST). Sindh's own sales tax law, administered by SRB, applies specifically to services rendered or received in Sindh.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How often does SRB update its Working Tariff?</summary>
+      <p>SRB revises rates and adds new categories periodically through notifications between annual Sindh Finance Acts, in addition to the main annual revision. The rates here reflect the Working Tariff as amended up to 10 July 2024; always check SRB's current notifications before relying on a rate for filing.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does withholding apply to Sindh sales tax invoices?</summary>
+      <p>Yes, following the same general pattern as other jurisdictions &mdash; a withholding agent typically deducts 1/5th of the sales tax shown from a registered, active service provider and the full amount from an unregistered one. See the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator for the exact figure.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Why do some Sindh sales tax categories show a standard and a reduced rate?","acceptedAnswer":{"@type":"Answer","text":"SRB offers a lower reduced/election rate as an alternative to the standard rate, conditional on filing a specific election and often giving up input tax credit."}},
+        {"@type":"Question","name":"Which Sindh sales tax rate applies without an SRB election?","acceptedAnswer":{"@type":"Answer","text":"The standard, higher rate applies by default until the business files the specific reduced-rate election with SRB."}},
+        {"@type":"Question","name":"Is Sindh sales tax on services the same as sales tax on goods?","acceptedAnswer":{"@type":"Answer","text":"No, goods are taxed under the federal Sales Tax Act, 1990 (GST), while Sindh's own law administered by SRB applies to services rendered in Sindh."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

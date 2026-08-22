@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1071,6 +1084,58 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Rates are sourced from the Islamabad Capital Territory (Tax on Services) Ordinance, 2001, Table-1 (standard rate, generally 15%) and Table-2 (reduced/zero rates inserted by the Finance (Supplementary) Act 2022 for specific categories), as amended up to 30 June 2025 (Finance Act 2025). Table-2 reduced rates generally require that no input tax adjustment or refund is claimed. Some categories (e.g. freight forwarding, low-cost housing) carry additional value-based or scheme-specific conditions not captured in this simplified calculator. Confirm your exact category and eligibility with FBR's Islamabad Sales Tax on Services wing or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: Restaurant Bill, Cash vs Digital Payment</h2>
+    <p class="sub">A restaurant in Islamabad bills a customer Rs. 10,000 &mdash; the ICT sales tax rate actually depends on how the customer pays.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Bill value (excl. tax)</span><span>Rs. 10,000</span></div>
+      <div class="ex-line"><span>Paid in cash (Table-1 standard, 15%)</span><span>Rs. 1,500</span></div>
+      <div class="ex-line"><span>Paid by debit/credit card, wallet or QR (Table-2 reduced, 5%)</span><span>Rs. 500</span></div>
+      <p class="ex-note">The 5% digital-payment rate requires the restaurant to forgo claiming input tax credit on that transaction &mdash; it's a genuine trade-off, not simply a discount for using digital payment.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is the standard sales tax rate on services in Islamabad (ICT)?</summary>
+      <p>Under Table-1 of the Islamabad Capital Territory (Tax on Services) Ordinance, 2001, the standard rate is generally 15%, applying to most services rendered within the Islamabad Capital Territory.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the payment method (cash vs card) change the tax rate?</summary>
+      <p>Table-2 of the Ordinance, inserted by the Finance (Supplementary) Act 2022, offers a reduced rate for certain categories like restaurants when payment is made digitally (debit/credit card, wallet, or QR) rather than in cash &mdash; intended to encourage documented, traceable payments. The trade-off is that the business generally can't claim input tax credit on transactions taxed at the reduced rate.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is ICT sales tax on services the same as federal GST?</summary>
+      <p>They're both administered by FBR, but they're distinct levies: GST (18%) taxes goods under the Sales Tax Act, 1990, while ICT sales tax on services taxes services rendered in Islamabad under the separate ICT (Tax on Services) Ordinance, 2001.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do all Table-2 reduced-rate categories require giving up input tax credit?</summary>
+      <p>Generally yes &mdash; that's the defining trade-off of Table-2 rates. Some categories, like freight forwarding or low-cost housing, carry additional value-based or scheme-specific conditions on top of that. Confirm the exact conditions for your category with FBR's Islamabad Sales Tax on Services wing.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does withholding apply to ICT sales tax invoices?</summary>
+      <p>Yes &mdash; ICT services tax is administered by FBR, and withholding is understood to follow the general federal 1/5th (20%) rule for registered, ATL-active providers, with 100% withheld for unregistered ones. See the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator for the exact figure.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is the standard sales tax rate on services in Islamabad (ICT)?","acceptedAnswer":{"@type":"Answer","text":"Under Table-1 of the ICT (Tax on Services) Ordinance, 2001, the standard rate is generally 15%, applying to most services rendered in Islamabad."}},
+        {"@type":"Question","name":"Why does payment method change the ICT sales tax rate on a restaurant bill?","acceptedAnswer":{"@type":"Answer","text":"Table-2 offers a reduced rate for digital payments (card, wallet, QR) versus cash for certain categories like restaurants, in exchange for the business giving up input tax credit on that transaction."}},
+        {"@type":"Question","name":"Is ICT sales tax on services the same as federal GST?","acceptedAnswer":{"@type":"Answer","text":"No, GST taxes goods under the Sales Tax Act, 1990, while ICT sales tax on services taxes services rendered in Islamabad under the separate ICT Ordinance, 2001, though both are administered by FBR."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

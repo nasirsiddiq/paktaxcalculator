@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1071,6 +1084,58 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Rates are sourced from the Second Schedule to the Balochistan Sales Tax on Services Act 2015, as amended by the Finance Act 2023. Several categories carry a two-tier rate structure (e.g. non-corporate/non-chain hotels at 5% vs corporate/franchise/chain hotels at 15%; cash-paid restaurant bills at 4% vs digital/card/QR-paid bills at 2%) or a reduced rate conditional on not claiming input tax credit. The "IT-based services" reduced rate of 6% applies per the Explanation to the Schedule covering software development, system design, web design, data processing, medical transcription and similar services. Confirm your exact tariff heading and eligibility with the Balochistan Revenue Authority (BRA) or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: General IT Consultant vs "IT-Based Services"</h2>
+    <p class="sub">A Quetta-based software business invoices a client Rs. 500,000, but the applicable rate depends on exactly how the work is classified.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Invoice value (excl. tax)</span><span>Rs. 500,000</span></div>
+      <div class="ex-line"><span>As "software/IT-based system developer &amp; consultant" (15%)</span><span>Rs. 75,000</span></div>
+      <div class="ex-line"><span>As "IT-based services" reduced category (6%)</span><span>Rs. 30,000</span></div>
+      <p class="ex-note">The 6% rate applies specifically to software development, system design, web design, data processing, medical transcription and similar services per the Schedule's Explanation &mdash; a Rs. 45,000 difference on this invoice depending on classification. Confirm which category genuinely fits your service with BRA.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>Why do some Balochistan categories have two different rates?</summary>
+      <p>Several categories in the Balochistan Sales Tax on Services Act 2015 use a two-tier structure &mdash; for example, non-corporate/non-chain hotels are taxed lower than corporate/franchise/chain hotels, and cash-paid restaurant bills are taxed differently from digital/card/QR-paid bills. Others offer a reduced rate conditional on the business not claiming input tax credit.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What exactly counts as an "IT-based service" at the 6% rate?</summary>
+      <p>The Schedule's Explanation defines "IT-based services" to cover software development, system design, web design, data processing, medical transcription, and similar services. A general software or IT consultancy that doesn't fit this specific definition may instead fall under the higher "software/IT-based system developers & consultants" category at 15%.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is Balochistan sales tax on services the same as federal GST?</summary>
+      <p>No &mdash; federal GST (18%) taxes goods under the Sales Tax Act, 1990, while Balochistan's sales tax on services is a separate provincial levy on services rendered in Balochistan, administered by the Balochistan Revenue Authority (BRA).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does withholding apply to Balochistan sales tax invoices?</summary>
+      <p>Yes, following the general pattern used across provinces &mdash; a withholding agent typically deducts a portion of the sales tax shown on the invoice from a registered service provider. See the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator for the applicable rate.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I confirm which classification applies to my business?</summary>
+      <p>Given how much the rate can differ between similar-sounding categories (15% vs 6% for IT-related work, for example), it's worth confirming your exact tariff heading directly with BRA or a tax advisor familiar with the Balochistan Sales Tax on Services Act rather than assuming based on the category name alone.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What counts as an IT-based service at Balochistan's 6% sales tax rate?","acceptedAnswer":{"@type":"Answer","text":"The Schedule's Explanation defines IT-based services as software development, system design, web design, data processing, medical transcription and similar services, taxed at a reduced 6% rate."}},
+        {"@type":"Question","name":"Why do some Balochistan sales tax categories have two rates?","acceptedAnswer":{"@type":"Answer","text":"Several categories use a two-tier structure, such as non-corporate versus corporate/chain hotels, or cash versus digital payment for restaurant bills, or a reduced rate conditional on not claiming input tax credit."}},
+        {"@type":"Question","name":"Is Balochistan sales tax on services the same as federal GST?","acceptedAnswer":{"@type":"Answer","text":"No, federal GST taxes goods under the Sales Tax Act, 1990, while Balochistan's sales tax on services is a separate provincial levy administered by the Balochistan Revenue Authority."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>

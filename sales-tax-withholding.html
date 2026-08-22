@@ -939,6 +939,19 @@ header.site-header .headerTop h1{
 @media (min-width:1300px){
   .calcSidebar{ display:block; }
 }
+
+/* ---- FAQ accordion & worked-example box ---- */
+.faq-item{border-bottom:1px solid var(--border);padding:12px 2px;}
+.faq-item:last-child{border-bottom:none;}
+.faq-item summary{cursor:pointer;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-weight:700;color:var(--muted);flex:0 0 auto;}
+.faq-item[open] summary::after{content:'\2212';}
+.faq-item p{margin:10px 0 0;color:var(--text);line-height:1.65;font-size:14.5px;}
+.example-box{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:12px 0 4px;}
+.example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
+.example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
+.example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1084,6 +1097,59 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Sales tax withholding is separate from income tax WHT and from the sales tax rate itself &mdash; the withholding agent pays the supplier a reduced amount and remits the withheld portion directly to FBR/the provincial authority on the supplier's behalf (creditable against the supplier's own liability). As a general rule across FBR and all provincial/ICT authorities, a withholding agent deducts 1/5th (20%) of the sales tax shown on the invoice when the supplier/service provider is registered and active on the relevant Active Taxpayer List (ATL), and the whole (100%) applicable tax when the supplier is unregistered or inactive &mdash; with the supplier's CNIC/NTN typically required to be recorded in the unregistered case. Several categories deviate from this general rule (e.g. advertisement services are withheld in full regardless of registration in most jurisdictions; federal wholesalers/dealers get a reduced 1/10th rate; Punjab's telecom/banking/insurance sector was newly brought into the withholding net at 80% from 10 July 2025; KPRA's regulations separately reference a 50% residual rate for some non-standard categories). Provincial withholding rules are amended frequently and primary-source PDFs are not always consistently accessible online, so treat the percentages above as a strong general guide and confirm the current notification/rate card with FBR or the relevant provincial revenue authority (PRA/SRB/KPRA/BRA) before relying on them for filing. Federal supplies to unregistered persons may also attract a separate 4% further tax under s.3(1A) of the Sales Tax Act (not a withholding amount, and not calculated here).
+  </div>
+
+  <div class="card">
+    <h2>Worked Example: Withholding on a Registered Supplier's Invoice</h2>
+    <p class="sub">A registered, ATL-active supplier issues a Rs. 200,000 goods invoice with 18% GST shown separately.</p>
+    <div class="example-box">
+      <div class="ex-line"><span>Invoice value (excl. tax)</span><span>Rs. 200,000</span></div>
+      <div class="ex-line"><span>GST shown on invoice (18%)</span><span>Rs. 36,000</span></div>
+      <div class="ex-line"><span>Withheld by agent &mdash; standard rate, 1/5th of tax</span><span>Rs. 7,200</span></div>
+      <div class="ex-line total"><span>Net amount paid to supplier</span><span>Rs. 228,800</span></div>
+      <p class="ex-note">The supplier still owes and deposits the remaining 4/5th (Rs. 28,800) through its own sales tax return. If the same supplier were a <strong>wholesaler/dealer</strong>, only 1/10th (Rs. 3,600) would be withheld instead of 1/5th.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>What is sales tax withholding, and who does it?</summary>
+      <p>It's a mechanism where the person paying an invoice (the withholding agent, usually a company or government body) deducts a portion of the sales tax shown on that invoice and deposits it directly with FBR or the relevant provincial revenue authority, instead of paying the full tax amount to the supplier. The supplier gets credit for the withheld amount against its own return.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why is only 1/5th (20%) withheld instead of the full tax?</summary>
+      <p>The general rule assumes a registered, ATL-active supplier will file its own sales tax return and remit the rest of the tax itself, so only a portion is collected upfront as a compliance check. When the supplier is unregistered or not ATL-active, there's no such return to rely on, so the withholding agent collects the full 100% instead.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does withholding work when the supplier is unregistered?</summary>
+      <p>An unregistered supplier can't issue a proper tax invoice showing sales tax as a separate line, so the amount they charge is treated as already including tax. The tax portion is extracted using the tax fraction &mdash; rate &divide; (100 + rate) &mdash; and the whole of that extracted amount is withheld, with the supplier's CNIC/NTN typically recorded on the transaction.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which categories don't follow the standard 20%/100% rule?</summary>
+      <p>A handful of categories are set at different rates by specific notifications: advertisement services are generally withheld in full regardless of registration status, federal wholesalers/dealers/distributors get a reduced 1/10th rate, and Punjab's telecom, banking and insurance sectors were brought into withholding at 80% from 10 July 2025. Select the correct category above to get the right rate automatically.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is the withheld amount an extra cost, or is it already part of the invoice?</summary>
+      <p>It's not an extra cost &mdash; it's a redirection of tax the supplier already owes. The buyer pays less to the supplier directly and pays that difference to the tax authority instead; the total amount leaving the buyer's account (net payment + tax deposited) is the same either way.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is sales tax withholding in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"A mechanism where the payer of an invoice deducts a portion of the sales tax shown and deposits it directly with the tax authority instead of paying the full amount to the supplier, who gets credit for it against their own return."}},
+        {"@type":"Question","name":"Why is only 20% of sales tax withheld from a registered supplier?","acceptedAnswer":{"@type":"Answer","text":"The general rule withholds 1/5th because a registered, ATL-active supplier is expected to remit the remaining 4/5th itself through its own sales tax return."}},
+        {"@type":"Question","name":"How is sales tax withholding calculated for an unregistered supplier?","acceptedAnswer":{"@type":"Answer","text":"The full 100% of the tax is withheld, extracted from the tax-inclusive amount using the tax fraction rate divided by (100 plus rate), since an unregistered supplier cannot show tax separately."}}
+      ]
+    }
+    </script>
   </div>
 
 </div>
