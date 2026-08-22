@@ -1021,6 +1021,7 @@ header.site-header .headerTop h1{
           <div class="zk-field">
             <label for="zkEligDebts">Debts &amp; essential needs <span class="zk-hint">(PKR, subtracted)</span></label>
             <input type="number" id="zkEligDebts" class="zk-input" min="0" step="any" placeholder="0.00">
+            <p class="zk-note" style="margin-top:4px;">e.g. loan/installments due, committee (Bisi) balance owed, unpaid utility bills, dealer payables, unpaid salaries, last year's unpaid Zakat</p>
           </div>
         </div>
 
@@ -1207,7 +1208,7 @@ header.site-header .headerTop h1{
     <!-- BANK ACCOUNTS -->
     <div class="zk-card">
       <h2>Bank Accounts</h2>
-      <p class="zk-section-note">Add every account, in whatever currency it's held. Each is converted to your reporting currency automatically once live rates are fetched.</p>
+      <p class="zk-section-note">Add every account, in whatever currency it's held. Each is converted to your reporting currency automatically once live rates are fetched. Use the label field for anything else zakatable that sits like a bank balance too — Prize Bonds, Provident Fund balance, or Committee (Bisi) installments already paid in.</p>
       <div class="zk-multi-list" id="zkBankList"></div>
       <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkAddBankBtn">+ Add bank account</button>
     </div>
@@ -1291,7 +1292,7 @@ header.site-header .headerTop h1{
       <div class="zk-row zk-row-2">
         <div class="zk-field">
           <label for="zkBusiness">Business cash &amp; inventory
-            <span class="zk-hint">Zakatable value of stock-in-trade</span>
+            <span class="zk-hint">Zakatable value of stock-in-trade — raw materials, finished goods, trading property, and your share of any business partnership assets</span>
           </label>
           <input type="number" id="zkBusiness" class="zk-input" min="0" step="0.01" placeholder="0.00">
         </div>
@@ -1311,6 +1312,7 @@ header.site-header .headerTop h1{
             <span class="zk-hint">Short-term liabilities due now — deducted from your total, in your reporting currency</span>
           </label>
           <input type="number" id="zkDebts" class="zk-input" min="0" step="0.01" placeholder="0.00">
+          <p class="zk-note" style="margin-top:6px;">Include things like: loan and installment payments due, remaining committee (Bisi) balance owed, utility bills already received but unpaid, amounts payable to suppliers/dealers, unpaid staff salaries, and any previous year's Zakat you still haven't paid.</p>
         </div>
       </div>
 
@@ -1332,6 +1334,28 @@ header.site-header .headerTop h1{
       </div>
 
       <p class="zk-note">This uses the silver standard for Nisab (the more precautionary threshold most scholars use), except when gold is your <em>only</em> zakatable asset — then Nisab is assessed by gold's own weight (7.5 tola / 87.48g), not its market value, per the Hanafi position. As soon as any other zakatable wealth is added, everything is combined and measured against the silver-value standard again. Zakat is calculated on the current value of your wealth at the time you calculate/pay it — not its value on the day you first reached Nisab.</p>
+    </div>
+
+    <!-- WHO CAN RECEIVE ZAKAT -->
+    <div class="zk-card">
+      <h2>Who Can Receive Your Zakat</h2>
+      <p class="zk-section-note">Zakat must go to one of these categories, per the Holy Quran (Surah At-Taubah, 9:60):</p>
+      <ul class="zk-elig-nisab-conditions">
+        <li>The poor (Fuqara)</li>
+        <li>The destitute (Masakeen)</li>
+        <li>Zakat collectors/administrators</li>
+        <li>Those in debt (Al-Gharimin)</li>
+        <li>In the cause of Allah (Fi Sabilillah)</li>
+        <li>Stranded travelers (Ibn as-Sabil)</li>
+      </ul>
+      <p class="zk-section-note">It cannot be given to:</p>
+      <ul class="zk-elig-nisab-conditions">
+        <li>Your own parents, grandparents, children, grandchildren, or spouse — you're already responsible for their upkeep</li>
+        <li>Sadaat/Bani Hashim (descendants of the Prophet's family), per the Hanafi position</li>
+        <li>A non-Muslim, or someone who already owns wealth at or above Nisab — this includes surplus non-essential items (e.g. extra furniture or valuables beyond everyday need), not just cash, gold and silver</li>
+      </ul>
+      <p class="zk-section-note"><strong>Madani Pearl:</strong> if you yourself don't qualify as a Zakat recipient, your Zakat can still be given to your adult children or spouse if they independently meet the eligibility criteria above (e.g. an adult child who is poor and owns no Nisab of their own).</p>
+      <p class="zk-note">Sources: eligible categories per Quran 9:60 (a historical 7th category, for freeing slaves, no longer applies today); exclusions and the Madani Pearl per Dawat-e-Islami's own Zakat calculator (events.dawateislami.net) and the Hanafi position cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</p>
     </div>
 
     <p class="zk-footer-note">
