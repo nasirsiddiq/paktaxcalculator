@@ -2115,9 +2115,28 @@ document.addEventListener('click', (e)=>{
     return isFinite(v) && v > 0 ? v : 0;
   }
 
+  // If the figures change after a Nisab check has run, the old computed answer is stale —
+  // clear it instead of silently carrying forward a verdict that no longer matches the inputs.
+  function invalidateEligNisabCheck(){
+    eligAnswers["4"] = null;
+    var resultEl = document.getElementById("zkEligNisabResult");
+    resultEl.style.display = "none";
+    resultEl.innerHTML = "";
+  }
+  ["zkEligCash","zkEligDebts","zkEligGoldQty","zkEligGoldUnit","zkEligSilverQty","zkEligSilverUnit"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){
+      el.addEventListener("input", invalidateEligNisabCheck);
+      el.addEventListener("change", invalidateEligNisabCheck);
+    }
+  });
+
   var eligFetchRateBtn = document.getElementById("zkEligFetchRateBtn");
   if(eligFetchRateBtn){
-    eligFetchRateBtn.addEventListener("click", fetchLiveRatesShared);
+    eligFetchRateBtn.addEventListener("click", function(){
+      invalidateEligNisabCheck(); // the rate is about to change — any prior check is now stale
+      fetchLiveRatesShared();
+    });
   }
 
   var eligNisabCheckBtn = document.getElementById("zkEligNisabCheckBtn");
