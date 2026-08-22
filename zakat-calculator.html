@@ -848,25 +848,10 @@ header.site-header .headerTop h1{
   .zk-live-dot.zk-ok{background:var(--zk-primary);}
   .zk-live-dot.zk-err{background:var(--zk-danger);}
 
-  /* ---- Find Your Zakat Due Date panel: pinned to the right side on wide screens ----
-     Main content narrows a bit at this breakpoint so the pinned panel never overlaps it
-     (and stays clear of the site's own fixed left "All Calculators" sidebar too). */
-  @media (min-width:1280px){
-    .zk-wrap{ max-width:600px; }
-    .zk-hawl-panel{
-      position:fixed;
-      top:130px;
-      right:24px;
-      width:290px;
-      max-height:calc(100vh - 150px);
-      overflow-y:auto;
-      z-index:40;
-      margin:0;
-    }
-    .zk-hawl-panel .zk-toggle-group{ flex-direction:column; }
-    .zk-hawl-panel .zk-toggle-btn{ min-width:0; }
-    .zk-hawl-panel .zk-hijri-row{ grid-template-columns:1fr; }
-  }
+  /* ---- Task switch: pick one of Eligibility / Due Date / Calculate Zakat ---- */
+  .zk-task-switch{ margin-bottom:18px; }
+  .zk-task-switch .zk-toggle-group{ flex-wrap:wrap; }
+  .zk-task-switch .zk-toggle-btn{ flex:1 1 auto; min-width:150px; }
 
   /* ---- English / Urdu language toggle ---- */
   .lang-ur{
@@ -1041,7 +1026,58 @@ header.site-header .headerTop h1{
       <p class="lang-ur">اپنے زکوٰۃ کے قابل مال کا اندازہ لگائیں، اپنا حول (اسلامی سال) ٹریک کریں، اور اپنی کرنسی میں واجب الادا زکوٰۃ معلوم کریں۔</p>
     </div>
 
+    <!-- ACCOUNT & ZAKAT DUE-DATE REMINDER -->
+    <div class="zk-card" id="zkAccountCard">
+      <h2><span class="lang-en">Your Account &amp; Zakat Reminder</span><span class="lang-ur">آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی</span></h2>
+      <p class="zk-section-note"><span class="lang-en">Create a free account to save your Zakat due date and get an email reminder as it approaches — and automatically again next year.</span><span class="lang-ur">اپنی زکوٰۃ کی واجب الادا تاریخ محفوظ کرنے اور اس کے قریب آنے پر ای میل یاد دہانی حاصل کرنے کے لیے مفت اکاؤنٹ بنائیں — اور اگلے سال بھی خودکار طور پر۔</span></p>
+
+      <!-- Logged-out view -->
+      <div id="zkAuthLoggedOut">
+        <div class="zk-row zk-row-2">
+          <div class="zk-field">
+            <label for="zkAuthEmail"><span class="lang-en">Email</span><span class="lang-ur">ای میل</span></label>
+            <input type="email" id="zkAuthEmail" class="zk-input" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="zk-field">
+            <label for="zkAuthPassword"><span class="lang-en">Password</span><span class="lang-ur">پاس ورڈ</span> <span class="zk-hint"><span class="lang-en">min. 6 characters</span><span class="lang-ur">کم از کم 6 حروف</span></span></label>
+            <input type="password" id="zkAuthPassword" class="zk-input" placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="zk-btn zk-btn-small" id="zkSignUpBtn"><span class="lang-en">Sign Up</span><span class="lang-ur">اکاؤنٹ بنائیں</span></button>
+          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogInBtn"><span class="lang-en">Log In</span><span class="lang-ur">لاگ ان</span></button>
+        </div>
+        <p class="zk-note" id="zkAuthStatus" style="display:none;"></p>
+      </div>
+
+      <!-- Logged-in view -->
+      <div id="zkAuthLoggedIn" style="display:none;">
+        <p class="zk-note"><span class="lang-en">Signed in as</span><span class="lang-ur">لاگ ان بطور</span> <strong id="zkAuthUserEmail"></strong></p>
+
+        <div class="zk-live-status" id="zkReminderStatus">
+          <span class="zk-live-dot" id="zkReminderDot"></span>
+          <span id="zkReminderStatusText"><span class="lang-en">No Zakat due-date reminder saved yet.</span><span class="lang-ur">ابھی تک کوئی زکوٰۃ یاد دہانی محفوظ نہیں کی گئی۔</span></span>
+        </div>
+
+        <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkSaveReminderBtn" disabled><span class="lang-en">Save &amp; Email Me a Reminder</span><span class="lang-ur">محفوظ کریں اور ای میل یاد دہانی بھیجیں</span></button>
+        <p class="zk-note" id="zkSaveReminderHint"><span class="lang-en">Use the "Find Your Zakat Due Date" panel below to calculate your due date first, then come back here to save it.</span><span class="lang-ur">پہلے نیچے دیے گئے "میری زکوٰۃ کی واجب الادا تاریخ معلوم کریں" پینل کا استعمال کریں، پھر یہاں واپس آ کر اسے محفوظ کریں۔</span></p>
+
+        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogOutBtn" style="margin-top:10px;"><span class="lang-en">Log Out</span><span class="lang-ur">لاگ آؤٹ</span></button>
+      </div>
+    </div>
+
+    <!-- TASK SWITCH: choose what you want to do -->
+    <div class="zk-task-switch">
+      <p class="zk-section-note" style="margin-top:0;"><span class="lang-en">What would you like to do?</span><span class="lang-ur">آپ کیا کرنا چاہتے ہیں؟</span></p>
+      <div class="zk-toggle-group" role="group" id="zkTaskGroup">
+        <button type="button" class="zk-toggle-btn zk-active" id="zkTaskBtnEligibility" onclick="zkShowTask('eligibility')"><span class="lang-en">Check Eligibility</span><span class="lang-ur">اہلیت چیک کریں</span></button>
+        <button type="button" class="zk-toggle-btn" id="zkTaskBtnDueDate" onclick="zkShowTask('duedate')"><span class="lang-en">Find Due Date</span><span class="lang-ur">واجب الادا تاریخ معلوم کریں</span></button>
+        <button type="button" class="zk-toggle-btn" id="zkTaskBtnCalculate" onclick="zkShowTask('calculate')"><span class="lang-en">Calculate Zakat Due</span><span class="lang-ur">زکوٰۃ کا حساب لگائیں</span></button>
+      </div>
+    </div>
+
     <!-- ZAKAT ELIGIBILITY CHECK -->
+    <div id="zkTaskEligibility">
     <div class="zk-card" id="zkEligCard">
       <h2><span class="lang-en">Check Your Zakat Eligibility</span><span class="lang-ur">اپنی زکوٰۃ کی اہلیت چیک کریں</span></h2>
       <p class="zk-section-note lang-en">Based on the Shariah conditions for Zakat becoming obligatory (Hanafi fiqh), as compiled in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>. Answer these questions to see whether Zakat is due on you this year.</p>
@@ -1158,8 +1194,10 @@ header.site-header .headerTop h1{
       <p class="zk-note lang-en">Source: conditions of Zakat obligation (Shurut al-Wujub) as cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>, quoting <em>Tanwir al-Absar</em>: "The conditions of its obligation are: sanity, puberty, Islam, freedom, ownership of Nisab for a full year — free of debt and basic necessities — and the wealth being of a growing nature." A separate historical condition of personal freedom (not being enslaved) is universally met today and isn't asked above.</p>
       <p class="zk-note lang-ur">ماخذ: زکوٰۃ کے واجب ہونے کی شرائط (شروطِ وجوب) جیسا کہ <em>فتاویٰ اہلسنت: احکامِ زکوٰۃ</em> میں <em>تنویر الابصار</em> کے حوالے سے بیان کی گئی ہیں: "اس کے واجب ہونے کی شرائط یہ ہیں: عقل، بلوغت، اسلام، آزادی، ایک مکمل سال تک نصاب کی ملکیت — قرض اور بنیادی ضروریات سے فارغ — اور مال کا نامی (بڑھنے والی) نوعیت کا ہونا۔" ایک علیحدہ تاریخی شرط (آزاد ہونا، غلام نہ ہونا) آج ہر کسی پر پوری اترتی ہے اس لیے اوپر نہیں پوچھی گئی۔</p>
     </div>
+    </div><!-- /zkTaskEligibility -->
 
     <!-- ZAKAT YEAR CALCULATOR (Hawl / Sahib-e-Nisab date tracker) -->
+    <div id="zkTaskDueDate" style="display:none;">
     <aside class="zk-card zk-hawl-panel" id="zkHawlPanel">
       <h2><span class="lang-en">Find Your Zakat Due Date <span class="zk-badge">Islamic calendar</span></span><span class="lang-ur">اپنی زکوٰۃ کی واجب الادا تاریخ معلوم کریں <span class="zk-badge">اسلامی کیلنڈر</span></span></h2>
       <p class="zk-section-note lang-en">Enter the date your wealth first reached (or exceeded) the Nisab threshold — the day you became "Sahib-e-Nisab." Zakat becomes due once a full Hawl (Islamic lunar year) has passed, as long as your wealth stays at or above Nisab throughout.</p>
@@ -1231,6 +1269,10 @@ header.site-header .headerTop h1{
         <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkApplyHawlRatesBtn" style="margin-top:10px;"><span class="lang-en">Use These Rates in My Calculation Above</span><span class="lang-ur">یہ شرحیں اوپر میرے حساب میں استعمال کریں</span></button>
       </div>
     </aside>
+    </div><!-- /zkTaskDueDate -->
+
+    <!-- CALCULATE ZAKAT DUE -->
+    <div id="zkTaskCalculate" style="display:none;">
 
     <!-- COUNTRY / CURRENCY / LIVE RATES -->
     <div class="zk-card">
@@ -1484,6 +1526,7 @@ header.site-header .headerTop h1{
 
       <p class="zk-note"><span class="lang-en">This uses the silver standard for Nisab (the more precautionary threshold most scholars use), except when gold is your <em>only</em> zakatable asset — then Nisab is assessed by gold's own weight (7.5 tola / 87.48g), not its market value, per the Hanafi position. As soon as any other zakatable wealth is added, everything is combined and measured against the silver-value standard again. Zakat is calculated on the current value of your wealth at the time you calculate/pay it — not its value on the day you first reached Nisab.</span><span class="lang-ur">اس میں نصاب کے لیے چاندی کا معیار استعمال ہوتا ہے (جو اکثر علماء کے نزدیک زیادہ احتیاطی حد ہے)، سوائے اس کے کہ سونا آپ کا <em>واحد</em> زکوٰۃ کے قابل اثاثہ ہو — تب حنفی مسلک کے مطابق نصاب سونے کے اپنے وزن (7.5 تولہ / 87.48 گرام) سے دیکھا جاتا ہے، نہ کہ اس کی مارکیٹ ویلیو سے۔ جیسے ہی کوئی اور زکوٰۃ کے قابل مال شامل ہو، سب کچھ دوبارہ ملا کر چاندی کے معیار سے ناپا جاتا ہے۔ زکوٰۃ کا حساب اس وقت آپ کے مال کی موجودہ قیمت پر لگایا جاتا ہے جب آپ حساب/ادائیگی کرتے ہیں — نہ کہ اس دن کی قیمت پر جب آپ پہلی بار نصاب کو پہنچے تھے۔</span></p>
     </div>
+    </div><!-- /zkTaskCalculate -->
 
     <!-- WHO CAN RECEIVE ZAKAT -->
     <div class="zk-card">
@@ -2378,6 +2421,14 @@ document.addEventListener('click', (e)=>{
     }
 
     document.getElementById("zkHawlResult").classList.add("zk-visible");
+
+    // Make the computed due date available to the account/reminder module (see end of page).
+    window.zkLastDueDate = {
+      iso: formatISODate(dueDate),
+      greg: formatGregorian(dueDate),
+      hijri: hijriSupported ? hijriFormatterLong.format(dueDate) : null
+    };
+    if(typeof zkOnDueDateComputed === "function"){ zkOnDueDateComputed(); }
   });
 
   // ---------- Historical rates as of the Zakat due date ----------
@@ -2702,6 +2753,28 @@ function zkSetLang(lang){
   zkSetLang(saved);
 })();
 </script>
+
+<script>
+/* ---- Task switch: Check Eligibility / Find Due Date / Calculate Zakat Due ---- */
+function zkShowTask(task){
+  var sections = {
+    eligibility: document.getElementById('zkTaskEligibility'),
+    duedate: document.getElementById('zkTaskDueDate'),
+    calculate: document.getElementById('zkTaskCalculate')
+  };
+  var buttons = {
+    eligibility: document.getElementById('zkTaskBtnEligibility'),
+    duedate: document.getElementById('zkTaskBtnDueDate'),
+    calculate: document.getElementById('zkTaskBtnCalculate')
+  };
+  Object.keys(sections).forEach(function(key){
+    if(sections[key]){ sections[key].style.display = (key === task) ? 'block' : 'none'; }
+    if(buttons[key]){ buttons[key].classList.toggle('zk-active', key === task); }
+  });
+  // Scroll the newly-shown section into view — handy on mobile where the switch sits well above the fold.
+  if(sections[task]){ sections[task].scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+}
+</script>
 <!-- ===== PTC MINI CHATBOT (FAQ ASSISTANT) ===== -->
 <style>
 #ptcChatToggle{
@@ -2996,6 +3069,166 @@ function zkSetLang(lang){
 </script>
 <!-- ===== END PTC MINI CHATBOT ===== -->
 
+<!-- ===== ACCOUNT & ZAKAT DUE-DATE REMINDER (Supabase) =====
+     Setup required before this works — see the setup notes delivered alongside this file:
+     1. Create a free project at supabase.com and run the provided SQL script in its SQL editor.
+     2. Copy your Project URL and "anon public" API key from Project Settings → API and paste
+        them into SUPABASE_URL / SUPABASE_ANON_KEY below. The anon key is meant to be public —
+        Row Level Security policies (from the SQL script) keep each user's data private.
+     3. Deploy the paired netlify/functions/send-zakat-reminders.js scheduled function with its
+        own environment variables (SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY, REMINDER_FROM_EMAIL)
+        so saved reminders actually get emailed.
+-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  // ---- Fill these in from Supabase -> Project Settings -> API ----
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  // ------------------------------------------------------------------
+
+  var loggedOutEl = document.getElementById("zkAuthLoggedOut");
+  var loggedInEl = document.getElementById("zkAuthLoggedIn");
+
+  if(!window.supabase || SUPABASE_URL.indexOf("YOUR_SUPABASE") === 0){
+    // Not configured yet -- leave the logged-out form visible but explain why it won't work.
+    var notice = document.createElement("p");
+    notice.className = "zk-note";
+    notice.style.color = "var(--zk-danger)";
+    notice.innerHTML =
+      '<span class="lang-en">Sign up / login isn\'t configured yet on this site — the site owner needs to add their Supabase project details.</span>' +
+      '<span class="lang-ur">اس ویب سائٹ پر ابھی سائن اپ / لاگ ان فعال نہیں کیا گیا — سائٹ کے مالک کو اپنی Supabase پراجیکٹ تفصیلات شامل کرنا ہوں گی۔</span>';
+    loggedOutEl.appendChild(notice);
+    document.getElementById("zkSignUpBtn").disabled = true;
+    document.getElementById("zkLogInBtn").disabled = true;
+    return;
+  }
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var statusEl = document.getElementById("zkAuthStatus");
+  var userEmailEl = document.getElementById("zkAuthUserEmail");
+  var saveBtn = document.getElementById("zkSaveReminderBtn");
+  var reminderStatusText = document.getElementById("zkReminderStatusText");
+  var reminderDot = document.getElementById("zkReminderDot");
+  var currentUser = null;
+
+  function showAuthStatus(msg, isError){
+    statusEl.textContent = msg;
+    statusEl.style.display = "block";
+    statusEl.style.color = isError ? "var(--zk-danger)" : "var(--zk-muted)";
+  }
+
+  function setReminderStatus(html, state){
+    reminderStatusText.innerHTML = html;
+    reminderDot.className = "zk-live-dot" + (state === "ok" ? " zk-ok" : state === "err" ? " zk-err" : "");
+  }
+
+  function setLoggedInUI(user){
+    currentUser = user;
+    loggedOutEl.style.display = "none";
+    loggedInEl.style.display = "block";
+    userEmailEl.textContent = user.email;
+    zkOnDueDateComputed();
+    loadExistingReminder();
+  }
+
+  function setLoggedOutUI(){
+    currentUser = null;
+    loggedOutEl.style.display = "block";
+    loggedInEl.style.display = "none";
+  }
+
+  function loadExistingReminder(){
+    if(!currentUser) return;
+    sb.from("zakat_reminders").select("due_date").eq("user_id", currentUser.id).maybeSingle().then(function(res){
+      if(res.data && res.data.due_date){
+        setReminderStatus(
+          '<span class="lang-en">Reminder saved for ' + res.data.due_date + '.</span>' +
+          '<span class="lang-ur">' + res.data.due_date + ' کے لیے یاد دہانی محفوظ ہے۔</span>',
+          "ok"
+        );
+      }
+    });
+  }
+
+  window.zkOnDueDateComputed = function(){
+    if(currentUser && window.zkLastDueDate){
+      saveBtn.disabled = false;
+      document.getElementById("zkSaveReminderHint").style.display = "none";
+    }
+  };
+
+  document.getElementById("zkSignUpBtn").addEventListener("click", function(){
+    var email = document.getElementById("zkAuthEmail").value.trim();
+    var password = document.getElementById("zkAuthPassword").value;
+    if(!email || !password){ showAuthStatus("Please enter both an email and a password.", true); return; }
+    if(password.length < 6){ showAuthStatus("Password must be at least 6 characters.", true); return; }
+    showAuthStatus("Creating your account…", false);
+    sb.auth.signUp({ email: email, password: password }).then(function(res){
+      if(res.error){ showAuthStatus(res.error.message, true); return; }
+      if(res.data && res.data.session){
+        setLoggedInUI(res.data.user);
+      } else {
+        showAuthStatus("Account created — please check your email to confirm it, then log in.", false);
+      }
+    });
+  });
+
+  document.getElementById("zkLogInBtn").addEventListener("click", function(){
+    var email = document.getElementById("zkAuthEmail").value.trim();
+    var password = document.getElementById("zkAuthPassword").value;
+    if(!email || !password){ showAuthStatus("Please enter both an email and a password.", true); return; }
+    showAuthStatus("Logging in…", false);
+    sb.auth.signInWithPassword({ email: email, password: password }).then(function(res){
+      if(res.error){ showAuthStatus(res.error.message, true); return; }
+      setLoggedInUI(res.data.user);
+    });
+  });
+
+  document.getElementById("zkLogOutBtn").addEventListener("click", function(){
+    sb.auth.signOut().then(function(){ setLoggedOutUI(); });
+  });
+
+  document.getElementById("zkSaveReminderBtn").addEventListener("click", function(){
+    if(!currentUser || !window.zkLastDueDate) return;
+    saveBtn.disabled = true;
+    var reportingEl = document.getElementById("zkReportingCurrency");
+    var payload = {
+      user_id: currentUser.id,
+      email: currentUser.email,
+      due_date: window.zkLastDueDate.iso,
+      due_date_hijri: window.zkLastDueDate.hijri,
+      reporting_currency: reportingEl ? reportingEl.value : null,
+      reminder_7day_sent: false,
+      reminder_dueday_sent: false,
+      updated_at: new Date().toISOString()
+    };
+    sb.from("zakat_reminders").upsert(payload, { onConflict: "user_id" }).then(function(res){
+      saveBtn.disabled = false;
+      if(res.error){
+        setReminderStatus("Couldn't save reminder: " + res.error.message, "err");
+        return;
+      }
+      setReminderStatus(
+        '<span class="lang-en">Reminder saved for ' + window.zkLastDueDate.iso + '. We\'ll email you as it approaches, and again next year.</span>' +
+        '<span class="lang-ur">' + window.zkLastDueDate.iso + ' کے لیے یاد دہانی محفوظ کر دی گئی۔ ہم اس کے قریب آنے پر، اور اگلے سال بھی، آپ کو ای میل کریں گے۔</span>',
+        "ok"
+      );
+    });
+  });
+
+  // Restore an existing session on page load / navigation (Supabase persists it in localStorage).
+  sb.auth.getSession().then(function(res){
+    if(res.data && res.data.session){ setLoggedInUI(res.data.session.user); }
+  });
+  sb.auth.onAuthStateChange(function(_event, session){
+    if(session && session.user){ setLoggedInUI(session.user); }
+    else { setLoggedOutUI(); }
+  });
+})();
+</script>
+<!-- ===== END ACCOUNT & ZAKAT DUE-DATE REMINDER ===== -->
 
 </body>
 </html>

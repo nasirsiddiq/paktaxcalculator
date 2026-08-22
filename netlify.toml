@@ -5,6 +5,9 @@
 [functions]
   directory = "netlify/functions"
 
+[functions."send-zakat-reminders"]
+  schedule = "@daily"
+
 [[headers]]
   for = "/*.html"
   [headers.values]
