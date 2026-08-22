@@ -1011,15 +1011,15 @@ header.site-header .headerTop h1{
           <li>You hold cash/bank balance alone worth the value of 612.36g of silver, at today's price</li>
           <li>You hold a <em>mix</em> of gold, silver and/or cash — none reaching its own threshold alone — but their combined value still reaches the value of 612.36g of silver</li>
         </ol>
-        <p class="zk-section-note">Enter what you actually hold below (after subtracting debts and basic living needs) and we'll check which condition, if any, applies — with the amounts shown in your reporting currency.</p>
+        <p class="zk-section-note">Enter what you actually hold below (after subtracting debts and basic living needs) and we'll check which condition, if any, applies — amounts shown in PKR.</p>
 
         <div class="zk-row zk-row-2">
           <div class="zk-field">
-            <label for="zkEligCash">Cash &amp; bank balance</label>
+            <label for="zkEligCash">Cash &amp; bank balance <span class="zk-hint">(in PKR)</span></label>
             <input type="number" id="zkEligCash" class="zk-input" min="0" step="any" placeholder="0.00">
           </div>
           <div class="zk-field">
-            <label for="zkEligDebts">Debts &amp; essential needs <span class="zk-hint">(subtracted)</span></label>
+            <label for="zkEligDebts">Debts &amp; essential needs <span class="zk-hint">(PKR, subtracted)</span></label>
             <input type="number" id="zkEligDebts" class="zk-input" min="0" step="any" placeholder="0.00">
           </div>
         </div>
@@ -1055,7 +1055,7 @@ header.site-header .headerTop h1{
         <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkEligFetchRateBtn">Fetch Live Gold, Silver &amp; Exchange Rate</button>
         <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkEligNisabCheckBtn">Check Against Nisab</button>
         <p class="zk-note" id="zkEligNisabNote">Gold, silver and exchange rates always come from a single lookup for the same date, so they never drift apart. Already fetched rates below? This reuses them — no need to fetch twice.</p>
-        <div class="zk-note" id="zkEligNisabResult" style="font-weight:600;"></div>
+        <div class="zk-elig-result-box" id="zkEligNisabResult" style="display:none;"></div>
       </div>
 
       <div class="zk-elig-question" data-elig-q="5">
@@ -1499,6 +1499,10 @@ document.addEventListener('click', (e)=>{
   function fmt(n){
     var num = isFinite(n) ? n : 0;
     return getCurrencySymbol(getReportingCurrency()) + num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  function fmtAs(n, code){
+    var num = isFinite(n) ? n : 0;
+    return getCurrencySymbol(code) + num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
   }
 
   countrySelect.addEventListener("change", function(){
@@ -2118,17 +2122,26 @@ document.addEventListener('click', (e)=>{
 
   var eligNisabCheckBtn = document.getElementById("zkEligNisabCheckBtn");
   if(eligNisabCheckBtn){
+    // Always priced in PKR (this site's primary audience), independent of whatever
+    // reporting currency is selected in the "Country & Reporting Currency" card below —
+    // derived from the same raw USD gold/silver/FX data a live fetch already gave us.
+    function eligPkrRates(){
+      if(fxRates && fxRates.PKR && rawGoldUSDPerOz != null && rawSilverUSDPerOz != null){
+        return {
+          gold: (rawGoldUSDPerOz / GRAMS_PER_UNIT.ozt) * fxRates.PKR,
+          silver: (rawSilverUSDPerOz / GRAMS_PER_UNIT.ozt) * fxRates.PKR,
+          available: true
+        };
+      }
+      return { gold: 0, silver: 0, available: false };
+    }
+
     eligNisabCheckBtn.addEventListener("click", function(){
       var cash = eligNum("zkEligCash");
       var debts = eligNum("zkEligDebts");
 
       var goldGrams = eligNum("zkEligGoldQty") * GRAMS_PER_UNIT[document.getElementById("zkEligGoldUnit").value];
       var silverGrams = eligNum("zkEligSilverQty") * GRAMS_PER_UNIT[document.getElementById("zkEligSilverUnit").value];
-      var goldValue = goldGrams * goldPricePerGramState;
-      var silverValue = silverGrams * silverPricePerGramState;
-
-      var netWealth = (cash + goldValue + silverValue) - debts;
-      if(netWealth < 0) netWealth = 0;
 
       var resultEl = document.getElementById("zkEligNisabResult");
       var hasGold = goldGrams > 0;
@@ -2137,12 +2150,30 @@ document.addEventListener('click', (e)=>{
       var typesHeld = [hasGold, hasSilver, hasCash].filter(Boolean).length;
       var goldOnlyCase = hasGold && !hasSilver && !hasCash;
 
-      var noRatesAvailable = (goldGrams > 0 || silverGrams > 0) && goldPricePerGramState <= 0 && silverPricePerGramState <= 0;
-      if(noRatesAvailable){
-        resultEl.textContent = "Enter a gold/silver rate above (fetch live, or type one manually in the \"Country & Reporting Currency\" card below), then check again — metal value can't be priced yet.";
+      if(typesHeld === 0){
+        resultEl.style.display = "block";
+        resultEl.className = "zk-elig-result-box zk-elig-no";
+        resultEl.innerHTML = "Nothing entered yet — enter your cash, gold and/or silver above to check.";
         eligAnswers["4"] = null;
         return;
       }
+
+      var pkr = eligPkrRates();
+
+      // The gold-only case is a pure weight comparison (87.48g), so it never needs a rate.
+      // Every other case needs a silver rate to know the PKR value of the 612.36g threshold.
+      if(!goldOnlyCase && !pkr.available){
+        resultEl.style.display = "block";
+        resultEl.className = "zk-elig-result-box zk-elig-no";
+        resultEl.innerHTML = "Click “Fetch Live Gold, Silver &amp; Exchange Rate” above first — we need a live silver rate to price the Nisab threshold in PKR.";
+        eligAnswers["4"] = null;
+        return;
+      }
+
+      var goldValue = goldGrams * pkr.gold;
+      var silverValue = silverGrams * pkr.silver;
+      var netWealth = (cash + goldValue + silverValue) - debts;
+      if(netWealth < 0) netWealth = 0;
 
       var meetsNisab, message;
 
@@ -2152,26 +2183,26 @@ document.addEventListener('click', (e)=>{
         message = "<strong>Condition 1 (gold alone):</strong> you hold " + goldGrams.toFixed(2) + "g of gold — the gold-only Nisab is 87.48g (7.5 tola). " +
           (meetsNisab ? "Nisab is met — this gold alone makes Zakat obligatory." : "Below the gold Nisab.");
       } else {
-        var nisabThreshold = NISAB_SILVER_GRAMS * silverPricePerGramState;
-        meetsNisab = silverPricePerGramState > 0 && netWealth >= nisabThreshold;
-        var thresholdStr = silverPricePerGramState > 0 ? fmt(nisabThreshold) : "enter a silver rate below";
+        var nisabThreshold = NISAB_SILVER_GRAMS * pkr.silver;
+        meetsNisab = netWealth >= nisabThreshold;
+        var thresholdStr = fmtAs(nisabThreshold, "PKR");
 
         if(hasSilver && !hasGold && !hasCash){
           // Condition 2: silver alone, weighed against its own Nisab (612.36g)
           message = "<strong>Condition 2 (silver alone):</strong> you hold " + silverGrams.toFixed(2) + "g of silver — the silver Nisab is 612.36g, worth " + thresholdStr + " at today's price. ";
         } else if(hasCash && !hasGold && !hasSilver){
           // Condition 3: cash alone, weighed against the value of silver Nisab
-          message = "<strong>Condition 3 (cash alone):</strong> your net cash/bank balance is " + fmt(netWealth) + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
-        } else if(typesHeld >= 2){
-          // Condition 4: a mix, none reaching its own threshold alone, but combined value does
-          message = "<strong>Condition 4 (combined mix):</strong> your gold, silver and cash together are worth " + fmt(netWealth) + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
+          message = "<strong>Condition 3 (cash alone):</strong> your net cash/bank balance is " + fmtAs(netWealth, "PKR") + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
         } else {
-          message = "Nothing entered yet — enter your cash, gold and/or silver above to check.";
+          // Condition 4: a mix, none reaching its own threshold alone, but combined value does
+          message = "<strong>Condition 4 (combined mix):</strong> your gold, silver and cash together are worth " + fmtAs(netWealth, "PKR") + " — the value of the silver Nisab (612.36g) is " + thresholdStr + ". ";
         }
 
-        message += (silverPricePerGramState > 0 ? (meetsNisab ? "Nisab is met." : "Below Nisab.") : "");
+        message += (meetsNisab ? "Nisab is met." : "Below Nisab.");
       }
 
+      resultEl.style.display = "block";
+      resultEl.className = "zk-elig-result-box " + (meetsNisab ? "zk-elig-yes" : "zk-elig-no");
       resultEl.innerHTML = message;
       eligAnswers["4"] = meetsNisab ? "yes" : "no";
     });
