@@ -1588,6 +1588,11 @@ document.addEventListener('click', (e)=>{
 #ptcChatInput:focus{ border-color:#0a6b34; }
 .ptcChatInputRow button{ width:38px; height:38px; border-radius:50%; border:none; background:#01411C; color:#fff; font-size:1rem; cursor:pointer; flex:0 0 auto; }
 .ptcChatFooterNote{ font-size:0.68rem; color:#8a978f; text-align:center; padding:0 10px 8px; flex:0 0 auto; }
+.ptcChatMsg.ptcTyping{ display:flex; gap:4px; align-items:center; padding:12px 14px; }
+.ptcDot{ width:6px; height:6px; border-radius:50%; background:#9fb0a7; animation:ptcBounce 1.2s infinite ease-in-out; }
+.ptcDot:nth-child(2){ animation-delay:0.15s; }
+.ptcDot:nth-child(3){ animation-delay:0.3s; }
+@keyframes ptcBounce{ 0%,60%,100%{ transform:translateY(0); opacity:0.5; } 30%{ transform:translateY(-4px); opacity:1; } }
 @media (max-width:480px){
   #ptcChatPanel{ right:8px; left:8px; width:auto; bottom:78px; height:min(460px, calc(100vh - 110px)); }
   #ptcChatToggle{ right:12px; bottom:12px; }
@@ -1608,7 +1613,7 @@ document.addEventListener('click', (e)=>{
     <input type="text" id="ptcChatInput" placeholder="Type your question…" autocomplete="off" aria-label="Type your question">
     <button type="submit" aria-label="Send">&#10148;</button>
   </form>
-  <div class="ptcChatFooterNote">Answers are drawn from this site's FAQs — not a substitute for professional advice.</div>
+  <div class="ptcChatFooterNote">AI-generated from this site's content — not a substitute for professional advice.</div>
 </div>
 
 <script>
@@ -1689,7 +1694,8 @@ document.addEventListener('click', (e)=>{
     return div;
   }
 
-  function answerQuery(raw){
+  /* ---- Offline fallback: local keyword search over this page's FAQs / site pages ---- */
+  function answerQueryLocal(raw){
     var qTokens = tokenize(raw);
     if(!qTokens.length){
       addMsg("Could you rephrase that as a question?", 'ptcBot');
@@ -1724,6 +1730,48 @@ document.addEventListener('click', (e)=>{
     } else {
       addMsg("I'm not sure — I can only answer from this site's FAQs. Try rephrasing, use the search bar at the top, or reach out via the Contact / Feedback page.", 'ptcBot');
     }
+  }
+
+  /* ---- Real AI answer via the Netlify Function, with automatic offline fallback ---- */
+  function addTyping(){
+    var div = document.createElement('div');
+    div.className = 'ptcChatMsg ptcBot ptcTyping';
+    div.innerHTML = '<span class="ptcDot"></span><span class="ptcDot"></span><span class="ptcDot"></span>';
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function answerQuery(raw){
+    var typingEl = addTyping();
+    var payload = {
+      message: raw,
+      pageTitle: document.title || '',
+      pageUrl: window.location.pathname || '',
+      pageFaqs: faqIndex.slice(0, 12).map(function(item){ return { q: item.q, a: item.a }; })
+    };
+    var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = setTimeout(function(){ if(controller) controller.abort(); }, 15000);
+    fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller ? controller.signal : undefined
+    }).then(function(res){
+      clearTimeout(timer);
+      if(!res.ok) throw new Error('chat function returned ' + res.status);
+      return res.json();
+    }).then(function(data){
+      if(typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+      if(data && data.reply){
+        addMsg(esc(data.reply).replace(/\n/g, '<br>'), 'ptcBot', true);
+      } else {
+        answerQueryLocal(raw);
+      }
+    }).catch(function(){
+      if(typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+      answerQueryLocal(raw);
+    });
   }
 
   function buildSuggestions(){
@@ -1789,6 +1837,7 @@ document.addEventListener('click', (e)=>{
 })();
 </script>
 <!-- ===== END PTC MINI CHATBOT ===== -->
+
 
 </body>
 </html>
