@@ -1056,13 +1056,17 @@ header.site-header .headerTop h1{
 
         <div class="zk-live-status" id="zkReminderStatus">
           <span class="zk-live-dot" id="zkReminderDot"></span>
-          <span id="zkReminderStatusText"><span class="lang-en">No Zakat due-date reminder saved yet.</span><span class="lang-ur">ابھی تک کوئی زکوٰۃ یاد دہانی محفوظ نہیں کی گئی۔</span></span>
+          <span id="zkReminderStatusText"><span class="lang-en">No Zakat due-date reminder saved yet — go to "Find Due Date" to set one.</span><span class="lang-ur">ابھی تک کوئی زکوٰۃ یاد دہانی محفوظ نہیں کی گئی — یاد دہانی کے لیے "واجب الادا تاریخ معلوم کریں" پر جائیں۔</span></span>
         </div>
+        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkDeleteReminderBtn" style="margin-top:8px; display:none;"><span class="lang-en">Delete Reminder</span><span class="lang-ur">یاد دہانی حذف کریں</span></button>
+        <p class="zk-note lang-en">To change your due date, just recalculate it in "Find Due Date" and click "Save &amp; Email Me a Reminder" again — it replaces the old one automatically.</p>
+        <p class="zk-note lang-ur">اپنی تاریخ تبدیل کرنے کے لیے، "واجب الادا تاریخ معلوم کریں" میں دوبارہ حساب لگائیں اور "محفوظ کریں اور ای میل یاد دہانی بھیجیں" دوبارہ دبائیں — یہ خودکار طور پر پرانی تاریخ کی جگہ لے لے گی۔</p>
 
-        <button type="button" class="zk-btn zk-btn-secondary zk-btn-small" id="zkSaveReminderBtn" disabled><span class="lang-en">Save &amp; Email Me a Reminder</span><span class="lang-ur">محفوظ کریں اور ای میل یاد دہانی بھیجیں</span></button>
-        <p class="zk-note" id="zkSaveReminderHint"><span class="lang-en">Use the "Find Your Zakat Due Date" panel below to calculate your due date first, then come back here to save it.</span><span class="lang-ur">پہلے نیچے دیے گئے "میری زکوٰۃ کی واجب الادا تاریخ معلوم کریں" پینل کا استعمال کریں، پھر یہاں واپس آ کر اسے محفوظ کریں۔</span></p>
-
-        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogOutBtn" style="margin-top:10px;"><span class="lang-en">Log Out</span><span class="lang-ur">لاگ آؤٹ</span></button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogOutBtn"><span class="lang-en">Log Out</span><span class="lang-ur">لاگ آؤٹ</span></button>
+          <button type="button" class="zk-btn zk-btn-small" id="zkDeleteAccountBtn" style="background:var(--zk-danger); color:#fff;"><span class="lang-en">Delete My Account</span><span class="lang-ur">میرا اکاؤنٹ حذف کریں</span></button>
+        </div>
+        <p class="zk-note" id="zkDeleteAccountStatus" style="display:none;"></p>
       </div>
     </div>
 
@@ -1245,6 +1249,9 @@ header.site-header .headerTop h1{
         </div>
         <div class="zk-countdown" id="zkOutCountdown"></div>
         <p class="zk-note" id="zkHijriFallbackNote" style="display:none;"><span class="lang-en">Your browser couldn't provide precise Hijri conversion, so dates shown are estimated using a 354-day lunar year. Actual moon-sighting dates may vary by a day or two.</span><span class="lang-ur">آپ کا براؤزر درست ہجری تبدیلی فراہم نہ کر سکا، اس لیے دکھائی گئی تاریخیں 354 دن کے قمری سال کے تخمینے پر مبنی ہیں۔ اصل چاند دیکھنے کی تاریخیں ایک دو دن آگے پیچھے ہو سکتی ہیں۔</span></p>
+
+        <button type="button" class="zk-btn zk-btn-secondary" id="zkHawlSaveReminderBtn" disabled style="margin-top:14px;"><span class="lang-en">Save &amp; Email Me a Reminder</span><span class="lang-ur">محفوظ کریں اور ای میل یاد دہانی بھیجیں</span></button>
+        <p class="zk-note" id="zkHawlSaveReminderHint"><span class="lang-en">Sign in or sign up above (in "Your Account &amp; Zakat Reminder") to enable this.</span><span class="lang-ur">اسے فعال کرنے کے لیے اوپر ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span></p>
       </div>
 
       <hr class="zk-divider">
@@ -3108,9 +3115,13 @@ function zkShowTask(task){
 
   var statusEl = document.getElementById("zkAuthStatus");
   var userEmailEl = document.getElementById("zkAuthUserEmail");
-  var saveBtn = document.getElementById("zkSaveReminderBtn");
+  var saveBtn = document.getElementById("zkHawlSaveReminderBtn");
+  var saveHint = document.getElementById("zkHawlSaveReminderHint");
   var reminderStatusText = document.getElementById("zkReminderStatusText");
   var reminderDot = document.getElementById("zkReminderDot");
+  var deleteReminderBtn = document.getElementById("zkDeleteReminderBtn");
+  var deleteAccountBtn = document.getElementById("zkDeleteAccountBtn");
+  var deleteAccountStatus = document.getElementById("zkDeleteAccountStatus");
   var currentUser = null;
 
   function showAuthStatus(msg, isError){
@@ -3137,6 +3148,8 @@ function zkShowTask(task){
     currentUser = null;
     loggedOutEl.style.display = "block";
     loggedInEl.style.display = "none";
+    deleteReminderBtn.style.display = "none";
+    updateSaveButtonState();
   }
 
   function loadExistingReminder(){
@@ -3148,16 +3161,32 @@ function zkShowTask(task){
           '<span class="lang-ur">' + res.data.due_date + ' کے لیے یاد دہانی محفوظ ہے۔</span>',
           "ok"
         );
+        deleteReminderBtn.style.display = "inline-block";
+      } else {
+        deleteReminderBtn.style.display = "none";
       }
     });
   }
 
   window.zkOnDueDateComputed = function(){
+    updateSaveButtonState();
+  };
+
+  function updateSaveButtonState(){
     if(currentUser && window.zkLastDueDate){
       saveBtn.disabled = false;
-      document.getElementById("zkSaveReminderHint").style.display = "none";
+      saveHint.style.display = "none";
+    } else if(!currentUser){
+      saveBtn.disabled = true;
+      saveHint.style.display = "block";
+      saveHint.innerHTML =
+        '<span class="lang-en">Sign in or sign up above (in "Your Account &amp; Zakat Reminder") to enable this.</span>' +
+        '<span class="lang-ur">اسے فعال کرنے کے لیے اوپر ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span>';
+    } else {
+      saveBtn.disabled = true;
+      saveHint.style.display = "none";
     }
-  };
+  }
 
   document.getElementById("zkSignUpBtn").addEventListener("click", function(){
     var email = document.getElementById("zkAuthEmail").value.trim();
@@ -3190,7 +3219,7 @@ function zkShowTask(task){
     sb.auth.signOut().then(function(){ setLoggedOutUI(); });
   });
 
-  document.getElementById("zkSaveReminderBtn").addEventListener("click", function(){
+  document.getElementById("zkHawlSaveReminderBtn").addEventListener("click", function(){
     if(!currentUser || !window.zkLastDueDate) return;
     saveBtn.disabled = true;
     var reportingEl = document.getElementById("zkReportingCurrency");
@@ -3215,6 +3244,67 @@ function zkShowTask(task){
         '<span class="lang-ur">' + window.zkLastDueDate.iso + ' کے لیے یاد دہانی محفوظ کر دی گئی۔ ہم اس کے قریب آنے پر، اور اگلے سال بھی، آپ کو ای میل کریں گے۔</span>',
         "ok"
       );
+      deleteReminderBtn.style.display = "inline-block";
+    });
+  });
+
+  deleteReminderBtn.addEventListener("click", function(){
+    if(!currentUser) return;
+    var confirmMsg = "Delete your saved Zakat reminder? You can always set a new one later.";
+    if(!confirm(confirmMsg)) return;
+    deleteReminderBtn.disabled = true;
+    sb.from("zakat_reminders").delete().eq("user_id", currentUser.id).then(function(res){
+      deleteReminderBtn.disabled = false;
+      if(res.error){
+        setReminderStatus("Couldn't delete reminder: " + res.error.message, "err");
+        return;
+      }
+      deleteReminderBtn.style.display = "none";
+      setReminderStatus(
+        '<span class="lang-en">Reminder deleted.</span><span class="lang-ur">یاد دہانی حذف کر دی گئی۔</span>',
+        ""
+      );
+    });
+  });
+
+  deleteAccountBtn.addEventListener("click", function(){
+    if(!currentUser) return;
+    var confirmMsg = "Permanently delete your account and saved Zakat reminder? This cannot be undone.";
+    if(!confirm(confirmMsg)) return;
+    deleteAccountBtn.disabled = true;
+    deleteAccountStatus.style.display = "block";
+    deleteAccountStatus.style.color = "var(--zk-muted)";
+    deleteAccountStatus.textContent = "Deleting your account…";
+    sb.auth.getSession().then(function(res){
+      var token = res.data && res.data.session ? res.data.session.access_token : null;
+      if(!token){
+        deleteAccountBtn.disabled = false;
+        deleteAccountStatus.style.color = "var(--zk-danger)";
+        deleteAccountStatus.textContent = "Couldn't verify your session — please log out and back in, then try again.";
+        return;
+      }
+      fetch("/.netlify/functions/delete-account", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ access_token: token })
+      }).then(function(r){ return r.json().then(function(body){ return { ok: r.ok, body: body }; }); })
+        .then(function(result){
+          deleteAccountBtn.disabled = false;
+          if(!result.ok){
+            deleteAccountStatus.style.color = "var(--zk-danger)";
+            deleteAccountStatus.textContent = "Couldn't delete account: " + (result.body && result.body.error ? result.body.error : "unknown error");
+            return;
+          }
+          sb.auth.signOut().then(function(){
+            setLoggedOutUI();
+            showAuthStatus("Your account has been deleted.", false);
+          });
+        })
+        .catch(function(err){
+          deleteAccountBtn.disabled = false;
+          deleteAccountStatus.style.color = "var(--zk-danger)";
+          deleteAccountStatus.textContent = "Couldn't reach the server to delete your account. Please try again shortly.";
+        });
     });
   });
 
