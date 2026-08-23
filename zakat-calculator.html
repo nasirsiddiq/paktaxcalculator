@@ -3308,6 +3308,33 @@ function zkShowTask(task){
     });
   });
 
+  // If this page was opened from a confirmation-email link that points at our own domain
+  // (see the Supabase "Confirm signup" email template, which we customized to link here
+  // with a token_hash instead of using Supabase's own supabase.co verify link), finish the
+  // verification here. This avoids a common spam-filter problem: mail providers are wary of
+  // a "confirm your account" email whose sender is your domain but whose link points to an
+  // unrelated one (your-project-ref.supabase.co), which looks like a phishing mismatch.
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var tokenHash = params.get("token_hash");
+    var otpType = params.get("type");
+    if(!tokenHash || !otpType) return;
+    showAuthStatus("Confirming your email…", false);
+    sb.auth.verifyOtp({ token_hash: tokenHash, type: otpType }).then(function(res){
+      // Strip the token out of the URL so refreshing the page can't try to reuse it.
+      var cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+      if(res.error){
+        showAuthStatus("Couldn't confirm your email: " + res.error.message + " — the link may have expired. Please try signing up again.", true);
+        return;
+      }
+      if(res.data && res.data.session && res.data.session.user){
+        setLoggedInUI(res.data.session.user);
+      }
+      showAuthStatus("Your email is confirmed — you're signed in!", false);
+    });
+  })();
+
   // Restore an existing session on page load / navigation (Supabase persists it in localStorage).
   sb.auth.getSession().then(function(res){
     if(res.data && res.data.session){ setLoggedInUI(res.data.session.user); }
