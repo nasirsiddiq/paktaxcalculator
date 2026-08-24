@@ -2844,7 +2844,7 @@ function zkShowTask(task){
     <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ptcChatBody" id="ptcChatBody">
-    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatMsg ptcBot">Assalam-o-Alaikum! What can I help you with today — income tax, sales tax, provincial tax, or something else? Tell us what you’re trying to figure out, or tap a suggestion below.</div>
     <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
   </div>
   <form class="ptcChatInputRow" id="ptcChatForm">
@@ -3295,10 +3295,13 @@ function zkShowTask(task){
             deleteAccountStatus.textContent = "Couldn't delete account: " + (result.body && result.body.error ? result.body.error : "unknown error");
             return;
           }
-          sb.auth.signOut().then(function(){
-            setLoggedOutUI();
-            showAuthStatus("Your account has been deleted.", false);
-          });
+          // The account is already gone on the server at this point. Update the screen right
+          // away rather than waiting on sb.auth.signOut() to finish -- signing out a session
+          // whose user no longer exists can fail/hang, which would otherwise leave the page
+          // stuck showing the logged-in view even though the account was truly deleted.
+          setLoggedOutUI();
+          showAuthStatus("Your account has been deleted.", false);
+          sb.auth.signOut().catch(function(){ /* best-effort local cleanup only; ignore errors */ });
         })
         .catch(function(err){
           deleteAccountBtn.disabled = false;

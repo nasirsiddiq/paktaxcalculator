@@ -607,6 +607,59 @@ table.gst td.note{
   max-width:640px;
   margin:0 auto;
 }
+.hero-greeting{
+  max-width:760px;
+  margin:16px auto 0;
+  padding:20px 24px;
+  background:linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(1,65,28,0.28);
+  position:relative;
+  overflow:hidden;
+}
+.hero-greeting::before{
+  content:"";
+  position:absolute;
+  top:-60px;
+  right:-40px;
+  width:180px;
+  height:180px;
+  background:rgba(255,255,255,0.07);
+  border-radius:50%;
+  pointer-events:none;
+}
+.hero-greeting::after{
+  content:"";
+  position:absolute;
+  bottom:-50px;
+  left:-30px;
+  width:140px;
+  height:140px;
+  background:rgba(255,255,255,0.05);
+  border-radius:50%;
+  pointer-events:none;
+}
+.hero-greeting p{
+  margin:0;
+  color:#ffffff;
+  font-size:16px;
+  font-weight:700;
+  line-height:1.75;
+  position:relative;
+  z-index:1;
+}
+.hero-greeting .hg-line1{
+  color:#ffe28a;
+  font-size:21px;
+  display:inline-block;
+  margin-bottom:4px;
+}
+@media (max-width:520px){
+  .hero-greeting{ padding:16px 18px; }
+  .hero-greeting p{ font-size:15px; }
+  .hero-greeting .hg-line1{ font-size:19px; }
+}
 .section-title{
   max-width:920px;
   margin:28px auto 12px;
@@ -1080,6 +1133,9 @@ header.site-header .headerTop h1{
 <div class="hero-home">
   <h2>All Pakistan Tax Calculators in One Place</h2>
   <p>Start with income tax below, or jump to any other calculator &mdash; <a href="#more-calculators">see them all</a>. Covers Tax Year 2025-26 and 2026-27.</p>
+  <div class="hero-greeting">
+    <p><span class="hg-line1">&#128075; Assalam-o-Alaikum!</span><br>We&rsquo;re here to help you.<br>Just enter your amount and get your answer.</p>
+  </div>
 </div>
 
 <div class="wrap">
@@ -1930,7 +1986,7 @@ document.addEventListener('click', (e)=>{
     <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ptcChatBody" id="ptcChatBody">
-    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatMsg ptcBot">Assalam-o-Alaikum! What can I help you with today — income tax, sales tax, provincial tax, or something else? Tell us what you’re trying to figure out, or tap a suggestion below.</div>
     <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
   </div>
   <form class="ptcChatInputRow" id="ptcChatForm">

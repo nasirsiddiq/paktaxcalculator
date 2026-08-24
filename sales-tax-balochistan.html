@@ -232,8 +232,101 @@ input.amount-input:focus{
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
+.braw-toggle-label{
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
+  margin:0 0 10px;
+}
+.braw-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.braw-toggle button{
+  flex:1 1 auto;
+  min-width:150px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.braw-toggle button:hover{border-color:var(--green-light);}
+.braw-toggle button.active{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
+}
+.braw-rate-result{
+  background:var(--green-pale);
+  border-radius:10px;
+  padding:16px;
+  margin-top:6px;
+}
+.braw-rate-result .big{font-size:22px;font-weight:800;color:var(--green);}
+.braw-rate-result .note{font-size:13px;color:var(--muted);margin-top:6px;}
 @media (max-width:520px){
   .row{grid-template-columns:1fr;}
+}
+
+.ptop-greeting{
+  margin:0 0 14px;
+  padding:16px 20px;
+  background:linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  border-radius:14px;
+  box-shadow:0 8px 22px rgba(1,65,28,0.25);
+  position:relative;
+  overflow:hidden;
+}
+.ptop-greeting::before{
+  content:"";
+  position:absolute;
+  top:-50px;
+  right:-30px;
+  width:140px;
+  height:140px;
+  background:rgba(255,255,255,0.07);
+  border-radius:50%;
+  pointer-events:none;
+}
+.ptop-toggle-sub{
+  font-size:14.5px;
+  color:#ffffff;
+  font-weight:600;
+  margin:0;
+  line-height:1.6;
+  position:relative;
+  z-index:1;
+}
+.ptop-toggle-sub strong{
+  color:#ffe28a;
+}
+.ptop-toggle-label{
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+  margin:0 0 10px;
+}
+.ptop-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.ptop-toggle button{
+  flex:1 1 auto;
+  min-width:150px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.ptop-toggle button:hover{border-color:var(--green-light);}
+.ptop-toggle button.active{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
 }
 .seg{
   display:flex;
@@ -1056,6 +1149,17 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
+  <div class="ptop-greeting">
+    <p class="ptop-toggle-sub">&#128073; Looking for the <strong>BRA</strong> rate on an invoice, or need to work out withholding tax? Pick a tab below, enter your amount, and we’ll do the rest.</p>
+  </div>
+  <p class="ptop-toggle-label">What would you like to check?</p>
+  <div class="ptop-toggle" role="group">
+    <button type="button" id="ptopBtnRate" class="active" onclick="ptopShowMode('rate')">Check Sales Tax Rate</button>
+    <button type="button" id="ptopBtnWithholding" onclick="ptopShowMode('withholding')">Check Withholding Tax</button>
+  </div>
+
+  <div id="ptopRateSection">
+
   <div class="card">
     <h2>Balochistan Sales Tax on Services</h2>
     <p class="sub">Provincial sales tax on services in Balochistan, administered by the Balochistan Revenue Authority (BRA) under the Balochistan Sales Tax on Services Act 2015. Select a service category and enter the value excluding tax.</p>
@@ -1084,6 +1188,54 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Rates are sourced from the Second Schedule to the Balochistan Sales Tax on Services Act 2015, as amended by the Finance Act 2023. Several categories carry a two-tier rate structure (e.g. non-corporate/non-chain hotels at 5% vs corporate/franchise/chain hotels at 15%; cash-paid restaurant bills at 4% vs digital/card/QR-paid bills at 2%) or a reduced rate conditional on not claiming input tax credit. The "IT-based services" reduced rate of 6% applies per the Explanation to the Schedule covering software development, system design, web design, data processing, medical transcription and similar services. Confirm your exact tariff heading and eligibility with the Balochistan Revenue Authority (BRA) or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  </div>
+
+  <div id="ptopWithholdingSection" style="display:none;">
+
+  <div class="card">
+    <h2>BRA Withholding Tax</h2>
+    <p class="sub">If you're the person paying a BRA-taxable services invoice (a notified withholding agent), use this to work out how much sales tax you must withhold and deposit directly with BRA instead of paying the supplier in full.</p>
+
+    <div class="field">
+      <label>Withholding Category</label>
+      <select id="brawCategory"></select>
+    </div>
+
+    <div id="brawAmountMode">
+
+      <div class="field">
+        <label>Sales Tax Category <span style="font-weight:400;color:var(--muted);font-size:12px;">(auto-fills the rate below — or leave blank and enter it yourself)</span></label>
+        <select id="brawTaxCategory"></select>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label id="brawValueLabel">Value of Supply, Excl. Tax (PKR)</label>
+          <div class="amount-wrap">
+            <span class="currency-prefix">₨</span>
+            <input type="text" inputmode="numeric" autocomplete="off" id="brawValue" class="amount-input" placeholder="e.g. 200,000">
+          </div>
+        </div>
+        <div class="field">
+          <label>Sales Tax Rate on Invoice (%)</label>
+          <input type="number" id="brawRate" placeholder="e.g. 15" min="0" step="0.5">
+        </div>
+      </div>
+      <div class="hint" id="brawBasisHint"></div>
+
+      <div class="result">
+        <div class="label">Amount Withheld &amp; Deposited by Agent</div>
+        <div class="big" id="brawWithheld">Rs. 0</div>
+        <div class="grid3" id="brawStats"></div>
+      </div>
+      <table class="breakdown" id="brawBreakdown"></table>
+    </div>
+
+    <p class="sub" style="margin:14px 0 0;">This covers Balochistan (BRA) specifically. For withholding under FBR or another province, see the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
+  </div>
+
   </div>
 
   <div class="card">
@@ -1264,7 +1416,7 @@ const SALES_TAX_GROUPS = [
       "Technical, scientific & engineering consultants": 6,
       "Tax practitioners & consultants": 6,
       "Corporate law practitioners & consultants": 6,
-      "Software / IT-based system developers & consultants": 15,
+      "Software / IT-based system developers & consultants": 6,
       "Human resource & personal development consultants": 15,
   }},
   { group: "Laboratories & Medical Diagnostics (98.17)", items: {
@@ -1278,7 +1430,7 @@ const SALES_TAX_GROUPS = [
       "Stockbrokers, futures & commodity brokers": 4,
       "Underwriters, indenters, commission agents, packers & movers": 4,
       "Foreign exchange dealers / money changers": 15,
-      "Rent-a-car / automobile rental service": 4,
+      "Rent-a-car / automobile rental service": 8,
       "Cab aggregator": 2,
       "Prize bond dealers": 15,
       "Surveyors": 4,
@@ -1388,6 +1540,110 @@ function computeSaleTax(){
     <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
     <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
   `;
+}
+
+/* =========================================================
+   BRA WITHHOLDING TAX (subset of the Federal 11th Schedule +
+   provincial withholding rules, restricted to Balochistan/BRA —
+   see the full cross-authority calculator at sales-tax-withholding.html
+   for FBR, Sindh, Punjab, KPK and ICT)
+========================================================= */
+const BRAW_ITEMS = {
+  "Registered service provider (general)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; provider deposits remaining 4/5th itself"},
+  "Unregistered / foreign provider": {type:"fraction", value:100, basis:"incl", note:"Full amount shown on invoice, or computed on gross value if not shown"},
+};
+const BRAW_DEFAULT_RATE = 15;
+
+const brawCategoryEl = document.getElementById('brawCategory');
+Object.keys(BRAW_ITEMS).forEach(k=>{
+  const o = document.createElement('option');
+  o.value = k; o.textContent = k;
+  brawCategoryEl.appendChild(o);
+});
+document.getElementById('brawRate').value = BRAW_DEFAULT_RATE;
+
+const brawTaxCategoryEl = document.getElementById('brawTaxCategory');
+if(brawTaxCategoryEl){
+  const manualOpt = document.createElement('option');
+  manualOpt.value = '';
+  manualOpt.textContent = '— Select to auto-fill —';
+  brawTaxCategoryEl.appendChild(manualOpt);
+  Object.keys(SALES_TAX_DATA).forEach(k=>{
+    const o = document.createElement('option');
+    o.value = k;
+    o.textContent = k + ' (' + SALES_TAX_DATA[k] + '%)';
+    brawTaxCategoryEl.appendChild(o);
+  });
+  brawTaxCategoryEl.addEventListener('change', function(){
+    if(brawTaxCategoryEl.value && SALES_TAX_DATA[brawTaxCategoryEl.value] !== undefined){
+      document.getElementById('brawRate').value = SALES_TAX_DATA[brawTaxCategoryEl.value];
+      brawCompute();
+    }
+  });
+}
+
+function brawScenario(entered, rate, item, basis){
+  let value, salesTax, gross;
+  if(basis === 'incl'){
+    gross = entered;
+    value = (100 + rate) === 0 ? 0 : entered * 100 / (100 + rate);
+    salesTax = gross - value;
+  } else {
+    value = entered;
+    salesTax = value * (rate/100);
+    gross = value + salesTax;
+  }
+  let withheld = 0;
+  if(item){
+    withheld = item.type === 'fraction' ? salesTax * (item.value/100) : value * (item.value/100);
+  }
+  return { value, salesTax, gross, withheld, netToSupplier: gross - withheld };
+}
+
+function brawCompute(){
+  const item = BRAW_ITEMS[brawCategoryEl.value];
+  const basis = (item && item.basis) || 'excl';
+
+  const entered = numVal('brawValue');
+  const rate = parseFloat(document.getElementById('brawRate').value) || 0;
+  const s = brawScenario(entered, rate, item, basis);
+
+  document.getElementById('brawValueLabel').textContent = basis === 'incl'
+    ? 'Total Invoice Amount, Incl. Tax (PKR)'
+    : 'Value of Supply, Excl. Tax (PKR)';
+  document.getElementById('brawBasisHint').innerHTML = basis === 'incl'
+    ? 'This category covers an <strong>unregistered</strong> provider, whose invoice carries no separate sales tax line. Enter the gross invoice total &mdash; the tax is extracted from it using the tax fraction, not added on top.'
+    : 'This category covers a <strong>registered</strong> provider, whose tax invoice shows the sales tax separately. Enter the value of supply excluding tax &mdash; the tax is added on top.';
+
+  document.getElementById('brawWithheld').textContent = fmt(s.withheld);
+  document.getElementById('brawStats').innerHTML = `
+    <div class="stat"><div class="v">${fmt(s.salesTax)}</div><div class="k">Sales Tax on Invoice</div></div>
+    <div class="stat"><div class="v">${fmt(s.netToSupplier)}</div><div class="k">Net Paid to Supplier</div></div>
+    <div class="stat"><div class="v">${item? (item.type==='fraction'? item.value+'% of tax' : item.value+'% of value') : '-'}</div><div class="k">Withholding Basis</div></div>
+  `;
+  document.getElementById('brawBreakdown').innerHTML = `
+    <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
+    <tr><td>Value of supply (excl. tax)</td><td>${basis==='incl' ? `Invoice &times; 100/${(100+rate)}` : 'Amount entered'}</td><td>${fmt(s.value)}</td></tr>
+    <tr><td>Sales tax on invoice</td><td>${basis==='incl' ? `Invoice &times; ${rate}/${(100+rate)} (tax fraction)` : `${rate}% of value`}</td><td>${fmt(s.salesTax)}</td></tr>
+    <tr><td>Gross invoice (incl. tax)</td><td>${basis==='incl' ? 'Amount entered' : 'Value + tax'}</td><td>${fmt(s.gross)}</td></tr>
+    <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
+    <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
+  `;
+}
+
+brawCategoryEl.addEventListener('change', brawCompute);
+document.getElementById('brawValue').addEventListener('input', brawCompute);
+document.getElementById('brawRate').addEventListener('input', brawCompute);
+attachCommaFormat('brawValue');
+brawCompute();
+
+
+function ptopShowMode(mode){
+  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
+  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
+  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
+  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
+  window.scrollTo({top: 0, behavior: 'instant'});
 }
 
 /* =========================================================
@@ -1579,7 +1835,7 @@ document.addEventListener('click', (e)=>{
     <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ptcChatBody" id="ptcChatBody">
-    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatMsg ptcBot">Assalam-o-Alaikum! What can I help you with today — income tax, sales tax, provincial tax, or something else? Tell us what you’re trying to figure out, or tap a suggestion below.</div>
     <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
   </div>
   <form class="ptcChatInputRow" id="ptcChatForm">

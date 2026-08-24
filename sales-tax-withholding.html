@@ -235,6 +235,40 @@ input.amount-input:focus{
 @media (max-width:520px){
   .row{grid-template-columns:1fr;}
 }
+.stw-toggle-label{
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
+  margin:0 0 10px;
+}
+.stw-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.stw-toggle button{
+  flex:1 1 auto;
+  min-width:150px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.stw-toggle button:hover{border-color:var(--green-light);}
+.stw-toggle button.active{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
+}
+.stw-rate-result{
+  background:var(--green-pale);
+  border-radius:10px;
+  padding:16px;
+  margin-top:6px;
+}
+.stw-rate-result .big{font-size:22px;font-weight:800;color:var(--green);}
+.stw-rate-result .note{font-size:13px;color:var(--muted);margin-top:6px;}
 .seg{
   display:flex;
   border:1px solid var(--border);
@@ -1070,23 +1104,25 @@ header.site-header .headerTop h1{
       <select id="stwCategory"></select>
     </div>
 
-    <div class="row">
-      <div class="field">
-        <label id="stwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix">₨</span>
-          <input type="text" inputmode="numeric" autocomplete="off" id="stwValue" class="amount-input" placeholder="e.g. 200,000">
+    <div id="stwAmountMode">
+      <div class="row">
+        <div class="field">
+          <label id="stwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
+          <div class="amount-wrap">
+            <span class="currency-prefix">₨</span>
+            <input type="text" inputmode="numeric" autocomplete="off" id="stwValue" class="amount-input" placeholder="e.g. 200,000">
+          </div>
+        </div>
+        <div class="field">
+          <label>Sales Tax Rate on Invoice (%)</label>
+          <input type="number" id="stwRate" placeholder="e.g. 18" min="0" step="0.5">
         </div>
       </div>
-      <div class="field">
-        <label>Sales Tax Rate on Invoice (%)</label>
-        <input type="number" id="stwRate" placeholder="e.g. 18" min="0" step="0.5">
-      </div>
+      <div class="hint" id="stwBasisHint"></div>
     </div>
-    <div class="hint" id="stwBasisHint"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="stwAmountResultCard">
     <div class="result">
       <div class="label">Amount Withheld &amp; Deposited by Agent</div>
       <div class="big" id="stwWithheld">Rs. 0</div>
@@ -1537,7 +1573,7 @@ document.addEventListener('click', (e)=>{
     <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ptcChatBody" id="ptcChatBody">
-    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatMsg ptcBot">Assalam-o-Alaikum! What can I help you with today — income tax, sales tax, provincial tax, or something else? Tell us what you’re trying to figure out, or tap a suggestion below.</div>
     <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
   </div>
   <form class="ptcChatInputRow" id="ptcChatForm">

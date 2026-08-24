@@ -232,8 +232,101 @@ input.amount-input:focus{
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
+.srbw-toggle-label{
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
+  margin:0 0 10px;
+}
+.srbw-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.srbw-toggle button{
+  flex:1 1 auto;
+  min-width:150px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.srbw-toggle button:hover{border-color:var(--green-light);}
+.srbw-toggle button.active{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
+}
+.srbw-rate-result{
+  background:var(--green-pale);
+  border-radius:10px;
+  padding:16px;
+  margin-top:6px;
+}
+.srbw-rate-result .big{font-size:22px;font-weight:800;color:var(--green);}
+.srbw-rate-result .note{font-size:13px;color:var(--muted);margin-top:6px;}
 @media (max-width:520px){
   .row{grid-template-columns:1fr;}
+}
+
+.ptop-greeting{
+  margin:0 0 14px;
+  padding:16px 20px;
+  background:linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  border-radius:14px;
+  box-shadow:0 8px 22px rgba(1,65,28,0.25);
+  position:relative;
+  overflow:hidden;
+}
+.ptop-greeting::before{
+  content:"";
+  position:absolute;
+  top:-50px;
+  right:-30px;
+  width:140px;
+  height:140px;
+  background:rgba(255,255,255,0.07);
+  border-radius:50%;
+  pointer-events:none;
+}
+.ptop-toggle-sub{
+  font-size:14.5px;
+  color:#ffffff;
+  font-weight:600;
+  margin:0;
+  line-height:1.6;
+  position:relative;
+  z-index:1;
+}
+.ptop-toggle-sub strong{
+  color:#ffe28a;
+}
+.ptop-toggle-label{
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+  margin:0 0 10px;
+}
+.ptop-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.ptop-toggle button{
+  flex:1 1 auto;
+  min-width:150px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.ptop-toggle button:hover{border-color:var(--green-light);}
+.ptop-toggle button.active{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
 }
 .seg{
   display:flex;
@@ -1056,6 +1149,17 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
+  <div class="ptop-greeting">
+    <p class="ptop-toggle-sub">&#128073; Looking for the <strong>SRB</strong> rate on an invoice, or need to work out withholding tax? Pick a tab below, enter your amount, and we’ll do the rest.</p>
+  </div>
+  <p class="ptop-toggle-label">What would you like to check?</p>
+  <div class="ptop-toggle" role="group">
+    <button type="button" id="ptopBtnRate" class="active" onclick="ptopShowMode('rate')">Check Sales Tax Rate</button>
+    <button type="button" id="ptopBtnWithholding" onclick="ptopShowMode('withholding')">Check Withholding Tax</button>
+  </div>
+
+  <div id="ptopRateSection">
+
   <div class="card">
     <h2>Sindh Sales Tax on Services</h2>
     <p class="sub">Provincial sales tax on services in Sindh, administered by the Sindh Revenue Board (SRB) under the Sindh Sales Tax on Services Act 2011. Select a service category and enter the value excluding tax.</p>
@@ -1084,6 +1188,54 @@ header.site-header .headerTop h1{
 
   <div class="disclaimer">
     Rates are sourced from the SRB "Working Tariff" (amended up to 10 July 2024), which lists both the statutory rate under the Second Schedule to the Sindh Sales Tax on Services Act, 2011 and the effective/reduced rate currently in force via SRB notifications. Where a category shows both a "standard" and a "reduced/election" rate, the reduced rate typically requires the registered person to file a specific election form and/or use SRB-linked POS/e-invoicing &mdash; if you haven't made that election, the standard rate applies. Many categories also carry additional conditions (turnover thresholds, input tax credit restrictions, franchise/branch exclusions) not captured in this simplified calculator. Confirm your exact tariff heading and eligibility with the Sindh Revenue Board (SRB) or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
+  </div>
+
+  </div>
+
+  <div id="ptopWithholdingSection" style="display:none;">
+
+  <div class="card">
+    <h2>SRB Withholding Tax</h2>
+    <p class="sub">If you're the person paying an SRB-taxable services invoice (a notified withholding agent), use this to work out how much sales tax you must withhold and deposit directly with SRB instead of paying the supplier in full.</p>
+
+    <div class="field">
+      <label>Withholding Category</label>
+      <select id="srbwCategory"></select>
+    </div>
+
+    <div id="srbwAmountMode">
+
+      <div class="field">
+        <label>Sales Tax Category <span style="font-weight:400;color:var(--muted);font-size:12px;">(auto-fills the rate below — or leave blank and enter it yourself)</span></label>
+        <select id="srbwTaxCategory"></select>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label id="srbwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
+          <div class="amount-wrap">
+            <span class="currency-prefix">₨</span>
+            <input type="text" inputmode="numeric" autocomplete="off" id="srbwValue" class="amount-input" placeholder="e.g. 200,000">
+          </div>
+        </div>
+        <div class="field">
+          <label>Sales Tax Rate on Invoice (%)</label>
+          <input type="number" id="srbwRate" placeholder="e.g. 15" min="0" step="0.5">
+        </div>
+      </div>
+      <div class="hint" id="srbwBasisHint"></div>
+
+      <div class="result">
+        <div class="label">Amount Withheld &amp; Deposited by Agent</div>
+        <div class="big" id="srbwWithheld">Rs. 0</div>
+        <div class="grid3" id="srbwStats"></div>
+      </div>
+      <table class="breakdown" id="srbwBreakdown"></table>
+    </div>
+
+    <p class="sub" style="margin:14px 0 0;">This covers Sindh (SRB) specifically. For withholding under FBR or another province, see the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
+  </div>
+
   </div>
 
   <div class="card">
@@ -1219,7 +1371,7 @@ const SALES_TAX_GROUPS = [
   }},
   { group: "Sale, Purchase or Hire (98.06)", items: {
       "Purchase, sale or hire of immovable property": 10,
-      "Property dealers": 10,
+      "Property dealers": 8,
       "Renting of immovable property": 3,
       "Car or automobile dealers": 10,
       "Renting of machinery, equipment & tangible goods": 15,
@@ -1229,13 +1381,14 @@ const SALES_TAX_GROUPS = [
       "Contractual execution of work / furnishing supplies": 15,
   }},
   { group: "Beauty, Wellness & Laundry (98.10–98.11)", items: {
-      "Beauty parlours, clinics & slimming centres – standard": 10,
+      "Beauty parlours, clinics & slimming centres – standard": 8,
       "Beauty parlours, clinics & slimming centres – SRB e-invoicing election": 5,
       "Laundries & dry cleaners – standard": 15,
       "Laundries & dry cleaners – standalone": 5,
   }},
   { group: "Banking, Insurance & Financial Services (98.13)", items: {
       "Insurance (goods / fire / theft / marine)": 15,
+      "Motor vehicle insurance": 5,
       "Life insurance (non-group)": 3,
       "Other insurance / re-insurance": 15,
       "Leasing (financial / commodity / hire purchase)": 15,
@@ -1261,7 +1414,7 @@ const SALES_TAX_GROUPS = [
       "Other consultants (tax, HR, personnel development)": 8,
   }},
   { group: "Specialized Agencies & Business Services (98.18–98.19)", items: {
-      "Security agency": 10,
+      "Security agency": 8,
       "Credit rating agency": 15,
       "Market research agency": 15,
       "Stockbrokers, future brokers & commodity brokers": 15,
@@ -1270,12 +1423,12 @@ const SALES_TAX_GROUPS = [
       "Commission agents": 15,
       "Packers and movers": 15,
       "Money exchanger (spread-based)": 3,
-      "Rent-a-car / automobile rental": 10,
+      "Rent-a-car / automobile rental": 8,
       "Surveyors": 15,
-      "Outdoor photographers & videographers": 15,
-      "Cable TV operators – standard": 10,
+      "Outdoor photographers & videographers": 8,
+      "Cable TV operators – standard": 8,
       "Cable TV operators – standalone": 2,
-      "Auctioneers": 10,
+      "Auctioneers": 8,
       "Public relations services": 15,
       "Technical testing & analysis": 15,
       "Port, airport, ground service & terminal operators": 15,
@@ -1288,7 +1441,7 @@ const SALES_TAX_GROUPS = [
   }},
   { group: "Health, Fitness & Personal Care (98.21)", items: {
       "Health care centre, gyms or fitness centre": 5,
-      "Sports and games centre": 10,
+      "Sports and games centre": 8,
       "Body massage centres – standard": 10,
       "Body massage centres – SRB e-invoicing election": 5,
       "Pedicure centres – standard": 10,
@@ -1296,15 +1449,15 @@ const SALES_TAX_GROUPS = [
   }},
   { group: "Cleaning & Site Services (98.22)", items: {
       "Fumigation services": 10,
-      "Maintenance or cleaning services": 10,
+      "Maintenance or cleaning services": 8,
       "Janitorial services": 10,
       "Dredging or desilting services": 10,
   }},
   { group: "Franchise, IP & Toll Manufacturing", items: {
       "Franchise services – standard": 15,
-      "Franchise services – reduced (no input credit)": 10,
+      "Franchise services – reduced (no input credit)": 8,
       "Intellectual property services – standard": 15,
-      "Intellectual property services – reduced": 10,
+      "Intellectual property services – reduced": 8,
       "Toll manufacturing/processing of textile & leather goods": 3,
       "Toll manufacturing/processing – other goods": 15,
   }},
@@ -1339,7 +1492,7 @@ const SALES_TAX_GROUPS = [
       "Supply chain management / distribution services": 15,
       "Cab aggregator services": 5,
       "Warehouse / depots for storage or cold storage": 15,
-      "Training services": 5,
+      "Training services": 3,
       "Actuarial services": 15,
       "Mining of minerals & allied services": 15,
       "Site preparation, excavation & demolition services": 15,
@@ -1380,6 +1533,120 @@ function computeSaleTax(){
     <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
     <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
   `;
+}
+
+/* =========================================================
+   SRB WITHHOLDING TAX (subset of the Federal 11th Schedule +
+   provincial withholding rules, restricted to Sindh/SRB — see the
+   full cross-authority calculator at sales-tax-withholding.html for
+   FBR, Punjab, KPK, Balochistan and ICT)
+========================================================= */
+const SRBW_ITEMS = {
+  "Registered service provider (general)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; provider deposits remaining 4/5th itself"},
+  "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value"},
+  "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Insurance agents / brokers": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Cab-hailing / truck aggregator services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Auctioneer services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Renting of immovable property": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Inter-city goods / passenger transport services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+  "Construction services (reduced-rate category)": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
+};
+const SRBW_DEFAULT_RATE = 15;
+
+const srbwCategoryEl = document.getElementById('srbwCategory');
+Object.keys(SRBW_ITEMS).forEach(k=>{
+  const o = document.createElement('option');
+  o.value = k; o.textContent = k;
+  srbwCategoryEl.appendChild(o);
+});
+document.getElementById('srbwRate').value = SRBW_DEFAULT_RATE;
+
+const srbwTaxCategoryEl = document.getElementById('srbwTaxCategory');
+if(srbwTaxCategoryEl){
+  const manualOpt = document.createElement('option');
+  manualOpt.value = '';
+  manualOpt.textContent = '— Select to auto-fill —';
+  srbwTaxCategoryEl.appendChild(manualOpt);
+  Object.keys(SALES_TAX_DATA).forEach(k=>{
+    const o = document.createElement('option');
+    o.value = k;
+    o.textContent = k + ' (' + SALES_TAX_DATA[k] + '%)';
+    srbwTaxCategoryEl.appendChild(o);
+  });
+  srbwTaxCategoryEl.addEventListener('change', function(){
+    if(srbwTaxCategoryEl.value && SALES_TAX_DATA[srbwTaxCategoryEl.value] !== undefined){
+      document.getElementById('srbwRate').value = SALES_TAX_DATA[srbwTaxCategoryEl.value];
+      srbwCompute();
+    }
+  });
+}
+
+function srbwScenario(entered, rate, item, basis){
+  let value, salesTax, gross;
+  if(basis === 'incl'){
+    gross = entered;
+    value = (100 + rate) === 0 ? 0 : entered * 100 / (100 + rate);
+    salesTax = gross - value;
+  } else {
+    value = entered;
+    salesTax = value * (rate/100);
+    gross = value + salesTax;
+  }
+  let withheld = 0;
+  if(item){
+    withheld = item.type === 'fraction' ? salesTax * (item.value/100) : value * (item.value/100);
+  }
+  return { value, salesTax, gross, withheld, netToSupplier: gross - withheld };
+}
+
+function srbwCompute(){
+  const item = SRBW_ITEMS[srbwCategoryEl.value];
+  const basis = (item && item.basis) || 'excl';
+
+  // "Just Check the Rate" mode — the withholding basis for the selected category,
+  // with no amount required.
+  // "Calculate Withholding Amount" mode.
+  const entered = numVal('srbwValue');
+  const rate = parseFloat(document.getElementById('srbwRate').value) || 0;
+  const s = srbwScenario(entered, rate, item, basis);
+
+  document.getElementById('srbwValueLabel').textContent = basis === 'incl'
+    ? 'Total Invoice Amount, Incl. Tax (PKR)'
+    : 'Value of Supply, Excl. Tax (PKR)';
+  document.getElementById('srbwBasisHint').innerHTML = basis === 'incl'
+    ? 'This category covers an <strong>unregistered</strong> provider, whose invoice carries no separate sales tax line. Enter the gross invoice total &mdash; the tax is extracted from it using the tax fraction, not added on top.'
+    : 'This category covers a <strong>registered</strong> provider, whose tax invoice shows the sales tax separately. Enter the value of supply excluding tax &mdash; the tax is added on top.';
+
+  document.getElementById('srbwWithheld').textContent = fmt(s.withheld);
+  document.getElementById('srbwStats').innerHTML = `
+    <div class="stat"><div class="v">${fmt(s.salesTax)}</div><div class="k">Sales Tax on Invoice</div></div>
+    <div class="stat"><div class="v">${fmt(s.netToSupplier)}</div><div class="k">Net Paid to Supplier</div></div>
+    <div class="stat"><div class="v">${item? (item.type==='fraction'? item.value+'% of tax' : item.value+'% of value') : '-'}</div><div class="k">Withholding Basis</div></div>
+  `;
+  document.getElementById('srbwBreakdown').innerHTML = `
+    <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
+    <tr><td>Value of supply (excl. tax)</td><td>${basis==='incl' ? `Invoice &times; 100/${(100+rate)}` : 'Amount entered'}</td><td>${fmt(s.value)}</td></tr>
+    <tr><td>Sales tax on invoice</td><td>${basis==='incl' ? `Invoice &times; ${rate}/${(100+rate)} (tax fraction)` : `${rate}% of value`}</td><td>${fmt(s.salesTax)}</td></tr>
+    <tr><td>Gross invoice (incl. tax)</td><td>${basis==='incl' ? 'Amount entered' : 'Value + tax'}</td><td>${fmt(s.gross)}</td></tr>
+    <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
+    <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
+  `;
+}
+
+srbwCategoryEl.addEventListener('change', srbwCompute);
+document.getElementById('srbwValue').addEventListener('input', srbwCompute);
+document.getElementById('srbwRate').addEventListener('input', srbwCompute);
+attachCommaFormat('srbwValue');
+srbwCompute();
+
+
+function ptopShowMode(mode){
+  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
+  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
+  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
+  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
+  window.scrollTo({top: 0, behavior: 'instant'});
 }
 
 /* =========================================================
@@ -1571,7 +1838,7 @@ document.addEventListener('click', (e)=>{
     <button type="button" id="ptcChatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ptcChatBody" id="ptcChatBody">
-    <div class="ptcChatMsg ptcBot">Hi! Ask me a tax or Zakat question, or tap a suggestion below.</div>
+    <div class="ptcChatMsg ptcBot">Assalam-o-Alaikum! What can I help you with today — income tax, sales tax, provincial tax, or something else? Tell us what you’re trying to figure out, or tap a suggestion below.</div>
     <div class="ptcChatSuggestions" id="ptcChatSuggestions"></div>
   </div>
   <form class="ptcChatInputRow" id="ptcChatForm">
