@@ -1148,6 +1148,7 @@ table.breakdown tr:last-child td{
   </nav>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
@@ -1255,18 +1256,22 @@ const FBR_CITIES = [
 const FBR_AREA_DATA = {};
 
 /* ---- Cities with a verified per-locality rate table. The full data for each is no
-   longer embedded on this page -- it's fetched on demand from /fbr-data/<city>.json
-   the moment someone selects that city, and cached here afterwards, instead of every
-   visitor downloading all 46 cities' data (formerly ~17MB) up front. ---- */
+   longer embedded on this page -- it's fetched on demand from Supabase (table
+   property_valuation_rates) the moment someone selects that city, and cached here
+   afterwards, instead of every visitor downloading all 46 cities' data (~17MB) up front. ---- */
 const FBR_CITIES_WITH_DATA = ["Abbottabad", "Attock", "Bahawalpur", "Bannu", "Bhakkar", "Chakwal", "Dera Ismail Khan", "Ghora Gali", "Ghotki", "Gujranwala", "Gujrat", "Gwadar", "Hafizabad", "Haripur", "Hyderabad", "Islamabad", "Jhelum", "Karachi", "Kasur", "Khushab", "Kohat", "Kotli Sattian", "Lahore", "Larkana", "Lasbela", "Lodhran", "Mandi Bahauddin", "Mansehra", "Mardan", "Mianwali", "Mirpurkhas", "Multan", "Murree", "Nankana", "Narowal", "Nowshera", "Peshawar", "Quetta", "Rahim Yar Khan", "Rawalpindi", "Sargodha", "Sheikhupura", "Sialkot", "Sukkur", "Talagang", "Wazirabad"];
+
+var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+var fbrSb = window.supabase && window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function loadCityData(name){
   if(FBR_AREA_DATA[name]) return FBR_AREA_DATA[name];
-  const res = await fetch('fbr-data/' + encodeURIComponent(name) + '.json');
-  if(!res.ok) throw new Error('Could not load rates for ' + name);
-  const data = await res.json();
-  FBR_AREA_DATA[name] = data;
-  return data;
+  if(!fbrSb) throw new Error('Could not load rates for ' + name);
+  const { data: row, error } = await fbrSb.from('property_valuation_rates').select('data').eq('city', name).maybeSingle();
+  if(error || !row) throw new Error('Could not load rates for ' + name);
+  FBR_AREA_DATA[name] = row.data;
+  return row.data;
 };
 
 (function(){
