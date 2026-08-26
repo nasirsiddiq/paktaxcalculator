@@ -966,7 +966,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html" class="active">Zakat Calculator</a>
-    <a href="my-wht-log.html">My Account</a>
+    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
 
@@ -976,7 +976,7 @@ header.site-header .headerTop h1{
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
     <h1>Pakistan Tax Calculator</h1>
-    <span class="brandSpacer"><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">Sign Up / Log In</a></span>
+    <span class="brandSpacer"></span>
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
@@ -1008,7 +1008,7 @@ header.site-header .headerTop h1{
     <a href="blog.html">Blog</a>
     <a href="feedback.html">Feedback</a>
     <a href="contact.html">Contact</a>
-    <a href="my-wht-log.html">My Account</a>
+    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
   </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
@@ -1046,7 +1046,7 @@ header.site-header .headerTop h1{
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
-<a href="my-wht-log.html">My Account</a>
+<a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
     </div>
   </nav>
@@ -1077,50 +1077,6 @@ header.site-header .headerTop h1{
       <h1><span class="lang-en">Zakat Calculator</span><span class="lang-ur">زکوٰۃ کیلکولیٹر</span></h1>
       <p class="lang-en">Estimate your zakatable wealth, track your Hawl (Islamic year), and calculate Zakat due — in your own currency.</p>
       <p class="lang-ur">اپنے زکوٰۃ کے قابل مال کا اندازہ لگائیں، اپنا حول (اسلامی سال) ٹریک کریں، اور اپنی کرنسی میں واجب الادا زکوٰۃ معلوم کریں۔</p>
-    </div>
-
-    <!-- ACCOUNT & ZAKAT DUE-DATE REMINDER -->
-    <div class="zk-card" id="zkAccountCard">
-      <h2><span class="lang-en">Your Account &amp; Zakat Reminder</span><span class="lang-ur">آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی</span></h2>
-      <p class="zk-section-note"><span class="lang-en">Create a free account to save your Zakat due date and get an email reminder as it approaches — and automatically again next year.</span><span class="lang-ur">اپنی زکوٰۃ کی واجب الادا تاریخ محفوظ کرنے اور اس کے قریب آنے پر ای میل یاد دہانی حاصل کرنے کے لیے مفت اکاؤنٹ بنائیں — اور اگلے سال بھی خودکار طور پر۔</span></p>
-
-      <!-- Logged-out view -->
-      <div id="zkAuthLoggedOut">
-        <div class="zk-row zk-row-2">
-          <div class="zk-field">
-            <label for="zkAuthEmail"><span class="lang-en">Email</span><span class="lang-ur">ای میل</span></label>
-            <input type="email" id="zkAuthEmail" class="zk-input" placeholder="you@example.com" autocomplete="email">
-          </div>
-          <div class="zk-field">
-            <label for="zkAuthPassword"><span class="lang-en">Password</span><span class="lang-ur">پاس ورڈ</span> <span class="zk-hint"><span class="lang-en">min. 6 characters</span><span class="lang-ur">کم از کم 6 حروف</span></span></label>
-            <input type="password" id="zkAuthPassword" class="zk-input" placeholder="••••••••" autocomplete="current-password">
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <button type="button" class="zk-btn zk-btn-small" id="zkSignUpBtn"><span class="lang-en">Sign Up</span><span class="lang-ur">اکاؤنٹ بنائیں</span></button>
-          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogInBtn"><span class="lang-en">Log In</span><span class="lang-ur">لاگ ان</span></button>
-        </div>
-        <p class="zk-note" id="zkAuthStatus" style="display:none;"></p>
-      </div>
-
-      <!-- Logged-in view -->
-      <div id="zkAuthLoggedIn" style="display:none;">
-        <p class="zk-note"><span class="lang-en">Signed in as</span><span class="lang-ur">لاگ ان بطور</span> <strong id="zkAuthUserEmail"></strong></p>
-
-        <div class="zk-live-status" id="zkReminderStatus">
-          <span class="zk-live-dot" id="zkReminderDot"></span>
-          <span id="zkReminderStatusText"><span class="lang-en">No Zakat due-date reminder saved yet — go to "Find Due Date" to set one.</span><span class="lang-ur">ابھی تک کوئی زکوٰۃ یاد دہانی محفوظ نہیں کی گئی — یاد دہانی کے لیے "واجب الادا تاریخ معلوم کریں" پر جائیں۔</span></span>
-        </div>
-        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkDeleteReminderBtn" style="margin-top:8px; display:none;"><span class="lang-en">Delete Reminder</span><span class="lang-ur">یاد دہانی حذف کریں</span></button>
-        <p class="zk-note lang-en">To change your due date, just recalculate it in "Find Due Date" and click "Save &amp; Email Me a Reminder" again — it replaces the old one automatically.</p>
-        <p class="zk-note lang-ur">اپنی تاریخ تبدیل کرنے کے لیے، "واجب الادا تاریخ معلوم کریں" میں دوبارہ حساب لگائیں اور "محفوظ کریں اور ای میل یاد دہانی بھیجیں" دوبارہ دبائیں — یہ خودکار طور پر پرانی تاریخ کی جگہ لے لے گی۔</p>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogOutBtn"><span class="lang-en">Log Out</span><span class="lang-ur">لاگ آؤٹ</span></button>
-          <button type="button" class="zk-btn zk-btn-small" id="zkDeleteAccountBtn" style="background:var(--zk-danger); color:#fff;"><span class="lang-en">Delete My Account</span><span class="lang-ur">میرا اکاؤنٹ حذف کریں</span></button>
-        </div>
-        <p class="zk-note" id="zkDeleteAccountStatus" style="display:none;"></p>
-      </div>
     </div>
 
     <!-- TASK SWITCH: choose what you want to do -->
@@ -1304,7 +1260,7 @@ header.site-header .headerTop h1{
         <p class="zk-note" id="zkHijriFallbackNote" style="display:none;"><span class="lang-en">Your browser couldn't provide precise Hijri conversion, so dates shown are estimated using a 354-day lunar year. Actual moon-sighting dates may vary by a day or two.</span><span class="lang-ur">آپ کا براؤزر درست ہجری تبدیلی فراہم نہ کر سکا، اس لیے دکھائی گئی تاریخیں 354 دن کے قمری سال کے تخمینے پر مبنی ہیں۔ اصل چاند دیکھنے کی تاریخیں ایک دو دن آگے پیچھے ہو سکتی ہیں۔</span></p>
 
         <button type="button" class="zk-btn zk-btn-secondary" id="zkHawlSaveReminderBtn" disabled style="margin-top:14px;"><span class="lang-en">Save &amp; Email Me a Reminder</span><span class="lang-ur">محفوظ کریں اور ای میل یاد دہانی بھیجیں</span></button>
-        <p class="zk-note" id="zkHawlSaveReminderHint"><span class="lang-en">Sign in or sign up above (in "Your Account &amp; Zakat Reminder") to enable this.</span><span class="lang-ur">اسے فعال کرنے کے لیے اوپر ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span></p>
+        <p class="zk-note" id="zkHawlSaveReminderHint"><span class="lang-en">Sign in or sign up below (in "Your Account &amp; Zakat Reminder") to enable this.</span><span class="lang-ur">اسے فعال کرنے کے لیے نیچے ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span></p>
       </div>
 
       <hr class="zk-divider">
@@ -1610,6 +1566,51 @@ header.site-header .headerTop h1{
       <p class="zk-note"><span class="lang-en">Sources: eligible categories per Quran 9:60 (a historical 7th category, for freeing slaves, no longer applies today); exclusions and the Madani Pearl per Dawat-e-Islami's own Zakat calculator (events.dawateislami.net) and the Hanafi position cited in <em>Fatawa-e-Ahlesunnat: Ahkam-e-Zakat</em>.</span><span class="lang-ur">مصادر: اہلیت کے زمرے قرآن 9:60 کے مطابق (ایک تاریخی ساتواں زمرہ، غلاموں کی آزادی کے لیے، اب لاگو نہیں ہوتا)؛ استثنائات اور مدنی پھول دعوتِ اسلامی کے اپنے زکوٰۃ کیلکولیٹر (events.dawateislami.net) اور <em>فتاویٰ اہلسنت: احکامِ زکوٰۃ</em> میں مذکور حنفی مسلک کے مطابق۔</span></p>
     </div>
 
+
+    <!-- ACCOUNT & ZAKAT DUE-DATE REMINDER -->
+    <div class="zk-card" id="zkAccountCard">
+      <h2><span class="lang-en">Your Account &amp; Zakat Reminder</span><span class="lang-ur">آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی</span></h2>
+      <p class="zk-section-note"><span class="lang-en">Create a free account to save your Zakat due date and get an email reminder as it approaches — and automatically again next year.</span><span class="lang-ur">اپنی زکوٰۃ کی واجب الادا تاریخ محفوظ کرنے اور اس کے قریب آنے پر ای میل یاد دہانی حاصل کرنے کے لیے مفت اکاؤنٹ بنائیں — اور اگلے سال بھی خودکار طور پر۔</span></p>
+
+      <!-- Logged-out view -->
+      <div id="zkAuthLoggedOut">
+        <div class="zk-row zk-row-2">
+          <div class="zk-field">
+            <label for="zkAuthEmail"><span class="lang-en">Email</span><span class="lang-ur">ای میل</span></label>
+            <input type="email" id="zkAuthEmail" class="zk-input" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="zk-field">
+            <label for="zkAuthPassword"><span class="lang-en">Password</span><span class="lang-ur">پاس ورڈ</span> <span class="zk-hint"><span class="lang-en">min. 6 characters</span><span class="lang-ur">کم از کم 6 حروف</span></span></label>
+            <input type="password" id="zkAuthPassword" class="zk-input" placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="zk-btn zk-btn-small" id="zkSignUpBtn"><span class="lang-en">Sign Up</span><span class="lang-ur">اکاؤنٹ بنائیں</span></button>
+          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogInBtn"><span class="lang-en">Log In</span><span class="lang-ur">لاگ ان</span></button>
+        </div>
+        <p class="zk-note" id="zkAuthStatus" style="display:none;"></p>
+      </div>
+
+      <!-- Logged-in view -->
+      <div id="zkAuthLoggedIn" style="display:none;">
+        <p class="zk-note"><span class="lang-en">Signed in as</span><span class="lang-ur">لاگ ان بطور</span> <strong id="zkAuthUserEmail"></strong></p>
+
+        <div class="zk-live-status" id="zkReminderStatus">
+          <span class="zk-live-dot" id="zkReminderDot"></span>
+          <span id="zkReminderStatusText"><span class="lang-en">No Zakat due-date reminder saved yet — go to "Find Due Date" to set one.</span><span class="lang-ur">ابھی تک کوئی زکوٰۃ یاد دہانی محفوظ نہیں کی گئی — یاد دہانی کے لیے "واجب الادا تاریخ معلوم کریں" پر جائیں۔</span></span>
+        </div>
+        <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkDeleteReminderBtn" style="margin-top:8px; display:none;"><span class="lang-en">Delete Reminder</span><span class="lang-ur">یاد دہانی حذف کریں</span></button>
+        <p class="zk-note lang-en">To change your due date, just recalculate it in "Find Due Date" and click "Save &amp; Email Me a Reminder" again — it replaces the old one automatically.</p>
+        <p class="zk-note lang-ur">اپنی تاریخ تبدیل کرنے کے لیے، "واجب الادا تاریخ معلوم کریں" میں دوبارہ حساب لگائیں اور "محفوظ کریں اور ای میل یاد دہانی بھیجیں" دوبارہ دبائیں — یہ خودکار طور پر پرانی تاریخ کی جگہ لے لے گی۔</p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <button type="button" class="zk-btn zk-btn-outline zk-btn-small" id="zkLogOutBtn"><span class="lang-en">Log Out</span><span class="lang-ur">لاگ آؤٹ</span></button>
+          <button type="button" class="zk-btn zk-btn-small" id="zkDeleteAccountBtn" style="background:var(--zk-danger); color:#fff;"><span class="lang-en">Delete My Account</span><span class="lang-ur">میرا اکاؤنٹ حذف کریں</span></button>
+        </div>
+        <p class="zk-note" id="zkDeleteAccountStatus" style="display:none;"></p>
+      </div>
+    </div>
+
     <!-- FAQ FROM FATAWA-E-AHLESUNNAT: AHKAM-E-ZAKAT -->
     <div class="zk-card no-print">
       <h2><span class="lang-en">Frequently Asked Questions</span><span class="lang-ur">اکثر پوچھے گئے سوالات</span></h2>
@@ -1788,7 +1789,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
-    <a href="my-wht-log.html">My Account</a>&middot;
+    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
@@ -3238,8 +3239,8 @@ function zkShowTask(task){
       saveBtn.disabled = true;
       saveHint.style.display = "block";
       saveHint.innerHTML =
-        '<span class="lang-en">Sign in or sign up above (in "Your Account &amp; Zakat Reminder") to enable this.</span>' +
-        '<span class="lang-ur">اسے فعال کرنے کے لیے اوپر ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span>';
+        '<span class="lang-en">Sign in or sign up below (in "Your Account &amp; Zakat Reminder") to enable this.</span>' +
+        '<span class="lang-ur">اسے فعال کرنے کے لیے نیچے ("آپ کا اکاؤنٹ اور زکوٰۃ کی یاد دہانی") میں سائن اپ یا لاگ ان کریں۔</span>';
     } else {
       saveBtn.disabled = true;
       saveHint.style.display = "none";

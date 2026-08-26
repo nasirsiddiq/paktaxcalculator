@@ -1234,59 +1234,6 @@ header.site-header .headerTop h1{
 
 <div class="wrap">
 
-  <div class="card">
-    <h2>My Account</h2>
-    <p class="sub">Save every withholding tax entry you calculate on this site &mdash; sales tax or income tax &mdash; and pull a CSV of your monthly totals when it's time to file. Your entries are private to your account; no one else can see them.</p>
-
-    <div id="whtAuthLoggedOut">
-      <div class="row">
-        <div class="field">
-          <label for="whtAuthName">Full Name <span style="font-weight:400;color:var(--muted);">(for new accounts, optional)</span></label>
-          <input type="text" id="whtAuthName" placeholder="e.g. Ahmed Khan" autocomplete="name">
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label for="whtAuthEmail">Email</label>
-          <input type="email" id="whtAuthEmail" placeholder="you@example.com" autocomplete="email">
-        </div>
-        <div class="field">
-          <label for="whtAuthPassword">Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
-          <input type="password" id="whtAuthPassword" placeholder="••••••••" autocomplete="current-password">
-        </div>
-      </div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="whtSignUpBtn">Sign Up</button>
-        <button type="button" class="wht-btn wht-btn-outline" id="whtLogInBtn">Log In</button>
-      </div>
-      <p class="wht-note"><a href="#" id="whtForgotPasswordLink" style="color:var(--green);font-weight:600;">Forgot your password?</a></p>
-      <p class="wht-note" id="whtAuthStatus" style="display:none;"></p>
-      <p class="wht-note">Already have an account from the Zakat Calculator page? Use the same email and password &mdash; it's the same account.</p>
-    </div>
-
-    <div id="whtResetPasswordSection" style="display:none;">
-      <h3>Set a New Password</h3>
-      <p class="wht-note">Choose a new password for your account below.</p>
-      <div class="row">
-        <div class="field">
-          <label for="whtNewPassword">New Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
-          <input type="password" id="whtNewPassword" placeholder="••••••••" autocomplete="new-password">
-        </div>
-      </div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="whtUpdatePasswordBtn">Update Password</button>
-      </div>
-      <p class="wht-note" id="whtResetStatus" style="display:none;"></p>
-    </div>
-
-    <div id="whtAuthLoggedIn" style="display:none;">
-      <p class="wht-note">Signed in as <strong id="whtAuthUserEmail"></strong></p>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn wht-btn-outline wht-btn-small" id="whtLogOutBtn">Log Out</button>
-      </div>
-    </div>
-  </div>
-
   <div id="whtLogSection" style="display:none;">
 
     <div class="card">
@@ -1428,6 +1375,59 @@ header.site-header .headerTop h1{
     </details>
   </div>
 
+  <div class="card">
+    <h2>My Account</h2>
+    <p class="sub">Save every withholding tax entry you calculate on this site &mdash; sales tax or income tax &mdash; and pull a CSV of your monthly totals when it's time to file. Your entries are private to your account; no one else can see them.</p>
+
+    <div id="whtAuthLoggedOut">
+      <div class="row">
+        <div class="field">
+          <label for="whtAuthName">Full Name <span style="font-weight:400;color:var(--muted);">(for new accounts, optional)</span></label>
+          <input type="text" id="whtAuthName" placeholder="e.g. Ahmed Khan" autocomplete="name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="whtAuthEmail">Email</label>
+          <input type="email" id="whtAuthEmail" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="whtAuthPassword">Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
+          <input type="password" id="whtAuthPassword" placeholder="••••••••" autocomplete="current-password">
+        </div>
+      </div>
+      <div class="wht-btn-row">
+        <button type="button" class="wht-btn" id="whtSignUpBtn">Sign Up</button>
+        <button type="button" class="wht-btn wht-btn-outline" id="whtLogInBtn">Log In</button>
+      </div>
+      <p class="wht-note"><a href="#" id="whtForgotPasswordLink" style="color:var(--green);font-weight:600;">Forgot your password?</a></p>
+      <p class="wht-note" id="whtAuthStatus" style="display:none;"></p>
+      <p class="wht-note">Already have an account from the Zakat Calculator page? Use the same email and password &mdash; it's the same account.</p>
+    </div>
+
+    <div id="whtResetPasswordSection" style="display:none;">
+      <h3>Set a New Password</h3>
+      <p class="wht-note">Choose a new password for your account below.</p>
+      <div class="row">
+        <div class="field">
+          <label for="whtNewPassword">New Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
+          <input type="password" id="whtNewPassword" placeholder="••••••••" autocomplete="new-password">
+        </div>
+      </div>
+      <div class="wht-btn-row">
+        <button type="button" class="wht-btn" id="whtUpdatePasswordBtn">Update Password</button>
+      </div>
+      <p class="wht-note" id="whtResetStatus" style="display:none;"></p>
+    </div>
+
+    <div id="whtAuthLoggedIn" style="display:none;">
+      <p class="wht-note">Signed in as <strong id="whtAuthUserEmail"></strong></p>
+      <div class="wht-btn-row">
+        <button type="button" class="wht-btn wht-btn-outline wht-btn-small" id="whtLogOutBtn">Log Out</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="wht-modal-backdrop" id="whtModalBackdrop">
@@ -1524,7 +1524,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
-    <a href="my-wht-log.html">My Account</a>&middot;
+    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
