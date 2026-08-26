@@ -835,6 +835,11 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 .btn-submit:hover{ background:#0b5c33; }
 .btn-submit:active{ transform:translateY(1px); }
 
+.wht-save-row{margin-top:14px;}
+.wht-save-status{font-size:13px;margin-top:8px;display:none;}
+.wht-save-status.ok{color:var(--green);font-weight:600;}
+.wht-save-status.err{color:#b3261e;font-weight:600;}
+
 /* ---- Header: logo pinned left, title centred ----
    The spacer matches the logo's width so the title stays optically
    centred in the row rather than shifted right by the logo. */
@@ -850,7 +855,52 @@ header.site-header .brand{
   line-height:0;
   text-decoration:none;
 }
-.brandSpacer{ flex:0 0 auto; width:162px; }
+.brandSpacer{ flex:0 0 auto; width:162px; display:flex; align-items:center; justify-content:flex-end; }
+.headerAuthBtn{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:20px;
+  background:#fff;
+  color:var(--green);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  transition:background .15s ease, color .15s ease;
+}
+.headerAuthBtn:hover{ background:#eef7f1; }
+.headerAuthBtn.loggedIn{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.7); }
+.headerAuthBtn.loggedIn:hover{ background:rgba(255,255,255,.15); }
+.headerAccountMenu{ position:relative; }
+.headerAvatarBtn{
+  width:34px; height:34px; border-radius:50%;
+  background:#fff; color:var(--green);
+  font-weight:700; font-size:14px;
+  border:none; cursor:pointer; padding:0;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+.headerAvatarBtn:hover{ background:#eef7f1; }
+.headerAccountDropdown{
+  display:none;
+  position:absolute; top:calc(100% + 10px); right:0;
+  background:#fff; color:#222;
+  border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.25);
+  min-width:210px; z-index:60; text-align:left; overflow:hidden;
+}
+.headerAccountDropdown.open{ display:block; }
+.headerAccountInfo{ padding:12px 14px; border-bottom:1px solid #eee; }
+.headerAccountName{ font-size:13px; font-weight:700; color:#222; margin-bottom:2px; }
+.headerAccountEmail{ font-size:12px; color:#666; word-break:break-all; }
+.headerAccountItem{
+  display:block; width:100%; box-sizing:border-box;
+  padding:10px 14px; font-size:13px;
+  color:#222; text-decoration:none; background:none; border:none;
+  text-align:left; cursor:pointer; font-family:inherit;
+}
+.headerAccountItem:hover{ background:#f3f7f4; }
+.headerLogoutBtn{ color:#b3261e; border-top:1px solid #eee; }
 .brandLogo{
   width:162px;
   height:162px;
@@ -870,10 +920,14 @@ header.site-header .headerTop h1{
   .headerTop{ gap:10px; }
   .brandLogo{ width:117px; height:117px; border-radius:16px; padding:6px; }
   .brandSpacer{ width:117px; }
+  .headerAuthBtn{ padding:6px 10px; font-size:11px; border-radius:16px; }
+  .headerAvatarBtn{ width:28px; height:28px; font-size:12px; }
 }
 @media (max-width:400px){
   .brandLogo{ width:99px; height:99px; }
-  .brandSpacer{ width:0; }
+  .brandSpacer{ width:auto; }
+  .headerAuthBtn{ padding:5px 8px; font-size:10px; }
+  .headerAvatarBtn{ width:26px; height:26px; font-size:11px; }
 }
 
 /* ---- Blog article typography ---- */
@@ -1045,6 +1099,26 @@ header.site-header .headerTop h1{
 .example-box .ex-line{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;gap:10px;}
 .example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
 .example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
+
+/* ---- Print ---- */
+.btn-print{
+  background:#01411C;color:#fff;border:none;border-radius:8px;
+  padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;
+}
+.btn-print:hover{ opacity:0.9; }
+@media print{
+  header.site-header, footer, .ptcLangSwitch, .no-print,
+  .wht-save-row, .wht-save-status, .disclaimer,
+  #ptcChatToggle, #ptcChatPanel,
+  ins.adsbygoogle, .google-auto-placed, [id^="google_ads"], iframe[id^="google_ads"]
+  { display:none !important; }
+  body{ background:#fff; }
+  .card, .zk-card{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .print-only{ display:none; }
+  .print-footer-note{ display:block !important; margin-top:24px; padding-top:10px; border-top:1px solid #ccc; font-size:11px; color:#666; }
+  #ptcPrintLetterhead.has-data{ display:block !important; }
+}
+.print-only{ display:none; }
 </style>
 </head>
 <body>
@@ -1063,6 +1137,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="my-wht-log.html">My Account</a>
 </aside>
 
 
@@ -1072,7 +1147,20 @@ header.site-header .headerTop h1{
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
     <h1>Pakistan Tax Calculator</h1>
-    <span class="brandSpacer" aria-hidden="true"></span>
+    <span class="brandSpacer">
+      <a href="my-wht-log.html" class="headerAuthBtn" id="headerAuthBtn" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">Sign Up / Log In</a>
+      <div class="headerAccountMenu" id="headerAccountMenu" style="display:none;">
+        <button type="button" class="headerAvatarBtn" id="headerAvatarBtn" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="headerAccountDropdown" id="headerAccountDropdown">
+          <div class="headerAccountInfo" id="headerAccountInfo">
+            <div class="headerAccountName" id="headerAccountName" style="display:none;"></div>
+            <div class="headerAccountEmail" id="headerAccountEmail"></div>
+          </div>
+          <a href="my-wht-log.html" class="headerAccountItem">View WHT Log</a>
+          <button type="button" class="headerAccountItem headerLogoutBtn" id="headerLogoutBtn">Log Out</button>
+        </div>
+      </div>
+    </span>
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
@@ -1104,6 +1192,7 @@ header.site-header .headerTop h1{
     <a href="blog.html">Blog</a>
     <a href="feedback.html">Feedback</a>
     <a href="contact.html">Contact</a>
+    <a href="my-wht-log.html">My Account</a>
   </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
@@ -1141,6 +1230,7 @@ header.site-header .headerTop h1{
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
+<a href="my-wht-log.html">My Account</a>
       </div>
     </div>
   </nav>
@@ -1148,6 +1238,18 @@ header.site-header .headerTop h1{
 <main>
 
 <div class="wrap">
+  <div class="no-print" style="text-align:right;margin:0 0 10px;">
+    <button type="button" class="btn-print" onclick="window.print()">Print This Page</button>
+  </div>
+  <div class="print-only" id="ptcPrintLetterhead" style="margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img id="ptcPrintLogo" alt="Company logo" style="display:none;max-height:48px;">
+      <div>
+        <div id="ptcPrintCompanyName" style="font-weight:700;color:#01411C;font-size:16px;"></div>
+        <div id="ptcPrintCompanyMeta" style="font-size:12px;color:#666;"></div>
+      </div>
+    </div>
+  </div>
 
   <div class="ptop-greeting">
     <p class="ptop-toggle-sub">&#128073; Looking for the <strong>SRB</strong> rate on an invoice, or need to work out withholding tax? Pick a tab below, enter your amount, and we’ll do the rest.</p>
@@ -1231,6 +1333,31 @@ header.site-header .headerTop h1{
         <div class="grid3" id="srbwStats"></div>
       </div>
       <table class="breakdown" id="srbwBreakdown"></table>
+      <div class="field">
+        <label>Supplier / Service Provider Name <span style="font-weight:400;color:var(--muted);font-size:12px;">(optional)</span></label>
+        <input type="text" id="srbwSupplierName" placeholder="e.g. ABC Traders (Pvt) Ltd">
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="field">
+          <label>Invoice Number <span style="font-weight:400;color:var(--muted);font-size:12px;">(optional)</span></label>
+          <input type="text" id="srbwInvoiceNumber" placeholder="e.g. INV-1042">
+        </div>
+        <div class="field">
+          <label>Invoice Date</label>
+          <input type="date" id="srbwInvoiceDate">
+        </div>
+      </div>
+      <div class="field">
+        <label>Mode of Payment</label>
+        <select id="srbwPaymentMode">
+          <option value="">Not specified</option>
+          <option value="cash">Cash</option>
+          <option value="cheque">Cheque</option>
+          <option value="bank">Bank Transfer</option>
+        </select>
+      </div>
+      <div class="wht-save-row"><button type="button" class="btn-submit" id="srbwSaveBtn">Save to My Account</button></div>
+      <p class="wht-save-status" id="srbwSaveStatus"></p>
     </div>
 
     <p class="sub" style="margin:14px 0 0;">This covers Sindh (SRB) specifically. For withholding under FBR or another province, see the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
@@ -1238,7 +1365,7 @@ header.site-header .headerTop h1{
 
   </div>
 
-  <div class="card">
+  <div class="card no-print">
     <h2>Worked Example: Standard vs SRB-Election Rate for IT Services</h2>
     <p class="sub">A Karachi software consultancy invoices a client Rs. 500,000 for system development services.</p>
     <div class="example-box">
@@ -1249,7 +1376,7 @@ header.site-header .headerTop h1{
     </div>
   </div>
 
-  <div class="card">
+  <div class="card no-print">
     <h2>Frequently Asked Questions</h2>
 
     <details class="faq-item">
@@ -1294,6 +1421,8 @@ header.site-header .headerTop h1{
 
 </main>
 
+  <div class="print-only print-footer-note">Estimate only — confirm exact rates and rules with FBR or the relevant provincial tax authority before filing.</div>
+
 <footer>
   Built for <strong>paktaxcalculator.net</strong> &middot; For informational purposes only, not a substitute for professional tax advice.<br>
   Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
@@ -1307,11 +1436,147 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="my-wht-log.html">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+// ---- Shared: Save to My Account ----
+var PTC_SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+var PTC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+window.PTC_currentUser = null;
+(function(){
+  if(!window.supabase) return;
+  var sb = window.supabase.createClient(PTC_SUPABASE_URL, PTC_SUPABASE_ANON_KEY);
+  window.PTC_sb = sb;
+
+  function ptcLoadPrintLetterhead(){
+    var el = document.getElementById('ptcPrintLetterhead');
+    if(!el) return;
+    if(!window.PTC_currentUser){
+      el.classList.remove('has-data');
+      return;
+    }
+    sb.from('company_profiles').select('*').eq('user_id', window.PTC_currentUser.id).then(function(res){
+      var p = (res && res.data && res.data[0]) || null;
+      if(!p || (!p.company_name && !p.logo_data_url)){
+        el.classList.remove('has-data');
+        return;
+      }
+      var nameEl = document.getElementById('ptcPrintCompanyName');
+      var metaEl = document.getElementById('ptcPrintCompanyMeta');
+      var logoEl = document.getElementById('ptcPrintLogo');
+      if(nameEl) nameEl.textContent = p.company_name || window.PTC_currentUser.email || '';
+      var metaParts = [];
+      if(p.address) metaParts.push(p.address);
+      if(p.phone) metaParts.push(p.phone);
+      if(p.email) metaParts.push(p.email);
+      if(metaEl) metaEl.textContent = metaParts.join(' \u00b7 ');
+      if(logoEl){
+        if(p.logo_data_url){ logoEl.src = p.logo_data_url; logoEl.style.display = 'block'; }
+        else { logoEl.style.display = 'none'; }
+      }
+      el.classList.add('has-data');
+    });
+  }
+
+  function ptcUpdateHeaderAuth(){
+    var btn = document.getElementById('headerAuthBtn');
+    var menu = document.getElementById('headerAccountMenu');
+    var avatarBtn = document.getElementById('headerAvatarBtn');
+    var emailEl = document.getElementById('headerAccountEmail');
+    var nameEl = document.getElementById('headerAccountName');
+    if(!btn || !menu) return;
+    if(window.PTC_currentUser){
+      btn.style.display = 'none';
+      menu.style.display = 'block';
+      var email = window.PTC_currentUser.email || '';
+      var fullName = (window.PTC_currentUser.user_metadata && window.PTC_currentUser.user_metadata.full_name) || '';
+      if(avatarBtn) avatarBtn.textContent = (fullName || email).charAt(0).toUpperCase() || '?';
+      if(nameEl){
+        if(fullName){ nameEl.textContent = fullName; nameEl.style.display = 'block'; }
+        else { nameEl.style.display = 'none'; }
+      }
+      if(emailEl) emailEl.textContent = email;
+    } else {
+      btn.style.display = 'inline-block';
+      menu.style.display = 'none';
+      var dropdown = document.getElementById('headerAccountDropdown');
+      if(dropdown) dropdown.classList.remove('open');
+    }
+  }
+
+  (function(){
+    var avatarBtn = document.getElementById('headerAvatarBtn');
+    var dropdown = document.getElementById('headerAccountDropdown');
+    var logoutBtn = document.getElementById('headerLogoutBtn');
+    if(!avatarBtn || !dropdown) return;
+    avatarBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = dropdown.classList.toggle('open');
+      avatarBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(e){
+      if(!dropdown.contains(e.target) && e.target !== avatarBtn){
+        dropdown.classList.remove('open');
+        avatarBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        dropdown.classList.remove('open');
+        avatarBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    if(logoutBtn){
+      logoutBtn.addEventListener('click', function(){
+        dropdown.classList.remove('open');
+        sb.auth.signOut();
+      });
+    }
+  })();
+
+  sb.auth.getSession().then(function(res){
+    window.PTC_currentUser = (res && res.data && res.data.session) ? res.data.session.user : null;
+    ptcLoadPrintLetterhead();
+    ptcUpdateHeaderAuth();
+  });
+  sb.auth.onAuthStateChange(function(event, session){
+    window.PTC_currentUser = session ? session.user : null;
+    ptcLoadPrintLetterhead();
+    ptcUpdateHeaderAuth();
+  });
+})();
+window.PTC_saveWhtEntry = function(payload, statusElId, btnEl){
+  var statusEl = document.getElementById(statusElId);
+  function showStatus(msg, isErr){
+    if(!statusEl) return;
+    statusEl.innerHTML = msg;
+    statusEl.className = 'wht-save-status ' + (isErr ? 'err' : 'ok');
+    statusEl.style.display = 'block';
+  }
+  if(!window.PTC_sb){
+    showStatus('Could not connect to the log service. Please try again later.', true);
+    return;
+  }
+  if(!window.PTC_currentUser){
+    showStatus('Please <a href="my-wht-log.html">log in or create a free account</a> on My Account to save this entry.', true);
+    return;
+  }
+  if(btnEl){ btnEl.disabled = true; var origText = btnEl.textContent; btnEl.textContent = 'Saving…'; }
+  var row = Object.assign({ user_id: window.PTC_currentUser.id, entry_date: new Date().toISOString().slice(0,10) }, payload);
+  window.PTC_sb.from('wht_entries').insert(row).then(function(res){
+    if(btnEl){ btnEl.disabled = false; btnEl.textContent = origText; }
+    if(res && res.error){
+      showStatus("Couldn't save: " + res.error.message, true);
+      return;
+    }
+    showStatus('Saved to your WHT Log. <a href="my-wht-log.html">View log &rarr;</a>', false);
+  });
+};
+
 function fmt(n){
   if(isNaN(n)) n = 0;
   n = Math.round(n);
@@ -1632,12 +1897,33 @@ function srbwCompute(){
     <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
     <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
   `;
+
+  window.srbwLastResult = { item: item, basis: basis, rate: rate, s: s, categoryLabel: (srbwCategoryEl.options[srbwCategoryEl.selectedIndex] ? srbwCategoryEl.options[srbwCategoryEl.selectedIndex].text : '') };
 }
 
 srbwCategoryEl.addEventListener('change', srbwCompute);
 document.getElementById('srbwValue').addEventListener('input', srbwCompute);
 document.getElementById('srbwRate').addEventListener('input', srbwCompute);
 attachCommaFormat('srbwValue');
+
+document.getElementById('srbwSaveBtn').addEventListener('click', function(){
+  var r = window.srbwLastResult;
+  if(!r || !r.s){ return; }
+  window.PTC_saveWhtEntry({
+    wht_type: 'sales_tax',
+    authority: 'SRB',
+    category: r.categoryLabel || null,
+    supplier_name: document.getElementById('srbwSupplierName').value.trim() || null,
+    supplier_id_number: null,
+    amount_value: r.s.value,
+    rate: r.rate,
+    amount_withheld: r.s.withheld,
+    invoice_number: document.getElementById('srbwInvoiceNumber').value.trim() || null,
+    invoice_date: document.getElementById('srbwInvoiceDate').value || null,
+    payment_mode: document.getElementById('srbwPaymentMode').value || null,
+    notes: null
+  }, 'srbwSaveStatus', this);
+});
 srbwCompute();
 
 
@@ -1700,6 +1986,7 @@ document.addEventListener('click', (e)=>{
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
     {title:"Withholding Tax (WHT) Calculator", url:"withholding-tax.html", desc:"Goods, services, contracts, dividends, filer vs non-filer"},
@@ -1892,6 +2179,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];
 
@@ -2010,7 +2298,7 @@ document.addEventListener('click', (e)=>{
     suggestionsWrap.innerHTML = '';
     var picks = faqIndex.slice(0, 4);
     if(!picks.length){
-      var fallbackUrls = ['income-tax.html','sales-tax-gst.html','withholding-tax.html','zakat-calculator.html'];
+      var fallbackUrls = ['income-tax.html','sales-tax-gst.html','withholding-tax.html','zakat-calculator.html','my-wht-log.html'];
       picks = pageIndex.filter(function(p){ return fallbackUrls.indexOf(p.url) > -1; });
       picks.forEach(function(p){
         var chip = document.createElement('button');

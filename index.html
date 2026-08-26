@@ -846,7 +846,23 @@ header.site-header .brand{
   line-height:0;
   text-decoration:none;
 }
-.brandSpacer{ flex:0 0 auto; width:162px; }
+.brandSpacer{ flex:0 0 auto; width:162px; display:flex; align-items:center; justify-content:flex-end; }
+.headerAuthBtn{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:20px;
+  background:#fff;
+  color:var(--green);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  transition:background .15s ease, color .15s ease;
+}
+.headerAuthBtn:hover{ background:#eef7f1; }
+.headerAuthBtn.loggedIn{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.7); }
+.headerAuthBtn.loggedIn:hover{ background:rgba(255,255,255,.15); }
 .brandLogo{
   width:162px;
   height:162px;
@@ -866,10 +882,12 @@ header.site-header .headerTop h1{
   .headerTop{ gap:10px; }
   .brandLogo{ width:117px; height:117px; border-radius:16px; padding:6px; }
   .brandSpacer{ width:117px; }
+  .headerAuthBtn{ padding:6px 10px; font-size:11px; border-radius:16px; }
 }
 @media (max-width:400px){
   .brandLogo{ width:99px; height:99px; }
-  .brandSpacer{ width:0; }
+  .brandSpacer{ width:auto; }
+  .headerAuthBtn{ padding:5px 8px; font-size:10px; }
 }
 
 /* ---- Blog article typography ---- */
@@ -1046,6 +1064,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="my-wht-log.html">My Account</a>
 </aside>
 
 
@@ -1055,7 +1074,7 @@ header.site-header .headerTop h1{
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
     <h1>Pakistan Tax Calculator</h1>
-    <span class="brandSpacer" aria-hidden="true"></span>
+    <span class="brandSpacer"><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">Sign Up / Log In</a></span>
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
@@ -1087,6 +1106,7 @@ header.site-header .headerTop h1{
     <a href="blog.html">Blog</a>
     <a href="feedback.html">Feedback</a>
     <a href="contact.html">Contact</a>
+    <a href="my-wht-log.html">My Account</a>
   </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
@@ -1124,6 +1144,7 @@ header.site-header .headerTop h1{
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
+<a href="my-wht-log.html">My Account</a>
       </div>
     </div>
   </nav>
@@ -1381,6 +1402,11 @@ header.site-header .headerTop h1{
     <h3>Zakat Calculator</h3>
     <p>Work out your Zakat on cash, gold, silver, stocks, funds &amp; business assets, in your own currency, with a Hawl (Islamic year) due-date tracker.</p>
   </a>
+  <a class="calc-card" href="my-wht-log.html">
+    <div class="icon">📝</div>
+    <h3>My Account</h3>
+    <p>Save every sales tax and income tax withholding entry from the calculators, review your month, and export a CSV to upload to FBR/SRB/PRA yourself.</p>
+  </a>
 </div>
 
 <div class="wrap" style="margin-top:8px;">
@@ -1404,6 +1430,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="my-wht-log.html">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
@@ -1848,6 +1875,7 @@ document.addEventListener('click', (e)=>{
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
     {title:"Withholding Tax (WHT) Calculator", url:"withholding-tax.html", desc:"Goods, services, contracts, dividends, filer vs non-filer"},
@@ -2040,6 +2068,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];
 
@@ -2158,7 +2187,7 @@ document.addEventListener('click', (e)=>{
     suggestionsWrap.innerHTML = '';
     var picks = faqIndex.slice(0, 4);
     if(!picks.length){
-      var fallbackUrls = ['income-tax.html','sales-tax-gst.html','withholding-tax.html','zakat-calculator.html'];
+      var fallbackUrls = ['income-tax.html','sales-tax-gst.html','withholding-tax.html','zakat-calculator.html','my-wht-log.html'];
       picks = pageIndex.filter(function(p){ return fallbackUrls.indexOf(p.url) > -1; });
       picks.forEach(function(p){
         var chip = document.createElement('button');
