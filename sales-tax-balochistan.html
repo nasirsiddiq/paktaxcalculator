@@ -1137,6 +1137,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html" class="active">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -1210,6 +1211,7 @@ header.site-header .headerTop h1{
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1423,6 +1425,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
@@ -1430,500 +1433,6 @@ header.site-header .headerTop h1{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ---- Shared: Save to My Account ----
-var PTC_SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
-var PTC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
-window.PTC_currentUser = null;
-(function(){
-  if(!window.supabase) return;
-  var sb = window.supabase.createClient(PTC_SUPABASE_URL, PTC_SUPABASE_ANON_KEY);
-  window.PTC_sb = sb;
-
-  function ptcLoadPrintLetterhead(){
-    var el = document.getElementById('ptcPrintLetterhead');
-    if(!el) return;
-    if(!window.PTC_currentUser){
-      el.classList.remove('has-data');
-      return;
-    }
-    sb.from('company_profiles').select('*').eq('user_id', window.PTC_currentUser.id).then(function(res){
-      var p = (res && res.data && res.data[0]) || null;
-      if(!p || (!p.company_name && !p.logo_data_url)){
-        el.classList.remove('has-data');
-        return;
-      }
-      var nameEl = document.getElementById('ptcPrintCompanyName');
-      var metaEl = document.getElementById('ptcPrintCompanyMeta');
-      var logoEl = document.getElementById('ptcPrintLogo');
-      if(nameEl) nameEl.textContent = p.company_name || window.PTC_currentUser.email || '';
-      var metaParts = [];
-      if(p.address) metaParts.push(p.address);
-      if(p.phone) metaParts.push(p.phone);
-      if(p.email) metaParts.push(p.email);
-      if(metaEl) metaEl.textContent = metaParts.join(' \u00b7 ');
-      if(logoEl){
-        if(p.logo_data_url){ logoEl.src = p.logo_data_url; logoEl.style.display = 'block'; }
-        else { logoEl.style.display = 'none'; }
-      }
-      el.classList.add('has-data');
-    });
-  }
-
-  function ptcUpdateHeaderAuth(){
-    var btn = document.getElementById('headerAuthBtn');
-    var menu = document.getElementById('headerAccountMenu');
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var emailEl = document.getElementById('headerAccountEmail');
-    var nameEl = document.getElementById('headerAccountName');
-    if(!btn || !menu) return;
-    if(window.PTC_currentUser){
-      btn.style.display = 'none';
-      menu.style.display = 'block';
-      var email = window.PTC_currentUser.email || '';
-      var fullName = (window.PTC_currentUser.user_metadata && window.PTC_currentUser.user_metadata.full_name) || '';
-      if(avatarBtn) avatarBtn.textContent = (fullName || email).charAt(0).toUpperCase() || '?';
-      if(nameEl){
-        if(fullName){ nameEl.textContent = fullName; nameEl.style.display = 'block'; }
-        else { nameEl.style.display = 'none'; }
-      }
-      if(emailEl) emailEl.textContent = email;
-    } else {
-      btn.style.display = 'inline-block';
-      menu.style.display = 'none';
-      var dropdown = document.getElementById('headerAccountDropdown');
-      if(dropdown) dropdown.classList.remove('open');
-    }
-  }
-
-  (function(){
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var dropdown = document.getElementById('headerAccountDropdown');
-    var logoutBtn = document.getElementById('headerLogoutBtn');
-    if(!avatarBtn || !dropdown) return;
-    avatarBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = dropdown.classList.toggle('open');
-      avatarBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', function(e){
-      if(!dropdown.contains(e.target) && e.target !== avatarBtn){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape'){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    if(logoutBtn){
-      logoutBtn.addEventListener('click', function(){
-        dropdown.classList.remove('open');
-        sb.auth.signOut();
-      });
-    }
-  })();
-
-  sb.auth.getSession().then(function(res){
-    window.PTC_currentUser = (res && res.data && res.data.session) ? res.data.session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-  sb.auth.onAuthStateChange(function(event, session){
-    window.PTC_currentUser = session ? session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-})();
-window.PTC_saveWhtEntry = function(payload, statusElId, btnEl){
-  var statusEl = document.getElementById(statusElId);
-  function showStatus(msg, isErr){
-    if(!statusEl) return;
-    statusEl.innerHTML = msg;
-    statusEl.className = 'wht-save-status ' + (isErr ? 'err' : 'ok');
-    statusEl.style.display = 'block';
-  }
-  if(!window.PTC_sb){
-    showStatus('Could not connect to the log service. Please try again later.', true);
-    return;
-  }
-  if(!window.PTC_currentUser){
-    showStatus('Please <a href="my-wht-log.html">log in or create a free account</a> on My Account to save this entry.', true);
-    return;
-  }
-  if(btnEl){ btnEl.disabled = true; var origText = btnEl.textContent; btnEl.textContent = 'Saving…'; }
-  var row = Object.assign({ user_id: window.PTC_currentUser.id, entry_date: new Date().toISOString().slice(0,10) }, payload);
-  window.PTC_sb.from('wht_entries').insert(row).then(function(res){
-    if(btnEl){ btnEl.disabled = false; btnEl.textContent = origText; }
-    if(res && res.error){
-      showStatus("Couldn't save: " + res.error.message, true);
-      return;
-    }
-    showStatus('Saved to your WHT Log. <a href="my-wht-log.html">View log &rarr;</a>', false);
-  });
-};
-
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['saleAmount'].forEach(attachCommaFormat);
-
-/* =========================================================
-   BALOCHISTAN SALES TAX ON SERVICES (BRA)
-   Sourced from the Second Schedule to the Balochistan Sales Tax
-   on Services Act, as amended by the Finance Act 2023
-========================================================= */
-const SALES_TAX_GROUPS = [
-  { group: "Telecommunication (98.12)", items: {
-      "Telecommunication services (phone, internet, data, etc.)": 19.5,
-  }},
-  { group: "Hotels, Restaurants, Marriage Halls & Clubs (98.01)", items: {
-      "Hotels, motels, boatels, resorts, guesthouses & farmhouses – non-corporate/non-chain": 5,
-      "Hotels, motels, boatels, resorts, guesthouses & farmhouses – corporate/franchise/chain": 15,
-      "Restaurants incl. café, coffee houses, food huts, ice-cream shops & eateries – cash": 4,
-      "Restaurants – digital/card/QR payment (no input tax credit)": 2,
-      "Caterers, suppliers of food & drinks": 15,
-      "Clubs": 15,
-      "Marriage halls, lawns, mandap, pandal & shamiana incl. floral/decoration": 15,
-      "Messes and hostels": 15,
-  }},
-  { group: "Advertisement, Passenger & Goods Transport (98.02–98.04)", items: {
-      "Advertisement on TV / radio / CCTV / cable / poles / billboards / website": 15,
-      "Advertisement in newspapers & periodicals": 15,
-      "Travelling of passengers by road (within/to/from Balochistan)": 15,
-      "International passenger journey embarking from Balochistan": 15,
-      "Chartered flight services": 15,
-      "Intercity/international transportation or carriage of goods (road/pipeline)": 15,
-  }},
-  { group: "Agents & Intermediaries (98.05)", items: {
-      "Shipping agents, stevedores & ship management services": 15,
-      "Freight forwarding & customs agents": 15,
-      "Travel agents": 6,
-      "Tour operators": 6,
-      "Hajj operators": 6,
-      "Real estate agents": 6,
-      "Recruiting agents": 15,
-      "Advertising agents": 15,
-      "Ship chandlers": 15,
-      "Share transfer agents": 15,
-      "Sponsorship services": 15,
-      "Business support services": 15,
-      "Insurance agents": 15,
-  }},
-  { group: "Sale, Purchase or Hire (98.06)", items: {
-      "Sale, purchase or hire of immovable property": 15,
-      "Property dealers": 6,
-      "Renting of immovable property": 15,
-      "Car or automobile dealers": 15,
-      "Dealers of second-hand goods (other than car/automobile)": 15,
-      "Supply of movable property by lease, license or similar arrangement": 15,
-  }},
-  { group: "Courier, Contract Work & Beauty/Laundry", items: {
-      "Courier services incl. express cargo & logistics": 15,
-      "Contractual execution of work / furnishing supplies": 15,
-      "Beauty parlours, clinics, slimming clinics, salons, manicure & pedicure centres": 6,
-      "Laundries & dry cleaners": 6,
-  }},
-  { group: "Banking, Insurance & Financial Services (98.13)", items: {
-      "Insurance (goods / fire / theft / marine / life / health / crop)": 15,
-      "Cooperative financing societies": 15,
-      "Leasing (financial / hire purchase / operating, commodity & equipment)": 15,
-      "Modaraba, musharika & ijarah financing": 15,
-      "Banking company services (guarantee, LC, cheque books, transfers, ATM, cards, etc.)": 15,
-      "Foreign exchange companies": 15,
-      "Non-banking finance companies / institutions": 15,
-  }},
-  { group: "Construction & Property Consultancy (98.14)", items: {
-      "Architects or town planners": 15,
-      "Contractor of building / roads / bridges / electrical / mechanical / horticultural works": 15,
-      "Landscape designers": 15,
-      "Interior decorators": 15,
-      "Construction services (9824.0000)": 15,
-  }},
-  { group: "Professionals & Consultants (98.15)", items: {
-      "Medical practitioners & consultants": 2,
-      "Legal practitioners & consultants": 2,
-      "Healthcare consultants": 2,
-      "Accountants & auditors": 6,
-      "Management consultants": 6,
-      "Technical, scientific & engineering consultants": 6,
-      "Tax practitioners & consultants": 6,
-      "Corporate law practitioners & consultants": 6,
-      "Software / IT-based system developers & consultants": 6,
-      "Human resource & personal development consultants": 15,
-  }},
-  { group: "Laboratories & Medical Diagnostics (98.17)", items: {
-      "Medical diagnosing (X-ray, CT scan, MRI, ultrasound)": 2,
-      "Pathological / radiological laboratories": 2,
-      "Scientific / chemical / mechanical / electrical & electronic laboratories": 4,
-      "Geological laboratories": 6,
-  }},
-  { group: "Specialized Agencies & Business Services (98.18–98.19)", items: {
-      "Security agency, credit rating agency, market research & opinion poll agency": 15,
-      "Stockbrokers, futures & commodity brokers": 4,
-      "Underwriters, indenters, commission agents, packers & movers": 4,
-      "Foreign exchange dealers / money changers": 15,
-      "Rent-a-car / automobile rental service": 8,
-      "Cab aggregator": 2,
-      "Prize bond dealers": 15,
-      "Surveyors": 4,
-      "Designers incl. fashion designers": 4,
-      "Outdoor photographers & videographers": 4,
-      "Public relations services": 4,
-      "Cable TV operators": 2,
-      "TV/radio production, video tape production & sound record services": 4,
-      "Technical testing & analysis services": 4,
-      "Registrar to an issue, depository & share transfer services": 15,
-      "Auctioneers": 15,
-      "Copyright services & art painters": 4,
-      "Port, airport & terminal operators, ground service providers": 15,
-  }},
-  { group: "Specialized Workshops & Personal Care (98.20–98.21)", items: {
-      "Auto-workshops incl. motor mechanic shops & AC fitting/cleaning": 15,
-      "Workshops for industrial/earth-moving machinery": 15,
-      "Workshop for electric/electronic equipment incl. computer hardware": 15,
-      "Car/automobile washing or similar service stations": 15,
-      "Healthcare centre, gyms or physical fitness centres": 15,
-      "Indoor sports & games centres": 15,
-      "Baby care centres": 15,
-      "Body massage & sauna centres": 15,
-  }},
-  { group: "Cleaning & Site Services (98.22)", items: {
-      "Fumigation services": 15,
-      "Maintenance or cleaning services": 15,
-      "Waste collection, transportation, processing & management services": 15,
-      "Janitorial services": 15,
-      "Dredging or de-silting services": 15,
-      "Site preparation, clearance, excavation, earth moving & demolition services": 15,
-  }},
-  { group: "Franchise, IP & Toll Manufacturing", items: {
-      "Franchise services incl. royalty, technical or other licensing": 15,
-      "Intellectual property services": 15,
-      "Manufacturing or processing for others on toll/job basis": 0,
-  }},
-  { group: "Other Specified Services", items: {
-      "Management services incl. fund & asset management": 15,
-      "Technical services": 15,
-      "Exhibition or convention services": 15,
-      "Public bonded warehouse services": 15,
-      "Program producers & production houses": 15,
-      "Labour and manpower supply services": 15,
-      "Film & drama studios incl. mobile stage shows or cinemas": 15,
-      "Brokerage (other than stocks) & indenting services": 15,
-      "Call centres": 15,
-      "Internet café": 15,
-      "Ready mix concrete services": 15,
-      "Erection, commissioning & installation services": 15,
-      "Electric power transmission or distribution services": 15,
-      "Evaluation services incl. competency & eligibility testing": 15,
-      "Cosmetic, plastic surgery & transplant services": 15,
-      "Actuarial services": 15,
-      "Car parking services": 15,
-      "Supply chain management / distribution (incl. delivery) services": 15,
-      "Notary public & stamp vending services": 15,
-      "CMT stitching services": 2,
-      "Repair and maintenance services": 15,
-      "Forward contract services": 15,
-      "Packaging and handling services": 15,
-      "Toll tax and octroi services": 15,
-      "Broadcasting services": 15,
-      "Ride hailing services": 15,
-      "Vocational centres & training services": 15,
-      "Entertainment services": 15,
-      "Amusement parks incl. theme & water parks": 15,
-      "Depot for storage incl. cold storage": 15,
-      "Valuation services (tangible or noncurrent assets)": 15,
-      "Event management incl. event photographers & videographers": 15,
-      "Technical inspection & certification incl. ISO certifications": 15,
-      "Visa processing, advisory or consultancy for migration/visa filing": 15,
-      "Debt collection & other debt recovery services": 15,
-      "Data processing & provision of information, engineers, handling & storage of goods": 15,
-      "Survey & exploration of minerals, oil & gas incl. drilling & refining": 15,
-      "Snorkeling, scuba, rafting, surfing & water diving services": 15,
-      "IT-based services (software dev, system design, web, data, medical transcription, etc.)": 6,
-      "Online market place services": 15,
-  }},
-];
-
-// Flatten for lookup
-const SALES_TAX_DATA = {};
-SALES_TAX_GROUPS.forEach(g => Object.keys(g.items).forEach(k => { SALES_TAX_DATA[k] = g.items[k]; }));
-
-const saleCategoryEl = document.getElementById('saleCategory');
-SALES_TAX_GROUPS.forEach(g=>{
-  const og = document.createElement('optgroup');
-  og.label = g.group;
-  Object.keys(g.items).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k; o.textContent = k + " (" + g.items[k] + "%)";
-    og.appendChild(o);
-  });
-  saleCategoryEl.appendChild(og);
-});
-saleCategoryEl.addEventListener('change', computeSaleTax);
-document.getElementById('saleAmount').addEventListener('input', computeSaleTax);
-
-function computeSaleTax(){
-  const rate = SALES_TAX_DATA[saleCategoryEl.value] || 0;
-  const amount = numVal('saleAmount');
-  const tax = amount * (rate/100);
-  document.getElementById('saleTaxAmount').textContent = fmt(tax);
-  document.getElementById('saleStats').innerHTML = `
-    <div class="stat"><div class="v">${rate}%</div><div class="k">Rate Applied</div></div>
-    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
-    <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
-  `;
-}
-
-/* =========================================================
-   BRA WITHHOLDING TAX (subset of the Federal 11th Schedule +
-   provincial withholding rules, restricted to Balochistan/BRA —
-   see the full cross-authority calculator at sales-tax-withholding.html
-   for FBR, Sindh, Punjab, KPK and ICT)
-========================================================= */
-const BRAW_ITEMS = {
-  "Registered service provider (general)": {type:"fraction", value:20, note:"1/5th of the sales tax shown on invoice; provider deposits remaining 4/5th itself"},
-  "Unregistered / foreign provider": {type:"fraction", value:100, basis:"incl", note:"Full amount shown on invoice, or computed on gross value if not shown"},
-};
-const BRAW_DEFAULT_RATE = 15;
-
-const brawCategoryEl = document.getElementById('brawCategory');
-Object.keys(BRAW_ITEMS).forEach(k=>{
-  const o = document.createElement('option');
-  o.value = k; o.textContent = k;
-  brawCategoryEl.appendChild(o);
-});
-document.getElementById('brawRate').value = BRAW_DEFAULT_RATE;
-
-const brawTaxCategoryEl = document.getElementById('brawTaxCategory');
-if(brawTaxCategoryEl){
-  const manualOpt = document.createElement('option');
-  manualOpt.value = '';
-  manualOpt.textContent = '— Select to auto-fill —';
-  brawTaxCategoryEl.appendChild(manualOpt);
-  Object.keys(SALES_TAX_DATA).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k;
-    o.textContent = k + ' (' + SALES_TAX_DATA[k] + '%)';
-    brawTaxCategoryEl.appendChild(o);
-  });
-  brawTaxCategoryEl.addEventListener('change', function(){
-    if(brawTaxCategoryEl.value && SALES_TAX_DATA[brawTaxCategoryEl.value] !== undefined){
-      document.getElementById('brawRate').value = SALES_TAX_DATA[brawTaxCategoryEl.value];
-      brawCompute();
-    }
-  });
-}
-
-function brawScenario(entered, rate, item, basis){
-  let value, salesTax, gross;
-  if(basis === 'incl'){
-    gross = entered;
-    value = (100 + rate) === 0 ? 0 : entered * 100 / (100 + rate);
-    salesTax = gross - value;
-  } else {
-    value = entered;
-    salesTax = value * (rate/100);
-    gross = value + salesTax;
-  }
-  let withheld = 0;
-  if(item){
-    withheld = item.type === 'fraction' ? salesTax * (item.value/100) : value * (item.value/100);
-  }
-  return { value, salesTax, gross, withheld, netToSupplier: gross - withheld };
-}
-
-function brawCompute(){
-  const item = BRAW_ITEMS[brawCategoryEl.value];
-  const basis = (item && item.basis) || 'excl';
-
-  const entered = numVal('brawValue');
-  const rate = parseFloat(document.getElementById('brawRate').value) || 0;
-  const s = brawScenario(entered, rate, item, basis);
-
-  document.getElementById('brawValueLabel').textContent = basis === 'incl'
-    ? 'Total Invoice Amount, Incl. Tax (PKR)'
-    : 'Value of Supply, Excl. Tax (PKR)';
-  document.getElementById('brawBasisHint').innerHTML = basis === 'incl'
-    ? 'This category covers an <strong>unregistered</strong> provider, whose invoice carries no separate sales tax line. Enter the gross invoice total &mdash; the tax is extracted from it using the tax fraction, not added on top.'
-    : 'This category covers a <strong>registered</strong> provider, whose tax invoice shows the sales tax separately. Enter the value of supply excluding tax &mdash; the tax is added on top.';
-
-  document.getElementById('brawWithheld').textContent = fmt(s.withheld);
-  document.getElementById('brawStats').innerHTML = `
-    <div class="stat"><div class="v">${fmt(s.salesTax)}</div><div class="k">Sales Tax on Invoice</div></div>
-    <div class="stat"><div class="v">${fmt(s.netToSupplier)}</div><div class="k">Net Paid to Supplier</div></div>
-    <div class="stat"><div class="v">${item? (item.type==='fraction'? item.value+'% of tax' : item.value+'% of value') : '-'}</div><div class="k">Withholding Basis</div></div>
-  `;
-  document.getElementById('brawBreakdown').innerHTML = `
-    <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
-    <tr><td>Value of supply (excl. tax)</td><td>${basis==='incl' ? `Invoice &times; 100/${(100+rate)}` : 'Amount entered'}</td><td>${fmt(s.value)}</td></tr>
-    <tr><td>Sales tax on invoice</td><td>${basis==='incl' ? `Invoice &times; ${rate}/${(100+rate)} (tax fraction)` : `${rate}% of value`}</td><td>${fmt(s.salesTax)}</td></tr>
-    <tr><td>Gross invoice (incl. tax)</td><td>${basis==='incl' ? 'Amount entered' : 'Value + tax'}</td><td>${fmt(s.gross)}</td></tr>
-    <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
-    <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
-  `;
-
-  window.brawLastResult = { item: item, basis: basis, rate: rate, s: s, categoryLabel: (brawCategoryEl.options[brawCategoryEl.selectedIndex] ? brawCategoryEl.options[brawCategoryEl.selectedIndex].text : '') };
-}
-
-brawCategoryEl.addEventListener('change', brawCompute);
-document.getElementById('brawValue').addEventListener('input', brawCompute);
-document.getElementById('brawRate').addEventListener('input', brawCompute);
-attachCommaFormat('brawValue');
-
-document.getElementById('brawSaveBtn').addEventListener('click', function(){
-  var r = window.brawLastResult;
-  if(!r || !r.s){ return; }
-  window.PTC_saveWhtEntry({
-    wht_type: 'sales_tax',
-    authority: 'BRA',
-    category: r.categoryLabel || null,
-    supplier_name: document.getElementById('brawSupplierName').value.trim() || null,
-    supplier_id_number: null,
-    amount_value: r.s.value,
-    rate: r.rate,
-    amount_withheld: r.s.withheld,
-    invoice_number: document.getElementById('brawInvoiceNumber').value.trim() || null,
-    invoice_date: document.getElementById('brawInvoiceDate').value || null,
-    payment_mode: document.getElementById('brawPaymentMode').value || null,
-    notes: null
-  }, 'brawSaveStatus', this);
-});
-brawCompute();
-
-
-function ptopShowMode(mode){
-  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
-  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
-  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
-  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
-  window.scrollTo({top: 0, behavior: 'instant'});
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeSaleTax();
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -1964,12 +1473,59 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
+function ptopShowMode(mode){
+  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
+  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
+  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
+  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+
+/* ---- sales-tax-balochistan calculator logic (lazy-loaded from Supabase on first interaction) ---- */
+(function(){
+  var SLUG = 'sales-tax-balochistan';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
+  }
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
+      }
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
+  }
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+  });
+})();
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -2163,6 +1719,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

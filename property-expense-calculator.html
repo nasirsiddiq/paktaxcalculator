@@ -619,6 +619,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -692,6 +693,7 @@ header.site-header .headerTop h1{
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -901,6 +903,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
@@ -948,192 +951,42 @@ document.addEventListener('click', (e)=>{
   });
 })();
 
-/* ---- Property Expense Calculator ---- */
+/* ---- property-expense-calculator calculator logic (lazy-loaded from Supabase on first interaction) ---- */
 (function(){
-  const PROVINCES = {
-    punjab:       { label: 'Punjab',       stampDuty: 1.0, regFee: 1.0 },
-    sindh:        { label: 'Sindh',        stampDuty: 3.0, regFee: 1.0 },
-    kpk:          { label: 'Khyber Pakhtunkhwa', stampDuty: 2.0, regFee: 1.0 },
-    balochistan:  { label: 'Balochistan',  stampDuty: 3.0, regFee: 1.0 },
-    ict:          { label: 'Islamabad (ICT)', stampDuty: 1.0, regFee: 0.5 }
-  };
-
-  let mode = 'buy';       // 'buy' | 'sell'
-  let filer = 'filer';    // 'filer' | 'nonfiler'
-
-  const $ = id => document.getElementById(id);
-  const fmt = n => 'Rs ' + Math.round(n).toLocaleString('en-US');
-  const pct = n => (Math.round(n*100)/100) + '%';
-
-  function rate236K(value, isFilerEffective){
-    if(value <= 50000000) return isFilerEffective ? 1.5 : 10.5;
-    if(value <= 100000000) return isFilerEffective ? 2.0 : 14.5;
-    return isFilerEffective ? 2.5 : 18.5;
+  var SLUG = 'property-expense-calculator';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
   }
-  function rate236C(value, isFilerEffective){
-    if(value <= 50000000) return isFilerEffective ? 4.5 : 11.5;
-    if(value <= 100000000) return isFilerEffective ? 5.0 : 11.5;
-    return isFilerEffective ? 5.5 : 11.5;
-  }
-  function cgtRate(acquisitionDateStr){
-    // Returns { rate, note }
-    if(!acquisitionDateStr){
-      return { rate: 15, note: 'no acquisition date given — assumed flat 15% rule' };
-    }
-    const cutoff = new Date('2024-07-01');
-    const acq = new Date(acquisitionDateStr);
-    if(isNaN(acq.getTime())){
-      return { rate: 15, note: 'invalid date — assumed flat 15% rule' };
-    }
-    if(acq >= cutoff){
-      return { rate: 15, note: 'acquired on/after 1 Jul 2024 — flat rate' };
-    }
-    const years = (Date.now() - acq.getTime()) / (1000*60*60*24*365.25);
-    let rate, note;
-    if(years < 1){ rate = 15; note = 'held < 1 year'; }
-    else if(years < 2){ rate = 12.5; note = 'held 1–2 years'; }
-    else if(years < 3){ rate = 10; note = 'held 2–3 years'; }
-    else if(years < 4){ rate = 7.5; note = 'held 3–4 years'; }
-    else if(years < 5){ rate = 5; note = 'held 4–5 years'; }
-    else if(years < 6){ rate = 2.5; note = 'held 5–6 years'; }
-    else { rate = 0; note = 'held 6+ years'; }
-    return { rate, note };
-  }
-
-  function setActiveSeg(container, attr, value){
-    container.querySelectorAll('button').forEach(b=>{
-      b.classList.toggle('active', b.dataset[attr] === value);
-    });
-  }
-
-  function applyProvinceDefaults(){
-    const p = PROVINCES[$('province').value];
-    $('stampDutyRate').value = p.stampDuty;
-    $('regFeeRate').value = p.regFee;
-  }
-
-  function updateModeUI(){
-    const buying = mode === 'buy';
-    $('valueLabel').textContent = buying ? 'Property Value (FMV / DC value used for tax)' : 'Sale Value (FMV / DC value used for tax)';
-    $('purchasePriceField').style.display = buying ? 'none' : 'block';
-    $('acquisitionDateField').style.display = buying ? 'none' : 'block';
-    $('rateFields').style.display = buying ? 'grid' : 'none';
-    calc();
-  }
-
-  function row(label, rateText, amount){
-    return '<tr><td>'+label+'</td><td>'+rateText+'</td><td>'+fmt(amount)+'</td></tr>';
-  }
-
-  function calc(){
-    const value = parseFloat($('propValue').value) || 0;
-    const isFilerEffective = (filer === 'filer') || $('overseas').checked;
-    let body = '';
-    let total = 0;
-
-    if(mode === 'buy'){
-      const stampRate = parseFloat($('stampDutyRate').value) || 0;
-      const regRate = parseFloat($('regFeeRate').value) || 0;
-      const stampAmt = value * stampRate/100;
-      const regAmt = value * regRate/100;
-      const r236k = rate236K(value, isFilerEffective);
-      const amt236k = value * r236k/100;
-      total = stampAmt + regAmt + amt236k;
-
-      body += row('Stamp Duty (' + PROVINCES[$('province').value].label + ')', pct(stampRate), stampAmt);
-      body += row('Registration Fee', pct(regRate), regAmt);
-      body += row('Advance Tax — Section 236K (' + (isFilerEffective ? 'filer rate' : 'non-filer rate') + ')', pct(r236k), amt236k);
-      body += row('Total Payable at Transfer', '', total);
-
-      $('resultSub').textContent = 'What you pay on top of the purchase price to complete the transfer.';
-      $('totalLabel').textContent = 'Total Extra Cost to Buy';
-      $('totalAmount').textContent = fmt(total);
-
-      $('statAKey').textContent = 'Stamp Duty';
-      $('statA').textContent = fmt(stampAmt);
-      $('statBKey').textContent = 'Registration';
-      $('statB').textContent = fmt(regAmt);
-      $('statCKey').textContent = '236K Advance Tax';
-      $('statC').textContent = fmt(amt236k);
-
-    } else {
-      const r236c = rate236C(value, isFilerEffective);
-      const amt236c = value * r236c/100;
-
-      const purchasePrice = parseFloat($('purchasePrice').value) || 0;
-      const acqDate = $('acquisitionDate').value;
-      let cgtAmt = 0, cgtRateVal = 0, effRate = 0, cgtNote = '', gain = 0;
-      if(purchasePrice > 0 && value > purchasePrice){
-        gain = value - purchasePrice;
-        const cg = cgtRate(acqDate);
-        cgtRateVal = cg.rate;
-        cgtNote = cg.note;
-        effRate = isFilerEffective ? cgtRateVal : Math.max(cgtRateVal, 15);
-        cgtAmt = gain * effRate/100;
-      }
-
-      total = amt236c + cgtAmt;
-
-      body += row('Advance Tax — Section 236C (' + (isFilerEffective ? 'filer rate' : 'non-filer rate') + ')', pct(r236c), amt236c);
-      if(purchasePrice > 0 && value > purchasePrice){
-        body += row('Capital Gain on Sale', '', gain);
-        body += row('Capital Gains Tax (' + cgtNote + (isFilerEffective ? '' : ', non-filer — approx. as slab min.') + ')', pct(effRate), cgtAmt);
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
       } else {
-        body += '<tr><td colspan="3" style="color:var(--muted);font-style:italic;">Add the original purchase price above to estimate Capital Gains Tax</td></tr>';
+        loading = false;
       }
-      body += row('Total Tax on Sale (estimate)', '', total);
-
-      $('resultSub').textContent = 'Advance tax under 236C is deducted at registration; CGT (if any) is settled on your annual return, adjustable against 236C already paid.';
-      $('totalLabel').textContent = 'Total Estimated Tax on Sale';
-      $('totalAmount').textContent = fmt(total);
-
-      $('statAKey').textContent = '236C Advance Tax';
-      $('statA').textContent = fmt(amt236c);
-      $('statBKey').textContent = 'Capital Gain';
-      $('statB').textContent = gain > 0 ? fmt(gain) : '—';
-      $('statCKey').textContent = 'Est. CGT';
-      $('statC').textContent = cgtAmt > 0 ? fmt(cgtAmt) : '—';
-    }
-
-    $('breakdownBody').innerHTML = body;
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
   }
-
-  // Mode toggle
-  $('modeSeg').querySelectorAll('button').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      mode = b.dataset.mode;
-      setActiveSeg($('modeSeg'), 'mode', mode);
-      updateModeUI();
-    });
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
   });
-
-  // Filer toggle
-  $('filerSeg').querySelectorAll('button').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      filer = b.dataset.filer;
-      setActiveSeg($('filerSeg'), 'filer', filer);
-      calc();
-    });
-  });
-
-  $('province').addEventListener('change', ()=>{ applyProvinceDefaults(); calc(); });
-  $('overseas').addEventListener('change', calc);
-  ['propValue','stampDutyRate','regFeeRate','purchasePrice','acquisitionDate'].forEach(id=>{
-    $(id).addEventListener('input', calc);
-  });
-
-  applyProvinceDefaults();
-
-  // Prefill from ?value=... when arriving from the FBR Valuation Directory calculator
-  try{
-    const params = new URLSearchParams(window.location.search);
-    const incoming = parseFloat(params.get('value'));
-    if(incoming > 0){
-      $('propValue').value = incoming;
-    }
-  }catch(e){}
-
-  updateModeUI();
 })();
 </script>
 <script>
@@ -1141,6 +994,7 @@ document.addEventListener('click', (e)=>{
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -1334,6 +1188,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

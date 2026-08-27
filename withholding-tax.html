@@ -1072,6 +1072,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -1145,6 +1146,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1348,6 +1350,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
@@ -1355,558 +1358,6 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ---- Shared: Save to My Account ----
-var PTC_SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
-var PTC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
-window.PTC_currentUser = null;
-(function(){
-  if(!window.supabase) return;
-  var sb = window.supabase.createClient(PTC_SUPABASE_URL, PTC_SUPABASE_ANON_KEY);
-  window.PTC_sb = sb;
-
-  function ptcLoadPrintLetterhead(){
-    var el = document.getElementById('ptcPrintLetterhead');
-    if(!el) return;
-    if(!window.PTC_currentUser){
-      el.classList.remove('has-data');
-      return;
-    }
-    sb.from('company_profiles').select('*').eq('user_id', window.PTC_currentUser.id).then(function(res){
-      var p = (res && res.data && res.data[0]) || null;
-      if(!p || (!p.company_name && !p.logo_data_url)){
-        el.classList.remove('has-data');
-        return;
-      }
-      var nameEl = document.getElementById('ptcPrintCompanyName');
-      var metaEl = document.getElementById('ptcPrintCompanyMeta');
-      var logoEl = document.getElementById('ptcPrintLogo');
-      if(nameEl) nameEl.textContent = p.company_name || window.PTC_currentUser.email || '';
-      var metaParts = [];
-      if(p.address) metaParts.push(p.address);
-      if(p.phone) metaParts.push(p.phone);
-      if(p.email) metaParts.push(p.email);
-      if(metaEl) metaEl.textContent = metaParts.join(' \u00b7 ');
-      if(logoEl){
-        if(p.logo_data_url){ logoEl.src = p.logo_data_url; logoEl.style.display = 'block'; }
-        else { logoEl.style.display = 'none'; }
-      }
-      el.classList.add('has-data');
-    });
-  }
-
-  function ptcUpdateHeaderAuth(){
-    var btn = document.getElementById('headerAuthBtn');
-    var menu = document.getElementById('headerAccountMenu');
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var emailEl = document.getElementById('headerAccountEmail');
-    var nameEl = document.getElementById('headerAccountName');
-    if(!btn || !menu) return;
-    if(window.PTC_currentUser){
-      btn.style.display = 'none';
-      menu.style.display = 'block';
-      var email = window.PTC_currentUser.email || '';
-      var fullName = (window.PTC_currentUser.user_metadata && window.PTC_currentUser.user_metadata.full_name) || '';
-      if(avatarBtn) avatarBtn.textContent = (fullName || email).charAt(0).toUpperCase() || '?';
-      if(nameEl){
-        if(fullName){ nameEl.textContent = fullName; nameEl.style.display = 'block'; }
-        else { nameEl.style.display = 'none'; }
-      }
-      if(emailEl) emailEl.textContent = email;
-    } else {
-      btn.style.display = 'inline-block';
-      menu.style.display = 'none';
-      var dropdown = document.getElementById('headerAccountDropdown');
-      if(dropdown) dropdown.classList.remove('open');
-    }
-  }
-
-  (function(){
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var dropdown = document.getElementById('headerAccountDropdown');
-    var logoutBtn = document.getElementById('headerLogoutBtn');
-    if(!avatarBtn || !dropdown) return;
-    avatarBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = dropdown.classList.toggle('open');
-      avatarBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', function(e){
-      if(!dropdown.contains(e.target) && e.target !== avatarBtn){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape'){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    if(logoutBtn){
-      logoutBtn.addEventListener('click', function(){
-        dropdown.classList.remove('open');
-        sb.auth.signOut();
-      });
-    }
-  })();
-
-  sb.auth.getSession().then(function(res){
-    window.PTC_currentUser = (res && res.data && res.data.session) ? res.data.session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-  sb.auth.onAuthStateChange(function(event, session){
-    window.PTC_currentUser = session ? session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-})();
-window.PTC_saveWhtEntry = function(payloadOrArray, statusElId, btnEl){
-  var statusEl = document.getElementById(statusElId);
-  function showStatus(msg, isErr){
-    if(!statusEl) return;
-    statusEl.innerHTML = msg;
-    statusEl.className = 'wht-save-status ' + (isErr ? 'err' : 'ok');
-    statusEl.style.display = 'block';
-  }
-  if(!window.PTC_sb){
-    showStatus('Could not connect to the log service. Please try again later.', true);
-    return;
-  }
-  if(!window.PTC_currentUser){
-    showStatus('Please <a href="my-wht-log.html">log in or create a free account</a> on My Account to save this entry.', true);
-    return;
-  }
-  if(btnEl){ btnEl.disabled = true; var origText = btnEl.innerHTML; btnEl.textContent = 'Saving…'; }
-  var today = new Date().toISOString().slice(0,10);
-  var rows = (Array.isArray(payloadOrArray) ? payloadOrArray : [payloadOrArray]).map(function(p){
-    return Object.assign({ user_id: window.PTC_currentUser.id, entry_date: today }, p);
-  });
-  window.PTC_sb.from('wht_entries').insert(rows).then(function(res){
-    if(btnEl){ btnEl.disabled = false; btnEl.innerHTML = origText; }
-    if(res && res.error){
-      showStatus("Couldn't save: " + res.error.message, true);
-      return;
-    }
-    showStatus('Saved to your WHT Log. <a href="my-wht-log.html">View log &rarr;</a>', false);
-  });
-};
-
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['whtAmount'].forEach(attachCommaFormat);
-
-let currentYear = "2025-26";
-function setTaxYear(year){
-  currentYear = year;
-  document.querySelectorAll('.year-toggle button').forEach(x=>{
-    x.classList.toggle('active', x.dataset.year === year);
-  });
-  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
-  populateWhtCategories();
-}
-document.querySelectorAll('.year-toggle button').forEach(b=>{
-  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
-});
-
-/* =========================================================
-   WHT DATA
-
-   Both tax years use an IDENTICAL set of 14 categories, in the
-   same order, so switching years never changes the shape of the
-   form. Line items within a category may still differ, because
-   some charges did not exist in both years (e.g. s.154B social
-   media revenue and s.151B life-insurance gains were introduced
-   by the Finance Act 2026 and so have no 2025-26 counterpart).
-
-   2025-26 = "Tax Year 2026" (year ending 30 June 2026), sourced
-   from FBR's official Withholding Tax Rate Card updated to
-   30 June 2025 per the Finance Act 2025.
-   2026-27 reflects the Finance Act 2026 changes.
-========================================================= */
-const MOTOR_VEHICLE_ITEMS = {
-  "Motor vehicle ≤850cc": [0.5,1.5],
-  "Motor vehicle 851–1000cc": [1,3],
-  "Motor vehicle 1001–1300cc": [1.5,4.5],
-  "Motor vehicle 1301–1600cc": [2,6],
-  "Motor vehicle 1601–1800cc": [3,9],
-  "Motor vehicle 1801–2000cc": [5,15],
-  "Motor vehicle 2001–2500cc": [7,21],
-  "Motor vehicle 2501–3000cc": [9,27],
-  "Motor vehicle >3000cc": [12,36],
-};
-
-// Shared across both years — rates unchanged by the Finance Act 2026
-const NON_RESIDENT_ITEMS = {
-  "Contracts – construction/assembly/installation (152(1A))": [7,7],
-  "Insurance / re-insurance premium (152(1AA))": [5,5],
-  "Advertisement – non-resident media person (152(1AAA))": [10,10],
-  "Royalty / fee for technical services & offshore digital services (152(1))": [15,15],
-  "Other payments to a non-resident, general (152(2))": [20,20],
-  "Capital gain – debt/securities via non-resident accounts (152(1D/1DA))": [10,10],
-  "Sale of goods – company (152(2A)(a))": [5,10],
-  "Sale of goods – other than company (152(2A)(a))": [5.5,11],
-  "Services – specified list (152(2A)(b))": [8,16],
-  "Services – IT/IT-enabled (152(2A)(b))": [4,8],
-  "Services – other (152(2A)(b))": [15,30],
-  "Contracts – sportspersons (152(2A)(c))": [15,30],
-  "Contracts – other (152(2A)(c))": [8,16],
-};
-
-const BROKERAGE_ITEMS = {
-  "Advertising agents": [10,20],
-  "Life-insurance agents (<Rs 0.5m p.a.)": [8,16],
-  "Other brokerage / commission": [12,24],
-};
-
-const RENT_ITEMS = {
-  "Company (flat rate)": [15,30],
-  "Individual / AOP (slab rate, non-filer = 2× slab)": ["slab","slab"],
-};
-
-const WHT_DATA_BY_YEAR = {
-  "2025-26": {
-    "Goods (Sec 153)": { filerToggle:true, items:{
-      "Rice, cotton-seed or edible oils": [1.5,3],
-      "Sale of goods – company": [5,10],
-      "Sale of goods – other than company": [5.5,11],
-      "Toll manufacturing – company": [9,18],
-      "Toll manufacturing – other than company": [11,22],
-    }},
-    "Services (Sec 153)": { filerToggle:true, items:{
-      "Services – specified list": [6,12],
-      "Services – IT / IT-enabled": [4,8],
-      "Independent professionals (doctors, lawyers, etc.)": [15,30],
-      "Other services": [15,30],
-      "Advertising to print / electronic media": [1.5,3],
-      "Services rendered to exporters": [1,2],
-    }},
-    "Contracts (Sec 153)": { filerToggle:true, items:{
-      "Contracts – company": [7.5,15],
-      "Contracts – other than company": [8,16],
-      "Contracts – sportspersons": [15,30],
-    }},
-    "E-commerce (Sec 153(2A))": { filerToggle:false, items:{
-      "Digitally ordered goods/services (digital/bank channel)": [1,2],
-      "Cash on delivery (by courier)": [2,4],
-    }},
-    "Dividend, Sukuk & Profit on Debt (Sec 150/150A/151)": { filerToggle:true, items:{
-      "Dividend – general & REIT": [15,30],
-      "Dividend – IPP pass-through (CPPA-G)": [7.5,15],
-      "Dividend – company paying no tax (exemption/loss/credit)": [25,50],
-      "Dividend – mutual funds (equity)": [15,30],
-      "Dividend – mutual funds (>50% debt income)": [25,50],
-      "Sukuk return – company holder": [25,50],
-      "Sukuk return – individual/AOP, return > Rs 1m": [12.5,25],
-      "Sukuk return – individual/AOP, return < Rs 1m": [10,20],
-      "Profit on debt – bank/FI deposits & govt securities": [20,40],
-      "Profit on debt – all other cases": [15,30],
-    }},
-    "Payments to Non-Residents (Sec 152)": { filerToggle:true, items:{
-      ...NON_RESIDENT_ITEMS,
-    }},
-    "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
-      ...RENT_ITEMS,
-    }},
-    "Imports (Sec 148)": { filerToggle:true, items:{
-      "12th Sch Part I (steel, fertiliser, urea, gold, cotton, LNG)": [1,2],
-      "12th Sch Part II – general": [2,4],
-      "12th Sch Part II – commercial importer": [3.5,7],
-      "12th Sch Part III – general": [5.5,11],
-      "12th Sch Part III – commercial importer": [6,12],
-      "SRO 1125(I)/2011 manufacturers": [1,2],
-      "Finished pharmaceutical products (DRAP registered)": [4,8],
-      "EV / small-car CKD kits": [1,2],
-    }},
-    "Exports & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
-      "Export proceeds of goods": [1,2],
-      "Export of IT/IT-enabled services (PSEB registered)": [0.25,0.5],
-      "Export of services – any other case": [1,2],
-    }},
-    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/151B)": { filerToggle:true, items:{
-      "Prize bond / cross-word puzzle": [15,30],
-      "Raffle / lottery / quiz / promotional prize": [20,40],
-      "Commission to petroleum-pump operators": [12,24],
-    }},
-    "Cash Withdrawal & Motor Vehicles (Sec 231AB/231B)": { filerToggle:true, items:{
-      "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
-      ...MOTOR_VEHICLE_ITEMS,
-    }},
-    "Brokerage & Commission (Sec 233)": { filerToggle:true, items:{
-      ...BROKERAGE_ITEMS,
-    }},
-    "Property Transactions & Other Collections (Sec 236A/C/K/CB/G/H/Y/Z)": { filerToggle:true, items:{
-      "Sale by auction – general (236A)": [10,20],
-      "Sale by auction – immovable property / Pakistan Railways (236A)": [5,10],
-      "Sale/transfer of immovable property, seller – value ≤ Rs 50m (236C)": [4.5,11.5],
-      "Sale/transfer of immovable property, seller – value Rs 50–100m (236C)": [5,11.5],
-      "Sale/transfer of immovable property, seller – value > Rs 100m (236C)": [5.5,11.5],
-      "Purchase of immovable property, buyer – value ≤ Rs 50m (236K)": [1.5,10.5],
-      "Purchase of immovable property, buyer – value Rs 50–100m (236K)": [2,14.5],
-      "Purchase of immovable property, buyer – value > Rs 100m (236K)": [2.5,18.5],
-      "Functions & gatherings – marriage halls, marquees, etc. (236CB)": [10,20],
-      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.25,0.7],
-      "Sale to distributors/dealers/wholesalers – other than fertiliser (236G)": [0.1,2],
-      "Sale to retailers, on gross sales (236H)": [0.5,2.5],
-      "Remittance abroad via credit/debit/prepaid card (236Y)": [5,10],
-      "Bonus shares (236Z)": [10,20],
-    }},
-    "Foreign Domestic Workers (Sec 231C)": { filerToggle:true, fixed:true, items:{
-      "Per worker, at visa issue/renewal": [200000,400000],
-    }},
-  },
-
-  "2026-27": {
-    "Goods (Sec 153)": { filerToggle:true, items:{
-      "Rice, cotton-seed or edible oils": [1.5,3],
-      "Sale of goods – company": [5,10],
-      "Sale of goods – other than company": [5.5,11],
-      "Toll manufacturing – company": [9,18],
-      "Toll manufacturing – other than company": [11,22],
-    }},
-    "Services (Sec 153)": { filerToggle:true, items:{
-      "Services – specified list": [7,14],
-      "Services – IT / IT-enabled": [4,8],
-      "Independent professionals (doctors, lawyers, etc.)": [15,30],
-      "Other services": [14,28],
-      "Advertising to print / electronic media": [1.5,3],
-      "Terminal / port operator services": [12,24],
-    }},
-    "Contracts (Sec 153)": { filerToggle:true, items:{
-      "Contracts – company": [7.5,15],
-      "Contracts – other than company": [8,16],
-      "Contracts – sportspersons": [15,30],
-    }},
-    "E-commerce (Sec 153(2A))": { filerToggle:false, items:{
-      "Digitally ordered goods/services (digital/bank channel)": [1,2],
-      "Cash on delivery (by courier)": [2,4],
-    }},
-    "Dividend, Sukuk & Profit on Debt (Sec 150/150A/151)": { filerToggle:true, items:{
-      "Dividend – general & REIT": [15,30],
-      "Dividend – IPP pass-through (CPPA-G)": [7.5,15],
-      "Dividend – company paying no tax (exemption/loss/credit)": [25,50],
-      "Dividend – REIT scheme from SPV": [0,0],
-      "Sukuk return – company holder": [25,50],
-      "Sukuk return – individual/AOP, return > Rs 1m": [12.5,25],
-      "Sukuk return – individual/AOP, return < Rs 1m": [10,20],
-      "Profit on debt – bank/FI deposits & govt securities (non-individuals)": [20,40],
-      "Profit on debt – all other cases": [15,30],
-      "Gain on disposal of debt securities (NCCPL, Sec 151A)": [15,30],
-    }},
-    "Payments to Non-Residents (Sec 152)": { filerToggle:true, items:{
-      ...NON_RESIDENT_ITEMS,
-    }},
-    "Rent of Property (Sec 155)": { filerToggle:true, special:"rent", items:{
-      ...RENT_ITEMS,
-    }},
-    "Imports (Sec 148)": { filerToggle:true, items:{
-      "12th Sch Part I (steel, fertiliser, urea, gold, cotton, LNG)": [1,2],
-      "12th Sch Part II goods; pulses": [2,4],
-      "SRO-1125 commercial importers": [3,6],
-      "Coal": [4,8],
-      "Ship-breakers": [4.5,9],
-      "Industrial undertakings & companies": [5.5,11],
-      "Any other person": [6,12],
-      "Plastic raw material (industrial / own use)": [1.75,3.5],
-      "Plastic raw material (commercial importer)": [4.5,9],
-    }},
-    "Exports & Digital Receipts (Sec 154/154A/154B)": { filerToggle:true, items:{
-      "Export proceeds of goods": [1.25,1.25],
-      "Export of IT/IT-enabled services (PSEB, to TY2029)": [0.25,0.25],
-      "Export of services – any other case": [1,1],
-      "Social-media platform revenue (resident)": [5,10],
-      "Social-media platform revenue (non-resident)": [5,5],
-    }},
-    "Prizes, Winnings, Petroleum & Life Insurance (Sec 156/156A/151B)": { filerToggle:true, items:{
-      "Prize bond / cross-word puzzle": [15,30],
-      "Raffle / lottery / quiz / promotional prize": [20,40],
-      "Commission to petroleum-pump operators": [12,24],
-      "Life-insurance payout gain – cashed within 1 year": [15,30],
-      "Life-insurance payout gain – cashed 1 to 4 years (exempt after 4)": [10,20],
-    }},
-    "Cash Withdrawal & Motor Vehicles (Sec 231AB/231B)": { filerToggle:true, items:{
-      "Cash withdrawal >Rs 50,000/day (bank)": [0,0.8],
-      ...MOTOR_VEHICLE_ITEMS,
-      "Vehicle, cc N/A, value ≥ Rs 5m (filer 3%)": [3,9],
-    }},
-    "Brokerage & Commission (Sec 233)": { filerToggle:true, items:{
-      ...BROKERAGE_ITEMS,
-    }},
-    "Property Transactions & Other Collections (Sec 236A/C/K/CB/G/H/Y/Z)": { filerToggle:true, items:{
-      "Sale by auction – general (236A)": [10,20],
-      "Sale by auction – immovable property / Pakistan Railways (236A)": [5,10],
-      "Sale/transfer of immovable property, seller – flat rate (236C)": [2.75,11.5],
-      "Purchase of immovable property, buyer – value ≤ Rs 50m (236K)": [1.25,10.5],
-      "Purchase of immovable property, buyer – value Rs 50–100m (236K)": [1.25,14.5],
-      "Purchase of immovable property, buyer – value > Rs 100m (236K)": [1.25,18.5],
-      "Functions & gatherings – marriage halls, marquees, etc. (236CB)": [10,20],
-      "Sale to distributors/dealers/wholesalers – fertiliser (236G)": [0.25,0.7],
-      "Sale to distributors/dealers/wholesalers – other than fertiliser (236G)": [0.1,2],
-      "Sale to retailers, on gross sales (236H)": [0.5,2.5],
-      "Remittance abroad via credit/debit/prepaid card (236Y)": [0.5,1],
-      "Bonus shares (236Z)": [10,20],
-    }},
-    "Foreign Domestic Workers (Sec 231C)": { filerToggle:true, fixed:true, items:{
-      "Per worker, at visa issue/renewal": [200000,400000],
-    }},
-  },
-};
-
-function currentWhtData(){
-  return WHT_DATA_BY_YEAR[currentYear];
-}
-
-const whtCategoryEl = document.getElementById('whtCategory');
-const whtSubcategoryEl = document.getElementById('whtSubcategory');
-
-function populateWhtCategories(){
-  // Preserve the selected category across a year switch where possible —
-  // both years share the same category list, so this should always hold.
-  const previous = whtCategoryEl.value;
-  whtCategoryEl.innerHTML = "";
-  Object.keys(currentWhtData()).forEach(cat=>{
-    const o = document.createElement('option');
-    o.value = cat; o.textContent = cat;
-    whtCategoryEl.appendChild(o);
-  });
-  if(previous && currentWhtData()[previous]) whtCategoryEl.value = previous;
-  populateWhtSub();
-}
-
-function populateWhtSub(){
-  const cat = currentWhtData()[whtCategoryEl.value];
-  if(!cat) return;
-  // Preserve the selected line item too, when it exists in the new year.
-  const previousSub = whtSubcategoryEl.value;
-  whtSubcategoryEl.innerHTML = "";
-  Object.keys(cat.items).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k; o.textContent = k;
-    whtSubcategoryEl.appendChild(o);
-  });
-  if(previousSub && cat.items[previousSub]) whtSubcategoryEl.value = previousSub;
-  document.getElementById('whtFilerField').style.display = cat.filerToggle ? 'block':'none';
-  document.getElementById('whtAmountField').style.display = cat.fixed ? 'none' : 'block';
-  computeWht();
-}
-whtCategoryEl.addEventListener('change', populateWhtSub);
-whtSubcategoryEl.addEventListener('change', computeWht);
-document.getElementById('whtAmount').addEventListener('input', computeWht);
-
-let filerStatus = 'filer';
-document.querySelectorAll('#filerSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#filerSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    filerStatus = b.dataset.filer;
-    computeWht();
-  });
-});
-
-function rentSlabTax(amount){
-  if(amount<=300000) return 0;
-  if(amount<=600000) return (amount-300000)*0.05;
-  if(amount<=2000000) return 15000 + (amount-600000)*0.10;
-  return 155000 + (amount-2000000)*0.25;
-}
-
-function computeWht(){
-  const cat = currentWhtData()[whtCategoryEl.value];
-  if(!cat) return;
-  const sub = cat.items[whtSubcategoryEl.value];
-  if(!sub) return;
-
-  if(cat.fixed){
-    const feeAmt = filerStatus==='filer' ? sub[0] : sub[1];
-    document.getElementById('whtTaxAmount').textContent = fmt(feeAmt);
-    document.getElementById('whtStats').innerHTML = `
-      <div class="stat"><div class="v">Flat fee</div><div class="k">Basis</div></div>
-      <div class="stat"><div class="v">${fmt(sub[0])}</div><div class="k">Filer Rate</div></div>
-      <div class="stat"><div class="v">${fmt(sub[1])}</div><div class="k">Non-Filer Rate</div></div>
-    `;
-    window.whtLastResult = {
-      categoryLabel: whtCategoryEl.value + ' — ' + whtSubcategoryEl.value,
-      amount: feeAmt,
-      rate: null,
-      taxAmt: feeAmt,
-      notes: 'Flat fee (' + (filerStatus==='filer' ? 'filer' : 'non-filer') + '), Tax Year ' + currentYear
-    };
-    return;
-  }
-
-  const amount = numVal('whtAmount');
-  let taxAmt = 0;
-  let rateDisplay = "";
-
-  if(sub[0]==="slab"){
-    const base = rentSlabTax(amount);
-    taxAmt = filerStatus==='filer' ? base : base*2;
-    rateDisplay = filerStatus==='filer' ? "Slab rate" : "2× slab rate";
-  } else {
-    const rate = filerStatus==='filer' ? sub[0] : sub[1];
-    taxAmt = amount * (rate/100);
-    rateDisplay = rate + "%";
-  }
-
-  document.getElementById('whtTaxAmount').textContent = fmt(taxAmt);
-  document.getElementById('whtStats').innerHTML = `
-    <div class="stat"><div class="v">${rateDisplay}</div><div class="k">Rate Applied</div></div>
-    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Gross Amount</div></div>
-    <div class="stat"><div class="v">${fmt(Math.max(amount-taxAmt,0))}</div><div class="k">Net Payment</div></div>
-  `;
-
-  window.whtLastResult = {
-    categoryLabel: whtCategoryEl.value + ' — ' + whtSubcategoryEl.value,
-    amount: amount,
-    rate: sub[0]==='slab' ? null : (filerStatus==='filer' ? sub[0] : sub[1]),
-    taxAmt: taxAmt,
-    notes: (sub[0]==='slab' ? rateDisplay + ' under Section 155, ' : '') + 'Tax Year ' + currentYear + ' (' + (filerStatus==='filer' ? 'filer' : 'non-filer') + ')'
-  };
-}
-
-document.getElementById('whtSaveBtn').addEventListener('click', function(){
-  var r = window.whtLastResult;
-  if(!r){ return; }
-  window.PTC_saveWhtEntry({
-    wht_type: 'income_tax',
-    authority: 'FBR',
-    category: r.categoryLabel || null,
-    supplier_name: document.getElementById('whtSupplierName').value.trim() || null,
-    supplier_id_number: null,
-    invoice_number: document.getElementById('whtInvoiceNumber').value.trim() || null,
-    invoice_date: document.getElementById('whtInvoiceDate').value || null,
-    payment_mode: document.getElementById('whtPaymentMode').value || null,
-    amount_value: r.amount,
-    rate: r.rate,
-    amount_withheld: r.taxAmt,
-    notes: r.notes || null
-  }, 'whtSaveStatus', this);
-});
-
-/* =========================================================
-   INIT
-========================================================= */
-populateWhtCategories();
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -1947,12 +1398,51 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
+/* ---- withholding-tax calculator logic (lazy-loaded from Supabase on first interaction) ---- */
+(function(){
+  var SLUG = 'withholding-tax';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
+  }
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
+      }
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
+  }
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+  });
+})();
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -2146,6 +1636,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

@@ -1036,6 +1036,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -1109,6 +1110,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1309,110 +1311,13 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
 
 <script>
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['gstAmount'].forEach(attachCommaFormat);
-
-/* =========================================================
-   FEDERAL GST ON GOODS
-   Sales Tax Act 1990 as amended by the Finance Act 2025 / 2026-27.
-   Grouped to match the provincial calculators. Items charged at a
-   fixed rupee amount rather than a percentage (mobile phones by CIF
-   band, steel per tonne, potassium chlorate) are not listed, since
-   they cannot be expressed as a rate on value.
-========================================================= */
-const GST_GOODS_GROUPS = [
-  { group: "Standard Rate (18%)", items: {
-      "Standard rate \u2013 all taxable goods & supplies": 18,
-      "Sale to an unregistered person (18% + 4% further tax)": 22,
-      "Third Schedule retail-price items (biscuits, drinks, tea, cereals, ice cream, toiletries, cosmetics, etc.)": 18,
-      "Footwear & other Third Schedule Serial 65 goods via POS-integrated retailers": 18,
-      "Natural gas": 18,
-      "Electricity \u2013 registered commercial/industrial consumer": 18,
-      "Cement (GST portion; a separate per-bag FED also applies)": 18,
-  }},
-  { group: "Reduced Rates (Eighth Schedule)", items: {
-      "Dairy products other than fresh milk (flavoured/UHT milk, yogurt, etc.)": 10,
-      "Prepared / preserved meat & poultry products": 8,
-      "Gold & silver jewellery \u2013 making charges": 3,
-      "Gold & silver jewellery \u2013 precious metal value": 1.5,
-      "Gold & silver jewellery \u2013 diamonds/stones value": 0.5,
-  }},
-  { group: "Zero-Rated (0%, input tax refundable)", items: {
-      "Exports of goods (Fifth Schedule)": 0,
-      "Supplies to diplomats & diplomatic missions": 0,
-  }},
-  { group: "Exempt \u2013 Sixth Schedule (0%, no input tax credit)", items: {
-      "Fresh milk, plain atta/flour, rice, pulses": 0,
-      "Fresh fruits & vegetables, eggs, live animals & poultry": 0,
-      "Unbranded, unpacked meat & poultry": 0,
-      "Books, newspapers & journals": 0,
-      "Most medicines & pharmaceutical raw materials": 0,
-      "Specified agricultural inputs (seeds, select pesticides)": 0,
-      "POL products \u2013 petrol, diesel, kerosene, HOBC (Petroleum Levy instead)": 0,
-  }},
-];
-
-// Flatten for lookup
-const GST_GOODS_DATA = {};
-GST_GOODS_GROUPS.forEach(g => Object.keys(g.items).forEach(k => { GST_GOODS_DATA[k] = g.items[k]; }));
-
-const gstCategoryEl = document.getElementById('gstCategory');
-GST_GOODS_GROUPS.forEach(g=>{
-  const og = document.createElement('optgroup');
-  og.label = g.group;
-  Object.keys(g.items).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k; o.textContent = k + " (" + g.items[k] + "%)";
-    og.appendChild(o);
-  });
-  gstCategoryEl.appendChild(og);
-});
-gstCategoryEl.addEventListener('change', computeGst);
-document.getElementById('gstAmount').addEventListener('input', computeGst);
-
-function computeGst(){
-  const rate = GST_GOODS_DATA[gstCategoryEl.value] || 0;
-  const amount = numVal('gstAmount');
-  const tax = amount * (rate/100);
-  document.getElementById('gstTaxAmount').textContent = fmt(tax);
-  document.getElementById('gstStats').innerHTML = `
-    <div class="stat"><div class="v">${rate}%</div><div class="k">Rate Applied</div></div>
-    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
-    <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
-  `;
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeGst();
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -1453,12 +1358,51 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
+/* ---- sales-tax-gst calculator logic (lazy-loaded from Supabase on first interaction) ---- */
+(function(){
+  var SLUG = 'sales-tax-gst';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
+  }
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
+      }
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
+  }
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+  });
+})();
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -1652,6 +1596,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

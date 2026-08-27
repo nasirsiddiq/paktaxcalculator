@@ -1137,6 +1137,7 @@ header.site-header .headerTop h1{
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html" class="active">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -1210,6 +1211,7 @@ header.site-header .headerTop h1{
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1423,6 +1425,7 @@ header.site-header .headerTop h1{
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
@@ -1430,415 +1433,6 @@ header.site-header .headerTop h1{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ---- Shared: Save to My Account ----
-var PTC_SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
-var PTC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
-window.PTC_currentUser = null;
-(function(){
-  if(!window.supabase) return;
-  var sb = window.supabase.createClient(PTC_SUPABASE_URL, PTC_SUPABASE_ANON_KEY);
-  window.PTC_sb = sb;
-
-  function ptcLoadPrintLetterhead(){
-    var el = document.getElementById('ptcPrintLetterhead');
-    if(!el) return;
-    if(!window.PTC_currentUser){
-      el.classList.remove('has-data');
-      return;
-    }
-    sb.from('company_profiles').select('*').eq('user_id', window.PTC_currentUser.id).then(function(res){
-      var p = (res && res.data && res.data[0]) || null;
-      if(!p || (!p.company_name && !p.logo_data_url)){
-        el.classList.remove('has-data');
-        return;
-      }
-      var nameEl = document.getElementById('ptcPrintCompanyName');
-      var metaEl = document.getElementById('ptcPrintCompanyMeta');
-      var logoEl = document.getElementById('ptcPrintLogo');
-      if(nameEl) nameEl.textContent = p.company_name || window.PTC_currentUser.email || '';
-      var metaParts = [];
-      if(p.address) metaParts.push(p.address);
-      if(p.phone) metaParts.push(p.phone);
-      if(p.email) metaParts.push(p.email);
-      if(metaEl) metaEl.textContent = metaParts.join(' \u00b7 ');
-      if(logoEl){
-        if(p.logo_data_url){ logoEl.src = p.logo_data_url; logoEl.style.display = 'block'; }
-        else { logoEl.style.display = 'none'; }
-      }
-      el.classList.add('has-data');
-    });
-  }
-
-  function ptcUpdateHeaderAuth(){
-    var btn = document.getElementById('headerAuthBtn');
-    var menu = document.getElementById('headerAccountMenu');
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var emailEl = document.getElementById('headerAccountEmail');
-    var nameEl = document.getElementById('headerAccountName');
-    if(!btn || !menu) return;
-    if(window.PTC_currentUser){
-      btn.style.display = 'none';
-      menu.style.display = 'block';
-      var email = window.PTC_currentUser.email || '';
-      var fullName = (window.PTC_currentUser.user_metadata && window.PTC_currentUser.user_metadata.full_name) || '';
-      if(avatarBtn) avatarBtn.textContent = (fullName || email).charAt(0).toUpperCase() || '?';
-      if(nameEl){
-        if(fullName){ nameEl.textContent = fullName; nameEl.style.display = 'block'; }
-        else { nameEl.style.display = 'none'; }
-      }
-      if(emailEl) emailEl.textContent = email;
-    } else {
-      btn.style.display = 'inline-block';
-      menu.style.display = 'none';
-      var dropdown = document.getElementById('headerAccountDropdown');
-      if(dropdown) dropdown.classList.remove('open');
-    }
-  }
-
-  (function(){
-    var avatarBtn = document.getElementById('headerAvatarBtn');
-    var dropdown = document.getElementById('headerAccountDropdown');
-    var logoutBtn = document.getElementById('headerLogoutBtn');
-    if(!avatarBtn || !dropdown) return;
-    avatarBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = dropdown.classList.toggle('open');
-      avatarBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', function(e){
-      if(!dropdown.contains(e.target) && e.target !== avatarBtn){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape'){
-        dropdown.classList.remove('open');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    if(logoutBtn){
-      logoutBtn.addEventListener('click', function(){
-        dropdown.classList.remove('open');
-        sb.auth.signOut();
-      });
-    }
-  })();
-
-  sb.auth.getSession().then(function(res){
-    window.PTC_currentUser = (res && res.data && res.data.session) ? res.data.session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-  sb.auth.onAuthStateChange(function(event, session){
-    window.PTC_currentUser = session ? session.user : null;
-    ptcLoadPrintLetterhead();
-    ptcUpdateHeaderAuth();
-  });
-})();
-window.PTC_saveWhtEntry = function(payload, statusElId, btnEl){
-  var statusEl = document.getElementById(statusElId);
-  function showStatus(msg, isErr){
-    if(!statusEl) return;
-    statusEl.innerHTML = msg;
-    statusEl.className = 'wht-save-status ' + (isErr ? 'err' : 'ok');
-    statusEl.style.display = 'block';
-  }
-  if(!window.PTC_sb){
-    showStatus('Could not connect to the log service. Please try again later.', true);
-    return;
-  }
-  if(!window.PTC_currentUser){
-    showStatus('Please <a href="my-wht-log.html">log in or create a free account</a> on My Account to save this entry.', true);
-    return;
-  }
-  if(btnEl){ btnEl.disabled = true; var origText = btnEl.textContent; btnEl.textContent = 'Saving…'; }
-  var row = Object.assign({ user_id: window.PTC_currentUser.id, entry_date: new Date().toISOString().slice(0,10) }, payload);
-  window.PTC_sb.from('wht_entries').insert(row).then(function(res){
-    if(btnEl){ btnEl.disabled = false; btnEl.textContent = origText; }
-    if(res && res.error){
-      showStatus("Couldn't save: " + res.error.message, true);
-      return;
-    }
-    showStatus('Saved to your WHT Log. <a href="my-wht-log.html">View log &rarr;</a>', false);
-  });
-};
-
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['saleAmount'].forEach(attachCommaFormat);
-
-/* =========================================================
-   ISLAMABAD SALES TAX ON SERVICES (ICT)
-   Sourced from the Islamabad Capital Territory (Tax on Services)
-   Ordinance, 2001, as amended up to 30 June 2025 (Table-1 & Table-2)
-========================================================= */
-const SALES_TAX_GROUPS = [
-  { group: "Hotels, Restaurants & Marriage Halls", items: {
-      "Hotels, motels, guest houses & farmhouses": 15,
-      "Clubs": 15,
-      "Restaurants – cash payment": 15,
-      "Restaurants – debit/credit card, wallet or QR payment (no input credit)": 5,
-      "Marriage halls & lawns (incl. pandal/shamiana) & caterers": 5,
-  }},
-  { group: "Advertisement", items: {
-      "Advertisement on TV & radio": 15,
-      "Advertisement on hoarding boards, poles, signboards, websites/internet": 15,
-  }},
-  { group: "Agents & Intermediaries", items: {
-      "Stevedores, customs agents & ship chandlers": 15,
-      "Freight forwarding agents, packers & movers": 5,
-      "Tour operators & travel agents (excl. Hajj/Umrah)": 5,
-      "Manpower recruitment agents, labour & manpower supply": 15,
-      "Advertising agents": 15,
-      "Share transfer / depository agents": 15,
-      "Business support services": 15,
-      "Sponsorship services": 15,
-      "Stockbrokers, future/commodity brokers, money exchanger, surveyors, outdoor/event photographers & videographers, art painters, auctioneers": 15,
-      "Underwriter, indenters & commission agents (incl. brokers)": 15,
-      "Corporate law consultants": 15,
-  }},
-  { group: "Courier, Cargo & Transport", items: {
-      "Courier services & cargo services by road": 15,
-      "Transportation through pipeline & conduit": 15,
-      "Inter-city transportation/carriage of goods by road or pipeline": 15,
-      "Ready mix concrete services": 15,
-  }},
-  { group: "Construction & Property", items: {
-      "Construction services": 15,
-      "Property developers & promoters (general, land development/construction)": 15,
-      "Property developers & promoters – low-cost housing (Naya Pakistan/Ehsaas)": 0,
-      "Property dealers & realtors": 0,
-      "Architects, town planners & interior decorators": 15,
-      "Landscape designers": 15,
-  }},
-  { group: "Beauty, Wellness, Health & Personal Care", items: {
-      "Beauty parlours, clinics, slimming/body massage & pedicure centres, incl. cosmetic & plastic surgery": 5,
-      "Health clubs, gyms, fitness centres, indoor sports & games centres": 5,
-      "Laundries & dry cleaners": 5,
-  }},
-  { group: "IT, Consultancy & Professional Services", items: {
-      "IT services & IT-enabled services (software dev, web/hosting, BPO, data entry, cloud, etc.)": 15,
-      "Software / IT-based system development consultants": 5,
-      "Management consultancy services": 15,
-      "Technical, scientific & engineering consultants": 15,
-      "Other consultants (HR, personnel development, market research, credit rating)": 15,
-      "Legal practitioners & consultants": 15,
-      "Accountants & auditors": 15,
-      "Visa processing, migration advisory/consultancy": 15,
-  }},
-  { group: "Specialized Workshops & Auto", items: {
-      "Specialized workshops (auto, industrial/earth-moving machinery, electric/electronic equipment, car washing)": 5,
-      "Rent a car": 15,
-      "Car / automobile dealers": 5,
-  }},
-  { group: "Cleaning, Fumigation & Site Services", items: {
-      "Fumigation, maintenance/repair, cleaning, janitorial, waste collection & de-silting services": 15,
-      "Mining of minerals, oil & gas incl. related/allied activities": 15,
-  }},
-  { group: "Security, Agencies & Business Services", items: {
-      "Security agencies": 15,
-      "Laboratories (other than pathological/diagnostic tests)": 15,
-      "Technical analysis & testing services": 15,
-      "Technical inspection, certification & quality control services": 15,
-      "Debt collection & debt recovery services": 15,
-      "Supply chain management / distribution (incl. delivery) services": 15,
-      "Public relations services": 15,
-      "Training or coaching services (other than education)": 15,
-      "Fund and asset (incl. investment) management services": 15,
-      "Erection, commissioning & installation services": 15,
-      "Valuation, competency & eligibility testing services": 15,
-      "Event management, exhibition & convention services": 15,
-      "Inland port, airport & terminal operators, incl. public bonded warehouses": 15,
-      "Call centres": 15,
-      "Cable TV operators": 15,
-      "Fashion designers": 15,
-      "TV/radio programme producers & production houses": 15,
-      "Race clubs – entry/admission & other services": 15,
-      "Electric power transmission services": 15,
-  }},
-];
-
-// Flatten for lookup
-const SALES_TAX_DATA = {};
-SALES_TAX_GROUPS.forEach(g => Object.keys(g.items).forEach(k => { SALES_TAX_DATA[k] = g.items[k]; }));
-
-const saleCategoryEl = document.getElementById('saleCategory');
-SALES_TAX_GROUPS.forEach(g=>{
-  const og = document.createElement('optgroup');
-  og.label = g.group;
-  Object.keys(g.items).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k; o.textContent = k + " (" + g.items[k] + "%)";
-    og.appendChild(o);
-  });
-  saleCategoryEl.appendChild(og);
-});
-saleCategoryEl.addEventListener('change', computeSaleTax);
-document.getElementById('saleAmount').addEventListener('input', computeSaleTax);
-
-function computeSaleTax(){
-  const rate = SALES_TAX_DATA[saleCategoryEl.value] || 0;
-  const amount = numVal('saleAmount');
-  const tax = amount * (rate/100);
-  document.getElementById('saleTaxAmount').textContent = fmt(tax);
-  document.getElementById('saleStats').innerHTML = `
-    <div class="stat"><div class="v">${rate}%</div><div class="k">Rate Applied</div></div>
-    <div class="stat"><div class="v">${fmt(amount)}</div><div class="k">Value Excl. Tax</div></div>
-    <div class="stat"><div class="v">${fmt(amount+tax)}</div><div class="k">Total Incl. Tax</div></div>
-  `;
-}
-
-/* =========================================================
-   ICT WITHHOLDING TAX (subset of the Federal 11th Schedule +
-   provincial withholding rules, restricted to Islamabad/ICT —
-   see the full cross-authority calculator at sales-tax-withholding.html
-   for FBR, Sindh, Punjab, KPK and Balochistan)
-========================================================= */
-const ICTW_ITEMS = {
-  "Registered service provider (general)": {type:"fraction", value:20, note:"ICT services tax is administered by FBR; withholding is understood to follow the general federal 1/5th rule (a distinct ICT-specific withholding regulation was not found)"},
-  "Unregistered service provider": {type:"fraction", value:100, basis:"incl", note:"Full applicable sales tax on gross value"},
-  "Advertisement services": {type:"fraction", value:100, note:"Full amount, regardless of registration"},
-};
-const ICTW_DEFAULT_RATE = 15;
-
-const ictwCategoryEl = document.getElementById('ictwCategory');
-Object.keys(ICTW_ITEMS).forEach(k=>{
-  const o = document.createElement('option');
-  o.value = k; o.textContent = k;
-  ictwCategoryEl.appendChild(o);
-});
-document.getElementById('ictwRate').value = ICTW_DEFAULT_RATE;
-
-const ictwTaxCategoryEl = document.getElementById('ictwTaxCategory');
-if(ictwTaxCategoryEl){
-  const manualOpt = document.createElement('option');
-  manualOpt.value = '';
-  manualOpt.textContent = '— Select to auto-fill —';
-  ictwTaxCategoryEl.appendChild(manualOpt);
-  Object.keys(SALES_TAX_DATA).forEach(k=>{
-    const o = document.createElement('option');
-    o.value = k;
-    o.textContent = k + ' (' + SALES_TAX_DATA[k] + '%)';
-    ictwTaxCategoryEl.appendChild(o);
-  });
-  ictwTaxCategoryEl.addEventListener('change', function(){
-    if(ictwTaxCategoryEl.value && SALES_TAX_DATA[ictwTaxCategoryEl.value] !== undefined){
-      document.getElementById('ictwRate').value = SALES_TAX_DATA[ictwTaxCategoryEl.value];
-      ictwCompute();
-    }
-  });
-}
-
-function ictwScenario(entered, rate, item, basis){
-  let value, salesTax, gross;
-  if(basis === 'incl'){
-    gross = entered;
-    value = (100 + rate) === 0 ? 0 : entered * 100 / (100 + rate);
-    salesTax = gross - value;
-  } else {
-    value = entered;
-    salesTax = value * (rate/100);
-    gross = value + salesTax;
-  }
-  let withheld = 0;
-  if(item){
-    withheld = item.type === 'fraction' ? salesTax * (item.value/100) : value * (item.value/100);
-  }
-  return { value, salesTax, gross, withheld, netToSupplier: gross - withheld };
-}
-
-function ictwCompute(){
-  const item = ICTW_ITEMS[ictwCategoryEl.value];
-  const basis = (item && item.basis) || 'excl';
-
-  const entered = numVal('ictwValue');
-  const rate = parseFloat(document.getElementById('ictwRate').value) || 0;
-  const s = ictwScenario(entered, rate, item, basis);
-
-  document.getElementById('ictwValueLabel').textContent = basis === 'incl'
-    ? 'Total Invoice Amount, Incl. Tax (PKR)'
-    : 'Value of Supply, Excl. Tax (PKR)';
-  document.getElementById('ictwBasisHint').innerHTML = basis === 'incl'
-    ? 'This category covers an <strong>unregistered</strong> provider, whose invoice carries no separate sales tax line. Enter the gross invoice total &mdash; the tax is extracted from it using the tax fraction, not added on top.'
-    : 'This category covers a <strong>registered</strong> provider, whose tax invoice shows the sales tax separately. Enter the value of supply excluding tax &mdash; the tax is added on top.';
-
-  document.getElementById('ictwWithheld').textContent = fmt(s.withheld);
-  document.getElementById('ictwStats').innerHTML = `
-    <div class="stat"><div class="v">${fmt(s.salesTax)}</div><div class="k">Sales Tax on Invoice</div></div>
-    <div class="stat"><div class="v">${fmt(s.netToSupplier)}</div><div class="k">Net Paid to Supplier</div></div>
-    <div class="stat"><div class="v">${item? (item.type==='fraction'? item.value+'% of tax' : item.value+'% of value') : '-'}</div><div class="k">Withholding Basis</div></div>
-  `;
-  document.getElementById('ictwBreakdown').innerHTML = `
-    <tr><th>Item</th><th>Basis</th><th>Amount</th></tr>
-    <tr><td>Value of supply (excl. tax)</td><td>${basis==='incl' ? `Invoice &times; 100/${(100+rate)}` : 'Amount entered'}</td><td>${fmt(s.value)}</td></tr>
-    <tr><td>Sales tax on invoice</td><td>${basis==='incl' ? `Invoice &times; ${rate}/${(100+rate)} (tax fraction)` : `${rate}% of value`}</td><td>${fmt(s.salesTax)}</td></tr>
-    <tr><td>Gross invoice (incl. tax)</td><td>${basis==='incl' ? 'Amount entered' : 'Value + tax'}</td><td>${fmt(s.gross)}</td></tr>
-    <tr><td>Withheld by agent</td><td>${item? item.note : '-'}</td><td>${fmt(s.withheld)}</td></tr>
-    <tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(s.netToSupplier)}</td></tr>
-  `;
-
-  window.ictwLastResult = { item: item, basis: basis, rate: rate, s: s, categoryLabel: (ictwCategoryEl.options[ictwCategoryEl.selectedIndex] ? ictwCategoryEl.options[ictwCategoryEl.selectedIndex].text : '') };
-}
-
-ictwCategoryEl.addEventListener('change', ictwCompute);
-document.getElementById('ictwValue').addEventListener('input', ictwCompute);
-document.getElementById('ictwRate').addEventListener('input', ictwCompute);
-attachCommaFormat('ictwValue');
-
-document.getElementById('ictwSaveBtn').addEventListener('click', function(){
-  var r = window.ictwLastResult;
-  if(!r || !r.s){ return; }
-  window.PTC_saveWhtEntry({
-    wht_type: 'sales_tax',
-    authority: 'ICT',
-    category: r.categoryLabel || null,
-    supplier_name: document.getElementById('ictwSupplierName').value.trim() || null,
-    supplier_id_number: null,
-    amount_value: r.s.value,
-    rate: r.rate,
-    amount_withheld: r.s.withheld,
-    invoice_number: document.getElementById('ictwInvoiceNumber').value.trim() || null,
-    invoice_date: document.getElementById('ictwInvoiceDate').value || null,
-    payment_mode: document.getElementById('ictwPaymentMode').value || null,
-    notes: null
-  }, 'ictwSaveStatus', this);
-});
-ictwCompute();
-
-
-function ptopShowMode(mode){
-  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
-  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
-  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
-  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
-  window.scrollTo({top: 0, behavior: 'instant'});
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeSaleTax();
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -1879,12 +1473,59 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
+function ptopShowMode(mode){
+  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
+  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
+  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
+  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+
+/* ---- sales-tax-ict calculator logic (lazy-loaded from Supabase on first interaction) ---- */
+(function(){
+  var SLUG = 'sales-tax-ict';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
+  }
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
+      }
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
+  }
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+  });
+})();
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -2078,6 +1719,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

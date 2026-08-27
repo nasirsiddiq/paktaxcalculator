@@ -1038,6 +1038,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="sales-tax-balochistan.html">Balochistan Sales Tax (BRA)</a>
     <a href="sales-tax-ict.html">Islamabad Sales Tax (ICT)</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
 </aside>
 
@@ -1111,6 +1112,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       <div class="navGroup">
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
+<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1410,405 +1412,13 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="feedback.html">Feedback</a>&middot;
     <a href="contact.html">Contact</a>&middot;
     <a href="zakat-calculator.html">Zakat Calculator</a>&middot;
+    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>&middot;
     <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>&middot;
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 </footer>
 
 <script>
-/* =========================================================
-   INCOME TAX DATA
-========================================================= */
-function slabTax(income, slabs){
-  income = Math.max(0, income||0);
-  if(income<=0) return {tax:0, slab:null};
-  let chosen = slabs[slabs.length-1];
-  for(const s of slabs){
-    if(income > s.min && income <= s.max){ chosen = s; break; }
-  }
-  const tax = chosen.base + (income - chosen.min) * (chosen.rate/100);
-  return {tax: Math.max(0,tax), slab: chosen};
-}
-
-const TAX_DATA = {
-  "2025-26": {
-    label: "Tax Year 2025-26",
-    salariedSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:1, base:0},
-      {min:1200000, max:2200000, rate:11, base:6000},
-      {min:2200000, max:3200000, rate:23, base:116000},
-      {min:3200000, max:4100000, rate:30, base:346000},
-      {min:4100000, max:Infinity, rate:35, base:616000},
-    ],
-    salariedSurcharge: true,
-    businessSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:15, base:0},
-      {min:1200000, max:1600000, rate:20, base:90000},
-      {min:1600000, max:3200000, rate:30, base:170000},
-      {min:3200000, max:5600000, rate:40, base:650000},
-      {min:5600000, max:Infinity, rate:45, base:1610000},
-    ],
-    businessSurcharge: true
-  },
-  "2026-27": {
-    label: "Tax Year 2026-27",
-    salariedSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:1, base:0},
-      {min:1200000, max:2200000, rate:11, base:6000},
-      {min:2200000, max:3200000, rate:20, base:116000},
-      {min:3200000, max:4100000, rate:25, base:316000},
-      {min:4100000, max:5600000, rate:29, base:541000},
-      {min:5600000, max:7000000, rate:32, base:976000},
-      {min:7000000, max:Infinity, rate:35, base:1424000},
-    ],
-    salariedSurcharge: false,
-    businessSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:15, base:0},
-      {min:1200000, max:1600000, rate:20, base:90000},
-      {min:1600000, max:3200000, rate:30, base:170000},
-      {min:3200000, max:5600000, rate:40, base:650000},
-      {min:5600000, max:Infinity, rate:45, base:1610000},
-    ],
-    businessSurcharge: true
-  }
-};
-
-const COMPANY_RATES = { other:29, small:20, banking:39 };
-
-const SUPER_TAX_SLABS = [
-  {min:0, max:150e6, rate:0},
-  {min:150e6, max:200e6, rate:1},
-  {min:200e6, max:250e6, rate:1.5},
-  {min:250e6, max:300e6, rate:2.5},
-  {min:300e6, max:350e6, rate:3.5},
-  {min:350e6, max:400e6, rate:5.5},
-  {min:400e6, max:500e6, rate:7.5},
-  {min:500e6, max:Infinity, rate:10},
-];
-function superTaxRate(income){
-  let r = 0;
-  for(const s of SUPER_TAX_SLABS){ if(income > s.min && income <= s.max){ r = s.rate; break; } }
-  if(income > 500e6) r = 10;
-  return r;
-}
-
-const SURCHARGE_THRESHOLD = 10000000;
-const SURCHARGE_RATE = 9;
-
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['incomeInput','turnoverInput'].forEach(attachCommaFormat);
-
-/* ---- UI wiring ---- */
-let currentYear = "2025-26";
-let currentType = "salaried";
-let currentFreq = "annual";
-
-function updateIncomeLabel(){
-  const label = document.getElementById('incomeLabel');
-  const input = document.getElementById('incomeInput');
-  if(currentType === 'company'){
-    label.textContent = 'Annual Taxable Income / Profit (PKR)';
-    input.placeholder = 'e.g. 3000000';
-  } else if(currentFreq === 'monthly'){
-    label.textContent = 'Monthly Salary / Income (PKR)';
-    input.placeholder = 'e.g. 250000';
-  } else {
-    label.textContent = 'Annual Taxable Income (PKR)';
-    input.placeholder = 'e.g. 3000000';
-  }
-}
-
-function setTaxYear(year){
-  currentYear = year;
-  document.querySelectorAll('.year-toggle button').forEach(x=>{
-    x.classList.toggle('active', x.dataset.year === year);
-  });
-  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
-  computeIncomeTax();
-  computeResidency();
-}
-
-document.querySelectorAll('.year-toggle button').forEach(b=>{
-  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
-});
-
-document.querySelectorAll('#typeSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#typeSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentType = b.dataset.type;
-    document.getElementById('companyTypeField').style.display = currentType==='company' ? 'block':'none';
-    document.getElementById('turnoverField').style.display = currentType==='company' ? 'block':'none';
-    document.getElementById('salariedHint').style.display = currentType==='salaried' ? 'block':'none';
-    document.getElementById('freqField').style.display = currentType==='company' ? 'none':'block';
-    updateIncomeLabel();
-    computeIncomeTax();
-  });
-});
-
-document.querySelectorAll('#freqSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#freqSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentFreq = b.dataset.freq;
-    updateIncomeLabel();
-    computeIncomeTax();
-  });
-});
-
-document.getElementById('companyType').addEventListener('change', computeIncomeTax);
-document.getElementById('incomeInput').addEventListener('input', computeIncomeTax);
-document.getElementById('turnoverInput').addEventListener('input', computeIncomeTax);
-
-function slabRowHtml(rateLabel, amt, pct, rangeText){
-  return `
-    <div class="slab-row">
-      <div class="slab-row-top">
-        <div class="slab-rate">${rateLabel}</div>
-        <div class="slab-bar-track"><div class="slab-bar-fill" style="width:${pct}%"></div></div>
-        <div class="slab-amount ${amt<=0?'muted':''}">${amt>0 ? fmt(amt) : '−'}</div>
-      </div>
-      <div class="slab-row-range">${rangeText}</div>
-    </div>`;
-}
-
-function computeIncomeTax(){
-  const rawInput = numVal('incomeInput');
-  const income = (currentFreq === 'monthly' && currentType !== 'company') ? rawInput * 12 : rawInput;
-  const yearData = TAX_DATA[currentYear];
-  const slabEl = document.getElementById('slabBreakdown');
-  const heroSubEl = document.getElementById('heroSub');
-  let total = 0;
-  let baseTax = 0;
-  let surcharge = 0;
-  let superTax = 0;
-  let minTax = 0;
-  let slabHtml = "";
-
-  if(currentType === 'salaried' || currentType === 'business'){
-    const slabs = currentType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
-    const surchargeApplies = currentType==='salaried' ? yearData.salariedSurcharge : yearData.businessSurcharge;
-    const {tax, slab} = slabTax(income, slabs);
-    baseTax = tax;
-    if(surchargeApplies && income > SURCHARGE_THRESHOLD){
-      surcharge = tax * (SURCHARGE_RATE/100);
-    }
-    superTax = income * (superTaxRate(income)/100);
-    total = baseTax + surcharge + superTax;
-
-    document.getElementById('slabPanelTitle').textContent = 'Slab-by-Slab Breakdown';
-    slabs.forEach(s=>{
-      let amt = 0;
-      if(income > s.min){
-        const cap = s.max===Infinity ? income : Math.min(income, s.max);
-        amt = (cap - s.min) * (s.rate/100);
-      }
-      const pct = baseTax>0 ? Math.min(100, (amt/baseTax*100)) : 0;
-      const rangeText = s.max===Infinity
-        ? `Rs. ${s.min.toLocaleString('en-US')} &amp; above`
-        : `Rs. ${s.min.toLocaleString('en-US')} – ${s.max.toLocaleString('en-US')}`;
-      slabHtml += slabRowHtml(s.rate+'%', amt, pct, rangeText);
-    });
-    if(surchargeApplies && surcharge>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">+9%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(surcharge)}</div></div><div class="slab-row-range">Surcharge on tax, income above Rs. 10,000,000</div></div>`;
-    }
-    if(superTax>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
-    }
-
-    if(income<=0){
-      heroSubEl.textContent = 'Enter an amount above to calculate';
-    } else if(slab && slab.rate===0){
-      heroSubEl.textContent = 'Below taxable threshold (Rs. 600,000) — no income tax';
-    } else if(slab){
-      const rangeText = slab.max===Infinity
-        ? `above Rs. ${slab.min.toLocaleString('en-PK')}`
-        : `Rs. ${slab.min.toLocaleString('en-PK')} – Rs. ${slab.max.toLocaleString('en-PK')}`;
-      heroSubEl.textContent = `You fall in the ${slab.rate}% tax bracket (${rangeText})`;
-    }
-
-    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
-    document.getElementById('heroStat1Value').textContent = fmt(total/12);
-    document.getElementById('heroStat2Label').textContent = 'Take-home / month';
-    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
-  } else {
-    // company
-    const compType = document.getElementById('companyType').value;
-    const rate = COMPANY_RATES[compType];
-    baseTax = income * (rate/100);
-    superTax = income * (superTaxRate(income)/100);
-    const turnover = numVal('turnoverInput');
-    minTax = turnover * 0.0125;
-    const higherBase = Math.max(baseTax, minTax);
-    total = higherBase + superTax;
-
-    document.getElementById('slabPanelTitle').textContent = 'Tax Breakdown';
-    slabHtml += slabRowHtml(rate+'%', baseTax, higherBase>0 ? Math.min(100, baseTax/higherBase*100) : 0, 'Corporate tax on taxable income');
-    if(turnover>0){
-      slabHtml += slabRowHtml('1.25%', minTax, higherBase>0 ? Math.min(100, minTax/higherBase*100) : 0, 'Minimum tax on turnover (Sec 113)');
-    }
-    if(superTax>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
-    }
-
-    const compLabel = compType==='small'?'Small':compType==='banking'?'Banking':'Standard';
-    heroSubEl.textContent = income>0 ? `${compLabel} company rate: ${rate}%` : 'Enter an amount above to calculate';
-
-    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
-    document.getElementById('heroStat1Value').textContent = fmt(total/12);
-    document.getElementById('heroStat2Label').textContent = 'Net profit / month';
-    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
-  }
-
-  slabEl.innerHTML = slabHtml;
-  document.getElementById('incomeTotalTax').textContent = fmt(total);
-}
-
-/* =========================================================
-   RESIDENT STATUS CHECKER (Section 82)
-========================================================= */
-const TAX_YEAR_RANGES = {
-  "2025-26": { start: Date.UTC(2025,6,1), end: Date.UTC(2026,5,30) },
-  "2026-27": { start: Date.UTC(2026,6,1), end: Date.UTC(2027,5,30) },
-};
-const MS_DAY = 86400000;
-
-let residencyMode = 'days';
-let tripCounter = 0;
-
-document.querySelectorAll('#residencyModeSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#residencyModeSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    residencyMode = b.dataset.mode;
-    document.getElementById('residencyDaysMode').style.display = residencyMode==='days' ? 'block':'none';
-    document.getElementById('residencyTripsMode').style.display = residencyMode==='trips' ? 'block':'none';
-    computeResidency();
-  });
-});
-
-function addTripRow(){
-  tripCounter++;
-  const id = 'trip'+tripCounter;
-  const row = document.createElement('div');
-  row.className = 'trip-row';
-  row.dataset.id = id;
-  row.innerHTML = `
-    <input type="date" class="tripEntry" id="${id}-entry">
-    <span class="arrow">&rarr;</span>
-    <input type="date" class="tripExit" id="${id}-exit">
-    <span class="tripDays" id="${id}-days">0 days</span>
-    <button type="button" class="tripRemove" aria-label="Remove trip">&times;</button>
-  `;
-  row.querySelector('.tripEntry').addEventListener('input', computeResidency);
-  row.querySelector('.tripExit').addEventListener('input', computeResidency);
-  row.querySelector('.tripRemove').addEventListener('click', ()=>{
-    row.remove();
-    computeResidency();
-  });
-  document.getElementById('tripsList').appendChild(row);
-}
-document.getElementById('addTripBtn').addEventListener('click', addTripRow);
-addTripRow(); // start with one row
-
-document.getElementById('residencyDaysInput').addEventListener('input', computeResidency);
-document.getElementById('residencyPrev4Input').addEventListener('input', computeResidency);
-document.getElementById('residencyGovt').addEventListener('change', computeResidency);
-document.getElementById('residencyCitizen').addEventListener('change', computeResidency);
-
-function computeResidency(){
-  const range = TAX_YEAR_RANGES[currentYear];
-  let daysThisYear = 0;
-
-  if(residencyMode === 'days'){
-    daysThisYear = parseFloat(document.getElementById('residencyDaysInput').value) || 0;
-  } else {
-    document.querySelectorAll('#tripsList .trip-row').forEach(row=>{
-      const entryVal = row.querySelector('.tripEntry').value;
-      const exitVal = row.querySelector('.tripExit').value;
-      const daysLabel = row.querySelector('.tripDays');
-      let rowDays = 0;
-      if(entryVal && exitVal){
-        const entryMs = Date.parse(entryVal + 'T00:00:00Z');
-        const exitMs = Date.parse(exitVal + 'T00:00:00Z');
-        if(!isNaN(entryMs) && !isNaN(exitMs) && exitMs >= entryMs){
-          const clipStart = Math.max(entryMs, range.start);
-          const clipEnd = Math.min(exitMs, range.end);
-          if(clipEnd >= clipStart){
-            rowDays = Math.round((clipEnd - clipStart) / MS_DAY) + 1;
-          }
-        }
-      }
-      daysLabel.textContent = rowDays + (rowDays===1?' day':' days');
-      daysThisYear += rowDays;
-    });
-  }
-
-  const prev4 = parseFloat(document.getElementById('residencyPrev4Input').value) || 0;
-  const govt = document.getElementById('residencyGovt').checked;
-  const citizen = document.getElementById('residencyCitizen').checked;
-
-  const test183 = daysThisYear >= 183;
-  const test120 = daysThisYear >= 120 && prev4 >= 365;
-  const anyInput = daysThisYear>0 || prev4>0 || govt || citizen;
-
-  const isResident = test183 || test120 || govt || citizen;
-
-  const pill = document.getElementById('residencyStatus');
-  const breakdownEl = document.getElementById('residencyBreakdown');
-
-  if(!anyInput){
-    pill.className = 'status-pill pending';
-    pill.textContent = 'Enter your details above';
-    breakdownEl.innerHTML = '';
-    return;
-  }
-
-  pill.className = 'status-pill ' + (isResident ? 'resident' : 'nonresident');
-  pill.textContent = isResident ? 'Resident' : 'Non-Resident';
-
-  breakdownEl.innerHTML = `
-    <tr><th>Test (Sec 82)</th><th>Your Figures</th><th>Result</th></tr>
-    <tr><td>(a) 183+ days present this tax year</td><td>${daysThisYear} days</td><td>${test183?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(b) 120+ days this year AND 365+ days in preceding 4 years</td><td>${daysThisYear} days this year, ${prev4} days prior 4 yrs</td><td>${test120?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(c) Govt employee posted abroad</td><td>${govt?'Yes':'No'}</td><td>${govt?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(d) Citizen, not resident/183+ days elsewhere</td><td>${citizen?'Yes':'No'}</td><td>${citizen?'✅ Met':'Not met'}</td></tr>
-    <tr><td colspan="2">Overall Status</td><td>${isResident?'Resident':'Non-Resident'}</td></tr>
-  `;
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeIncomeTax();
-computeResidency();
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -1849,12 +1459,51 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
+/* ---- income-tax calculator logic (lazy-loaded from Supabase on first interaction) ---- */
+(function(){
+  var SLUG = 'income-tax';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
+  }
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
+      }
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
+  }
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+  });
+})();
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
 (function(){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -2048,6 +1697,7 @@ document.addEventListener('click', (e)=>{
     {title:"Balochistan Sales Tax (BRA)", url:"sales-tax-balochistan.html", desc:"Balochistan sales tax on services"},
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
+    {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];
