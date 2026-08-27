@@ -945,16 +945,209 @@ header.site-header .headerTop h1{
 @media (max-width:560px){
   .siteSearch{ max-width:100%; padding:0 4px; }
 }
+
+/* ---- Sticky header + Login/Sign Up buttons ---- */
+.headerTop{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:500;
+  padding:10px 16px;
+  background:var(--green);
+  box-shadow:0 2px 10px rgba(0,0,0,.18);
+  box-sizing:border-box;
+}
+.brandSpacer{
+  flex:0 0 auto;
+  width:auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+.headerAuthBtnGroup{ display:flex; align-items:center; gap:8px; }
+.headerAuthBtn{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:20px;
+  background:#fff;
+  color:var(--green);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  transition:background .15s ease, color .15s ease;
+  border:1.5px solid transparent;
+  cursor:pointer;
+}
+.headerAuthBtn:hover{ background:#eef7f1; }
+.headerAuthBtn.outline{ background:transparent; color:#fff; border-color:rgba(255,255,255,.75); box-shadow:none; }
+.headerAuthBtn.outline:hover{ background:rgba(255,255,255,.15); }
+.headerAuthBtn.loggedIn{ background:transparent; color:#fff; border-color:rgba(255,255,255,.7); box-shadow:none; }
+.headerAuthBtn.loggedIn:hover{ background:rgba(255,255,255,.15); }
+@media (max-width:640px){
+  .headerAuthBtn{ padding:6px 12px; font-size:11px; }
+  .headerAuthBtnGroup .headerAuthBtn.outline{ display:none; }
+}
+@media (max-width:400px){
+  .headerAuthBtn{ padding:5px 9px; font-size:10px; }
+}
+
+/* ---- Side rail promo cards (wide screens only) ---- */
+.sideRail{
+  display:none;
+  position:fixed;
+  top:480px;
+  width:210px;
+  z-index:45;
+}
+.sideRail.sideRail-left{ left:24px; }
+.sideRail.sideRail-right{ right:24px; }
+@media (max-width:1400px){
+  .sideRail{ display:none !important; }
+}
+.railCard{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:16px 14px;
+  text-align:center;
+}
+.railEmoji{ font-size:26px; margin:0 0 8px; line-height:1; }
+.railText{ margin:0 0 10px; font-size:13.5px; color:var(--text); font-weight:600; line-height:1.4; }
+.railLink{
+  display:inline-block;
+  color:var(--green);
+  font-weight:700;
+  font-size:12.5px;
+  text-decoration:none;
+  border:1.5px solid var(--green);
+  border-radius:20px;
+  padding:6px 12px;
+  line-height:1.3;
+}
+.railLink:hover{ background:var(--green-pale); }
 </style>
 </head>
 <body>
+<aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">📊</p><p class="railText">Income Tax calculator.</p><a href="income-tax.html" class="railLink">Income Tax Calculator&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🌙</p><p class="railText">Zakat calculator.</p><a href="zakat-calculator.html" class="railLink">Zakat Calculator&nbsp;&rarr;</a></div></aside>
 <header class="site-header">
   <div class="headerTop">
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
     <h1>Pakistan Tax Calculator</h1>
-    <span class="brandSpacer"></span>
+    <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
+<script>
+(function(){
+  var railLeftAllowed = false, railRightAllowed = false;
+  var railLeftHeight = 0, railRightHeight = 0;
+  function fixHeaderOffset(){
+    try{
+      var ht = document.querySelector(".headerTop");
+      var hdr = document.querySelector("header.site-header");
+      if(ht && hdr){
+        hdr.style.paddingTop = (ht.offsetHeight + 16) + "px";
+        var railTop = hdr.offsetHeight + 16;
+        var main = document.querySelector("main");
+        var leftRail = document.querySelector(".sideRail-left");
+        var rightRail = document.querySelector(".sideRail-right");
+        var minSpace = 258;
+        railLeftAllowed = false; railRightAllowed = false;
+        if(main && (leftRail || rightRail)){
+          var leftSpace = Infinity, rightSpace = Infinity;
+          var contentEls = [];
+          var innerWrap = document.querySelector(".zk-wrap");
+          if(innerWrap){
+            contentEls.push(innerWrap);
+          } else {
+            for(var c=0;c<main.children.length;c++){ contentEls.push(main.children[c]); }
+          }
+          for(var m=0;m<contentEls.length;m++){
+            var cr = contentEls[m].getBoundingClientRect();
+            if(cr.width === 0 && cr.height === 0){ continue; }
+            if(cr.left < leftSpace){ leftSpace = cr.left; }
+            var rs = window.innerWidth - cr.right;
+            if(rs < rightSpace){ rightSpace = rs; }
+          }
+          if(leftSpace === Infinity){ leftSpace = 0; }
+          if(rightSpace === Infinity){ rightSpace = 0; }
+          railLeftAllowed = leftSpace >= minSpace;
+          railRightAllowed = rightSpace >= minSpace;
+        }
+        if(leftRail){
+          leftRail.style.top = railTop + "px";
+          if(railLeftAllowed){
+            leftRail.style.display = "block";
+            railLeftHeight = leftRail.offsetHeight;
+          } else {
+            leftRail.style.display = "none";
+          }
+        }
+        if(rightRail){
+          rightRail.style.top = railTop + "px";
+          if(railRightAllowed){
+            rightRail.style.display = "block";
+            railRightHeight = rightRail.offsetHeight;
+          } else {
+            rightRail.style.display = "none";
+          }
+        }
+      }
+    }catch(e){}
+    updateRailFooterOverlap();
+  }
+  function updateRailFooterOverlap(){
+    try{
+      var footer = document.querySelector("footer");
+      if(!footer){ return; }
+      var hdr = document.querySelector("header.site-header");
+      var ht = document.querySelector(".headerTop");
+      var railTop = (hdr && ht) ? (ht.offsetHeight + 16) : 0;
+      var fr = footer.getBoundingClientRect();
+      var leftRail = document.querySelector(".sideRail-left");
+      var rightRail = document.querySelector(".sideRail-right");
+      if(leftRail && railLeftAllowed){
+        var leftOverlap = fr.top < (railTop + railLeftHeight + 16);
+        leftRail.style.display = leftOverlap ? "none" : "block";
+      }
+      if(rightRail && railRightAllowed){
+        var rightOverlap = fr.top < (railTop + railRightHeight + 16);
+        rightRail.style.display = rightOverlap ? "none" : "block";
+      }
+    }catch(e){}
+  }
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", fixHeaderOffset);
+  } else {
+    fixHeaderOffset();
+  }
+  window.addEventListener("resize", fixHeaderOffset);
+  window.addEventListener("scroll", updateRailFooterOverlap, {passive:true});
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fixHeaderOffset); }
+  try{
+    var raw = null;
+    for(var i=0;i<localStorage.length;i++){
+      var k = localStorage.key(i);
+      if(k && /^sb-.*-auth-token$/.test(k)){ raw = localStorage.getItem(k); break; }
+    }
+    if(!raw) return;
+    var sess = JSON.parse(raw);
+    var exp = sess && (sess.expires_at || (sess.currentSession && sess.currentSession.expires_at));
+    if(exp && exp * 1000 > Date.now()){
+      var grp = document.getElementById('headerAuthBtnGroup');
+      if(grp){ grp.innerHTML = '<a href="my-wht-log.html" class="headerAuthBtn loggedIn" onclick="this.href=\'my-wht-log.html?return=\'+encodeURIComponent(location.pathname.split(\'/\').pop()||\'index.html\')">My Account</a>'; fixHeaderOffset(); }
+    }
+  }catch(e){}
+})();
+</script>
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
   <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
