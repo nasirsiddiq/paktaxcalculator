@@ -416,6 +416,29 @@ table.breakdown tr:last-child td{
   padding:12px 14px;
   margin-top:6px;
 }
+.shareButtons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:4px;
+}
+.shareBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  border-radius:24px;
+  font-weight:700;
+  font-size:13.5px;
+  text-decoration:none;
+  color:#fff;
+  transition:opacity .15s ease;
+}
+.shareBtn:hover{ opacity:.87; }
+.shareBtn svg{ width:17px; height:17px; fill:#fff; flex-shrink:0; }
+.shareBtn-whatsapp{ background:#25D366; }
+.shareBtn-facebook{ background:#1877F2; }
+.shareBtn-x{ background:#000; }
 .footerCalcs{
   background:var(--green-pale);
   border-top:1px solid var(--border);
@@ -1329,6 +1352,7 @@ header.site-header .headerTop h1{
     <a href="fbr-property-valuation.html">Property Valuation</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
     <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+    <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
     <span class="qlDrop" id="qlDrop">
       <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
       <span class="qlDropMenu" id="qlDropMenu">
@@ -1374,6 +1398,7 @@ header.site-header .headerTop h1{
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
 <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+<a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1568,6 +1593,25 @@ header.site-header .headerTop h1{
     </script>
   </div>
 
+  <div class="card no-print" id="shareCard">
+    <h2>Share This Calculator</h2>
+    <p class="sub">Know a business filing Balochistan Sales Tax on Services? Share this calculator.</p>
+    <div class="shareButtons">
+      <a class="shareBtn shareBtn-whatsapp" href="https://wa.me/?text=Calculate%20Balochistan%20Sales%20Tax%20on%20Services%20%28BRA%29%20with%20this%20free%20calculator%3A%20https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-balochistan.html" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.986.579 3.833 1.578 5.392L2 22l4.735-1.554A9.943 9.943 0 0012.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.13a8.1 8.1 0 01-4.363-1.267l-.313-.185-3.242 1.064 1.078-3.155-.204-.324A8.11 8.11 0 013.87 12c0-4.484 3.647-8.13 8.131-8.13 4.484 0 8.13 3.646 8.13 8.13 0 4.484-3.646 8.13-8.13 8.13z"/></svg>
+        WhatsApp
+      </a>
+      <a class="shareBtn shareBtn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-balochistan.html" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.49-1.46H16.5V4.36C16.24 4.32 15.32 4.25 14.25 4.25c-2.23 0-3.75 1.36-3.75 3.86V10.5H8v3h2.5V21h3z"/></svg>
+        Facebook
+      </a>
+      <a class="shareBtn shareBtn-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-balochistan.html&text=Calculate%20Balochistan%20Sales%20Tax%20on%20Services%20%28BRA%29%20with%20this%20free%20calculator%3A" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+    </div>
+  </div>
+
 </div>
 
 </main>
@@ -1599,6 +1643,7 @@ header.site-header .headerTop h1{
         <h4>Other Tools</h4>
         <a href="zakat-calculator.html">Zakat Calculator</a>
         <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+        <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
         <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
       <div class="footerCalcsCol">
@@ -1713,6 +1758,7 @@ function ptopShowMode(mode){
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -1907,6 +1953,7 @@ function ptopShowMode(mode){
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

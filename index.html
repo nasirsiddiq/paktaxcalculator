@@ -88,63 +88,6 @@ header.site-header p.tagline{
   border-radius:20px;
   margin-bottom:14px;
 }
-.mainnav{
-  max-width:920px;
-  margin:0 auto;
-  position:relative;
-  padding-bottom:16px;
-}
-.navToggle{
-  width:100%;
-  background:rgba(255,255,255,0.14);
-  border:1px solid rgba(255,255,255,0.35);
-  color:#fff;
-  font-weight:700;
-  font-size:14px;
-  padding:12px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.navToggle .chev{transition:transform .2s ease;font-size:11px;}
-.navToggle.open{border-radius:10px 10px 0 0;}
-.navToggle.open .chev{transform:rotate(180deg);}
-.navMenu{
-  display:none;
-  background:#fff;
-  border-radius:0 0 12px 12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.18);
-  padding:10px;
-  text-align:left;
-  position:absolute;
-  left:0;right:0;
-  z-index:50;
-}
-.navMenu.open{display:block;}
-.navGroup{margin-bottom:6px;}
-.navGroup:last-child{margin-bottom:0;}
-.navGroupTitle{
-  font-size:11px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  color:var(--muted);
-  padding:9px 10px 3px;
-}
-.navMenu a{
-  display:block;
-  padding:10px 10px;
-  border-radius:8px;
-  color:var(--text);
-  text-decoration:none;
-  font-size:14.5px;
-  font-weight:600;
-}
-.navMenu a:hover{background:var(--green-pale);}
-.navMenu a.active{background:var(--green);color:#fff;}
-.navDivider{height:1px;background:var(--border);margin:6px 4px;}
 .wrap{
   max-width:920px;
   margin:0 auto;
@@ -745,35 +688,7 @@ table.gst td.note{
 .tag-req{ background:var(--green); color:#fff; }
 .tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 
-/* ---- Quick links bar in the header ---- */
-.quickLinks{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:.15rem .1rem;
-  margin:0 auto .75rem;
-  max-width:900px;
-}
-.quickLinks a{
-  color:rgba(255,255,255,.92);
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  padding:.3rem .62rem;
-  border-radius:6px;
-  white-space:nowrap;
-  transition:background .15s ease, color .15s ease;
-}
-.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
-.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
-@media (max-width:560px){
-  .quickLinks{ gap:.1rem 0; }
-  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
-  .quickLinks a + a{ border-left:none; }
-}
-
-/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
+ inside the header quick-links bar ---- */
 .qlDrop{ position:relative; display:inline-block; }
 .qlDropBtn{
   font:inherit;
@@ -1122,6 +1037,199 @@ header.site-header .headerTop h1{
   line-height:1.3;
 }
 .railLink:hover{ background:var(--green-pale); }
+
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
+
+/* ---- Quick links bar in the header ---- */
+.quickLinks{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:.15rem .1rem;
+  margin:0 auto .75rem;
+  max-width:900px;
+}
+.quickLinks a{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  padding:.3rem .62rem;
+  border-radius:6px;
+  white-space:nowrap;
+  transition:background .15s ease, color .15s ease;
+}
+.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
+.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
+@media (max-width:560px){
+  .quickLinks{ gap:.1rem 0; }
+  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
+  .quickLinks a + a{ border-left:none; }
+}
+
+/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
+.qlDrop{ position:relative; display:inline-block; }
+.qlDropBtn{
+  font:inherit;
+  color:rgba(255,255,255,.92);
+  background:transparent;
+  border:none;
+  border-left:1px solid rgba(255,255,255,.28);
+  border-radius:0 6px 6px 0;
+  font-size:13px;
+  font-weight:600;
+  padding:.3rem .62rem;
+  cursor:pointer;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  transition:background .15s ease, color .15s ease;
+}
+.qlDropBtn:hover, .qlDropBtn.open{ background:rgba(255,255,255,.2); color:#fff; }
+.qlDropBtn .chev{ font-size:10px; transition:transform .18s ease; }
+.qlDropBtn.open .chev{ transform:rotate(180deg); }
+.qlDropMenu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:50%;
+  transform:translateX(-50%);
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+  padding:.35rem;
+  z-index:60;
+  text-align:left;
+}
+.qlDropMenu.open{ display:block; }
+.qlDropMenu a{
+  display:block;
+  color:var(--green);
+  font-size:13px;
+  font-weight:600;
+  padding:.5rem .7rem;
+  border-radius:6px;
+  white-space:nowrap;
+  text-decoration:none;
+  border:none;
+}
+.qlDropMenu a:hover{ background:var(--green-pale); color:var(--green); }
+@media (max-width:560px){
+  .qlDropBtn{ border-left:none; font-size:12px; padding:.28rem .45rem; }
+  .qlDropMenu{ min-width:200px; }
+}
+
+
+/* ---- PakTaxPro-style quick presets, stat tiles, distribution bar, bracket rule ---- */
+.quick-presets{ margin-top:10px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.quick-presets-label{ font-size:12px; color:var(--muted); font-weight:600; margin-right:2px; }
+.preset-btn{
+  font:inherit; font-size:12.5px; font-weight:700;
+  padding:5px 12px; border-radius:20px;
+  border:1.5px solid var(--border); background:#fff; color:var(--green);
+  cursor:pointer; transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.preset-btn:hover{ border-color:var(--green-light); background:var(--green-pale); }
+.preset-btn.active{ background:var(--green); border-color:var(--green); color:#fff; }
+
+.stat-tiles{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 16px;
+}
+@media (max-width:640px){ .stat-tiles{ grid-template-columns:1fr 1fr; } }
+.stat-tile{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:14px 16px; box-shadow:var(--shadow); text-align:center;
+}
+.stat-tile-label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:6px; }
+.stat-tile-value{ font-size:19px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; }
+.stat-tile-value-tax{ color:#c0392b; }
+
+.dist-card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow);
+}
+.dist-header{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; }
+.dist-title{ font-size:12.5px; font-weight:700; color:var(--text); }
+.dist-legend{ display:flex; gap:14px; font-size:12px; color:var(--muted); font-weight:600; }
+.dist-legend-item{ display:inline-flex; align-items:center; gap:5px; }
+.dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+.dot-take{ background:var(--green); }
+.dot-tax{ background:#c0392b; }
+.dist-bar{ display:flex; height:10px; border-radius:6px; overflow:hidden; background:var(--bg); border:1px solid var(--border); }
+.dist-bar-take{ background:var(--green); height:100%; transition:width .35s ease; }
+.dist-bar-tax{ background:#c0392b; height:100%; transition:width .35s ease; }
+
+.bracket-card{
+  background:var(--green-pale); border:1px solid var(--green-light); border-radius:var(--radius);
+  padding:14px 18px; margin-bottom:16px;
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
+}
+.bracket-rule-label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--green); }
+.bracket-rule-text{ font-size:13px; color:var(--text); font-weight:600; }
+.marginal-badge{
+  font-size:11.5px; font-weight:700; color:#fff; background:var(--green);
+  padding:5px 12px; border-radius:20px; white-space:nowrap;
+}
 </style>
 </head>
 <body>
@@ -1256,6 +1364,7 @@ header.site-header .headerTop h1{
     <a href="fbr-property-valuation.html">Property Valuation</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
     <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+    <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
     <span class="qlDrop" id="qlDrop">
       <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
       <span class="qlDropMenu" id="qlDropMenu">
@@ -1277,12 +1386,12 @@ header.site-header .headerTop h1{
     </button>
     <div class="navMenu" id="navMenu">
       <div class="navGroup">
-<a href="index.html" class="active">Home</a>
+<a href="index.html">Home</a>
       </div>
       <div class="navGroup">
         <div class="navGroupTitle">Federal Taxes</div>
 <a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
-<a href="income-tax.html">Income Tax</a>
+<a href="income-tax.html" class="active">Income Tax</a>
 <a href="withholding-tax.html">Withholding Tax (WHT)</a>
 <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
 <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
@@ -1301,6 +1410,7 @@ header.site-header .headerTop h1{
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
 <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+<a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1374,6 +1484,17 @@ header.site-header .headerTop h1{
         <input type="text" inputmode="numeric" autocomplete="off" id="incomeInput" class="amount-input" placeholder="e.g. 3,000,000">
       </div>
       <div class="hint" id="salariedHint">For salaried individuals, at least 75% of taxable income must be from salary to use these rates.</div>
+      <div class="quick-presets" id="incomePresets">
+        <span class="quick-presets-label">Quick presets:</span>
+        <button type="button" class="preset-btn" data-val="50000">50k</button>
+        <button type="button" class="preset-btn" data-val="75000">75k</button>
+        <button type="button" class="preset-btn" data-val="100000">100k</button>
+        <button type="button" class="preset-btn" data-val="150000">150k</button>
+        <button type="button" class="preset-btn" data-val="250000">250k</button>
+        <button type="button" class="preset-btn" data-val="400000">400k</button>
+        <button type="button" class="preset-btn" data-val="600000">600k</button>
+        <button type="button" class="preset-btn" data-val="1000000">10 Lakh</button>
+      </div>
     </div>
 
     <div class="field" id="turnoverField" style="display:none;">
@@ -1412,6 +1533,43 @@ header.site-header .headerTop h1{
         <div class="v" id="heroStat2Value">Rs. 0</div>
       </div>
     </div>
+  </div>
+
+  <div class="stat-tiles">
+    <div class="stat-tile">
+      <div class="stat-tile-label">Gross Annual</div>
+      <div class="stat-tile-value" id="statGrossAnnual">Rs. 0</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile-label">Total Yearly Tax</div>
+      <div class="stat-tile-value stat-tile-value-tax" id="statTotalTax">Rs. 0</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile-label">Effective Tax Rate</div>
+      <div class="stat-tile-value" id="statEffRate">0%</div>
+    </div>
+  </div>
+
+  <div class="dist-card">
+    <div class="dist-header">
+      <span class="dist-title">Income Distribution Ratio</span>
+      <span class="dist-legend">
+        <span class="dist-legend-item"><i class="dot dot-take"></i><span id="distTakeHomeLabel">Take-Home (100%)</span></span>
+        <span class="dist-legend-item"><i class="dot dot-tax"></i><span id="distTaxLabel">Tax (0%)</span></span>
+      </span>
+    </div>
+    <div class="dist-bar">
+      <div class="dist-bar-take" id="distTakeHomeBar" style="width:100%;"></div>
+      <div class="dist-bar-tax" id="distTaxBar" style="width:0%;"></div>
+    </div>
+  </div>
+
+  <div class="bracket-card">
+    <div>
+      <div class="bracket-rule-label">FBR Bracket Rule</div>
+      <div class="bracket-rule-text" id="bracketRuleText">Enter an amount to see the applicable rule.</div>
+    </div>
+    <div class="marginal-badge" id="marginalRateBadge">Marginal Rate: 0%</div>
   </div>
 
   <div class="card slab-panel">
@@ -1571,6 +1729,11 @@ header.site-header .headerTop h1{
     <h3>Apna Ghar Calculator</h3>
     <p>Estimate your monthly rental under the Government of Pakistan's subsidized Islamic home finance scheme (Diminishing Musharakah) &mdash; 5% fixed for 10 years, then KIBOR + 3%.</p>
   </a>
+  <a class="calc-card" href="pta-mobile-tax-calculator.html">
+    <div class="icon">📱</div>
+    <h3>PTA Mobile Tax Calculator</h3>
+    <p>Estimate the tax on a non-PTA-approved phone and compare the Passport route against the CNIC route before you register its IMEI.</p>
+  </a>
   <a class="calc-card" href="my-wht-log.html">
     <div class="icon">📝</div>
     <h3>My Account</h3>
@@ -1611,6 +1774,7 @@ header.site-header .headerTop h1{
         <h4>Other Tools</h4>
         <a href="zakat-calculator.html">Zakat Calculator</a>
         <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+        <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
         <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
       <div class="footerCalcsCol">
@@ -1903,7 +2067,66 @@ function computeIncomeTax(){
 
   slabEl.innerHTML = slabHtml;
   document.getElementById('incomeTotalTax').textContent = fmt(total);
+  updateExtraStats(income, total, currentType, currentYear);
 }
+
+function updateExtraStats(income, total, taxpayerType, taxYear){
+  var grossEl = document.getElementById('statGrossAnnual');
+  var taxEl = document.getElementById('statTotalTax');
+  var rateEl = document.getElementById('statEffRate');
+  if(grossEl) grossEl.textContent = fmt(income);
+  if(taxEl) taxEl.textContent = fmt(total);
+  var effRate = income>0 ? (total/income*100) : 0;
+  if(rateEl) rateEl.textContent = effRate.toFixed(1)+'%';
+
+  var takeHomePct = income>0 ? Math.max(0, Math.min(100, (income-total)/income*100)) : 100;
+  var taxPct = 100 - takeHomePct;
+  var barTake = document.getElementById('distTakeHomeBar');
+  var barTax = document.getElementById('distTaxBar');
+  var lblTake = document.getElementById('distTakeHomeLabel');
+  var lblTax = document.getElementById('distTaxLabel');
+  if(barTake) barTake.style.width = takeHomePct+'%';
+  if(barTax) barTax.style.width = taxPct+'%';
+  if(lblTake) lblTake.textContent = 'Take-Home ('+takeHomePct.toFixed(1)+'%)';
+  if(lblTax) lblTax.textContent = 'Tax ('+taxPct.toFixed(1)+'%)';
+
+  var bracketEl = document.getElementById('bracketRuleText');
+  var marginalEl = document.getElementById('marginalRateBadge');
+  var yearData = TAX_DATA[taxYear];
+  if(taxpayerType === 'salaried' || taxpayerType === 'business'){
+    var slabs = taxpayerType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
+    var chosen = slabs[slabs.length-1];
+    for(var i=0;i<slabs.length;i++){ if(income > slabs[i].min && income <= slabs[i].max){ chosen = slabs[i]; break; } }
+    if(bracketEl){
+      bracketEl.textContent = (income>0 && chosen.rate>0)
+        ? ('Rs. '+chosen.base.toLocaleString('en-US')+' + '+chosen.rate+'% of the amount exceeding Rs. '+chosen.min.toLocaleString('en-US'))
+        : (income>0 ? 'Below the taxable threshold — no income tax due.' : 'Enter an amount to see the applicable rule.');
+    }
+    if(marginalEl) marginalEl.textContent = 'Marginal Rate: '+chosen.rate+'%';
+  } else {
+    var compTypeEl = document.getElementById('companyType');
+    var compType = compTypeEl ? compTypeEl.value : 'other';
+    var rate = COMPANY_RATES[compType];
+    if(bracketEl){
+      bracketEl.textContent = income>0
+        ? ('Flat '+rate+'% of taxable income (plus 1.25% minimum tax on turnover, if higher)')
+        : 'Enter an amount to see the applicable rule.';
+    }
+    if(marginalEl) marginalEl.textContent = 'Marginal Rate: '+rate+'%';
+  }
+}
+
+/* ---- Quick income presets ---- */
+document.querySelectorAll('.preset-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var input = document.getElementById('incomeInput');
+    if(!input) return;
+    input.value = Number(btn.getAttribute('data-val')).toLocaleString('en-US');
+    input.dispatchEvent(new Event('input', { bubbles:true }));
+  });
+});
 
 /* =========================================================
    RESIDENT STATUS CHECKER (Section 82)
@@ -2071,6 +2294,7 @@ document.addEventListener('click', (e)=>{
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -2265,6 +2489,7 @@ document.addEventListener('click', (e)=>{
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

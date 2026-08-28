@@ -602,72 +602,10 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
 .card-summary .btn-submit:hover{ background:#eef7f1; }
 .card-summary .wht-save-status{ color:rgba(255,255,255,0.85); font-size:12px; margin-top:8px; }
 .card-summary .hint{ color:rgba(255,255,255,0.65); }
-.card-summary table.breakdown .amt-neg{ color:#ff8a80; font-weight:700; }
-.card-summary table.breakdown .amt-pos{ color:#8fd6a8; font-weight:700; }
-.card-summary table.breakdown .amt-subtotal{ color:rgba(255,255,255,0.85); }
-.card-summary table.breakdown .amt-net{ color:#fff; font-weight:800; font-size:15px; }
 
 
-.mainnav{
-  max-width:920px;
-  margin:0 auto;
-  position:relative;
-  padding-bottom:16px;
-}
-.navToggle{
-  width:100%;
-  background:rgba(255,255,255,0.14);
-  border:1px solid rgba(255,255,255,0.35);
-  color:#fff;
-  font-weight:700;
-  font-size:14px;
-  padding:12px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.navToggle .chev{transition:transform .2s ease;font-size:11px;}
-.navToggle.open{border-radius:10px 10px 0 0;}
-.navToggle.open .chev{transform:rotate(180deg);}
-.navMenu{
-  display:none;
-  background:#fff;
-  border-radius:0 0 12px 12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.18);
-  padding:10px;
-  text-align:left;
-  position:absolute;
-  left:0;right:0;
-  z-index:50;
-}
-.navMenu.open{display:block;}
-.navGroup{margin-bottom:6px;}
-.navGroup:last-child{margin-bottom:0;}
-.navGroupTitle{
-  font-size:11px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  color:var(--muted);
-  padding:9px 10px 3px;
-}
-.navMenu a{
-  display:block;
-  padding:10px 10px;
-  border-radius:8px;
-  color:var(--text);
-  text-decoration:none;
-  font-size:14.5px;
-  font-weight:600;
-}
-.navMenu a:hover{background:var(--green-pale);}
-.navMenu a.active{background:var(--green);color:#fff;}
-.navDivider{height:1px;background:var(--border);margin:6px 4px;}
-
-/* ---- Quick links bar in the header ---- */
-.quickLinks{
+/* ---- New top nav: Home + category dropdowns (replaces quickLinks + mainnav) ---- */
+.topNav{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
@@ -675,8 +613,9 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
   gap:.15rem .1rem;
   margin:0 auto .75rem;
   max-width:900px;
+  padding-bottom:2px;
 }
-.quickLinks a{
+.topNavLink{
   color:rgba(255,255,255,.92);
   text-decoration:none;
   font-size:13px;
@@ -686,70 +625,11 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
   white-space:nowrap;
   transition:background .15s ease, color .15s ease;
 }
-.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
-.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
+.topNavLink:hover{ background:rgba(255,255,255,.2); color:#fff; }
 @media (max-width:560px){
-  .quickLinks{ gap:.1rem 0; }
-  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
-  .quickLinks a + a{ border-left:none; }
+  .topNav{ gap:.1rem 0; }
+  .topNavLink{ font-size:12px; padding:.28rem .45rem; }
 }
-
-/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
-.qlDrop{ position:relative; display:inline-block; }
-.qlDropBtn{
-  font:inherit;
-  color:rgba(255,255,255,.92);
-  background:transparent;
-  border:none;
-  border-left:1px solid rgba(255,255,255,.28);
-  border-radius:0 6px 6px 0;
-  font-size:13px;
-  font-weight:600;
-  padding:.3rem .62rem;
-  cursor:pointer;
-  white-space:nowrap;
-  display:inline-flex;
-  align-items:center;
-  gap:.3rem;
-  transition:background .15s ease, color .15s ease;
-}
-.qlDropBtn:hover, .qlDropBtn.open{ background:rgba(255,255,255,.2); color:#fff; }
-.qlDropBtn .chev{ font-size:10px; transition:transform .18s ease; }
-.qlDropBtn.open .chev{ transform:rotate(180deg); }
-.qlDropMenu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 6px);
-  left:50%;
-  transform:translateX(-50%);
-  min-width:220px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:0 10px 28px rgba(0,0,0,.22);
-  padding:.35rem;
-  z-index:60;
-  text-align:left;
-}
-.qlDropMenu.open{ display:block; }
-.qlDropMenu a{
-  display:block;
-  color:var(--green);
-  font-size:13px;
-  font-weight:600;
-  padding:.5rem .7rem;
-  border-radius:6px;
-  white-space:nowrap;
-  text-decoration:none;
-  border:none;
-}
-.qlDropMenu a:hover{ background:var(--green-pale); color:var(--green); }
-@media (max-width:560px){
-  .qlDropBtn{ border-left:none; font-size:12px; padding:.28rem .45rem; }
-  .qlDropMenu{ min-width:200px; }
-}
-
-
 </style>
 </head>
 <body>
@@ -874,20 +754,23 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     <div class="siteSearchResults" id="siteSearchResults"></div>
   </div>
 
-  <nav class="quickLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="invoice-withholding.html">Invoice Withholding</a>
-    <a href="income-tax.html">Income Tax</a>
-    <a href="withholding-tax.html">Withholding Tax</a>
-    <a href="sales-tax-gst.html">Sales Tax (GST)</a>
-    <a href="fbr-property-valuation.html">Property Valuation</a>
-    <a href="zakat-calculator.html">Zakat Calculator</a>
-    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
-    <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
-    <span class="qlDrop" id="qlDrop">
-      <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
-      <span class="qlDropMenu" id="qlDropMenu">
+  <nav class="topNav" id="topNav">
+    <a href="index.html" class="topNavLink">Home</a>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Federal Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
+        <a href="income-tax.html">Income Tax</a>
+        <a href="withholding-tax.html">Withholding Tax (WHT)</a>
+        <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+        <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+        <a href="property-expense-calculator.html">Property Expense Calculator</a>
+        <a href="fbr-property-valuation.html">FBR Property Valuation Directory</a>
+      </span>
+    </span>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Provincial Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
         <a href="sales-tax-punjab.html">Punjab (PRA)</a>
         <a href="sales-tax-sindh.html">Sindh (SRB)</a>
         <a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
@@ -895,52 +778,25 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
         <a href="sales-tax-ict.html">Islamabad (ICT)</a>
       </span>
     </span>
-    <a href="blog.html">Blog</a>
-    <a href="feedback.html">Feedback</a>
-    <a href="contact.html">Contact</a>
-    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
-  </nav>
-  <nav class="mainnav" id="mainNav">
-    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
-      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
-    </button>
-    <div class="navMenu" id="navMenu">
-      <div class="navGroup">
-<a href="index.html">Home</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Federal Taxes</div>
-<a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
-<a href="income-tax.html" class="active">Income Tax</a>
-<a href="withholding-tax.html">Withholding Tax (WHT)</a>
-<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
-<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
-<a href="property-expense-calculator.html">Property Expense Calculator</a>
-<a href="fbr-property-valuation.html">FBR Property Valuation Directory</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
-<a href="sales-tax-punjab.html">Punjab (PRA)</a>
-<a href="sales-tax-sindh.html">Sindh (SRB)</a>
-<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
-<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
-<a href="sales-tax-ict.html">Islamabad (ICT)</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Other Tools</div>
-<a href="zakat-calculator.html">Zakat Calculator</a>
-<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
-<a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
-      </div>
-      <div class="navGroup">
-<a href="about.html">About Us</a>
-<a href="blog.html">Blog</a>
-<a href="feedback.html">Give Feedback</a>
-<a href="contact.html">Contact Us</a>
-<a href="privacy.html">Privacy Policy</a>
-<a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
-      </div>
-    </div>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Other Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="zakat-calculator.html">Zakat Calculator</a>
+        <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+        <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
+      </span>
+    </span>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">More <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="about.html">About Us</a>
+        <a href="blog.html">Blog</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
+      </span>
+    </span>
   </nav>
 </header>
 <main>
@@ -1166,44 +1022,43 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-/* ---- Nav dropdown toggle (shared) ---- */
-document.getElementById('navToggle').addEventListener('click', ()=>{
-  document.getElementById('navToggle').classList.toggle('open');
-  document.getElementById('navMenu').classList.toggle('open');
-});
-document.addEventListener('click', (e)=>{
-  const nav = document.getElementById('mainNav');
-  if(nav && !nav.contains(e.target)){
-    document.getElementById('navToggle').classList.remove('open');
-    document.getElementById('navMenu').classList.remove('open');
-  }
-});
-
-/* ---- Provincial Tax dropdown in the header quick-links bar ---- */
+/* ---- Header calculator-category dropdowns (Federal / Provincial / Other / More) ---- */
 (function(){
-  const drop = document.getElementById('qlDrop');
-  const btn  = document.getElementById('qlDropBtn');
-  const menu = document.getElementById('qlDropMenu');
-  if(!drop || !btn || !menu) return;
-  btn.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    const open = menu.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  var drops = document.querySelectorAll('.qlDrop');
+  function closeAll(except){
+    drops.forEach(function(d){
+      if(d === except) return;
+      var m = d.querySelector('.qlDropMenu');
+      var b = d.querySelector('.qlDropBtn');
+      if(m) m.classList.remove('open');
+      if(b){ b.classList.remove('open'); b.setAttribute('aria-expanded','false'); }
+    });
+  }
+  drops.forEach(function(drop){
+    var btn = drop.querySelector('.qlDropBtn');
+    var menu = drop.querySelector('.qlDropMenu');
+    if(!btn || !menu) return;
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = !menu.classList.contains('open');
+      closeAll(drop);
+      menu.classList.toggle('open', open);
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   });
-  document.addEventListener('click', (e)=>{
-    if(!drop.contains(e.target)){
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
+  document.addEventListener('click', function(e){
+    drops.forEach(function(d){
+      if(!d.contains(e.target)){
+        var m = d.querySelector('.qlDropMenu');
+        var b = d.querySelector('.qlDropBtn');
+        if(m) m.classList.remove('open');
+        if(b){ b.classList.remove('open'); b.setAttribute('aria-expanded','false'); }
+      }
+    });
   });
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeAll(null); }
   });
 })();
 
@@ -2393,18 +2248,18 @@ function computeCombined(){
   let rows = `<tr><th>Item</th><th>Basis</th><th>Amount</th></tr>`;
   if(it){
     rows += `<tr><td>Income Tax Withholding <em>(${it.categoryLabel})</em></td><td>${it.rate !== null ? it.rate + '% of gross amount' : 'Flat fee / slab'}</td><td>${fmt(itAmount)}</td></tr>`;
-    rows += `<tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>Deposited with FBR</td><td><span class="amt-neg">&minus; ${fmt(itTax)}</span></td></tr>`;
-    rows += `<tr><td>Net after income tax withholding</td><td>Gross amount &minus; tax withheld</td><td><span class="amt-subtotal">${fmt(itNet)}</span></td></tr>`;
+    rows += `<tr><td>&nbsp;&nbsp;&#8627; withheld by agent</td><td>Deposited with FBR</td><td>&minus; ${fmt(itTax)}</td></tr>`;
+    rows += `<tr><td>Net after income tax withholding</td><td>Gross amount &minus; tax withheld</td><td>${fmt(itNet)}</td></tr>`;
   }
   if(prov){
-    rows += `<tr><td>Provincial sales tax &mdash; ${prov.authority.split('–')[0].trim()} <em>(${prov.category})</em></td><td>${prov.rate}% of value excl. tax</td><td><span class="amt-pos">+ ${fmt(prov.tax)}</span></td></tr>`;
-    rows += `<tr><td>Services total, incl. tax</td><td>Value + sales tax</td><td><span class="amt-subtotal">${fmt(provTotal)}</span></td></tr>`;
+    rows += `<tr><td>Provincial sales tax &mdash; ${prov.authority.split('–')[0].trim()} <em>(${prov.category})</em></td><td>${prov.rate}% of value excl. tax</td><td>${fmt(prov.tax)}</td></tr>`;
+    rows += `<tr><td>Services total, incl. tax</td><td>Value + sales tax</td><td>${fmt(provTotal)}</td></tr>`;
     if(prov.withholdOn){
-      rows += `<tr><td>&nbsp;&nbsp;&#8627; sales tax withheld by agent <em>(${prov.whtCategoryLabel || ''})</em></td><td>${prov.whtItem ? prov.whtItem.note : ''}</td><td><span class="amt-neg">&minus; ${fmt(provWithheld)}</span></td></tr>`;
-      rows += `<tr><td>Net for services, after sales tax withholding</td><td>Services total &minus; tax withheld</td><td><span class="amt-subtotal">${fmt(provNet)}</span></td></tr>`;
+      rows += `<tr><td>&nbsp;&nbsp;&#8627; sales tax withheld by agent <em>(${prov.whtCategoryLabel || ''})</em></td><td>${prov.whtItem ? prov.whtItem.note : ''}</td><td>&minus; ${fmt(provWithheld)}</td></tr>`;
+      rows += `<tr><td>Net for services, after sales tax withholding</td><td>Services total &minus; tax withheld</td><td>${fmt(provNet)}</td></tr>`;
     }
   }
-  rows += `<tr><td colspan="2">Net Payment to Supplier</td><td><span class="amt-net">${fmt(net)}</span></td></tr>`;
+  rows += `<tr><td colspan="2">Net Payment to Supplier</td><td>${fmt(net)}</td></tr>`;
   document.getElementById('invBreakdown').innerHTML = rows;
 
   window.invLastResult = { it: it, prov: prov };

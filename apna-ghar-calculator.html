@@ -301,6 +301,29 @@ table.breakdown tr:last-child td{
   padding:12px 14px;
   margin-top:6px;
 }
+.shareButtons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:4px;
+}
+.shareBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  border-radius:24px;
+  font-weight:700;
+  font-size:13.5px;
+  text-decoration:none;
+  color:#fff;
+  transition:opacity .15s ease;
+}
+.shareBtn:hover{ opacity:.87; }
+.shareBtn svg{ width:17px; height:17px; fill:#fff; flex-shrink:0; }
+.shareBtn-whatsapp{ background:#25D366; }
+.shareBtn-facebook{ background:#1877F2; }
+.shareBtn-x{ background:#000; }
 .footerCalcs{
   background:var(--green-pale);
   border-top:1px solid var(--border);
@@ -540,6 +563,17 @@ header.site-header .headerTop h1{
   padding:8px 12px;
   margin-top:8px;
 }
+.tranche-row{
+  margin-bottom:12px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.tranche-row:last-child{
+  margin-bottom:0;
+  padding-bottom:0;
+  border-bottom:none;
+}
+.tranche-row .field label{ font-size:12.5px; }
 .ag-schedule-toggle{
   background:none;
   border:1px solid var(--green-light);
@@ -554,6 +588,9 @@ header.site-header .headerTop h1{
 .ag-schedule-toggle:hover{ background:var(--green-pale); }
 #agScheduleWrap{ display:none; overflow-x:auto; }
 #agScheduleWrap.open{ display:block; }
+#agMonthlyWrap{ display:none; overflow-x:auto; max-height:520px; overflow-y:auto; }
+#agMonthlyWrap.open{ display:block; }
+table.breakdown thead th{ position:sticky; top:0; background:var(--card); z-index:1; }
 table.features-table{ width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px; }
 table.features-table th, table.features-table td{ text-align:left; padding:9px 8px; border-bottom:1px solid var(--border); vertical-align:top; }
 table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-size:12px; text-transform:uppercase; }
@@ -649,7 +686,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
 </head>
 <body>
 <aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">📍</p><p class="railText">Estimate stamp duty on the property.</p><a href="property-expense-calculator.html" class="railLink">Property Expense Calculator&nbsp;&rarr;</a></div></aside>
-<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">📊</p><p class="railText">Check your Income Tax.</p><a href="income-tax.html" class="railLink">Income Tax Calculator&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🌍</p><p class="railText">Not sure if you're a tax resident?</p><a href="income-tax.html#residentStatusChecker" class="railLink">Resident Status Checker&nbsp;&rarr;</a></div></aside>
 <header class="site-header">
   <div class="headerTop">
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
@@ -779,6 +816,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     <a href="fbr-property-valuation.html">Property Valuation</a>
     <a href="zakat-calculator.html">Zakat Calculator</a>
     <a href="apna-ghar-calculator.html" class="active">Apna Ghar Calculator</a>
+    <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
     <span class="qlDrop" id="qlDrop">
       <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
       <span class="qlDropMenu" id="qlDropMenu">
@@ -824,6 +862,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
         <div class="navGroupTitle">Other Tools</div>
 <a href="zakat-calculator.html">Zakat Calculator</a>
 <a href="apna-ghar-calculator.html" class="active">Apna Ghar Calculator</a>
+<a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -839,13 +878,14 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
 <main>
 
 <div class="wrap">
-  <div class="no-print" style="text-align:right;margin:0 0 10px;">
+  <div class="no-print" style="text-align:right;margin:0 0 10px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
+    <button type="button" class="btn-print" id="agResetBtn">Reset to Defaults</button>
     <button type="button" class="btn-print" onclick="window.print()">Print This Page</button>
   </div>
 
   <div class="pageIntro">
     <h2>Apna Ghar Program Calculator</h2>
-    <p>Estimate your monthly rental (installment) under the Government of Pakistan's <strong>Wazir-e-Azam Apna Ghar Program &mdash; Ghar Ho Tu Apna</strong>, a subsidized Islamic housing finance scheme offered by Meezan Bank and other participating Islamic banks under the Diminishing Musharakah mode of financing.</p>
+    <p>Estimate your monthly rental (installment) under the Government of Pakistan's <strong>Wazir-e-Azam Apna Ghar Program &mdash; Ghar Ho Tu Apna</strong>, a subsidized Islamic housing finance scheme offered by Meezan Bank and other participating Islamic banks under the Diminishing Musharakah mode of financing. This calculation follows Islamic banking (Shariah-compliant) principles &mdash; it is based on rental and profit-sharing under a joint-ownership partnership, not interest (riba), which this scheme does not involve or promote.</p>
   </div>
 
   <div class="card">
@@ -856,7 +896,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
       <label for="propValue">Property Price</label>
       <div class="amount-wrap">
         <span class="currency-prefix">Rs</span>
-        <input type="number" id="propValue" class="amount-input" placeholder="e.g. 11,000,000" min="0" step="1000" value="11000000">
+        <input type="number" id="propValue" class="amount-input" placeholder="e.g. 11,000,000" min="0" step="1000">
       </div>
     </div>
 
@@ -893,29 +933,75 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     <div class="row">
       <div class="field">
         <label for="tenure">Financing Tenure</label>
-        <select id="tenure"></select>
+        <select id="tenure">
+          <option value="" selected disabled>Select tenure&hellip;</option>
+          <option value="3">3 years</option>
+          <option value="4">4 years</option>
+          <option value="5">5 years</option>
+          <option value="6">6 years</option>
+          <option value="7">7 years</option>
+          <option value="8">8 years</option>
+          <option value="9">9 years</option>
+          <option value="10">10 years</option>
+          <option value="11">11 years</option>
+          <option value="12">12 years</option>
+          <option value="13">13 years</option>
+          <option value="14">14 years</option>
+          <option value="15">15 years</option>
+          <option value="16">16 years</option>
+          <option value="17">17 years</option>
+          <option value="18">18 years</option>
+          <option value="19">19 years</option>
+          <option value="20">20 years</option>
+        </select>
       </div>
       <div class="field">
         <label for="kibor">Expected 1-Yr KIBOR for Years 11+ (%)</label>
-        <input type="number" id="kibor" min="0" max="40" step="0.01" value="12">
+        <input type="number" id="kibor" min="0" max="40" step="0.01" value="12.16">
         <p class="hint">1-yr KIBOR (offer) was ~12.16% on 20 Aug 2026 (SBP). Only used if tenure exceeds 10 years &mdash; adjust to test other scenarios.</p>
       </div>
     </div>
     <div class="ag-note">Rental rate is fixed at <strong>5% per annum</strong> for the first 10 years (government-subsidized), then floats at <strong>KIBOR + 3%</strong> for the remaining tenure.</div>
   </div>
 
+  <div class="card" id="tranchesCard" style="display:none;">
+    <h2>3. Disbursement Tranches</h2>
+    <p class="sub">Builder categories are usually disbursed in stages as construction progresses, and rental is only charged on the amount disbursed so far. Enter your bank's tranche schedule below, or use the default estimate.</p>
+
+    <div class="field">
+      <label for="trancheCount">Number of Tranches</label>
+      <select id="trancheCount">
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <div id="trancheRows"></div>
+
+    <div class="field">
+      <label for="graceMonths">Grace Period After Full Disbursement (months)</label>
+      <input type="number" id="graceMonths" min="0" max="240" step="1" value="0">
+      <p class="hint">Extra rental-only months after the last tranche (e.g. while construction finishes) before your regular installment (EMI) begins. Leave at 0 if the EMI starts right after full disbursement.</p>
+    </div>
+
+    <p class="hint" id="trancheValidation"></p>
+  </div>
+
   <div class="card" id="resultCard">
     <h2>Your Estimated Payment Plan</h2>
-    <p class="sub" id="resultSub">&nbsp;</p>
+    <p class="sub" id="resultSub">Calculating based on the figures above &mdash; adjust any field to update your plan.</p>
 
     <div class="result">
-      <div class="label">Monthly Rental &mdash; Years 1&ndash;10 (Fixed 5%)</div>
+      <div class="label" id="emiFixedLabel">Monthly Rental &mdash; Years 1&ndash;10 (Fixed 5%)</div>
       <div class="big" id="emiFixed">Rs 0</div>
       <div class="grid3" id="statGrid">
         <div class="stat"><div class="v" id="statA">&mdash;</div><div class="k" id="statAKey">Financing Amount</div></div>
         <div class="stat"><div class="v" id="statB">&mdash;</div><div class="k" id="statBKey">Your Down Payment</div></div>
         <div class="stat"><div class="v" id="statC">&mdash;</div><div class="k" id="statCKey">Monthly Rental Years 11+</div></div>
       </div>
+      <div class="ag-note" id="takafulNote"></div>
     </div>
 
     <table class="breakdown" id="breakdownTable">
@@ -929,15 +1015,44 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     <div id="agScheduleWrap">
       <table class="breakdown" id="agScheduleTable">
         <thead>
-          <tr><th>Year</th><th>Rental (Profit) Paid</th><th>Musharakah Units Purchased</th><th>Bank's Remaining Share</th></tr>
+          <tr><th>Year</th><th>Rental (Profit) Paid</th><th>Takaful Paid (Est.)</th><th>Musharakah Units Purchased</th><th>Bank's Remaining Share</th></tr>
         </thead>
         <tbody id="agScheduleBody"></tbody>
+      </table>
+    </div>
+
+    <button type="button" class="ag-schedule-toggle no-print" id="agMonthlyToggle">Show Full Monthly Payment Schedule</button>
+    <div id="agMonthlyWrap">
+      <table class="breakdown" id="agMonthlyTable">
+        <thead>
+          <tr><th>Month</th><th>Rental (Profit)</th><th>Takaful (Est.)</th><th>Unit Price (Principal)</th><th>Total Monthly Payment</th><th>Outstanding Balance</th></tr>
+        </thead>
+        <tbody id="agMonthlyScheduleBody"></tbody>
       </table>
     </div>
   </div>
 
   <div class="disclaimer">
-    This is an independent, unofficial estimate for planning purposes only and is not affiliated with Meezan Bank, the State Bank of Pakistan, or the Government of Pakistan. It assumes a standard reducing-balance (diminishing Musharakah) amortization recalculated once at the 10-year mark when the rental rate switches from the fixed 5% to a variable KIBOR+3% rate &mdash; actual bank schedules may compute rounding, processing charges, takaful/insurance, and rate resets slightly differently. KIBOR is variable and published daily by the State Bank of Pakistan; the figure you enter for years 11+ is only an assumption. Financing is also subject to eligibility (minimum gross income of PKR 40,000/month, age, employment tenure, and property/city restrictions) which this tool does not verify. Confirm the exact figures and your eligibility with your bank before proceeding.
+    This is an independent, unofficial estimate for planning purposes only and is not affiliated with the State Bank of Pakistan or the Government of Pakistan. It assumes a standard reducing-balance (diminishing Musharakah) amortization recalculated once at the 10-year mark when the rental rate switches from the fixed 5% to a variable KIBOR+3% rate, plus an estimated Takaful (Shariah-compliant insurance) contribution of about 0.298% of the outstanding balance per year (charged monthly) &mdash; actual bank schedules may compute rounding, processing charges, exact Takaful rates, and rate resets slightly differently. KIBOR is variable and published daily by the State Bank of Pakistan; the figure you enter for years 11+ is only an assumption. Financing is also subject to eligibility (minimum gross income of PKR 40,000/month, age, employment tenure, and property/city restrictions) which this tool does not verify. Confirm the exact figures and your eligibility with your bank before proceeding.
+  </div>
+
+  <div class="card no-print" id="shareCard">
+    <h2>Share This Calculator</h2>
+    <p class="sub">Know someone planning to buy a home through the Apna Ghar Program? Send them this calculator.</p>
+    <div class="shareButtons">
+      <a class="shareBtn shareBtn-whatsapp" href="https://wa.me/?text=Check%20your%20Apna%20Ghar%20Program%20%28Islamic%20home%20finance%29%20installment%20with%20this%20free%20calculator%3A%20https%3A%2F%2Fpaktaxcalculator.net%2Fapna-ghar-calculator.html" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.986.579 3.833 1.578 5.392L2 22l4.735-1.554A9.943 9.943 0 0012.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.13a8.1 8.1 0 01-4.363-1.267l-.313-.185-3.242 1.064 1.078-3.155-.204-.324A8.11 8.11 0 013.87 12c0-4.484 3.647-8.13 8.131-8.13 4.484 0 8.13 3.646 8.13 8.13 0 4.484-3.646 8.13-8.13 8.13z"/></svg>
+        WhatsApp
+      </a>
+      <a class="shareBtn shareBtn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpaktaxcalculator.net%2Fapna-ghar-calculator.html" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.49-1.46H16.5V4.36C16.24 4.32 15.32 4.25 14.25 4.25c-2.23 0-3.75 1.36-3.75 3.86V10.5H8v3h2.5V21h3z"/></svg>
+        Facebook
+      </a>
+      <a class="shareBtn shareBtn-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpaktaxcalculator.net%2Fapna-ghar-calculator.html&text=Check%20your%20Apna%20Ghar%20Program%20%28Islamic%20home%20finance%29%20installment%20with%20this%20free%20calculator%3A" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+    </div>
   </div>
 
   <div class="card no-print">
@@ -974,7 +1089,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
 
     <details class="faq-item">
       <summary>What is the Apna Ghar Program?</summary>
-      <p>The Wazir-e-Azam Apna Ghar Program &mdash; Ghar Ho Tu Apna is a Government of Pakistan profit-subsidy and risk-sharing housing finance scheme. Participating Islamic banks, including Meezan Bank, offer financing under it through the Diminishing Musharakah mode, with the government subsidizing part of the rental rate to keep it at 5% for the first 10 years.</p>
+      <p>The Wazir-e-Azam Apna Ghar Program &mdash; Ghar Ho Tu Apna is a Government of Pakistan profit-subsidy and risk-sharing housing finance scheme. Participating Islamic banks offer financing under it through the Diminishing Musharakah mode, with the government subsidizing part of the rental rate to keep it at 5% for the first 10 years.</p>
     </details>
 
     <details class="faq-item">
@@ -998,8 +1113,8 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     </details>
 
     <details class="faq-item">
-      <summary>Is this calculator affiliated with Meezan Bank or the Government of Pakistan?</summary>
-      <p>No. This is an independent estimation tool built from publicly available program terms. It is not affiliated with, endorsed by, or connected to Meezan Bank, the State Bank of Pakistan, or the Government of Pakistan. Always confirm your exact payment plan and eligibility directly with a participating bank.</p>
+      <summary>Is this calculator affiliated with any bank or the Government of Pakistan?</summary>
+      <p>No. This is an independent estimation tool built from publicly available program terms. It is not affiliated with, endorsed by, or connected to any participating bank, the State Bank of Pakistan, or the Government of Pakistan. Always confirm your exact payment plan and eligibility directly with a participating bank.</p>
     </details>
 
     <script type="application/ld+json">
@@ -1045,6 +1160,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
         <h4>Other Tools</h4>
         <a href="zakat-calculator.html">Zakat Calculator</a>
         <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+        <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
         <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
       <div class="footerCalcsCol">
@@ -1142,6 +1258,55 @@ document.addEventListener('click', (e)=>{
   ['pointerdown','focusin','keydown'].forEach(function(evt){
     root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
   });
+  // Also load automatically shortly after the page settles, so visitors who
+  // never click into a field still see a real computed result rather than
+  // the static "Rs 0" / placeholder values.
+  if(document.readyState === 'complete'){
+    setTimeout(ptcLoadCalculator, 900);
+  } else {
+    window.addEventListener('load', function(){ setTimeout(ptcLoadCalculator, 900); });
+  }
+
+  // Reset to Defaults button
+  var resetBtn = document.getElementById('agResetBtn');
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      var defaults = { propValue: '', downPct: '10', kibor: '12.16', segment: 'Salaried', category: 'buyer', tenure: '', trancheCount: '2', graceMonths: '0' };
+      Object.keys(defaults).forEach(function(id){
+        var el = document.getElementById(id);
+        if(el){ el.value = defaults[id]; }
+      });
+      var wrap = document.getElementById('agScheduleWrap');
+      var toggle = document.getElementById('agScheduleToggle');
+      if(wrap && wrap.classList.contains('open')){
+        wrap.classList.remove('open');
+        if(toggle){ toggle.textContent = 'Show Year-by-Year Schedule'; }
+      }
+      var monthlyWrap = document.getElementById('agMonthlyWrap');
+      var monthlyToggleBtn = document.getElementById('agMonthlyToggle');
+      if(monthlyWrap && monthlyWrap.classList.contains('open')){
+        monthlyWrap.classList.remove('open');
+        if(monthlyToggleBtn){ monthlyToggleBtn.textContent = 'Show Full Monthly Payment Schedule'; }
+      }
+      var categoryEl = document.getElementById('category');
+      if(categoryEl){
+        categoryEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      var trancheCountEl = document.getElementById('trancheCount');
+      if(trancheCountEl){
+        trancheCountEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      var propEl = document.getElementById('propValue');
+      if(propEl){
+        // Triggers the lazy loader if it hasn't fired yet...
+        propEl.dispatchEvent(new Event('focusin', { bubbles: true }));
+        // ...and triggers a recalculation if the calculator is already loaded.
+        propEl.dispatchEvent(new Event('input', { bubbles: true }));
+        propEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      resetBtn.blur();
+    });
+  }
 })();
 </script>
 <script>
@@ -1150,6 +1315,7 @@ document.addEventListener('click', (e)=>{
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
     {title:"Income Tax Calculator", url:"income-tax.html", desc:"Salaried, business & company tax slabs, 2025-26 / 2026-27"},
@@ -1344,6 +1510,7 @@ document.addEventListener('click', (e)=>{
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Blog", url:"blog.html", desc:"Notes on Pakistani tax rules and enforcement"}
   ];

@@ -3,29 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator</title>
-<meta name="description" content="Calculate Sindh sales tax on services under the Sindh Revenue Board (SRB), sourced from the official SRB Working Tariff — over 80 categories across hotels, professionals, financial services, construction and more.">
-<link rel="canonical" href="https://paktaxcalculator.net/sales-tax-sindh.html">
+<title>Income Tax Calculator (Redesign Preview) | Pakistan Tax Calculator</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Calculate Pakistan income tax for salaried individuals, business/AOPs and companies for tax year 2025-26 and 2026-27, plus check your Section 82 residency status.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
+<link rel="canonical" href="https://paktaxcalculator.net/income-tax.html">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
 <link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0a4f2c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator">
-<meta property="og:description" content="Calculate Sindh sales tax on services under the Sindh Revenue Board (SRB), sourced from the official SRB Working Tariff — over 80 categories across hotels, professionals, financial services, construction and more.">
-<meta property="og:image" content="https://paktaxcalculator.net/sales-tax-sindh-og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/png">
-<meta property="og:url" content="https://paktaxcalculator.net/sales-tax-sindh.html">
+<meta property="og:url" content="https://paktaxcalculator.net/income-tax.html">
+<meta property="og:title" content="Income Tax Calculator Pakistan 2025-26 & 2026-27 | Pakistan Tax Calculator">
+<meta property="og:description" content="Calculate Pakistan income tax for salaried individuals, business/AOPs and companies for tax year 2025-26 and 2026-27, plus check your Section 82 residency status.">
+<meta property="og:image" content="https://paktaxcalculator.net/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator">
-<meta name="twitter:description" content="Calculate Sindh sales tax on services under the Sindh Revenue Board (SRB), sourced from the official SRB Working Tariff — over 80 categories across hotels, professionals, financial services, construction and more.">
-<meta name="twitter:image" content="https://paktaxcalculator.net/sales-tax-sindh-og.png">
+<meta name="twitter:title" content="Income Tax Calculator Pakistan 2025-26 & 2026-27 | Pakistan Tax Calculator">
+<meta name="twitter:description" content="Calculate Pakistan income tax for salaried individuals, business/AOPs and companies for tax year 2025-26 and 2026-27, plus check your Section 82 residency status.">
+<meta name="twitter:image" content="https://paktaxcalculator.net/og-image.png">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWC3JE3YR"></script>
@@ -91,63 +94,6 @@ header.site-header p.tagline{
   border-radius:20px;
   margin-bottom:14px;
 }
-.mainnav{
-  max-width:920px;
-  margin:0 auto;
-  position:relative;
-  padding-bottom:16px;
-}
-.navToggle{
-  width:100%;
-  background:rgba(255,255,255,0.14);
-  border:1px solid rgba(255,255,255,0.35);
-  color:#fff;
-  font-weight:700;
-  font-size:14px;
-  padding:12px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.navToggle .chev{transition:transform .2s ease;font-size:11px;}
-.navToggle.open{border-radius:10px 10px 0 0;}
-.navToggle.open .chev{transform:rotate(180deg);}
-.navMenu{
-  display:none;
-  background:#fff;
-  border-radius:0 0 12px 12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.18);
-  padding:10px;
-  text-align:left;
-  position:absolute;
-  left:0;right:0;
-  z-index:50;
-}
-.navMenu.open{display:block;}
-.navGroup{margin-bottom:6px;}
-.navGroup:last-child{margin-bottom:0;}
-.navGroupTitle{
-  font-size:11px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  color:var(--muted);
-  padding:9px 10px 3px;
-}
-.navMenu a{
-  display:block;
-  padding:10px 10px;
-  border-radius:8px;
-  color:var(--text);
-  text-decoration:none;
-  font-size:14.5px;
-  font-weight:600;
-}
-.navMenu a:hover{background:var(--green-pale);}
-.navMenu a.active{background:var(--green);color:#fff;}
-.navDivider{height:1px;background:var(--border);margin:6px 4px;}
 .wrap{
   max-width:920px;
   margin:0 auto;
@@ -161,6 +107,7 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
+#freqField, #residentStatusChecker{ scroll-margin-top:210px; }
 .card h2{
   margin:0 0 4px;
   font-size:18px;
@@ -235,101 +182,8 @@ input.amount-input:focus{
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-.srbw-toggle-label{
-  font-size:15px;
-  font-weight:600;
-  color:var(--text);
-  margin:0 0 10px;
-}
-.srbw-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.srbw-toggle button{
-  flex:1 1 auto;
-  min-width:150px;
-  padding:9px 12px;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--muted);
-  cursor:pointer;
-  transition:all .15s ease;
-}
-.srbw-toggle button:hover{border-color:var(--green-light);}
-.srbw-toggle button.active{
-  background:var(--green);
-  border-color:var(--green);
-  color:#fff;
-}
-.srbw-rate-result{
-  background:var(--green-pale);
-  border-radius:10px;
-  padding:16px;
-  margin-top:6px;
-}
-.srbw-rate-result .big{font-size:22px;font-weight:800;color:var(--green);}
-.srbw-rate-result .note{font-size:13px;color:var(--muted);margin-top:6px;}
 @media (max-width:520px){
   .row{grid-template-columns:1fr;}
-}
-
-.ptop-greeting{
-  margin:0 0 14px;
-  padding:16px 20px;
-  background:linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
-  border-radius:14px;
-  box-shadow:0 8px 22px rgba(1,65,28,0.25);
-  position:relative;
-  overflow:hidden;
-}
-.ptop-greeting::before{
-  content:"";
-  position:absolute;
-  top:-50px;
-  right:-30px;
-  width:140px;
-  height:140px;
-  background:rgba(255,255,255,0.07);
-  border-radius:50%;
-  pointer-events:none;
-}
-.ptop-toggle-sub{
-  font-size:14.5px;
-  color:#ffffff;
-  font-weight:600;
-  margin:0;
-  line-height:1.6;
-  position:relative;
-  z-index:1;
-}
-.ptop-toggle-sub strong{
-  color:#ffe28a;
-}
-.ptop-toggle-label{
-  font-size:16px;
-  font-weight:700;
-  color:var(--text);
-  margin:0 0 10px;
-}
-.ptop-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
-.ptop-toggle button{
-  flex:1 1 auto;
-  min-width:150px;
-  padding:9px 12px;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--muted);
-  cursor:pointer;
-  transition:all .15s ease;
-}
-.ptop-toggle button:hover{border-color:var(--green-light);}
-.ptop-toggle button.active{
-  background:var(--green);
-  border-color:var(--green);
-  color:#fff;
 }
 .seg{
   display:flex;
@@ -775,35 +629,7 @@ table.gst td.note{
 .tag-req{ background:var(--green); color:#fff; }
 .tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 
-/* ---- Quick links bar in the header ---- */
-.quickLinks{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:.15rem .1rem;
-  margin:0 auto .75rem;
-  max-width:900px;
-}
-.quickLinks a{
-  color:rgba(255,255,255,.92);
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  padding:.3rem .62rem;
-  border-radius:6px;
-  white-space:nowrap;
-  transition:background .15s ease, color .15s ease;
-}
-.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
-.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
-@media (max-width:560px){
-  .quickLinks{ gap:.1rem 0; }
-  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
-  .quickLinks a + a{ border-left:none; }
-}
-
-/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
+ inside the header quick-links bar ---- */
 .qlDrop{ position:relative; display:inline-block; }
 .qlDropBtn{
   font:inherit;
@@ -888,11 +714,6 @@ textarea:focus{ outline:none; border-color:var(--green); box-shadow:0 0 0 3px va
 .btn-submit:hover{ background:#0b5c33; }
 .btn-submit:active{ transform:translateY(1px); }
 
-.wht-save-row{margin-top:14px;}
-.wht-save-status{font-size:13px;margin-top:8px;display:none;}
-.wht-save-status.ok{color:var(--green);font-weight:600;}
-.wht-save-status.err{color:#b3261e;font-weight:600;}
-
 /* ---- Header: logo pinned left, title centred ----
    The spacer matches the logo's width so the title stays optically
    centred in the row rather than shifted right by the logo. */
@@ -925,35 +746,6 @@ header.site-header .brand{
 .headerAuthBtn:hover{ background:#eef7f1; }
 .headerAuthBtn.loggedIn{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.7); }
 .headerAuthBtn.loggedIn:hover{ background:rgba(255,255,255,.15); }
-.headerAccountMenu{ position:relative; }
-.headerAvatarBtn{
-  width:34px; height:34px; border-radius:50%;
-  background:#fff; color:var(--green);
-  font-weight:700; font-size:14px;
-  border:none; cursor:pointer; padding:0;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.18);
-}
-.headerAvatarBtn:hover{ background:#eef7f1; }
-.headerAccountDropdown{
-  display:none;
-  position:absolute; top:calc(100% + 10px); right:0;
-  background:#fff; color:#222;
-  border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.25);
-  min-width:210px; z-index:60; text-align:left; overflow:hidden;
-}
-.headerAccountDropdown.open{ display:block; }
-.headerAccountInfo{ padding:12px 14px; border-bottom:1px solid #eee; }
-.headerAccountName{ font-size:13px; font-weight:700; color:#222; margin-bottom:2px; }
-.headerAccountEmail{ font-size:12px; color:#666; word-break:break-all; }
-.headerAccountItem{
-  display:block; width:100%; box-sizing:border-box;
-  padding:10px 14px; font-size:13px;
-  color:#222; text-decoration:none; background:none; border:none;
-  text-align:left; cursor:pointer; font-family:inherit;
-}
-.headerAccountItem:hover{ background:#f3f7f4; }
-.headerLogoutBtn{ color:#b3261e; border-top:1px solid #eee; }
 .brandLogo{
   width:162px;
   height:162px;
@@ -974,13 +766,11 @@ header.site-header .headerTop h1{
   .brandLogo{ width:117px; height:117px; border-radius:16px; padding:6px; }
   .brandSpacer{ width:117px; }
   .headerAuthBtn{ padding:6px 10px; font-size:11px; border-radius:16px; }
-  .headerAvatarBtn{ width:28px; height:28px; font-size:12px; }
 }
 @media (max-width:400px){
   .brandLogo{ width:99px; height:99px; }
   .brandSpacer{ width:auto; }
   .headerAuthBtn{ padding:5px 8px; font-size:10px; }
-  .headerAvatarBtn{ width:26px; height:26px; font-size:11px; }
 }
 
 /* ---- Blog article typography ---- */
@@ -1114,6 +904,31 @@ header.site-header .headerTop h1{
 .example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
 .example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 
+/* ---- English / Urdu language toggle ---- */
+.lang-ur{
+  display:none;
+  font-family:'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  direction:rtl;
+  text-align:right;
+  line-height:2.1;
+}
+html[data-lang="ur"] .lang-en{ display:none; }
+html[data-lang="ur"] .lang-ur{ display:block; }
+html[data-lang="ur"] span.lang-ur{ display:inline; }
+.ptcLangSwitch{
+  position:sticky; top:8px; z-index:80;
+  display:flex; justify-content:flex-end; gap:6px;
+  margin:0 0 12px;
+}
+.ptcLangBtn{
+  font:inherit; font-size:0.82rem; font-weight:700;
+  padding:6px 14px; border-radius:999px;
+  border:1px solid var(--border); background:#fff; color:var(--green);
+  cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.ptcLangBtn.active{ background:var(--green); color:#fff; border-color:var(--green); }
+html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; font-size:1.1rem; }
+
 /* ---- Print ---- */
 .btn-print{
   background:#01411C;color:#fff;border:none;border-radius:8px;
@@ -1221,11 +1036,129 @@ header.site-header .headerTop h1{
   line-height:1.3;
 }
 .railLink:hover{ background:var(--green-pale); }
+
+/* ---- Sticky "Calculation Summary" sidebar redesign (preview) ---- */
+.itc-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  align-items:start;
+}
+@media (min-width:900px){
+  .itc-grid{ grid-template-columns:1.7fr 1fr; }
+}
+.itc-main{ min-width:0; display:flex; flex-direction:column; gap:16px; }
+.itc-sidebar{ min-width:0; }
+@media (min-width:900px){
+  .itc-sidebar{ position:sticky; top:20px; }
+}
+.card-summary{
+  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
+  border:none;
+  color:#fff;
+  box-shadow:var(--shadow);
+}
+.card-summary h2{ color:#fff; }
+.card-summary .cs-eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:#e8c766;
+  margin:2px 0 8px;
+}
+.card-summary .cs-amount{
+  font-size:clamp(30px,7vw,40px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.card-summary .cs-sub{
+  font-size:13px;
+  color:rgba(255,255,255,0.68);
+  margin-bottom:18px;
+}
+.card-summary .hero-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
+}
+.card-summary .hero-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.card-summary .hero-stat .k{
+  font-size:11px;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:4px;
+}
+.card-summary .hero-stat .v{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+.card-summary .cs-slab-panel{
+  border-top:1px solid rgba(255,255,255,0.18);
+  padding-top:16px;
+}
+.card-summary .cs-slab-panel h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.65);
+  margin:0 0 16px;
+}
+.card-summary .slab-row .slab-rate{ color:#fff; }
+.card-summary .slab-row .slab-bar-track{ background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.18); }
+.card-summary .slab-row .slab-bar-fill{ background:#fff; }
+.card-summary .slab-row .slab-bar-fill.extra{ background:#e8c766; }
+.card-summary .slab-row .slab-amount{ color:#fff; }
+.card-summary .slab-row .slab-amount.muted{ color:rgba(255,255,255,0.55); }
+.card-summary .slab-row-range{ color:rgba(255,255,255,0.6); }
+.card-summary .cs-slab-panel #slabBreakdown:empty::before{
+  content:"Enter an amount to see the breakdown.";
+  display:block;
+  font-size:13px;
+  color:rgba(255,255,255,0.6);
+}
+
+/* ---- New top nav: Home + category dropdowns (replaces quickLinks + mainnav) ---- */
+.topNav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:.15rem .1rem;
+  margin:0 auto .75rem;
+  max-width:900px;
+  padding-bottom:2px;
+}
+.topNavLink{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  padding:.3rem .62rem;
+  border-radius:6px;
+  white-space:nowrap;
+  transition:background .15s ease, color .15s ease;
+}
+.topNavLink:hover{ background:rgba(255,255,255,.2); color:#fff; }
+@media (max-width:560px){
+  .topNav{ gap:.1rem 0; }
+  .topNavLink{ font-size:12px; padding:.28rem .45rem; }
+}
 </style>
 </head>
 <body>
-<aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🏛️</p><p class="railText">Need Punjab's PRA rates?</p><a href="sales-tax-punjab.html" class="railLink">Punjab Sales Tax (PRA)&nbsp;&rarr;</a></div></aside>
-<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🌍</p><p class="railText">Not sure if you're a tax resident?</p><a href="income-tax.html#residentStatusChecker" class="railLink">Resident Status Checker&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">💰</p><p class="railText">Also getting paid via contracts or dividends?</p><a href="withholding-tax.html" class="railLink">Withholding Tax&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🌙</p><p class="railText">Don't forget your Zakat this year.</p><a href="zakat-calculator.html" class="railLink">Zakat Calculator&nbsp;&rarr;</a></div></aside>
 <header class="site-header">
   <div class="headerTop">
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
@@ -1345,20 +1278,23 @@ header.site-header .headerTop h1{
     <div class="siteSearchResults" id="siteSearchResults"></div>
   </div>
 
-  <nav class="quickLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="invoice-withholding.html">Invoice Withholding</a>
-    <a href="income-tax.html">Income Tax</a>
-    <a href="withholding-tax.html">Withholding Tax</a>
-    <a href="sales-tax-gst.html">Sales Tax (GST)</a>
-    <a href="fbr-property-valuation.html">Property Valuation</a>
-    <a href="zakat-calculator.html">Zakat Calculator</a>
-    <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
-    <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
-    <span class="qlDrop" id="qlDrop">
-      <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
-      <span class="qlDropMenu" id="qlDropMenu">
+  <nav class="topNav" id="topNav">
+    <a href="index.html" class="topNavLink">Home</a>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Federal Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
+        <a href="income-tax.html">Income Tax</a>
+        <a href="withholding-tax.html">Withholding Tax (WHT)</a>
+        <a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
+        <a href="sales-tax-withholding.html">Sales Tax Withholding</a>
+        <a href="property-expense-calculator.html">Property Expense Calculator</a>
+        <a href="fbr-property-valuation.html">FBR Property Valuation Directory</a>
+      </span>
+    </span>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Provincial Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
         <a href="sales-tax-punjab.html">Punjab (PRA)</a>
         <a href="sales-tax-sindh.html">Sindh (SRB)</a>
         <a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
@@ -1366,52 +1302,25 @@ header.site-header .headerTop h1{
         <a href="sales-tax-ict.html">Islamabad (ICT)</a>
       </span>
     </span>
-    <a href="blog.html">Blog</a>
-    <a href="feedback.html">Feedback</a>
-    <a href="contact.html">Contact</a>
-    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
-  </nav>
-  <nav class="mainnav" id="mainNav">
-    <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
-      <span>&#9776; All Calculators</span><span class="chev">&#9662;</span>
-    </button>
-    <div class="navMenu" id="navMenu">
-      <div class="navGroup">
-<a href="index.html">Home</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Federal Taxes</div>
-<a href="invoice-withholding.html">Invoice Withholding (All-in-One)</a>
-<a href="income-tax.html">Income Tax</a>
-<a href="withholding-tax.html">Withholding Tax (WHT)</a>
-<a href="sales-tax-gst.html">Sales Tax on Goods (GST)</a>
-<a href="sales-tax-withholding.html">Sales Tax Withholding</a>
-<a href="property-expense-calculator.html">Property Expense Calculator</a>
-<a href="fbr-property-valuation.html">FBR Property Valuation Directory</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Provincial Sales Tax on Services</div>
-<a href="sales-tax-punjab.html">Punjab (PRA)</a>
-<a href="sales-tax-sindh.html" class="active">Sindh (SRB)</a>
-<a href="sales-tax-kpk.html">Khyber Pakhtunkhwa (KPRA)</a>
-<a href="sales-tax-balochistan.html">Balochistan (BRA)</a>
-<a href="sales-tax-ict.html">Islamabad (ICT)</a>
-      </div>
-      <div class="navGroup">
-        <div class="navGroupTitle">Other Tools</div>
-<a href="zakat-calculator.html">Zakat Calculator</a>
-<a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
-<a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
-      </div>
-      <div class="navGroup">
-<a href="about.html">About Us</a>
-<a href="blog.html">Blog</a>
-<a href="feedback.html">Give Feedback</a>
-<a href="contact.html">Contact Us</a>
-<a href="privacy.html">Privacy Policy</a>
-<a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
-      </div>
-    </div>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">Other Calculators <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="zakat-calculator.html">Zakat Calculator</a>
+        <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
+        <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
+      </span>
+    </span>
+    <span class="qlDrop">
+      <button type="button" class="qlDropBtn" aria-expanded="false">More <span class="chev">&#9662;</span></button>
+      <span class="qlDropMenu">
+        <a href="about.html">About Us</a>
+        <a href="blog.html">Blog</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
+      </span>
+    </span>
   </nav>
 </header>
 <main>
@@ -1430,157 +1339,248 @@ header.site-header .headerTop h1{
     </div>
   </div>
 
-  <div class="ptop-greeting">
-    <p class="ptop-toggle-sub">&#128073; Looking for the <strong>SRB</strong> rate on an invoice, or need to work out withholding tax? Pick a tab below, enter your amount, and we’ll do the rest.</p>
-  </div>
-  <p class="ptop-toggle-label">What would you like to check?</p>
-  <div class="ptop-toggle" role="group">
-    <button type="button" id="ptopBtnRate" class="active" onclick="ptopShowMode('rate')">Check Sales Tax Rate</button>
-    <button type="button" id="ptopBtnWithholding" onclick="ptopShowMode('withholding')">Check Withholding Tax</button>
+  <div class="ptcLangSwitch" role="group" aria-label="Language / زبان">
+    <button type="button" class="ptcLangBtn active" id="ptcLangEn" onclick="ptcSetLang('en')">English</button>
+    <button type="button" class="ptcLangBtn" id="ptcLangUr" onclick="ptcSetLang('ur')">اردو</button>
   </div>
 
-  <div id="ptopRateSection">
-
-  <div class="card">
-    <h2>Sindh Sales Tax on Services</h2>
-    <p class="sub">Provincial sales tax on services in Sindh, administered by the Sindh Revenue Board (SRB) under the Sindh Sales Tax on Services Act 2011. Select a service category and enter the value excluding tax.</p>
+  <div class="itc-grid">
+    <div class="itc-main">
+      <div class="card">
+    <h2><span class="lang-en">Income Tax Calculator</span><span class="lang-ur">انکم ٹیکس کیلکولیٹر</span></h2>
+    <p class="sub lang-en">Calculate your annual income tax liability under the Income Tax Ordinance, 2001.</p>
+    <p class="sub lang-ur">انکم ٹیکس آرڈیننس 2001 کے تحت اپنی سالانہ انکم ٹیکس واجب الادا رقم معلوم کریں۔</p>
 
     <div class="field">
-      <label>Service Category</label>
-      <select id="saleCategory"></select>
+      <label><span class="lang-en">Tax Year</span><span class="lang-ur">ٹیکس سال</span></label>
+      <div class="seg year-toggle" id="yearSeg">
+        <button class="active" data-year="2025-26">2025-26</button>
+        <button data-year="2026-27">2026-27</button>
+      </div>
+      <div class="hint lang-en">2025-26: 1 Jul 2025 &ndash; 30 Jun 2026 &nbsp;|&nbsp; 2026-27: 1 Jul 2026 &ndash; 30 Jun 2027</div>
+      <div class="hint lang-ur">27-2026 :2026 جولائی 1 – 2027 جون 30 | 26-2025 :2025 جولائی 1 – 2026 جون 30</div>
     </div>
 
     <div class="field">
-      <label>Value Excluding Tax (PKR)</label>
+      <label><span class="lang-en">Taxpayer Type</span><span class="lang-ur">ٹیکس دہندہ کی قسم</span></label>
+      <div class="seg" id="typeSeg">
+        <button class="active" data-type="salaried">Salaried</button>
+        <button data-type="business">Business / AOP</button>
+        <button data-type="company">Company</button>
+      </div>
+    </div>
+
+    <div class="field" id="companyTypeField" style="display:none;">
+      <label><span class="lang-en">Company Category</span><span class="lang-ur">کمپنی کی قسم</span></label>
+      <select id="companyType">
+        <option value="other">Other Company (29%)</option>
+        <option value="small">Small Company (20%)</option>
+        <option value="banking">Banking Company (39%)</option>
+      </select>
+    </div>
+
+    <div class="field" id="freqField">
+      <label><span class="lang-en">Income Frequency</span><span class="lang-ur">آمدنی کا دورانیہ</span></label>
+      <div class="seg" id="freqSeg">
+        <button class="active" data-freq="annual">Annual</button>
+        <button data-freq="monthly">Monthly Salary</button>
+      </div>
+      <div class="hint lang-en">Choose "Monthly Salary" to type what you actually earn per month &mdash; it's automatically annualised (&times;12) to work out your slab, tax bracket, and take-home pay.</div>
+      <div class="hint lang-ur">اپنی ماہانہ آمدنی درج کرنے کے لیے "Monthly Salary" منتخب کریں — یہ خودکار طور پر سالانہ (×12) بنا کر آپ کا سلیب، ٹیکس بریکٹ، اور ہاتھ میں آنے والی رقم معلوم کرتا ہے۔</div>
+    </div>
+
+    <div class="field">
+      <label id="incomeLabel"><span class="lang-en">Annual Taxable Income (PKR)</span><span class="lang-ur">سالانہ قابلِ ٹیکس آمدنی (روپے)</span></label>
       <div class="amount-wrap">
         <span class="currency-prefix">₨</span>
-        <input type="text" inputmode="numeric" autocomplete="off" id="saleAmount" class="amount-input" placeholder="e.g. 100,000">
+        <input type="text" inputmode="numeric" autocomplete="off" id="incomeInput" class="amount-input" placeholder="e.g. 3,000,000">
       </div>
+      <div class="hint lang-en" id="salariedHint">For salaried individuals, at least 75% of taxable income must be from salary to use these rates.</div>
+      <div class="hint lang-ur">تنخواہ دار افراد کے لیے، ان ریٹس کے اطلاق کے لیے قابلِ ٹیکس آمدنی کا کم از کم 75% تنخواہ سے ہونا ضروری ہے۔</div>
+    </div>
+
+    <div class="field" id="turnoverField" style="display:none;">
+      <label><span class="lang-en">Annual Turnover (PKR) &mdash; optional, for minimum tax check</span><span class="lang-ur">سالانہ ٹرن اوور (روپے) — اختیاری، کم از کم ٹیکس چیک کے لیے</span></label>
+      <input type="text" inputmode="numeric" autocomplete="off" id="turnoverInput" placeholder="e.g. 50,000,000">
+      <div class="hint lang-en">Minimum tax is 1.25% of turnover (lower rates 0.25%-0.75% apply to certain sectors). Shown only if higher than computed tax.</div>
+      <div class="hint lang-ur">کم از کم ٹیکس ٹرن اوور کا 1.25% ہے (بعض شعبوں پر کم ریٹ 0.25% تا 0.75% لاگو ہوتا ہے)۔ صرف اسی صورت ظاہر ہوگا جب یہ حساب کردہ ٹیکس سے زیادہ ہو۔</div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="result">
-      <div class="label">Sales Tax Amount</div>
-      <div class="big" id="saleTaxAmount">Rs. 0</div>
-      <div class="grid3" id="saleStats"></div>
+      <div class="card videoCard">
+    <h3><span class="lang-en">Watch: How to Use This Calculator</span><span class="lang-ur">ویڈیو: یہ کیلکولیٹر کیسے استعمال کریں</span></h3>
+    <p class="sub lang-en">Step-by-step walkthrough of the Income Tax Calculator above.</p>
+    <p class="sub lang-ur">اوپر دیے گئے انکم ٹیکس کیلکولیٹر کے استعمال کا مرحلہ وار طریقہ۔</p>
+    <div class="videoFrame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/j3QTBR_K5NE"
+        title="How to Use the Pakistan Tax Calculator (Step-by-Step)"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
     </div>
   </div>
-
-  <div class="disclaimer">
-    Rates are sourced from the SRB "Working Tariff" (amended up to 10 July 2024), which lists both the statutory rate under the Second Schedule to the Sindh Sales Tax on Services Act, 2011 and the effective/reduced rate currently in force via SRB notifications. Where a category shows both a "standard" and a "reduced/election" rate, the reduced rate typically requires the registered person to file a specific election form and/or use SRB-linked POS/e-invoicing &mdash; if you haven't made that election, the standard rate applies. Many categories also carry additional conditions (turnover thresholds, input tax credit restrictions, franchise/branch exclusions) not captured in this simplified calculator. Confirm your exact tariff heading and eligibility with the Sindh Revenue Board (SRB) or a tax advisor. For withholding on the GST portion of an invoice, see <a href="sales-tax-withholding.html">Sales Tax Withholding</a>.
-  </div>
-
-  </div>
-
-  <div id="ptopWithholdingSection" style="display:none;">
-
-  <div class="card">
-    <h2>SRB Withholding Tax</h2>
-    <p class="sub">If you're the person paying an SRB-taxable services invoice (a notified withholding agent), use this to work out how much sales tax you must withhold and deposit directly with SRB instead of paying the supplier in full.</p>
-
-    <div class="field">
-      <label>Withholding Category</label>
-      <select id="srbwCategory"></select>
     </div>
 
-    <div id="srbwAmountMode">
-
-      <div class="field">
-        <label>Sales Tax Category <span style="font-weight:400;color:var(--muted);font-size:12px;">(auto-fills the rate below — or leave blank and enter it yourself)</span></label>
-        <select id="srbwTaxCategory"></select>
-      </div>
-
-      <div class="row">
-        <div class="field">
-          <label id="srbwValueLabel">Value of Supply, Excl. Tax (PKR)</label>
-          <div class="amount-wrap">
-            <span class="currency-prefix">₨</span>
-            <input type="text" inputmode="numeric" autocomplete="off" id="srbwValue" class="amount-input" placeholder="e.g. 200,000">
+    <div class="itc-sidebar">
+      <div class="card card-summary">
+        <h2><span class="lang-en">Calculation Summary</span><span class="lang-ur">حساب کا خلاصہ</span></h2>
+        <div class="cs-eyebrow lang-en">Estimated Tax Payable &middot; Annual</div>
+        <div class="cs-eyebrow lang-ur">تخمینی واجب الادا ٹیکس · سالانہ</div>
+        <div class="cs-amount" id="incomeTotalTax">Rs. 0</div>
+        <div class="cs-sub" id="heroSub">Enter an amount above to calculate</div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="k" id="heroStat1Label">Monthly tax</div>
+            <div class="v" id="heroStat1Value">Rs. 0</div>
+          </div>
+          <div class="hero-stat">
+            <div class="k" id="heroStat2Label">Take-home / month</div>
+            <div class="v" id="heroStat2Value">Rs. 0</div>
           </div>
         </div>
-        <div class="field">
-          <label>Sales Tax Rate on Invoice (%)</label>
-          <input type="number" id="srbwRate" placeholder="e.g. 15" min="0" step="0.5">
+        <div class="cs-slab-panel">
+          <h3 id="slabPanelTitle">Slab-by-Slab Breakdown</h3>
+          <div id="slabBreakdown"></div>
         </div>
       </div>
-      <div class="hint" id="srbwBasisHint"></div>
-
-      <div class="result">
-        <div class="label">Amount Withheld &amp; Deposited by Agent</div>
-        <div class="big" id="srbwWithheld">Rs. 0</div>
-        <div class="grid3" id="srbwStats"></div>
-      </div>
-      <table class="breakdown" id="srbwBreakdown"></table>
-      <div class="field">
-        <label>Supplier / Service Provider Name <span style="font-weight:400;color:var(--muted);font-size:12px;">(optional)</span></label>
-        <input type="text" id="srbwSupplierName" placeholder="e.g. ABC Traders (Pvt) Ltd">
-      </div>
-      <div class="row" style="margin-top:10px;">
-        <div class="field">
-          <label>Invoice Number <span style="font-weight:400;color:var(--muted);font-size:12px;">(optional)</span></label>
-          <input type="text" id="srbwInvoiceNumber" placeholder="e.g. INV-1042">
-        </div>
-        <div class="field">
-          <label>Invoice Date</label>
-          <input type="date" id="srbwInvoiceDate">
-        </div>
-      </div>
-      <div class="field">
-        <label>Mode of Payment</label>
-        <select id="srbwPaymentMode">
-          <option value="">Not specified</option>
-          <option value="cash">Cash</option>
-          <option value="cheque">Cheque</option>
-          <option value="bank">Bank Transfer</option>
-        </select>
-      </div>
-      <div class="wht-save-row"><button type="button" class="btn-submit" id="srbwSaveBtn">Save to My Account</button></div>
-      <p class="wht-save-status" id="srbwSaveStatus"></p>
     </div>
-
-    <p class="sub" style="margin:14px 0 0;">This covers Sindh (SRB) specifically. For withholding under FBR or another province, see the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
   </div>
 
+  <div class="disclaimer lang-en">
+    Rates are based on the First Schedule to the Income Tax Ordinance, 2001 as amended by the Finance Act 2025 and the Finance Act 2026-27. Business/AOP slabs for 2026-27 are shown unchanged pending final confirmation of any Finance Act 2026 revision &mdash; please verify with FBR before filing. Super tax (Section 4C) and minimum tax on turnover (Section 113) may apply in addition for high earners and companies.
+  </div>
+  <div class="disclaimer lang-ur">
+    یہ ریٹس انکم ٹیکس آرڈیننس 2001 کے فرسٹ شیڈول پر مبنی ہیں، جیسا کہ فنانس ایکٹ 2025 اور فنانس ایکٹ 27-2026 کے ذریعے ترمیم شدہ ہیں۔ کاروبار/AOP کے 27-2026 کے سلیب فی الحال 2026 کے فنانس ایکٹ میں حتمی تبدیلی کی تصدیق تک غیر تبدیل شدہ دکھائے گئے ہیں — براہِ کرم فائل کرنے سے پہلے FBR سے تصدیق کر لیں۔ سیکشن 4C کے تحت سپر ٹیکس اور سیکشن 113 کے تحت ٹرن اوور پر کم از کم ٹیکس زیادہ آمدنی والوں اور کمپنیوں پر اضافی طور پر لاگو ہو سکتا ہے۔
+  </div>
+
+  <!-- ---- Resident Status Checker ---- -->
+  <div class="card" id="residentStatusChecker">
+    <h2><span class="lang-en">Resident Status Checker</span><span class="lang-ur">رہائشی حیثیت چیکر</span></h2>
+    <p class="sub lang-en">Determine your tax residency under Section 82 of the Income Tax Ordinance, 2001 for the Tax Year selected above. Residency affects whether your <em>worldwide</em> income (resident) or only your <em>Pakistan-source</em> income (non-resident) is taxable &mdash; the slab rates themselves are the same either way.</p>
+    <p class="sub lang-ur">اوپر منتخب کردہ ٹیکس سال کے لیے انکم ٹیکس آرڈیننس 2001 کے سیکشن 82 کے تحت اپنی ٹیکس رہائشی حیثیت معلوم کریں۔ رہائشی حیثیت اس بات کا تعین کرتی ہے کہ آیا آپ کی <em>عالمی</em> آمدنی (رہائشی) یا صرف <em>پاکستان سے حاصل شدہ</em> آمدنی (غیر رہائشی) قابلِ ٹیکس ہے — سلیب کے ریٹس دونوں صورتوں میں یکساں رہتے ہیں۔</p>
+
+    <div class="field">
+      <label><span class="lang-en">How do you want to enter your stay in Pakistan?</span><span class="lang-ur">آپ اپنے پاکستان میں قیام کی تفصیل کیسے درج کرنا چاہتے ہیں؟</span></label>
+      <div class="seg" id="residencyModeSeg">
+        <button class="active" data-mode="days">Enter Total Days</button>
+        <button data-mode="trips">Enter Entry/Exit Dates</button>
+      </div>
+    </div>
+
+    <div id="residencyDaysMode">
+      <div class="field">
+        <label><span class="lang-en">Days Present in Pakistan &ndash; This Tax Year</span><span class="lang-ur">پاکستان میں قیام کے دن — اس ٹیکس سال</span></label>
+        <input type="number" id="residencyDaysInput" min="0" max="366" placeholder="e.g. 200">
+      </div>
+    </div>
+
+    <div id="residencyTripsMode" style="display:none;">
+      <div class="field">
+        <label><span class="lang-en">Trips to/from Pakistan</span><span class="lang-ur">پاکستان آنے/جانے کے سفر</span></label>
+        <div id="tripsList"></div>
+        <button type="button" class="addTripBtn" id="addTripBtn">+ Add Trip</button>
+        <div class="hint lang-en">Add every period you were physically present in Pakistan (entry date &rarr; exit date). Days are counted inclusively and automatically clipped to the selected Tax Year.</div>
+        <div class="hint lang-ur">وہ ہر دورانیہ شامل کریں جس میں آپ جسمانی طور پر پاکستان میں موجود تھے (تاریخِ آمد → تاریخِ روانگی)۔ دن جامع طور پر شمار کیے جاتے ہیں اور خودکار طور پر منتخب ٹیکس سال تک محدود کر دیے جاتے ہیں۔</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="lang-en">Days Present in Pakistan &ndash; Preceding 4 Tax Years (cumulative)</span><span class="lang-ur">پاکستان میں قیام کے دن — گزشتہ 4 ٹیکس سال (مجموعی)</span></label>
+      <input type="number" id="residencyPrev4Input" min="0" placeholder="e.g. 400">
+      <div class="hint lang-en">Only needed for the "120-day" test below. Leave blank if not applicable.</div>
+      <div class="hint lang-ur">صرف نیچے دیے گئے "120 دن" کے ٹیسٹ کے لیے درکار ہے۔ اگر لاگو نہ ہو تو خالی چھوڑ دیں۔</div>
+    </div>
+
+    <div class="field">
+      <label><span class="lang-en">Other Criteria</span><span class="lang-ur">دیگر معیارات</span></label>
+      <label class="checkbox-row" for="residencyGovt">
+        <input type="checkbox" id="residencyGovt">
+        <span class="lang-en">Federal / Provincial Government employee posted abroad this tax year</span><span class="lang-ur">وفاقی/صوبائی حکومت کا ملازم جو اس ٹیکس سال بیرونِ ملک تعینات رہا</span>
+      </label>
+      <label class="checkbox-row" for="residencyCitizen">
+        <input type="checkbox" id="residencyCitizen">
+        <span class="lang-en">Pakistani citizen and not present abroad 183+ days, and not a tax resident of any other country, this tax year</span><span class="lang-ur">پاکستانی شہری، اس ٹیکس سال 183 یا زائد دن بیرونِ ملک موجود نہیں رہا، اور کسی دوسرے ملک کا ٹیکس رہائشی بھی نہیں</span>
+      </label>
+    </div>
+
+    <div class="result">
+      <div class="label">Residency Status</div>
+      <div style="margin-top:6px;"><span class="status-pill pending" id="residencyStatus">Enter your details above</span></div>
+      <table class="breakdown" id="residencyBreakdown" style="margin-top:14px;"></table>
+    </div>
+
+    <div class="disclaimer lang-en">
+      Based on Section 82 of the Income Tax Ordinance, 2001: (a) present 183+ days in the tax year; (b) present 120+ days in the tax year <em>and</em> 365+ days cumulatively in the preceding 4 tax years; (c) a Federal/Provincial Government employee posted abroad; or (d) a Pakistani citizen not resident/183+ days present in any other country in the tax year (added by the Finance Act 2022, aimed at Pakistanis not tax-resident anywhere). Meeting <em>any one</em> test is sufficient for residency. This is a simplified guide &mdash; edge cases (part-year moves, tax treaties, tie-breaker rules) should be confirmed with a tax advisor or FBR.
+    </div>
+    <div class="disclaimer lang-ur">
+      یہ انکم ٹیکس آرڈیننس 2001 کے سیکشن 82 پر مبنی ہے: (a) ٹیکس سال میں 183 یا زائد دن موجودگی؛ (b) ٹیکس سال میں 120 یا زائد دن <em>اور</em> گزشتہ 4 ٹیکس سالوں میں مجموعی طور پر 365 یا زائد دن موجودگی؛ (c) وفاقی/صوبائی حکومت کا ملازم جو بیرونِ ملک تعینات ہو؛ یا (d) پاکستانی شہری جو کسی دوسرے ملک میں رہائشی نہیں اور نہ ہی 183 یا زائد دن وہاں موجود رہا (یہ شق فنانس ایکٹ 2022 کے ذریعے شامل کی گئی، ان پاکستانیوں کے لیے جو کہیں بھی ٹیکس رہائشی نہیں)۔ <em>کوئی بھی ایک</em> شرط پوری ہونا رہائش کے لیے کافی ہے۔ یہ ایک آسان رہنما ہے — خاص صورتحال (سال کے دوران نقل مکانی، ٹیکس معاہدے، ٹائی بریکر قواعد) کی تصدیق ٹیکس ایڈوائزر یا FBR سے کر لیں۔
+    </div>
   </div>
 
   <div class="card no-print">
-    <h2>Worked Example: Standard vs SRB-Election Rate for IT Services</h2>
-    <p class="sub">A Karachi software consultancy invoices a client Rs. 500,000 for system development services.</p>
+    <h2><span class="lang-en">Worked Example: Tax on a Rs. 250,000/Month Salary</span><span class="lang-ur">حل شدہ مثال: 250,000 روپے ماہانہ تنخواہ پر ٹیکس</span></h2>
+    <p class="sub lang-en">Here's exactly how the calculator gets its number for a salaried employee earning Rs. 250,000 a month (Rs. 3,000,000 a year) in tax year 2025-26.</p>
+    <p class="sub lang-ur">یہ بالکل وہی طریقہ ہے جس سے کیلکولیٹر ٹیکس سال 26-2025 میں 250,000 روپے ماہانہ (3,000,000 روپے سالانہ) کمانے والے تنخواہ دار ملازم کے لیے رقم نکالتا ہے۔</p>
     <div class="example-box">
-      <div class="ex-line"><span>Service value (excl. tax)</span><span>Rs. 500,000</span></div>
-      <div class="ex-line"><span>Standard SRB rate (15%)</span><span>Rs. 75,000</span></div>
-      <div class="ex-line"><span>SRB-election reduced rate (3%)</span><span>Rs. 15,000</span></div>
-      <p class="ex-note">The 3% election rate is only available if the consultancy has filed the specific SRB election and given up its right to claim input tax credit &mdash; without that election on file, SRB treats the invoice at the 15% standard rate, a Rs. 60,000 difference on this invoice alone.</p>
+      <div class="ex-line lang-en"><span>Monthly salary</span><span>Rs. 250,000</span></div>
+      <div class="ex-line lang-ur"><span>ماہانہ تنخواہ</span><span>250,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Annualised income (&times;12)</span><span>Rs. 3,000,000</span></div>
+      <div class="ex-line lang-ur"><span>سالانہ آمدنی (×12)</span><span>3,000,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Applicable slab</span><span>Rs. 2,200,000 &ndash; 3,200,000 @ 23%</span></div>
+      <div class="ex-line lang-ur"><span>لاگو سلیب</span><span>23% @ 2,200,000 – 3,200,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Base tax on slab entry</span><span>Rs. 116,000</span></div>
+      <div class="ex-line lang-ur"><span>سلیب کے آغاز پر بنیادی ٹیکس</span><span>116,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Plus 23% of (3,000,000 &minus; 2,200,000)</span><span>Rs. 184,000</span></div>
+      <div class="ex-line lang-ur"><span>مزید (3,000,000 − 2,200,000) کا 23%</span><span>184,000 روپے</span></div>
+      <div class="ex-line total lang-en"><span>Annual tax payable</span><span>Rs. 300,000</span></div>
+      <div class="ex-line total lang-ur"><span>سالانہ واجب الادا ٹیکس</span><span>300,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Monthly tax (withheld by employer)</span><span>Rs. 25,000</span></div>
+      <div class="ex-line lang-ur"><span>ماہانہ ٹیکس (آجر کی جانب سے کٹوتی)</span><span>25,000 روپے</span></div>
+      <div class="ex-line lang-en"><span>Monthly take-home pay</span><span>Rs. 225,000</span></div>
+      <div class="ex-line lang-ur"><span>ماہانہ ہاتھ میں آنے والی تنخواہ</span><span>225,000 روپے</span></div>
+      <p class="ex-note lang-en">Effective tax rate: 10% of gross income. For the same Rs. 3,000,000 income in <strong>tax year 2026-27</strong>, the same slab is taxed at 20% instead of 23%, bringing annual tax down to Rs. 276,000 &mdash; Rs. 24,000 less per year.</p>
+      <p class="ex-note lang-ur">مؤثر ٹیکس ریٹ: مجموعی آمدنی کا 10%۔ اسی 3,000,000 روپے کی آمدنی پر <strong>ٹیکس سال 27-2026</strong> میں، وہی سلیب 23% کی بجائے 20% پر ٹیکس ہوگا، جس سے سالانہ ٹیکس کم ہو کر 276,000 روپے رہ جائے گا — یعنی سالانہ 24,000 روپے کم۔</p>
     </div>
   </div>
 
   <div class="card no-print">
-    <h2>Frequently Asked Questions</h2>
+    <h2><span class="lang-en">Frequently Asked Questions</span><span class="lang-ur">اکثر پوچھے گئے سوالات</span></h2>
 
     <details class="faq-item">
-      <summary>Why do some Sindh categories show two different rates?</summary>
-      <p>The Sindh Revenue Board (SRB) often offers a lower "reduced/election" rate as an alternative to the statutory "standard" rate for the same service category. The reduced rate is conditional &mdash; typically requiring the business to file a specific election with SRB and/or use SRB-linked point-of-sale or e-invoicing, and usually forgoing the ability to claim input tax credit.</p>
+      <summary><span class="lang-en">How is income tax calculated on salary in Pakistan?</span><span class="lang-ur">پاکستان میں تنخواہ پر انکم ٹیکس کیسے حساب کیا جاتا ہے؟</span></summary>
+      <p class="lang-en">Pakistan uses a slab (progressive) system for salaried individuals under the First Schedule to the Income Tax Ordinance, 2001. Your annual taxable salary is matched to a slab, and tax is calculated as a fixed base amount for that slab plus a percentage of the amount above the slab's starting point &mdash; not a flat percentage of your whole income. This calculator does that slab lookup and math for you automatically.</p>
+      <p class="lang-ur">پاکستان انکم ٹیکس آرڈیننس 2001 کے فرسٹ شیڈول کے تحت تنخواہ دار افراد کے لیے سلیب (بتدریج) نظام استعمال کرتا ہے۔ آپ کی سالانہ قابلِ ٹیکس تنخواہ کو ایک سلیب سے ملایا جاتا ہے، اور ٹیکس اس سلیب کے لیے مقررہ بنیادی رقم جمع سلیب کے آغاز سے زائد رقم کے فیصد کے طور پر حساب کیا جاتا ہے — نہ کہ آپ کی پوری آمدنی کا یکساں فیصد۔ یہ کیلکولیٹر یہ سلیب تلاش اور حساب خودکار طور پر کرتا ہے۔</p>
     </details>
 
     <details class="faq-item">
-      <summary>Which rate applies if I haven't filed an SRB election?</summary>
-      <p>The standard (higher) rate applies by default. The reduced rate is only available once the specific election has been filed with SRB &mdash; simply operating in a category that has a reduced rate option doesn't automatically qualify you for it.</p>
+      <summary><span class="lang-en">What income is completely tax-free?</span><span class="lang-ur">کون سی آمدنی مکمل طور پر ٹیکس سے مستثنیٰ ہے؟</span></summary>
+      <p class="lang-en">For both tax years 2025-26 and 2026-27, salaried and business/AOP income up to Rs. 600,000 a year (Rs. 50,000/month) falls in the 0% slab and is not taxed at all.</p>
+      <p class="lang-ur">ٹیکس سال 26-2025 اور 27-2026 دونوں کے لیے، تنخواہ دار اور کاروبار/AOP کی 600,000 روپے سالانہ (50,000 روپے ماہانہ) تک کی آمدنی 0% سلیب میں آتی ہے اور بالکل ٹیکس نہیں لگتا۔</p>
     </details>
 
     <details class="faq-item">
-      <summary>Is Sindh sales tax on services the same as Sindh's sales tax on goods?</summary>
-      <p>No &mdash; goods sold anywhere in Pakistan, including Sindh, are taxed under the federal Sales Tax Act, 1990 (GST). Sindh's own sales tax law, administered by SRB, applies specifically to services rendered or received in Sindh.</p>
+      <summary><span class="lang-en">What's the difference between the "Salaried" and "Business/AOP" slabs?</span><span class="lang-ur">"تنخواہ دار" اور "کاروبار/AOP" سلیب میں کیا فرق ہے؟</span></summary>
+      <p class="lang-en">Business individuals and Associations of Persons (AOPs) are taxed on a separate, generally steeper slab table than salaried employees &mdash; for example, the first taxable slab above Rs. 600,000 is 15% for business income versus just 1% for salaried income. This reflects that salaried income already has tax withheld at source each month, while business income is typically assessed and paid at return-filing time.</p>
+      <p class="lang-ur">کاروباری افراد اور ایسوسی ایشن آف پرسنز (AOPs) پر تنخواہ دار ملازمین سے علیحدہ، عموماً زیادہ سخت سلیب ٹیبل لاگو ہوتی ہے — مثال کے طور پر 600,000 روپے سے زائد پہلا قابلِ ٹیکس سلیب کاروباری آمدنی پر 15% ہے جبکہ تنخواہ دار آمدنی پر صرف 1%۔ اس کی وجہ یہ ہے کہ تنخواہ دار آمدنی سے ٹیکس ہر ماہ ذریعہ پر ہی کٹ جاتا ہے، جبکہ کاروباری آمدنی کا تعین اور ادائیگی عموماً ریٹرن فائل کرتے وقت ہوتی ہے۔</p>
     </details>
 
     <details class="faq-item">
-      <summary>How often does SRB update its Working Tariff?</summary>
-      <p>SRB revises rates and adds new categories periodically through notifications between annual Sindh Finance Acts, in addition to the main annual revision. The rates here reflect the Working Tariff as amended up to 10 July 2024; always check SRB's current notifications before relying on a rate for filing.</p>
+      <summary><span class="lang-en">Do I need to pay super tax on top of the regular slab tax?</span><span class="lang-ur">کیا مجھے عام سلیب ٹیکس کے علاوہ سپر ٹیکس بھی ادا کرنا ہوگا؟</span></summary>
+      <p class="lang-en">Super tax under Section 4C applies only once your annual taxable income exceeds Rs. 150 million, starting at 1% and rising in slabs to 10% for income above Rs. 500 million. It applies in addition to the normal slab tax and to companies as well as individuals. Most salaried and small business taxpayers will never reach this threshold.</p>
+      <p class="lang-ur">سیکشن 4C کے تحت سپر ٹیکس صرف اس وقت لاگو ہوتا ہے جب آپ کی سالانہ قابلِ ٹیکس آمدنی 150 ملین روپے سے تجاوز کرے، جو 1% سے شروع ہو کر 500 ملین روپے سے زائد آمدنی پر 10% تک بڑھتا ہے۔ یہ عام سلیب ٹیکس کے علاوہ لاگو ہوتا ہے اور کمپنیوں کے ساتھ ساتھ افراد پر بھی۔ زیادہ تر تنخواہ دار اور چھوٹے کاروباری ٹیکس دہندگان اس حد تک کبھی نہیں پہنچتے۔</p>
     </details>
 
     <details class="faq-item">
-      <summary>Does withholding apply to Sindh sales tax invoices?</summary>
-      <p>Yes, following the same general pattern as other jurisdictions &mdash; a withholding agent typically deducts 1/5th of the sales tax shown from a registered, active service provider and the full amount from an unregistered one. See the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator for the exact figure.</p>
+      <summary><span class="lang-en">Why does the calculator ask for "Monthly Salary" and then multiply by 12?</span><span class="lang-ur">کیلکولیٹر "ماہانہ تنخواہ" کیوں پوچھتا ہے اور پھر اسے 12 سے ضرب دیتا ہے؟</span></summary>
+      <p class="lang-en">Pakistan's income tax slabs are defined on an annual basis, but most people know their pay as a monthly figure. Choosing "Monthly Salary" simply annualises what you enter (&times;12) so it can be matched against the correct yearly slab &mdash; the tax shown is then divided back down to show your monthly withholding.</p>
+      <p class="lang-ur">پاکستان کے انکم ٹیکس سلیب سالانہ بنیاد پر متعین ہیں، لیکن زیادہ تر لوگ اپنی تنخواہ ماہانہ کے حساب سے جانتے ہیں۔ "ماہانہ تنخواہ" منتخب کرنے سے آپ کی درج کردہ رقم خودکار طور پر سالانہ (×12) بنا دی جاتی ہے تاکہ درست سالانہ سلیب سے ملائی جا سکے — پھر دکھایا گیا ٹیکس آپ کی ماہانہ کٹوتی دکھانے کے لیے واپس تقسیم کر دیا جاتا ہے۔</p>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="lang-en">Can I use this calculator to file my actual tax return?</span><span class="lang-ur">کیا میں اپنا اصل ٹیکس ریٹرن فائل کرنے کے لیے یہ کیلکولیٹر استعمال کر سکتا ہوں؟</span></summary>
+      <p class="lang-en">This calculator gives a reliable estimate for planning purposes based on the published slab rates, but it doesn't account for every possible deduction, tax credit, or exemption (e.g. donations, Sehat Card premiums, specific allowances) that could apply to your individual return. Use it to understand roughly what you owe, then confirm the final figure with FBR's IRIS portal or a tax practitioner before filing.</p>
+      <p class="lang-ur">یہ کیلکولیٹر شائع شدہ سلیب ریٹس کی بنیاد پر منصوبہ بندی کے مقاصد کے لیے قابلِ اعتماد تخمینہ دیتا ہے، لیکن یہ ہر ممکنہ کٹوتی، ٹیکس کریڈٹ، یا استثنیٰ (مثلاً عطیات، صحت کارڈ پریمیم، مخصوص الاؤنسز) کا احاطہ نہیں کرتا جو آپ کے انفرادی ریٹرن پر لاگو ہو سکتے ہیں۔ اسے یہ اندازہ لگانے کے لیے استعمال کریں کہ آپ پر تقریباً کتنا ٹیکس بنتا ہے، پھر فائل کرنے سے پہلے حتمی رقم FBR کے IRIS پورٹل یا ٹیکس پریکٹیشنر سے تصدیق کر لیں۔</p>
     </details>
 
     <script type="application/ld+json">
@@ -1588,9 +1588,11 @@ header.site-header .headerTop h1{
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type":"Question","name":"Why do some Sindh sales tax categories show a standard and a reduced rate?","acceptedAnswer":{"@type":"Answer","text":"SRB offers a lower reduced/election rate as an alternative to the standard rate, conditional on filing a specific election and often giving up input tax credit."}},
-        {"@type":"Question","name":"Which Sindh sales tax rate applies without an SRB election?","acceptedAnswer":{"@type":"Answer","text":"The standard, higher rate applies by default until the business files the specific reduced-rate election with SRB."}},
-        {"@type":"Question","name":"Is Sindh sales tax on services the same as sales tax on goods?","acceptedAnswer":{"@type":"Answer","text":"No, goods are taxed under the federal Sales Tax Act, 1990 (GST), while Sindh's own law administered by SRB applies to services rendered in Sindh."}}
+        {"@type":"Question","name":"How is income tax calculated on salary in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Pakistan uses a slab (progressive) system for salaried individuals under the First Schedule to the Income Tax Ordinance, 2001. Annual taxable salary is matched to a slab, and tax is a fixed base amount for that slab plus a percentage of the amount above the slab's starting point."}},
+        {"@type":"Question","name":"What income is completely tax-free in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"For tax years 2025-26 and 2026-27, salaried and business/AOP income up to Rs. 600,000 a year (Rs. 50,000/month) falls in the 0% slab and is not taxed."}},
+        {"@type":"Question","name":"What's the difference between Salaried and Business/AOP tax slabs in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Business individuals and AOPs are taxed on a steeper slab table than salaried employees — the first taxable slab above Rs. 600,000 is 15% for business income versus 1% for salaried income."}},
+        {"@type":"Question","name":"When does super tax apply in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Super tax under Section 4C applies once annual taxable income exceeds Rs. 150 million, starting at 1% and rising to 10% above Rs. 500 million, in addition to normal slab tax."}},
+        {"@type":"Question","name":"Can this calculator be used to file an actual Pakistan tax return?","acceptedAnswer":{"@type":"Answer","text":"It gives a reliable estimate based on published slab rates but does not account for every deduction, credit, or exemption. Confirm the final figure with FBR's IRIS portal or a tax practitioner before filing."}}
       ]
     }
     </script>
@@ -1598,17 +1600,17 @@ header.site-header .headerTop h1{
 
   <div class="card no-print" id="shareCard">
     <h2>Share This Calculator</h2>
-    <p class="sub">Know a business filing Sindh Sales Tax on Services? Share this calculator.</p>
+    <p class="sub">Know someone who wants to check their Pakistan income tax or take-home salary? Send them this calculator.</p>
     <div class="shareButtons">
-      <a class="shareBtn shareBtn-whatsapp" href="https://wa.me/?text=Calculate%20Sindh%20Sales%20Tax%20on%20Services%20%28SRB%29%20with%20this%20free%20calculator%3A%20https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-sindh.html" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+      <a class="shareBtn shareBtn-whatsapp" href="https://wa.me/?text=Check%20your%20Pakistan%20income%20tax%20and%20monthly%20take-home%20salary%20with%20this%20free%20calculator%3A%20https%3A%2F%2Fpaktaxcalculator.net%2Fincome-tax.html" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.986.579 3.833 1.578 5.392L2 22l4.735-1.554A9.943 9.943 0 0012.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.13a8.1 8.1 0 01-4.363-1.267l-.313-.185-3.242 1.064 1.078-3.155-.204-.324A8.11 8.11 0 013.87 12c0-4.484 3.647-8.13 8.131-8.13 4.484 0 8.13 3.646 8.13 8.13 0 4.484-3.646 8.13-8.13 8.13z"/></svg>
         WhatsApp
       </a>
-      <a class="shareBtn shareBtn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-sindh.html" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+      <a class="shareBtn shareBtn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpaktaxcalculator.net%2Fincome-tax.html" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.49-1.46H16.5V4.36C16.24 4.32 15.32 4.25 14.25 4.25c-2.23 0-3.75 1.36-3.75 3.86V10.5H8v3h2.5V21h3z"/></svg>
         Facebook
       </a>
-      <a class="shareBtn shareBtn-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpaktaxcalculator.net%2Fsales-tax-sindh.html&text=Calculate%20Sindh%20Sales%20Tax%20on%20Services%20%28SRB%29%20with%20this%20free%20calculator%3A" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+      <a class="shareBtn shareBtn-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpaktaxcalculator.net%2Fincome-tax.html&text=Check%20your%20Pakistan%20income%20tax%20and%20monthly%20take-home%20salary%20with%20this%20free%20calculator%3A" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         X
       </a>
@@ -1666,93 +1668,441 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-/* ---- Nav dropdown toggle (shared) ---- */
-document.getElementById('navToggle').addEventListener('click', ()=>{
-  document.getElementById('navToggle').classList.toggle('open');
-  document.getElementById('navMenu').classList.toggle('open');
-});
-document.addEventListener('click', (e)=>{
-  const nav = document.getElementById('mainNav');
-  if(nav && !nav.contains(e.target)){
-    document.getElementById('navToggle').classList.remove('open');
-    document.getElementById('navMenu').classList.remove('open');
-  }
-});
-
-/* ---- Provincial Tax dropdown in the header quick-links bar ---- */
+/* ---- Header calculator-category dropdowns (Federal / Provincial / Other / More) ---- */
 (function(){
-  const drop = document.getElementById('qlDrop');
-  const btn  = document.getElementById('qlDropBtn');
-  const menu = document.getElementById('qlDropMenu');
-  if(!drop || !btn || !menu) return;
-  btn.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    const open = menu.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  var drops = document.querySelectorAll('.qlDrop');
+  function closeAll(except){
+    drops.forEach(function(d){
+      if(d === except) return;
+      var m = d.querySelector('.qlDropMenu');
+      var b = d.querySelector('.qlDropBtn');
+      if(m) m.classList.remove('open');
+      if(b){ b.classList.remove('open'); b.setAttribute('aria-expanded','false'); }
+    });
+  }
+  drops.forEach(function(drop){
+    var btn = drop.querySelector('.qlDropBtn');
+    var menu = drop.querySelector('.qlDropMenu');
+    if(!btn || !menu) return;
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = !menu.classList.contains('open');
+      closeAll(drop);
+      menu.classList.toggle('open', open);
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   });
-  document.addEventListener('click', (e)=>{
-    if(!drop.contains(e.target)){
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
+  document.addEventListener('click', function(e){
+    drops.forEach(function(d){
+      if(!d.contains(e.target)){
+        var m = d.querySelector('.qlDropMenu');
+        var b = d.querySelector('.qlDropBtn');
+        if(m) m.classList.remove('open');
+        if(b){ b.classList.remove('open'); b.setAttribute('aria-expanded','false'); }
+      }
+    });
   });
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeAll(null); }
   });
 })();
 
-function ptopShowMode(mode){
-  document.getElementById('ptopRateSection').style.display = mode === 'rate' ? 'block' : 'none';
-  document.getElementById('ptopWithholdingSection').style.display = mode === 'withholding' ? 'block' : 'none';
-  document.getElementById('ptopBtnRate').classList.toggle('active', mode === 'rate');
-  document.getElementById('ptopBtnWithholding').classList.toggle('active', mode === 'withholding');
-  window.scrollTo({top: 0, behavior: 'instant'});
+/* ---- income-tax calculator logic (embedded verbatim for offline local preview; production loads this lazily from Supabase) ---- */
+(function(){
+/* =========================================================
+   INCOME TAX DATA
+========================================================= */
+function slabTax(income, slabs){
+  income = Math.max(0, income||0);
+  if(income<=0) return {tax:0, slab:null};
+  let chosen = slabs[slabs.length-1];
+  for(const s of slabs){
+    if(income > s.min && income <= s.max){ chosen = s; break; }
+  }
+  const tax = chosen.base + (income - chosen.min) * (chosen.rate/100);
+  return {tax: Math.max(0,tax), slab: chosen};
 }
 
-/* ---- sales-tax-sindh calculator logic (lazy-loaded from Supabase on first interaction) ---- */
-(function(){
-  var SLUG = 'sales-tax-sindh';
-  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
-  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
-  var loaded = false, loading = false;
-  function ptcShowLoadingToast(){
-    var t = document.createElement('div');
-    t.id = 'ptcCalcLoadingToast';
-    t.textContent = 'Loading calculator\u2026';
-    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
-    document.body.appendChild(t);
-    return t;
+const TAX_DATA = {
+  "2025-26": {
+    label: "Tax Year 2025-26",
+    salariedSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:1, base:0},
+      {min:1200000, max:2200000, rate:11, base:6000},
+      {min:2200000, max:3200000, rate:23, base:116000},
+      {min:3200000, max:4100000, rate:30, base:346000},
+      {min:4100000, max:Infinity, rate:35, base:616000},
+    ],
+    salariedSurcharge: true,
+    businessSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:15, base:0},
+      {min:1200000, max:1600000, rate:20, base:90000},
+      {min:1600000, max:3200000, rate:30, base:170000},
+      {min:3200000, max:5600000, rate:40, base:650000},
+      {min:5600000, max:Infinity, rate:45, base:1610000},
+    ],
+    businessSurcharge: true
+  },
+  "2026-27": {
+    label: "Tax Year 2026-27",
+    salariedSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:1, base:0},
+      {min:1200000, max:2200000, rate:11, base:6000},
+      {min:2200000, max:3200000, rate:20, base:116000},
+      {min:3200000, max:4100000, rate:25, base:316000},
+      {min:4100000, max:5600000, rate:29, base:541000},
+      {min:5600000, max:7000000, rate:32, base:976000},
+      {min:7000000, max:Infinity, rate:35, base:1424000},
+    ],
+    salariedSurcharge: false,
+    businessSlabs: [
+      {min:0, max:600000, rate:0, base:0},
+      {min:600000, max:1200000, rate:15, base:0},
+      {min:1200000, max:1600000, rate:20, base:90000},
+      {min:1600000, max:3200000, rate:30, base:170000},
+      {min:3200000, max:5600000, rate:40, base:650000},
+      {min:5600000, max:Infinity, rate:45, base:1610000},
+    ],
+    businessSurcharge: true
   }
-  function ptcLoadCalculator(){
-    if(loaded || loading) return;
-    loading = true;
-    var toast = ptcShowLoadingToast();
-    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
-      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
-    }).then(function(r){ return r.json(); }).then(function(rows){
-      if(rows && rows[0] && rows[0].js_code){
-        var s = document.createElement('script');
-        s.textContent = rows[0].js_code;
-        document.body.appendChild(s);
-        loaded = true;
-      } else {
-        loading = false;
-      }
-    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
-      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
-  }
-  var root = document.querySelector('main') || document.body;
-  ['pointerdown','focusin','keydown'].forEach(function(evt){
-    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
+};
+
+const COMPANY_RATES = { other:29, small:20, banking:39 };
+
+const SUPER_TAX_SLABS = [
+  {min:0, max:150e6, rate:0},
+  {min:150e6, max:200e6, rate:1},
+  {min:200e6, max:250e6, rate:1.5},
+  {min:250e6, max:300e6, rate:2.5},
+  {min:300e6, max:350e6, rate:3.5},
+  {min:350e6, max:400e6, rate:5.5},
+  {min:400e6, max:500e6, rate:7.5},
+  {min:500e6, max:Infinity, rate:10},
+];
+function superTaxRate(income){
+  let r = 0;
+  for(const s of SUPER_TAX_SLABS){ if(income > s.min && income <= s.max){ r = s.rate; break; } }
+  if(income > 500e6) r = 10;
+  return r;
+}
+
+const SURCHARGE_THRESHOLD = 10000000;
+const SURCHARGE_RATE = 9;
+
+function fmt(n){
+  if(isNaN(n)) n = 0;
+  n = Math.round(n);
+  return "Rs. " + n.toLocaleString('en-PK');
+}
+
+function numVal(id){
+  const el = document.getElementById(id);
+  if(!el) return 0;
+  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
+}
+
+function attachCommaFormat(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const cursorFromEnd = el.value.length - el.selectionStart;
+    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
+    const newPos = Math.max(0, el.value.length - cursorFromEnd);
+    el.setSelectionRange(newPos, newPos);
   });
+}
+['incomeInput','turnoverInput'].forEach(attachCommaFormat);
+
+/* ---- UI wiring ---- */
+let currentYear = "2025-26";
+let currentType = "salaried";
+let currentFreq = "annual";
+
+function updateIncomeLabel(){
+  const label = document.getElementById('incomeLabel');
+  const input = document.getElementById('incomeInput');
+  if(currentType === 'company'){
+    label.textContent = 'Annual Taxable Income / Profit (PKR)';
+    input.placeholder = 'e.g. 3000000';
+  } else if(currentFreq === 'monthly'){
+    label.textContent = 'Monthly Salary / Income (PKR)';
+    input.placeholder = 'e.g. 250000';
+  } else {
+    label.textContent = 'Annual Taxable Income (PKR)';
+    input.placeholder = 'e.g. 3000000';
+  }
+}
+
+function setTaxYear(year){
+  currentYear = year;
+  document.querySelectorAll('.year-toggle button').forEach(x=>{
+    x.classList.toggle('active', x.dataset.year === year);
+  });
+  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
+  computeIncomeTax();
+  computeResidency();
+}
+
+document.querySelectorAll('.year-toggle button').forEach(b=>{
+  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
+});
+
+document.querySelectorAll('#typeSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#typeSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentType = b.dataset.type;
+    document.getElementById('companyTypeField').style.display = currentType==='company' ? 'block':'none';
+    document.getElementById('turnoverField').style.display = currentType==='company' ? 'block':'none';
+    document.getElementById('salariedHint').style.display = currentType==='salaried' ? 'block':'none';
+    document.getElementById('freqField').style.display = currentType==='company' ? 'none':'block';
+    updateIncomeLabel();
+    computeIncomeTax();
+  });
+});
+
+document.querySelectorAll('#freqSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#freqSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentFreq = b.dataset.freq;
+    updateIncomeLabel();
+    computeIncomeTax();
+  });
+});
+
+document.getElementById('companyType').addEventListener('change', computeIncomeTax);
+document.getElementById('incomeInput').addEventListener('input', computeIncomeTax);
+document.getElementById('turnoverInput').addEventListener('input', computeIncomeTax);
+
+function slabRowHtml(rateLabel, amt, pct, rangeText){
+  return `
+    <div class="slab-row">
+      <div class="slab-row-top">
+        <div class="slab-rate">${rateLabel}</div>
+        <div class="slab-bar-track"><div class="slab-bar-fill" style="width:${pct}%"></div></div>
+        <div class="slab-amount ${amt<=0?'muted':''}">${amt>0 ? fmt(amt) : '−'}</div>
+      </div>
+      <div class="slab-row-range">${rangeText}</div>
+    </div>`;
+}
+
+function computeIncomeTax(){
+  const rawInput = numVal('incomeInput');
+  const income = (currentFreq === 'monthly' && currentType !== 'company') ? rawInput * 12 : rawInput;
+  const yearData = TAX_DATA[currentYear];
+  const slabEl = document.getElementById('slabBreakdown');
+  const heroSubEl = document.getElementById('heroSub');
+  let total = 0;
+  let baseTax = 0;
+  let surcharge = 0;
+  let superTax = 0;
+  let minTax = 0;
+  let slabHtml = "";
+
+  if(currentType === 'salaried' || currentType === 'business'){
+    const slabs = currentType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
+    const surchargeApplies = currentType==='salaried' ? yearData.salariedSurcharge : yearData.businessSurcharge;
+    const {tax, slab} = slabTax(income, slabs);
+    baseTax = tax;
+    if(surchargeApplies && income > SURCHARGE_THRESHOLD){
+      surcharge = tax * (SURCHARGE_RATE/100);
+    }
+    superTax = income * (superTaxRate(income)/100);
+    total = baseTax + surcharge + superTax;
+
+    document.getElementById('slabPanelTitle').textContent = 'Slab-by-Slab Breakdown';
+    slabs.forEach(s=>{
+      let amt = 0;
+      if(income > s.min){
+        const cap = s.max===Infinity ? income : Math.min(income, s.max);
+        amt = (cap - s.min) * (s.rate/100);
+      }
+      const pct = baseTax>0 ? Math.min(100, (amt/baseTax*100)) : 0;
+      const rangeText = s.max===Infinity
+        ? `Rs. ${s.min.toLocaleString('en-US')} &amp; above`
+        : `Rs. ${s.min.toLocaleString('en-US')} – ${s.max.toLocaleString('en-US')}`;
+      slabHtml += slabRowHtml(s.rate+'%', amt, pct, rangeText);
+    });
+    if(surchargeApplies && surcharge>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">+9%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(surcharge)}</div></div><div class="slab-row-range">Surcharge on tax, income above Rs. 10,000,000</div></div>`;
+    }
+    if(superTax>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
+    }
+
+    if(income<=0){
+      heroSubEl.textContent = 'Enter an amount above to calculate';
+    } else if(slab && slab.rate===0){
+      heroSubEl.textContent = 'Below taxable threshold (Rs. 600,000) — no income tax';
+    } else if(slab){
+      const rangeText = slab.max===Infinity
+        ? `above Rs. ${slab.min.toLocaleString('en-PK')}`
+        : `Rs. ${slab.min.toLocaleString('en-PK')} – Rs. ${slab.max.toLocaleString('en-PK')}`;
+      heroSubEl.textContent = `You fall in the ${slab.rate}% tax bracket (${rangeText})`;
+    }
+
+    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
+    document.getElementById('heroStat1Value').textContent = fmt(total/12);
+    document.getElementById('heroStat2Label').textContent = 'Take-home / month';
+    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
+  } else {
+    // company
+    const compType = document.getElementById('companyType').value;
+    const rate = COMPANY_RATES[compType];
+    baseTax = income * (rate/100);
+    superTax = income * (superTaxRate(income)/100);
+    const turnover = numVal('turnoverInput');
+    minTax = turnover * 0.0125;
+    const higherBase = Math.max(baseTax, minTax);
+    total = higherBase + superTax;
+
+    document.getElementById('slabPanelTitle').textContent = 'Tax Breakdown';
+    slabHtml += slabRowHtml(rate+'%', baseTax, higherBase>0 ? Math.min(100, baseTax/higherBase*100) : 0, 'Corporate tax on taxable income');
+    if(turnover>0){
+      slabHtml += slabRowHtml('1.25%', minTax, higherBase>0 ? Math.min(100, minTax/higherBase*100) : 0, 'Minimum tax on turnover (Sec 113)');
+    }
+    if(superTax>0){
+      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
+    }
+
+    const compLabel = compType==='small'?'Small':compType==='banking'?'Banking':'Standard';
+    heroSubEl.textContent = income>0 ? `${compLabel} company rate: ${rate}%` : 'Enter an amount above to calculate';
+
+    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
+    document.getElementById('heroStat1Value').textContent = fmt(total/12);
+    document.getElementById('heroStat2Label').textContent = 'Net profit / month';
+    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
+  }
+
+  slabEl.innerHTML = slabHtml;
+  document.getElementById('incomeTotalTax').textContent = fmt(total);
+}
+
+/* =========================================================
+   RESIDENT STATUS CHECKER (Section 82)
+========================================================= */
+const TAX_YEAR_RANGES = {
+  "2025-26": { start: Date.UTC(2025,6,1), end: Date.UTC(2026,5,30) },
+  "2026-27": { start: Date.UTC(2026,6,1), end: Date.UTC(2027,5,30) },
+};
+const MS_DAY = 86400000;
+
+let residencyMode = 'days';
+let tripCounter = 0;
+
+document.querySelectorAll('#residencyModeSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#residencyModeSeg button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    residencyMode = b.dataset.mode;
+    document.getElementById('residencyDaysMode').style.display = residencyMode==='days' ? 'block':'none';
+    document.getElementById('residencyTripsMode').style.display = residencyMode==='trips' ? 'block':'none';
+    computeResidency();
+  });
+});
+
+function addTripRow(){
+  tripCounter++;
+  const id = 'trip'+tripCounter;
+  const row = document.createElement('div');
+  row.className = 'trip-row';
+  row.dataset.id = id;
+  row.innerHTML = `
+    <input type="date" class="tripEntry" id="${id}-entry">
+    <span class="arrow">&rarr;</span>
+    <input type="date" class="tripExit" id="${id}-exit">
+    <span class="tripDays" id="${id}-days">0 days</span>
+    <button type="button" class="tripRemove" aria-label="Remove trip">&times;</button>
+  `;
+  row.querySelector('.tripEntry').addEventListener('input', computeResidency);
+  row.querySelector('.tripExit').addEventListener('input', computeResidency);
+  row.querySelector('.tripRemove').addEventListener('click', ()=>{
+    row.remove();
+    computeResidency();
+  });
+  document.getElementById('tripsList').appendChild(row);
+}
+document.getElementById('addTripBtn').addEventListener('click', addTripRow);
+addTripRow(); // start with one row
+
+document.getElementById('residencyDaysInput').addEventListener('input', computeResidency);
+document.getElementById('residencyPrev4Input').addEventListener('input', computeResidency);
+document.getElementById('residencyGovt').addEventListener('change', computeResidency);
+document.getElementById('residencyCitizen').addEventListener('change', computeResidency);
+
+function computeResidency(){
+  const range = TAX_YEAR_RANGES[currentYear];
+  let daysThisYear = 0;
+
+  if(residencyMode === 'days'){
+    daysThisYear = parseFloat(document.getElementById('residencyDaysInput').value) || 0;
+  } else {
+    document.querySelectorAll('#tripsList .trip-row').forEach(row=>{
+      const entryVal = row.querySelector('.tripEntry').value;
+      const exitVal = row.querySelector('.tripExit').value;
+      const daysLabel = row.querySelector('.tripDays');
+      let rowDays = 0;
+      if(entryVal && exitVal){
+        const entryMs = Date.parse(entryVal + 'T00:00:00Z');
+        const exitMs = Date.parse(exitVal + 'T00:00:00Z');
+        if(!isNaN(entryMs) && !isNaN(exitMs) && exitMs >= entryMs){
+          const clipStart = Math.max(entryMs, range.start);
+          const clipEnd = Math.min(exitMs, range.end);
+          if(clipEnd >= clipStart){
+            rowDays = Math.round((clipEnd - clipStart) / MS_DAY) + 1;
+          }
+        }
+      }
+      daysLabel.textContent = rowDays + (rowDays===1?' day':' days');
+      daysThisYear += rowDays;
+    });
+  }
+
+  const prev4 = parseFloat(document.getElementById('residencyPrev4Input').value) || 0;
+  const govt = document.getElementById('residencyGovt').checked;
+  const citizen = document.getElementById('residencyCitizen').checked;
+
+  const test183 = daysThisYear >= 183;
+  const test120 = daysThisYear >= 120 && prev4 >= 365;
+  const anyInput = daysThisYear>0 || prev4>0 || govt || citizen;
+
+  const isResident = test183 || test120 || govt || citizen;
+
+  const pill = document.getElementById('residencyStatus');
+  const breakdownEl = document.getElementById('residencyBreakdown');
+
+  if(!anyInput){
+    pill.className = 'status-pill pending';
+    pill.textContent = 'Enter your details above';
+    breakdownEl.innerHTML = '';
+    return;
+  }
+
+  pill.className = 'status-pill ' + (isResident ? 'resident' : 'nonresident');
+  pill.textContent = isResident ? 'Resident' : 'Non-Resident';
+
+  breakdownEl.innerHTML = `
+    <tr><th>Test (Sec 82)</th><th>Your Figures</th><th>Result</th></tr>
+    <tr><td>(a) 183+ days present this tax year</td><td>${daysThisYear} days</td><td>${test183?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(b) 120+ days this year AND 365+ days in preceding 4 years</td><td>${daysThisYear} days this year, ${prev4} days prior 4 yrs</td><td>${test120?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(c) Govt employee posted abroad</td><td>${govt?'Yes':'No'}</td><td>${govt?'✅ Met':'Not met'}</td></tr>
+    <tr><td>(d) Citizen, not resident/183+ days elsewhere</td><td>${citizen?'Yes':'No'}</td><td>${citizen?'✅ Met':'Not met'}</td></tr>
+    <tr><td colspan="2">Overall Status</td><td>${isResident?'Resident':'Non-Resident'}</td></tr>
+  `;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+computeIncomeTax();
+computeResidency();
 })();
 </script>
 <script>
@@ -2137,5 +2487,21 @@ function ptopShowMode(mode){
 <!-- ===== END PTC MINI CHATBOT ===== -->
 
 
+<script>
+/* ---- English / Urdu language toggle (shared across the site) ---- */
+function ptcSetLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  var enBtn = document.getElementById('ptcLangEn');
+  var urBtn = document.getElementById('ptcLangUr');
+  if(enBtn) enBtn.classList.toggle('active', lang === 'en');
+  if(urBtn) urBtn.classList.toggle('active', lang === 'ur');
+  try{ localStorage.setItem('ptcLang', lang); }catch(e){}
+}
+(function(){
+  var saved = 'en';
+  try{ saved = localStorage.getItem('ptcLang') || 'en'; }catch(e){}
+  ptcSetLang(saved);
+})();
+</script>
 </body>
 </html>
