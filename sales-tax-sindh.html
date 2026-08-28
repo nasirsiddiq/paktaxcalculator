@@ -70,7 +70,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -161,11 +161,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -964,7 +982,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1231,7 +1249,7 @@ header.site-header .headerTop h1{
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1442,7 +1460,7 @@ header.site-header .headerTop h1{
   <div id="ptopRateSection">
 
   <div class="card">
-    <h2>Sindh Sales Tax on Services</h2>
+    <h1>Sindh Sales Tax on Services Calculator (SRB)</h1>
     <p class="sub">Provincial sales tax on services in Sindh, administered by the Sindh Revenue Board (SRB) under the Sindh Sales Tax on Services Act 2011. Select a service category and enter the value excluding tax.</p>
 
     <div class="field">
@@ -1544,7 +1562,179 @@ header.site-header .headerTop h1{
 
   </div>
 
+    <div class="card no-print">
+    <h2>Sindh Sales Tax on Services: Categories &amp; Rates at a Glance</h2>
+    <p class="sub">Every category below is drawn directly from the SRB "Working Tariff" used in the calculator above, grouped by tariff heading. Where a category lists two rates, the lower one is a conditional "reduced/election" rate &mdash; see the note under the table.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Service Category</th><th>SRB Rate</th></tr>
+      <tr class="rateGroupRow"><td colspan="2">Telecommunication (98.12)</td></tr>
+      <tr><td>Telecommunication services (phone, internet, data, etc.)</td><td>19.5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Hotels, Restaurants, Marriage Halls &amp; Clubs (98.01)</td></tr>
+      <tr><td>Hotels, motels, guest houses &amp; farmhouses</td><td>15%</td></tr>
+      <tr><td>Restaurants – standard</td><td>15%</td></tr>
+      <tr><td>Restaurants – digital/card/QR payment (no input tax credit)</td><td>8%</td></tr>
+      <tr><td>Marriage halls &amp; lawns</td><td>15%</td></tr>
+      <tr><td>Clubs</td><td>15%</td></tr>
+      <tr><td>Caterers, suppliers of food &amp; drinks</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Advertisement &amp; Charter Flights (98.02–98.03)</td></tr>
+      <tr><td>Advertisement on TV / radio / cable TV / poles / billboards</td><td>15%</td></tr>
+      <tr><td>Advertisement in newspapers &amp; periodicals published in Sindh</td><td><span class="rate-zero">0% (exempt/zero-rated)</span></td></tr>
+      <tr><td>Chartered flight services</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Agents &amp; Intermediaries (98.05)</td></tr>
+      <tr><td>Shipping agents</td><td>15%</td></tr>
+      <tr><td>Stevedores / ship management services</td><td>15%</td></tr>
+      <tr><td>Customs agents</td><td>15%</td></tr>
+      <tr><td>Travel agents</td><td>5%</td></tr>
+      <tr><td>Tour operators</td><td>5%</td></tr>
+      <tr><td>Recruiting agents (standalone, overseas employment)</td><td>5%</td></tr>
+      <tr><td>Advertising agents</td><td>15%</td></tr>
+      <tr><td>Ship chandlers</td><td>15%</td></tr>
+      <tr><td>Share transfer agents</td><td>15%</td></tr>
+      <tr><td>Sponsorship services</td><td>15%</td></tr>
+      <tr><td>Business support services</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Sale, Purchase or Hire (98.06)</td></tr>
+      <tr><td>Purchase, sale or hire of immovable property</td><td>10%</td></tr>
+      <tr><td>Property dealers</td><td>8%</td></tr>
+      <tr><td>Renting of immovable property</td><td>3%</td></tr>
+      <tr><td>Car or automobile dealers</td><td>10%</td></tr>
+      <tr><td>Renting of machinery, equipment &amp; tangible goods</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Courier &amp; Contract Work</td></tr>
+      <tr><td>Courier services</td><td>15%</td></tr>
+      <tr><td>Contractual execution of work / furnishing supplies</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Beauty, Wellness &amp; Laundry (98.10–98.11)</td></tr>
+      <tr><td>Beauty parlours, clinics &amp; slimming centres – standard</td><td>8%</td></tr>
+      <tr><td>Beauty parlours, clinics &amp; slimming centres – SRB e-invoicing election</td><td>5%</td></tr>
+      <tr><td>Laundries &amp; dry cleaners – standard</td><td>15%</td></tr>
+      <tr><td>Laundries &amp; dry cleaners – standalone</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Banking, Insurance &amp; Financial Services (98.13)</td></tr>
+      <tr><td>Insurance (goods / fire / theft / marine)</td><td>15%</td></tr>
+      <tr><td>Motor vehicle insurance</td><td>5%</td></tr>
+      <tr><td>Life insurance (non-group)</td><td>3%</td></tr>
+      <tr><td>Other insurance / re-insurance</td><td>15%</td></tr>
+      <tr><td>Leasing (financial / commodity / hire purchase)</td><td>15%</td></tr>
+      <tr><td>Banking company services (guarantee, LC, cheque books, transfers, ATM, cards, etc.)</td><td>15%</td></tr>
+      <tr><td>Foreign exchange dealer / money changer (spread-based)</td><td>3%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Construction &amp; Property Consultancy (98.14, 98.24)</td></tr>
+      <tr><td>Architects or town planners</td><td>15%</td></tr>
+      <tr><td>Contractor of building / electrical / mechanical works</td><td>15%</td></tr>
+      <tr><td>Interior decorators</td><td>15%</td></tr>
+      <tr><td>Construction services – standard</td><td>15%</td></tr>
+      <tr><td>Construction services – reduced (no input credit)</td><td>8%</td></tr>
+      <tr><td>Construction services – government civil works</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Professionals &amp; Consultants (98.15)</td></tr>
+      <tr><td>Medical practitioners &amp; consultants</td><td>3%</td></tr>
+      <tr><td>Legal practitioners &amp; consultants</td><td>8%</td></tr>
+      <tr><td>Accountants &amp; auditors</td><td>8%</td></tr>
+      <tr><td>Management consultants</td><td>15%</td></tr>
+      <tr><td>Technical, scientific &amp; engineering consultants</td><td>15%</td></tr>
+      <tr><td>Software / IT-based system development consultants – standard</td><td>15%</td></tr>
+      <tr><td>Software / IT-based system development consultants – SRB election</td><td>3%</td></tr>
+      <tr><td>Other consultants (tax, HR, personnel development)</td><td>8%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Specialized Agencies &amp; Business Services (98.18–98.19)</td></tr>
+      <tr><td>Security agency</td><td>8%</td></tr>
+      <tr><td>Credit rating agency</td><td>15%</td></tr>
+      <tr><td>Market research agency</td><td>15%</td></tr>
+      <tr><td>Stockbrokers, future brokers &amp; commodity brokers</td><td>15%</td></tr>
+      <tr><td>Underwriter</td><td>15%</td></tr>
+      <tr><td>Indenters</td><td>15%</td></tr>
+      <tr><td>Commission agents</td><td>15%</td></tr>
+      <tr><td>Packers and movers</td><td>15%</td></tr>
+      <tr><td>Money exchanger (spread-based)</td><td>3%</td></tr>
+      <tr><td>Rent-a-car / automobile rental</td><td>8%</td></tr>
+      <tr><td>Surveyors</td><td>15%</td></tr>
+      <tr><td>Outdoor photographers &amp; videographers</td><td>8%</td></tr>
+      <tr><td>Cable TV operators – standard</td><td>8%</td></tr>
+      <tr><td>Cable TV operators – standalone</td><td>2%</td></tr>
+      <tr><td>Auctioneers</td><td>8%</td></tr>
+      <tr><td>Public relations services</td><td>15%</td></tr>
+      <tr><td>Technical testing &amp; analysis</td><td>15%</td></tr>
+      <tr><td>Port, airport, ground service &amp; terminal operators</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Specialized Workshops (98.20)</td></tr>
+      <tr><td>Auto-workshops incl. authorized service stations</td><td>15%</td></tr>
+      <tr><td>Workshops for industrial / construction / earth-moving machinery</td><td>15%</td></tr>
+      <tr><td>Workshop for electric/electronic equipment incl. computer hardware</td><td>15%</td></tr>
+      <tr><td>Car / automobile washing or similar service stations</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Health, Fitness &amp; Personal Care (98.21)</td></tr>
+      <tr><td>Health care centre, gyms or fitness centre</td><td>5%</td></tr>
+      <tr><td>Sports and games centre</td><td>8%</td></tr>
+      <tr><td>Body massage centres – standard</td><td>10%</td></tr>
+      <tr><td>Body massage centres – SRB e-invoicing election</td><td>5%</td></tr>
+      <tr><td>Pedicure centres – standard</td><td>10%</td></tr>
+      <tr><td>Pedicure centres – SRB e-invoicing election</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Cleaning &amp; Site Services (98.22)</td></tr>
+      <tr><td>Fumigation services</td><td>10%</td></tr>
+      <tr><td>Maintenance or cleaning services</td><td>8%</td></tr>
+      <tr><td>Janitorial services</td><td>10%</td></tr>
+      <tr><td>Dredging or desilting services</td><td>10%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Franchise, IP &amp; Toll Manufacturing</td></tr>
+      <tr><td>Franchise services – standard</td><td>15%</td></tr>
+      <tr><td>Franchise services – reduced (no input credit)</td><td>8%</td></tr>
+      <tr><td>Intellectual property services – standard</td><td>15%</td></tr>
+      <tr><td>Intellectual property services – reduced</td><td>8%</td></tr>
+      <tr><td>Toll manufacturing/processing of textile &amp; leather goods</td><td>3%</td></tr>
+      <tr><td>Toll manufacturing/processing – other goods</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Transport, Logistics &amp; Ready Mix (98.36–98.37, 98.56)</td></tr>
+      <tr><td>Transportation/carriage of goods by road, pipeline or conduit – standard</td><td>15%</td></tr>
+      <tr><td>Transportation/carriage of goods – reduced (excl. specified categories)</td><td>3%</td></tr>
+      <tr><td>Ready mix concrete services – standard</td><td>15%</td></tr>
+      <tr><td>Ready mix concrete services – reduced</td><td>8%</td></tr>
+      <tr><td>Truck aggregator services</td><td>15%</td></tr>
+      <tr><td>Vehicle towing, parking &amp; valet services</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Media, Events &amp; Entertainment</td></tr>
+      <tr><td>Programme producers &amp; production houses</td><td>8%</td></tr>
+      <tr><td>Race Club – other services</td><td>15%</td></tr>
+      <tr><td>Event management, exhibition &amp; photography/videography services</td><td>15%</td></tr>
+      <tr><td>Fashion designers</td><td>5%</td></tr>
+      <tr><td>Call centres – standard</td><td>15%</td></tr>
+      <tr><td>Call centres – SRB election</td><td>3%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Other Specified Services</td></tr>
+      <tr><td>Corporate law consultants</td><td>8%</td></tr>
+      <tr><td>Management services incl. fund &amp; assets management</td><td>15%</td></tr>
+      <tr><td>Airport services</td><td>15%</td></tr>
+      <tr><td>Public bonded warehouses</td><td>15%</td></tr>
+      <tr><td>Labour and manpower supply services</td><td>15%</td></tr>
+      <tr><td>Erection, commissioning &amp; installation services</td><td>15%</td></tr>
+      <tr><td>Technical inspection &amp; certification (incl. ISO)</td><td>15%</td></tr>
+      <tr><td>Valuation services</td><td>15%</td></tr>
+      <tr><td>Cosmetic &amp; plastic surgery / transplantation</td><td>15%</td></tr>
+      <tr><td>Visa processing &amp; migration consultancy</td><td>15%</td></tr>
+      <tr><td>Debt collection &amp; recovery services</td><td>15%</td></tr>
+      <tr><td>Supply chain management / distribution services</td><td>15%</td></tr>
+      <tr><td>Cab aggregator services</td><td>5%</td></tr>
+      <tr><td>Warehouse / depots for storage or cold storage</td><td>15%</td></tr>
+      <tr><td>Training services</td><td>3%</td></tr>
+      <tr><td>Actuarial services</td><td>15%</td></tr>
+      <tr><td>Mining of minerals &amp; allied services</td><td>15%</td></tr>
+      <tr><td>Site preparation, excavation &amp; demolition services</td><td>15%</td></tr>
+      <tr><td>Waste collection, transportation &amp; management services</td><td>15%</td></tr>
+      <tr><td>Electric power transmission services</td><td>15%</td></tr>
+      <tr><td>Insurance agents</td><td>5%</td></tr>
+      <tr><td>Education services (fee &gt; Rs 500,000/year per student)</td><td>3%</td></tr>
+      <tr><td>Hospital / clinic room &amp; bed charges (&gt; Rs 25,000/day)</td><td>3%</td></tr>
+      <tr><td>Laboratories (other than pathological/diagnostic tests)</td><td>15%</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">Rates shown are as reflected in the calculator above and may not include every condition, exemption or turnover threshold that applies to a specific taxpayer. Always confirm your exact tariff heading with the Sindh Revenue Board (SRB) before filing.</p>
+  </div>
+
   <div class="card no-print">
+    <h2>Understanding Sindh Sales Tax on Services (SRB)</h2>
+
+    <h3>Who has to register with SRB?</h3>
+    <p>Any person or business providing a taxable service listed in the Second Schedule to the Sindh Sales Tax on Services Act, 2011 &mdash; and rendered or received in Sindh &mdash; is generally required to register with the Sindh Revenue Board and charge sales tax on its invoices. This applies whether the service provider is based in Karachi, Hyderabad, or anywhere else in the province, and covers everything from hotels and restaurants to IT consultancies, security agencies, and professional services.</p>
+
+    <h3>Standard rate vs. reduced/election rate</h3>
+    <p>Several SRB categories &mdash; restaurants, beauty parlours, construction, IT/software consultancy, franchise services, and others &mdash; carry both a higher "standard" rate and a lower "reduced" or "election" rate. The reduced rate is not automatic: it typically requires the registered person to file a specific election with SRB and often to give up the right to claim input tax credit, sometimes alongside a requirement to use SRB-linked point-of-sale or e-invoicing systems. Until that election is filed and approved, SRB treats the business at the standard rate by default.</p>
+
+    <h3>Filing and payment</h3>
+    <p>Registered persons file periodic sales tax returns with SRB (typically monthly) declaring output tax charged on their invoices, net of any input tax credit they're entitled to claim, and deposit the balance by the statutory due date. Late filing or short payment can trigger default surcharge and penalties under the Act, in addition to the tax itself, so most businesses track their SRB filing deadline alongside their federal FBR obligations.</p>
+
+    <h3>How this differs from federal GST and withholding</h3>
+    <p>Sindh's sales tax on services is entirely separate from the federal Sales Tax Act, 1990, which taxes the sale of goods everywhere in Pakistan including Sindh &mdash; a business that both sells goods and renders services in Sindh can owe both taxes on different parts of the same transaction. Separately, when a company or other designated withholding agent pays an SRB-taxable invoice, it may need to withhold a portion of the sales tax shown and deposit it directly with SRB instead of paying the supplier in full &mdash; use the "Check Withholding Tax" tab above, or the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, to work that out.</p>
+  </div>
+
+<div class="card no-print">
     <h2>Worked Example: Standard vs SRB-Election Rate for IT Services</h2>
     <p class="sub">A Karachi software consultancy invoices a client Rs. 500,000 for system development services.</p>
     <div class="example-box">
@@ -1579,6 +1769,16 @@ header.site-header .headerTop h1{
     </details>
 
     <details class="faq-item">
+      <summary>What is the SRB rate on IT and software consultancy services in Sindh?</summary>
+      <p>Software or IT-based system development consultancy is taxed at the standard 15% rate. A registered consultancy that has filed SRB's specific election (and given up its right to claim input tax credit) can instead be taxed at a reduced 3% rate.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What SRB rate applies to restaurants that only accept card or digital payment?</summary>
+      <p>Restaurants are taxed at the standard 15% rate by default. Restaurants operating only through SRB-integrated digital/card/QR payment channels can qualify for a reduced 8% rate, without the ability to claim input tax credit.</p>
+    </details>
+
+    <details class="faq-item">
       <summary>Does withholding apply to Sindh sales tax invoices?</summary>
       <p>Yes, following the same general pattern as other jurisdictions &mdash; a withholding agent typically deducts 1/5th of the sales tax shown from a registered, active service provider and the full amount from an unregistered one. See the <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator for the exact figure.</p>
     </details>
@@ -1590,7 +1790,9 @@ header.site-header .headerTop h1{
       "mainEntity": [
         {"@type":"Question","name":"Why do some Sindh sales tax categories show a standard and a reduced rate?","acceptedAnswer":{"@type":"Answer","text":"SRB offers a lower reduced/election rate as an alternative to the standard rate, conditional on filing a specific election and often giving up input tax credit."}},
         {"@type":"Question","name":"Which Sindh sales tax rate applies without an SRB election?","acceptedAnswer":{"@type":"Answer","text":"The standard, higher rate applies by default until the business files the specific reduced-rate election with SRB."}},
-        {"@type":"Question","name":"Is Sindh sales tax on services the same as sales tax on goods?","acceptedAnswer":{"@type":"Answer","text":"No, goods are taxed under the federal Sales Tax Act, 1990 (GST), while Sindh's own law administered by SRB applies to services rendered in Sindh."}}
+        {"@type":"Question","name":"Is Sindh sales tax on services the same as sales tax on goods?","acceptedAnswer":{"@type":"Answer","text":"No, goods are taxed under the federal Sales Tax Act, 1990 (GST), while Sindh's own law administered by SRB applies to services rendered in Sindh."}},
+        {"@type":"Question","name":"What is the SRB rate on IT and software consultancy services in Sindh?","acceptedAnswer":{"@type":"Answer","text":"Software or IT-based system development consultancy is taxed at the standard 15% rate, or a reduced 3% rate if the consultancy has filed SRB's specific election and given up input tax credit."}},
+        {"@type":"Question","name":"What SRB rate applies to restaurants that only accept card or digital payment?","acceptedAnswer":{"@type":"Answer","text":"Restaurants are taxed at 15% by default; those operating only through SRB-integrated digital/card/QR payment channels can qualify for a reduced 8% rate."}}
       ]
     }
     </script>

@@ -70,7 +70,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -161,11 +161,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -964,7 +982,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1231,7 +1249,7 @@ header.site-header .headerTop h1{
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1442,7 +1460,7 @@ header.site-header .headerTop h1{
   <div id="ptopRateSection">
 
   <div class="card">
-    <h2>Punjab Sales Tax on Services</h2>
+    <h1>Punjab Sales Tax on Services Calculator (PRA)</h1>
     <p class="sub">Provincial sales tax on services in Punjab, administered by the Punjab Revenue Authority (PRA) under the Punjab Sales Tax on Services Act 2012. Select a service category and enter the value excluding tax.</p>
 
     <div class="field">
@@ -1544,7 +1562,47 @@ header.site-header .headerTop h1{
 
   </div>
 
+    <div class="card no-print">
+    <h2>Punjab Sales Tax on Services: Categories &amp; Rates at a Glance</h2>
+    <p class="sub">The categories below are drawn directly from the calculator above. Punjab's 16% standard rate applies to most services rendered in Punjab unless a category has its own notified rate.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Service Category</th><th>PRA Rate</th></tr>
+      <tr><td>Standard rate</td><td>16%</td></tr>
+      <tr><td>IT &amp; IT-enabled services</td><td>5%</td></tr>
+      <tr><td>Software development (zero-rated)</td><td><span class="rate-zero">0% (exempt/zero-rated)</span></td></tr>
+      <tr><td>Restaurants – cash payment</td><td>16%</td></tr>
+      <tr><td>Restaurants – digital/card payment</td><td>8%</td></tr>
+      <tr><td>Construction – standard</td><td>16%</td></tr>
+      <tr><td>Construction – government civil works</td><td>5%</td></tr>
+      <tr><td>Telecommunication services</td><td>19.5%</td></tr>
+      <tr><td>Beauty &amp; wellness services</td><td>5%</td></tr>
+      <tr><td>Ride-hailing / travel services</td><td>5%</td></tr>
+      <tr><td>Property dealers / services</td><td>8%</td></tr>
+      <tr><td>Cargo / goods transport</td><td>15%</td></tr>
+      <tr><td>Foreign exchange dealers</td><td>3%</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">Rates shown are as reflected in the calculator above and may not include every condition or exemption that applies to a specific taxpayer. Always confirm your exact tariff heading with the Punjab Revenue Authority (PRA) before filing.</p>
+  </div>
+
   <div class="card no-print">
+    <h2>Understanding Punjab Sales Tax on Services (PRA)</h2>
+
+    <h3>Who has to register with PRA?</h3>
+    <p>Any person or business providing a taxable service under the Punjab Sales Tax on Services Act, 2012 &mdash; and rendered or provided in Punjab &mdash; is generally required to register with the Punjab Revenue Authority and charge sales tax on its invoices. This spans a wide range of sectors, from restaurants, construction and telecom to IT-enabled services, beauty and wellness, and ride-hailing platforms.</p>
+
+    <h3>Why some categories are taxed below 16%</h3>
+    <p>Punjab's law sets 16% as the standard rate, but several categories &mdash; IT and IT-enabled services, restaurants accepting digital or card payment, government civil works, beauty and wellness services, ride-hailing, and foreign exchange dealing &mdash; carry their own lower notified rate, and a few (like exported software development) are zero-rated. These category-specific rates are set and revised through the annual Punjab Finance Act, so it's worth re-checking a rate that matters to your business each year.</p>
+
+    <h3>Filing and payment</h3>
+    <p>Registered persons file periodic sales tax returns with PRA (typically monthly), declaring the output tax charged on their invoices net of any input tax credit, and deposit the balance by the statutory due date. Late filing or short payment can trigger default surcharge and penalties under the Act, separate from any federal FBR obligations the same business may also have.</p>
+
+    <h3>How this differs from federal GST and withholding</h3>
+    <p>Punjab's provincial sales tax on services is separate from federal GST (18%), which taxes the sale of goods under the Sales Tax Act, 1990 &mdash; a business dealing in both goods and services in Punjab can owe both taxes on different parts of the same transaction. Separately, when a company or other designated withholding agent pays a registered, active-taxpayer-list (ATL) service provider, it typically withholds 1/5th of the Punjab sales tax shown on the invoice and remits it directly to PRA. Use the "Check Withholding Tax" tab above, or the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, to work that out.</p>
+  </div>
+
+<div class="card no-print">
     <h2>Worked Example: A Punjab Marketing Services Invoice</h2>
     <p class="sub">A digital marketing agency in Lahore invoices a client Rs. 250,000 for its services, at Punjab's 16% standard rate.</p>
     <div class="example-box">
@@ -1574,6 +1632,16 @@ header.site-header .headerTop h1{
     </details>
 
     <details class="faq-item">
+      <summary>What is Punjab's sales tax rate on IT and IT-enabled services?</summary>
+      <p>IT and IT-enabled services in Punjab are taxed at a reduced 5% rate rather than the 16% standard rate. Exported software development is zero-rated (0%).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What Punjab sales tax rate applies to restaurants that accept digital payment?</summary>
+      <p>Restaurants accepting cash are taxed at the standard 16% rate. Restaurants accepting payment through the notified digital/card scheme qualify for a reduced 8% rate.</p>
+    </details>
+
+    <details class="faq-item">
       <summary>Does withholding apply to Punjab sales tax invoices?</summary>
       <p>Yes &mdash; when a company or other designated withholding agent pays a registered, ATL-active service provider, it generally withholds 1/5th (20%) of the Punjab sales tax shown on the invoice and remits it directly to the PRA, with the provider depositing the rest itself. The full 100% is withheld if the provider is unregistered or inactive.</p>
     </details>
@@ -1590,7 +1658,9 @@ header.site-header .headerTop h1{
       "mainEntity": [
         {"@type":"Question","name":"What is the standard Punjab sales tax rate on services?","acceptedAnswer":{"@type":"Answer","text":"Punjab's standard rate under the Punjab Sales Tax on Services Act, 2012 is 16%, applied to most services rendered in Punjab unless a specific category has its own rate."}},
         {"@type":"Question","name":"Is Punjab sales tax the same as federal GST?","acceptedAnswer":{"@type":"Answer","text":"No, federal GST taxes goods under the Sales Tax Act, 1990, while Punjab sales tax on services is a separate provincial levy administered by the Punjab Revenue Authority."}},
-        {"@type":"Question","name":"Does withholding apply to Punjab sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Yes, a withholding agent generally deducts 1/5th of the Punjab sales tax shown on an invoice from a registered, ATL-active provider, and the full amount from an unregistered one."}}
+        {"@type":"Question","name":"Does withholding apply to Punjab sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Yes, a withholding agent generally deducts 1/5th of the Punjab sales tax shown on an invoice from a registered, ATL-active provider, and the full amount from an unregistered one."}},
+        {"@type":"Question","name":"What is Punjab's sales tax rate on IT and IT-enabled services?","acceptedAnswer":{"@type":"Answer","text":"IT and IT-enabled services are taxed at a reduced 5% rate rather than the 16% standard rate; exported software development is zero-rated."}},
+        {"@type":"Question","name":"What Punjab sales tax rate applies to restaurants that accept digital payment?","acceptedAnswer":{"@type":"Answer","text":"Cash-paying restaurants are taxed at the standard 16% rate; those accepting the notified digital/card payment scheme qualify for a reduced 8% rate."}}
       ]
     }
     </script>
