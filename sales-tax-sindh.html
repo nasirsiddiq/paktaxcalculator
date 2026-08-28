@@ -153,6 +153,52 @@ header.site-header p.tagline{
   margin:0 auto;
   padding:16px;
 }
+.calcVideoRow{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  gap:20px;
+}
+.calcVideoMain{
+  flex:1 1 420px;
+  min-width:0;
+}
+.calcVideoAside{
+  flex:0 0 300px;
+  width:300px;
+  position:sticky;
+  top:16px;
+}
+.videoCard{
+  padding:16px;
+}
+.videoCard h2{
+  font-size:16px;
+  margin:0 0 10px;
+}
+.videoEmbed{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:8px;
+  overflow:hidden;
+  background:#000;
+}
+.videoEmbed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+@media (max-width:760px){
+  .calcVideoRow{ display:block; }
+  .calcVideoAside{
+    width:100%;
+    position:static;
+    margin-top:16px;
+  }
+}
 .card{
   background:var(--card);
   border:1px solid var(--border);
@@ -1448,6 +1494,9 @@ header.site-header .headerTop .brandTitle{
     </div>
   </div>
 
+  <div class="calcVideoRow">
+  <div class="calcVideoMain">
+
   <div class="ptop-greeting">
     <p class="ptop-toggle-sub">&#128073; Looking for the <strong>SRB</strong> rate on an invoice, or need to work out withholding tax? Pick a tab below, enter your amount, and we’ll do the rest.</p>
   </div>
@@ -1559,6 +1608,20 @@ header.site-header .headerTop .brandTitle{
 
     <p class="sub" style="margin:14px 0 0;">This covers Sindh (SRB) specifically. For withholding under FBR or another province, see the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator.</p>
   </div>
+
+  </div>
+
+  </div>
+
+  <aside class="calcVideoAside">
+    <div class="card videoCard no-print">
+      <h2>Watch: How to Use the SRB Calculator</h2>
+      <div class="videoEmbed">
+        <iframe src="https://www.youtube.com/embed/63uzqlofzGs" title="How to Use the SRB Calculator" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <p class="sub" style="margin:10px 0 0;">A quick walkthrough of picking a service category, entering your invoice amount, and reading the SRB rate and withholding results.</p>
+    </div>
+  </aside>
 
   </div>
 

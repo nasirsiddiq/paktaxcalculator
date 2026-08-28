@@ -67,7 +67,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -158,11 +158,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -902,7 +920,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1169,7 +1187,7 @@ header.site-header .headerTop h1{
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1369,7 +1387,7 @@ header.site-header .headerTop h1{
   </div>
 
   <div class="card">
-    <h2>Sales Tax Withholding &ndash; Goods &amp; Services</h2>
+    <h1>Sales Tax Withholding Calculator &ndash; Goods &amp; Services</h1>
     <p class="sub">Withholding agents (government departments, companies, and other notified persons) withhold a portion of the sales tax/GST shown on a supplier's invoice and deposit it directly, under the Federal 11th Schedule and equivalent provincial withholding rules. Choose the Federal authority for goods/services generally, or a provincial authority for that province's services. (Looking for income tax withheld on the payment itself instead? See <a href="withholding-tax.html">Withholding Tax (WHT)</a>.)</p>
 
     <div class="field">
@@ -1438,7 +1456,60 @@ header.site-header .headerTop h1{
     Sales tax withholding is separate from income tax WHT and from the sales tax rate itself &mdash; the withholding agent pays the supplier a reduced amount and remits the withheld portion directly to FBR/the provincial authority on the supplier's behalf (creditable against the supplier's own liability). As a general rule across FBR and all provincial/ICT authorities, a withholding agent deducts 1/5th (20%) of the sales tax shown on the invoice when the supplier/service provider is registered and active on the relevant Active Taxpayer List (ATL), and the whole (100%) applicable tax when the supplier is unregistered or inactive &mdash; with the supplier's CNIC/NTN typically required to be recorded in the unregistered case. Several categories deviate from this general rule (e.g. advertisement services are withheld in full regardless of registration in most jurisdictions; federal wholesalers/dealers get a reduced 1/10th rate; Punjab's telecom/banking/insurance sector was newly brought into the withholding net at 80% from 10 July 2025; KPRA's regulations separately reference a 50% residual rate for some non-standard categories). Provincial withholding rules are amended frequently and primary-source PDFs are not always consistently accessible online, so treat the percentages above as a strong general guide and confirm the current notification/rate card with FBR or the relevant provincial revenue authority (PRA/SRB/KPRA/BRA) before relying on them for filing. Federal supplies to unregistered persons may also attract a separate 4% further tax under s.3(1A) of the Sales Tax Act (not a withholding amount, and not calculated here).
   </div>
 
+    <div class="card no-print">
+    <h2>Sales Tax Withholding Rates by Authority, at a Glance</h2>
+    <p class="sub">Every row below is drawn directly from the calculator above, grouped by the authority that administers it. "Withholding basis" is what the withholding agent deducts and deposits directly, instead of paying the supplier in full.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Provider / Category</th><th>Withholding Basis</th></tr>
+      <tr class="rateGroupRow"><td colspan="2">Federal – FBR (11th Schedule, Goods &amp; Services) &middot; default rate 18%</td></tr>
+      <tr><td>Registered / active taxpayer (ATL) – standard supply</td><td>1/5th of the sales tax shown on invoice</td></tr>
+      <tr><td>Wholesaler / dealer / distributor (active taxpayer)</td><td>1/10th of the sales tax shown on invoice</td></tr>
+      <tr><td>Unregistered / non-ATL supplier – govt/public sector agent</td><td>Full amount of tax, on value</td></tr>
+      <tr><td>Unregistered / non-ATL supplier – company agent (goods)</td><td>5% of gross value of supplies</td></tr>
+      <tr><td>Advertisement services (unregistered provider)</td><td>Full amount, regardless of recipient</td></tr>
+      <tr><td>Online marketplace – non-active seller</td><td>1% of gross value of supplies</td></tr>
+      <tr><td>Lead / scrap battery suppliers</td><td>75% of applicable sales tax</td></tr>
+      <tr><td>Surgical instruments exporters (purchase of goods)</td><td>5% of gross value of supplies</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Sindh – SRB (Services) &middot; default rate 15%</td></tr>
+      <tr><td>Registered service provider (general)</td><td>1/5th of the sales tax shown on invoice</td></tr>
+      <tr><td>Unregistered service provider</td><td>Full applicable sales tax on gross value</td></tr>
+      <tr><td>Advertisement / insurance agents / cab-hailing / auctioneer / rented immovable property / inter-city transport / reduced-rate construction</td><td>Full amount, regardless of registration</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Punjab – PRA (Services) &middot; default rate 16%</td></tr>
+      <tr><td>Registered service provider (general, corporate agent)</td><td>1/5th of the sales tax shown on invoice</td></tr>
+      <tr><td>Unregistered service provider</td><td>Full applicable sales tax on gross value</td></tr>
+      <tr><td>Advertisement services</td><td>Full amount, regardless of registration</td></tr>
+      <tr><td>Telecom / banking / insurance (ATL company – Rule 5A, w.e.f. 10 Jul 2025)</td><td>80% of the sales tax shown on invoice</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Khyber Pakhtunkhwa – KPRA (Services) &middot; default rate 15%</td></tr>
+      <tr><td>Registered service provider (general)</td><td>1/5th of the sales tax shown on invoice (KPRA separately references 50% for some non-standard categories)</td></tr>
+      <tr><td>Unregistered service provider</td><td>Full applicable sales tax on gross value</td></tr>
+      <tr><td>Advertisement services / government or public sector recipient</td><td>Full amount, regardless of registration</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Balochistan – BRA (Services) &middot; default rate 15%</td></tr>
+      <tr><td>Registered service provider (general)</td><td>1/5th of the sales tax shown on invoice</td></tr>
+      <tr><td>Unregistered / foreign provider</td><td>Full amount shown on invoice, or on gross value if not shown</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Islamabad – ICT (Services, FBR-administered) &middot; default rate 15%</td></tr>
+      <tr><td>Registered service provider (general)</td><td>1/5th of the sales tax shown on invoice (general federal rule)</td></tr>
+      <tr><td>Unregistered service provider</td><td>Full applicable sales tax on gross value</td></tr>
+      <tr><td>Advertisement services</td><td>Full amount, regardless of registration</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">This is a simplified summary of the most common categories per authority; each authority's schedule contains additional categories and conditions not captured here. Always confirm the exact rule for your transaction with the relevant authority.</p>
+  </div>
+
   <div class="card no-print">
+    <h2>How Sales Tax Withholding Works</h2>
+
+    <h3>Registered vs. unregistered supplier</h3>
+    <p>The core distinction across every authority above is whether the supplier is a registered, active taxpayer or not. A registered, active supplier issues a proper tax invoice showing sales tax as a separate line — the withholding agent typically deducts only a fraction of that shown tax (commonly 1/5th) and pays the rest to the supplier, who deposits the remainder itself. An unregistered or inactive supplier's invoice carries no separate tax line, so the withholding agent must withhold the full applicable tax, computed on the value using the tax-fraction method.</p>
+
+    <h3>Federal vs. provincial withholding</h3>
+    <p>Goods are taxed under the federal Sales Tax Act, 1990 and withheld per the 11th Schedule administered by FBR. Services, by contrast, are taxed by whichever provincial (or territorial) authority has jurisdiction over where the service was rendered — Sindh's SRB, Punjab's PRA, Khyber Pakhtunkhwa's KPRA, Balochistan's BRA, or ICT for Islamabad (administered by FBR under a separate ordinance). A business paying for both goods and services on the same invoice may need to apply two different withholding rules to the two components.</p>
+
+    <h3>Depositing what you withhold</h3>
+    <p>A withholding agent must deposit the amount withheld directly with the relevant authority (not the supplier) by the prescribed due date, and issue a withholding tax certificate to the supplier so the supplier can claim credit for it. Failing to withhold, or withholding but not depositing on time, can expose the withholding agent itself to penalties and default surcharge, separate from any liability of the supplier.</p>
+  </div>
+
+<div class="card no-print">
     <h2>Worked Example: Withholding on a Registered Supplier's Invoice</h2>
     <p class="sub">A registered, ATL-active supplier issues a Rs. 200,000 goods invoice with 18% GST shown separately.</p>
     <div class="example-box">

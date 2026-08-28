@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Income Tax Calculator (Redesign Preview) | Pakistan Tax Calculator</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Income Tax Calculator Pakistan 2025-26 & 2026-27 | Pakistan Tax Calculator</title>
 <meta name="description" content="Calculate Pakistan income tax for salaried individuals, business/AOPs and companies for tax year 2025-26 and 2026-27, plus check your Section 82 residency status.">
 <meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
@@ -73,7 +72,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -94,6 +93,63 @@ header.site-header p.tagline{
   border-radius:20px;
   margin-bottom:14px;
 }
+.mainnav{
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  padding-bottom:16px;
+}
+.navToggle{
+  width:100%;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navToggle .chev{transition:transform .2s ease;font-size:11px;}
+.navToggle.open{border-radius:10px 10px 0 0;}
+.navToggle.open .chev{transform:rotate(180deg);}
+.navMenu{
+  display:none;
+  background:#fff;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  padding:10px;
+  text-align:left;
+  position:absolute;
+  left:0;right:0;
+  z-index:50;
+}
+.navMenu.open{display:block;}
+.navGroup{margin-bottom:6px;}
+.navGroup:last-child{margin-bottom:0;}
+.navGroupTitle{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  padding:9px 10px 3px;
+}
+.navMenu a{
+  display:block;
+  padding:10px 10px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+}
+.navMenu a:hover{background:var(--green-pale);}
+.navMenu a.active{background:var(--green);color:#fff;}
+.navDivider{height:1px;background:var(--border);margin:6px 4px;}
 .wrap{
   max-width:920px;
   margin:0 auto;
@@ -108,11 +164,29 @@ header.site-header p.tagline{
   box-shadow:var(--shadow);
 }
 #freqField, #residentStatusChecker{ scroll-margin-top:210px; }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -629,7 +703,35 @@ table.gst td.note{
 .tag-req{ background:var(--green); color:#fff; }
 .tag-opt{ background:var(--green-pale); color:var(--green); border:1px solid var(--green-light); }
 
- inside the header quick-links bar ---- */
+/* ---- Quick links bar in the header ---- */
+.quickLinks{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:.15rem .1rem;
+  margin:0 auto .75rem;
+  max-width:900px;
+}
+.quickLinks a{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  padding:.3rem .62rem;
+  border-radius:6px;
+  white-space:nowrap;
+  transition:background .15s ease, color .15s ease;
+}
+.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
+.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
+@media (max-width:560px){
+  .quickLinks{ gap:.1rem 0; }
+  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
+  .quickLinks a + a{ border-left:none; }
+}
+
+/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
 .qlDrop{ position:relative; display:inline-block; }
 .qlDropBtn{
   font:inherit;
@@ -756,7 +858,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1036,290 +1138,6 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
   line-height:1.3;
 }
 .railLink:hover{ background:var(--green-pale); }
-
-/* ---- Sticky "Calculation Summary" sidebar redesign (preview) ---- */
-.itc-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-  align-items:start;
-}
-@media (min-width:900px){
-  .itc-grid{ grid-template-columns:1.7fr 1fr; }
-}
-.itc-main{ min-width:0; display:flex; flex-direction:column; gap:16px; }
-.itc-sidebar{ min-width:0; }
-@media (min-width:900px){
-  .itc-sidebar{ position:sticky; top:20px; }
-}
-.card-summary{
-  background:linear-gradient(160deg, var(--green) 0%, #022c14 100%);
-  border:none;
-  color:#fff;
-  box-shadow:var(--shadow);
-}
-.card-summary h2{ color:#fff; }
-.card-summary .cs-eyebrow{
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-  color:#e8c766;
-  margin:2px 0 8px;
-}
-.card-summary .cs-amount{
-  font-size:clamp(30px,7vw,40px);
-  font-weight:800;
-  color:#fff;
-  letter-spacing:-.5px;
-  line-height:1.1;
-  margin-bottom:6px;
-}
-.card-summary .cs-sub{
-  font-size:13px;
-  color:rgba(255,255,255,0.68);
-  margin-bottom:18px;
-}
-.card-summary .hero-stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:20px;
-}
-.card-summary .hero-stat{
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.14);
-  border-radius:10px;
-  padding:12px 14px;
-}
-.card-summary .hero-stat .k{
-  font-size:11px;
-  color:rgba(255,255,255,0.62);
-  margin-bottom:4px;
-}
-.card-summary .hero-stat .v{
-  font-size:18px;
-  font-weight:700;
-  color:#fff;
-}
-.card-summary .cs-slab-panel{
-  border-top:1px solid rgba(255,255,255,0.18);
-  padding-top:16px;
-}
-.card-summary .cs-slab-panel h3{
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.65);
-  margin:0 0 16px;
-}
-.card-summary .slab-row .slab-rate{ color:#fff; }
-.card-summary .slab-row .slab-bar-track{ background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.18); }
-.card-summary .slab-row .slab-bar-fill{ background:#fff; }
-.card-summary .slab-row .slab-bar-fill.extra{ background:#e8c766; }
-.card-summary .slab-row .slab-amount{ color:#fff; }
-.card-summary .slab-row .slab-amount.muted{ color:rgba(255,255,255,0.55); }
-.card-summary .slab-row-range{ color:rgba(255,255,255,0.6); }
-.card-summary .cs-slab-panel #slabBreakdown:empty::before{
-  content:"Enter an amount to see the breakdown.";
-  display:block;
-  font-size:13px;
-  color:rgba(255,255,255,0.6);
-}
-
-.mainnav{
-  max-width:920px;
-  margin:0 auto;
-  position:relative;
-  padding-bottom:16px;
-}
-.navToggle{
-  width:100%;
-  background:rgba(255,255,255,0.14);
-  border:1px solid rgba(255,255,255,0.35);
-  color:#fff;
-  font-weight:700;
-  font-size:14px;
-  padding:12px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.navToggle .chev{transition:transform .2s ease;font-size:11px;}
-.navToggle.open{border-radius:10px 10px 0 0;}
-.navToggle.open .chev{transform:rotate(180deg);}
-.navMenu{
-  display:none;
-  background:#fff;
-  border-radius:0 0 12px 12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.18);
-  padding:10px;
-  text-align:left;
-  position:absolute;
-  left:0;right:0;
-  z-index:50;
-}
-.navMenu.open{display:block;}
-.navGroup{margin-bottom:6px;}
-.navGroup:last-child{margin-bottom:0;}
-.navGroupTitle{
-  font-size:11px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  color:var(--muted);
-  padding:9px 10px 3px;
-}
-.navMenu a{
-  display:block;
-  padding:10px 10px;
-  border-radius:8px;
-  color:var(--text);
-  text-decoration:none;
-  font-size:14.5px;
-  font-weight:600;
-}
-.navMenu a:hover{background:var(--green-pale);}
-.navMenu a.active{background:var(--green);color:#fff;}
-.navDivider{height:1px;background:var(--border);margin:6px 4px;}
-
-/* ---- Quick links bar in the header ---- */
-.quickLinks{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:.15rem .1rem;
-  margin:0 auto .75rem;
-  max-width:900px;
-}
-.quickLinks a{
-  color:rgba(255,255,255,.92);
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  padding:.3rem .62rem;
-  border-radius:6px;
-  white-space:nowrap;
-  transition:background .15s ease, color .15s ease;
-}
-.quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
-.quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
-@media (max-width:560px){
-  .quickLinks{ gap:.1rem 0; }
-  .quickLinks a{ font-size:12px; padding:.28rem .45rem; }
-  .quickLinks a + a{ border-left:none; }
-}
-
-/* ---- Provincial Tax dropdown inside the header quick-links bar ---- */
-.qlDrop{ position:relative; display:inline-block; }
-.qlDropBtn{
-  font:inherit;
-  color:rgba(255,255,255,.92);
-  background:transparent;
-  border:none;
-  border-left:1px solid rgba(255,255,255,.28);
-  border-radius:0 6px 6px 0;
-  font-size:13px;
-  font-weight:600;
-  padding:.3rem .62rem;
-  cursor:pointer;
-  white-space:nowrap;
-  display:inline-flex;
-  align-items:center;
-  gap:.3rem;
-  transition:background .15s ease, color .15s ease;
-}
-.qlDropBtn:hover, .qlDropBtn.open{ background:rgba(255,255,255,.2); color:#fff; }
-.qlDropBtn .chev{ font-size:10px; transition:transform .18s ease; }
-.qlDropBtn.open .chev{ transform:rotate(180deg); }
-.qlDropMenu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 6px);
-  left:50%;
-  transform:translateX(-50%);
-  min-width:220px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:0 10px 28px rgba(0,0,0,.22);
-  padding:.35rem;
-  z-index:60;
-  text-align:left;
-}
-.qlDropMenu.open{ display:block; }
-.qlDropMenu a{
-  display:block;
-  color:var(--green);
-  font-size:13px;
-  font-weight:600;
-  padding:.5rem .7rem;
-  border-radius:6px;
-  white-space:nowrap;
-  text-decoration:none;
-  border:none;
-}
-.qlDropMenu a:hover{ background:var(--green-pale); color:var(--green); }
-@media (max-width:560px){
-  .qlDropBtn{ border-left:none; font-size:12px; padding:.28rem .45rem; }
-  .qlDropMenu{ min-width:200px; }
-}
-
-
-/* ---- PakTaxPro-style quick presets, stat tiles, distribution bar, bracket rule ---- */
-.quick-presets{ margin-top:10px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
-.quick-presets-label{ font-size:12px; color:var(--muted); font-weight:600; margin-right:2px; }
-.preset-btn{
-  font:inherit; font-size:12.5px; font-weight:700;
-  padding:5px 12px; border-radius:20px;
-  border:1.5px solid var(--border); background:#fff; color:var(--green);
-  cursor:pointer; transition:background .15s ease, border-color .15s ease, color .15s ease;
-}
-.preset-btn:hover{ border-color:var(--green-light); background:var(--green-pale); }
-.preset-btn.active{ background:var(--green); border-color:var(--green); color:#fff; }
-
-.stat-tiles{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 16px;
-}
-@media (max-width:640px){ .stat-tiles{ grid-template-columns:1fr 1fr; } }
-.stat-tile{
-  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-  padding:14px 16px; box-shadow:var(--shadow); text-align:center;
-}
-.stat-tile-label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:6px; }
-.stat-tile-value{ font-size:19px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; }
-.stat-tile-value-tax{ color:#c0392b; }
-
-.dist-card{
-  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-  padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow);
-}
-.dist-header{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; }
-.dist-title{ font-size:12.5px; font-weight:700; color:var(--text); }
-.dist-legend{ display:flex; gap:14px; font-size:12px; color:var(--muted); font-weight:600; }
-.dist-legend-item{ display:inline-flex; align-items:center; gap:5px; }
-.dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
-.dot-take{ background:var(--green); }
-.dot-tax{ background:#c0392b; }
-.dist-bar{ display:flex; height:10px; border-radius:6px; overflow:hidden; background:var(--bg); border:1px solid var(--border); }
-.dist-bar-take{ background:var(--green); height:100%; transition:width .35s ease; }
-.dist-bar-tax{ background:#c0392b; height:100%; transition:width .35s ease; }
-
-.bracket-card{
-  background:var(--green-pale); border:1px solid var(--green-light); border-radius:var(--radius);
-  padding:14px 18px; margin-bottom:16px;
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
-}
-.bracket-rule-label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--green); }
-.bracket-rule-text{ font-size:13px; color:var(--text); font-weight:600; }
-.marginal-badge{
-  font-size:11.5px; font-weight:700; color:#fff; background:var(--green);
-  padding:5px 12px; border-radius:20px; white-space:nowrap;
-}
 </style>
 </head>
 <body>
@@ -1330,7 +1148,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1534,10 +1352,8 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <button type="button" class="ptcLangBtn" id="ptcLangUr" onclick="ptcSetLang('ur')">اردو</button>
   </div>
 
-  <div class="itc-grid">
-    <div class="itc-main">
-      <div class="card">
-    <h2><span class="lang-en">Income Tax Calculator</span><span class="lang-ur">انکم ٹیکس کیلکولیٹر</span></h2>
+  <div class="card">
+    <h1><span class="lang-en">Income Tax Calculator</span><span class="lang-ur">انکم ٹیکس کیلکولیٹر</span></h1>
     <p class="sub lang-en">Calculate your annual income tax liability under the Income Tax Ordinance, 2001.</p>
     <p class="sub lang-ur">انکم ٹیکس آرڈیننس 2001 کے تحت اپنی سالانہ انکم ٹیکس واجب الادا رقم معلوم کریں۔</p>
 
@@ -1587,17 +1403,6 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       </div>
       <div class="hint lang-en" id="salariedHint">For salaried individuals, at least 75% of taxable income must be from salary to use these rates.</div>
       <div class="hint lang-ur">تنخواہ دار افراد کے لیے، ان ریٹس کے اطلاق کے لیے قابلِ ٹیکس آمدنی کا کم از کم 75% تنخواہ سے ہونا ضروری ہے۔</div>
-      <div class="quick-presets" id="incomePresets">
-        <span class="quick-presets-label">Quick presets:</span>
-        <button type="button" class="preset-btn" data-val="50000">50k</button>
-        <button type="button" class="preset-btn" data-val="75000">75k</button>
-        <button type="button" class="preset-btn" data-val="100000">100k</button>
-        <button type="button" class="preset-btn" data-val="150000">150k</button>
-        <button type="button" class="preset-btn" data-val="250000">250k</button>
-        <button type="button" class="preset-btn" data-val="400000">400k</button>
-        <button type="button" class="preset-btn" data-val="600000">600k</button>
-        <button type="button" class="preset-btn" data-val="1000000">10 Lakh</button>
-      </div>
     </div>
 
     <div class="field" id="turnoverField" style="display:none;">
@@ -1607,8 +1412,8 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       <div class="hint lang-ur">کم از کم ٹیکس ٹرن اوور کا 1.25% ہے (بعض شعبوں پر کم ریٹ 0.25% تا 0.75% لاگو ہوتا ہے)۔ صرف اسی صورت ظاہر ہوگا جب یہ حساب کردہ ٹیکس سے زیادہ ہو۔</div>
     </div>
   </div>
-
-      <div class="card videoCard">
+  
+  <div class="card videoCard">
     <h3><span class="lang-en">Watch: How to Use This Calculator</span><span class="lang-ur">ویڈیو: یہ کیلکولیٹر کیسے استعمال کریں</span></h3>
     <p class="sub lang-en">Step-by-step walkthrough of the Income Tax Calculator above.</p>
     <p class="sub lang-ur">اوپر دیے گئے انکم ٹیکس کیلکولیٹر کے استعمال کا مرحلہ وار طریقہ۔</p>
@@ -1621,68 +1426,26 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
         allowfullscreen></iframe>
     </div>
   </div>
-    </div>
 
-    <div class="itc-sidebar">
-      <div class="card card-summary">
-        <h2><span class="lang-en">Calculation Summary</span><span class="lang-ur">حساب کا خلاصہ</span></h2>
-        <div class="cs-eyebrow lang-en">Estimated Tax Payable &middot; Annual</div>
-        <div class="cs-eyebrow lang-ur">تخمینی واجب الادا ٹیکس · سالانہ</div>
-        <div class="cs-amount" id="incomeTotalTax">Rs. 0</div>
-        <div class="cs-sub" id="heroSub">Enter an amount above to calculate</div>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="k" id="heroStat1Label">Monthly tax</div>
-            <div class="v" id="heroStat1Value">Rs. 0</div>
-          </div>
-          <div class="hero-stat">
-            <div class="k" id="heroStat2Label">Take-home / month</div>
-            <div class="v" id="heroStat2Value">Rs. 0</div>
-          </div>
-        </div>
-        <div class="cs-slab-panel">
-          <h3 id="slabPanelTitle">Slab-by-Slab Breakdown</h3>
-          <div id="slabBreakdown"></div>
-        </div>
+  <div class="tax-hero">
+    <div class="hero-label"><span class="lang-en">Estimated Tax Payable &middot; Annual</span><span class="lang-ur">تخمینی واجب الادا ٹیکس · سالانہ</span></div>
+    <div class="hero-amount" id="incomeTotalTax">Rs. 0</div>
+    <div class="hero-sub" id="heroSub">Enter an amount above to calculate</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="k" id="heroStat1Label">Monthly tax</div>
+        <div class="v" id="heroStat1Value">Rs. 0</div>
+      </div>
+      <div class="hero-stat">
+        <div class="k" id="heroStat2Label">Take-home / month</div>
+        <div class="v" id="heroStat2Value">Rs. 0</div>
       </div>
     </div>
   </div>
 
-  <div class="stat-tiles">
-    <div class="stat-tile">
-      <div class="stat-tile-label">Gross Annual</div>
-      <div class="stat-tile-value" id="statGrossAnnual">Rs. 0</div>
-    </div>
-    <div class="stat-tile">
-      <div class="stat-tile-label">Total Yearly Tax</div>
-      <div class="stat-tile-value stat-tile-value-tax" id="statTotalTax">Rs. 0</div>
-    </div>
-    <div class="stat-tile">
-      <div class="stat-tile-label">Effective Tax Rate</div>
-      <div class="stat-tile-value" id="statEffRate">0%</div>
-    </div>
-  </div>
-
-  <div class="dist-card">
-    <div class="dist-header">
-      <span class="dist-title">Income Distribution Ratio</span>
-      <span class="dist-legend">
-        <span class="dist-legend-item"><i class="dot dot-take"></i><span id="distTakeHomeLabel">Take-Home (100%)</span></span>
-        <span class="dist-legend-item"><i class="dot dot-tax"></i><span id="distTaxLabel">Tax (0%)</span></span>
-      </span>
-    </div>
-    <div class="dist-bar">
-      <div class="dist-bar-take" id="distTakeHomeBar" style="width:100%;"></div>
-      <div class="dist-bar-tax" id="distTaxBar" style="width:0%;"></div>
-    </div>
-  </div>
-
-  <div class="bracket-card">
-    <div>
-      <div class="bracket-rule-label">FBR Bracket Rule</div>
-      <div class="bracket-rule-text" id="bracketRuleText">Enter an amount to see the applicable rule.</div>
-    </div>
-    <div class="marginal-badge" id="marginalRateBadge">Marginal Rate: 0%</div>
+  <div class="card slab-panel">
+    <h3 id="slabPanelTitle">Slab-by-Slab Breakdown</h3>
+    <div id="slabBreakdown"></div>
   </div>
 
   <div class="disclaimer lang-en">
@@ -1948,459 +1711,42 @@ document.addEventListener('click', (e)=>{
   });
 })();
 
-/* ---- income-tax calculator logic (embedded verbatim for offline local preview; production loads this lazily from Supabase) ---- */
+/* ---- income-tax calculator logic (lazy-loaded from Supabase on first interaction) ---- */
 (function(){
-/* =========================================================
-   INCOME TAX DATA
-========================================================= */
-function slabTax(income, slabs){
-  income = Math.max(0, income||0);
-  if(income<=0) return {tax:0, slab:null};
-  let chosen = slabs[slabs.length-1];
-  for(const s of slabs){
-    if(income > s.min && income <= s.max){ chosen = s; break; }
+  var SLUG = 'income-tax';
+  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
+  var loaded = false, loading = false;
+  function ptcShowLoadingToast(){
+    var t = document.createElement('div');
+    t.id = 'ptcCalcLoadingToast';
+    t.textContent = 'Loading calculator\u2026';
+    t.style.cssText = 'position:fixed;bottom:18px;left:18px;z-index:9999;background:#01411C;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 4px 14px rgba(1,65,28,0.35);';
+    document.body.appendChild(t);
+    return t;
   }
-  const tax = chosen.base + (income - chosen.min) * (chosen.rate/100);
-  return {tax: Math.max(0,tax), slab: chosen};
-}
-
-const TAX_DATA = {
-  "2025-26": {
-    label: "Tax Year 2025-26",
-    salariedSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:1, base:0},
-      {min:1200000, max:2200000, rate:11, base:6000},
-      {min:2200000, max:3200000, rate:23, base:116000},
-      {min:3200000, max:4100000, rate:30, base:346000},
-      {min:4100000, max:Infinity, rate:35, base:616000},
-    ],
-    salariedSurcharge: true,
-    businessSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:15, base:0},
-      {min:1200000, max:1600000, rate:20, base:90000},
-      {min:1600000, max:3200000, rate:30, base:170000},
-      {min:3200000, max:5600000, rate:40, base:650000},
-      {min:5600000, max:Infinity, rate:45, base:1610000},
-    ],
-    businessSurcharge: true
-  },
-  "2026-27": {
-    label: "Tax Year 2026-27",
-    salariedSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:1, base:0},
-      {min:1200000, max:2200000, rate:11, base:6000},
-      {min:2200000, max:3200000, rate:20, base:116000},
-      {min:3200000, max:4100000, rate:25, base:316000},
-      {min:4100000, max:5600000, rate:29, base:541000},
-      {min:5600000, max:7000000, rate:32, base:976000},
-      {min:7000000, max:Infinity, rate:35, base:1424000},
-    ],
-    salariedSurcharge: false,
-    businessSlabs: [
-      {min:0, max:600000, rate:0, base:0},
-      {min:600000, max:1200000, rate:15, base:0},
-      {min:1200000, max:1600000, rate:20, base:90000},
-      {min:1600000, max:3200000, rate:30, base:170000},
-      {min:3200000, max:5600000, rate:40, base:650000},
-      {min:5600000, max:Infinity, rate:45, base:1610000},
-    ],
-    businessSurcharge: true
-  }
-};
-
-const COMPANY_RATES = { other:29, small:20, banking:39 };
-
-const SUPER_TAX_SLABS = [
-  {min:0, max:150e6, rate:0},
-  {min:150e6, max:200e6, rate:1},
-  {min:200e6, max:250e6, rate:1.5},
-  {min:250e6, max:300e6, rate:2.5},
-  {min:300e6, max:350e6, rate:3.5},
-  {min:350e6, max:400e6, rate:5.5},
-  {min:400e6, max:500e6, rate:7.5},
-  {min:500e6, max:Infinity, rate:10},
-];
-function superTaxRate(income){
-  let r = 0;
-  for(const s of SUPER_TAX_SLABS){ if(income > s.min && income <= s.max){ r = s.rate; break; } }
-  if(income > 500e6) r = 10;
-  return r;
-}
-
-const SURCHARGE_THRESHOLD = 10000000;
-const SURCHARGE_RATE = 9;
-
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-
-function numVal(id){
-  const el = document.getElementById(id);
-  if(!el) return 0;
-  return parseFloat((el.value || '').replace(/,/g,'')) || 0;
-}
-
-function attachCommaFormat(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const cursorFromEnd = el.value.length - el.selectionStart;
-    let raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
-    el.value = raw === '' ? '' : Number(raw).toLocaleString('en-US');
-    const newPos = Math.max(0, el.value.length - cursorFromEnd);
-    el.setSelectionRange(newPos, newPos);
-  });
-}
-['incomeInput','turnoverInput'].forEach(attachCommaFormat);
-
-/* ---- UI wiring ---- */
-let currentYear = "2025-26";
-let currentType = "salaried";
-let currentFreq = "annual";
-
-function updateIncomeLabel(){
-  const label = document.getElementById('incomeLabel');
-  const input = document.getElementById('incomeInput');
-  if(currentType === 'company'){
-    label.textContent = 'Annual Taxable Income / Profit (PKR)';
-    input.placeholder = 'e.g. 3000000';
-  } else if(currentFreq === 'monthly'){
-    label.textContent = 'Monthly Salary / Income (PKR)';
-    input.placeholder = 'e.g. 250000';
-  } else {
-    label.textContent = 'Annual Taxable Income (PKR)';
-    input.placeholder = 'e.g. 3000000';
-  }
-}
-
-function setTaxYear(year){
-  currentYear = year;
-  document.querySelectorAll('.year-toggle button').forEach(x=>{
-    x.classList.toggle('active', x.dataset.year === year);
-  });
-  document.getElementById('taxYearBadge').textContent = "Tax Year " + currentYear;
-  computeIncomeTax();
-  computeResidency();
-}
-
-document.querySelectorAll('.year-toggle button').forEach(b=>{
-  b.addEventListener('click', ()=>{ setTaxYear(b.dataset.year); });
-});
-
-document.querySelectorAll('#typeSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#typeSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentType = b.dataset.type;
-    document.getElementById('companyTypeField').style.display = currentType==='company' ? 'block':'none';
-    document.getElementById('turnoverField').style.display = currentType==='company' ? 'block':'none';
-    document.getElementById('salariedHint').style.display = currentType==='salaried' ? 'block':'none';
-    document.getElementById('freqField').style.display = currentType==='company' ? 'none':'block';
-    updateIncomeLabel();
-    computeIncomeTax();
-  });
-});
-
-document.querySelectorAll('#freqSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#freqSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentFreq = b.dataset.freq;
-    updateIncomeLabel();
-    computeIncomeTax();
-  });
-});
-
-document.getElementById('companyType').addEventListener('change', computeIncomeTax);
-document.getElementById('incomeInput').addEventListener('input', computeIncomeTax);
-document.getElementById('turnoverInput').addEventListener('input', computeIncomeTax);
-
-function slabRowHtml(rateLabel, amt, pct, rangeText){
-  return `
-    <div class="slab-row">
-      <div class="slab-row-top">
-        <div class="slab-rate">${rateLabel}</div>
-        <div class="slab-bar-track"><div class="slab-bar-fill" style="width:${pct}%"></div></div>
-        <div class="slab-amount ${amt<=0?'muted':''}">${amt>0 ? fmt(amt) : '−'}</div>
-      </div>
-      <div class="slab-row-range">${rangeText}</div>
-    </div>`;
-}
-
-function computeIncomeTax(){
-  const rawInput = numVal('incomeInput');
-  const income = (currentFreq === 'monthly' && currentType !== 'company') ? rawInput * 12 : rawInput;
-  const yearData = TAX_DATA[currentYear];
-  const slabEl = document.getElementById('slabBreakdown');
-  const heroSubEl = document.getElementById('heroSub');
-  let total = 0;
-  let baseTax = 0;
-  let surcharge = 0;
-  let superTax = 0;
-  let minTax = 0;
-  let slabHtml = "";
-
-  if(currentType === 'salaried' || currentType === 'business'){
-    const slabs = currentType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
-    const surchargeApplies = currentType==='salaried' ? yearData.salariedSurcharge : yearData.businessSurcharge;
-    const {tax, slab} = slabTax(income, slabs);
-    baseTax = tax;
-    if(surchargeApplies && income > SURCHARGE_THRESHOLD){
-      surcharge = tax * (SURCHARGE_RATE/100);
-    }
-    superTax = income * (superTaxRate(income)/100);
-    total = baseTax + surcharge + superTax;
-
-    document.getElementById('slabPanelTitle').textContent = 'Slab-by-Slab Breakdown';
-    slabs.forEach(s=>{
-      let amt = 0;
-      if(income > s.min){
-        const cap = s.max===Infinity ? income : Math.min(income, s.max);
-        amt = (cap - s.min) * (s.rate/100);
+  function ptcLoadCalculator(){
+    if(loaded || loading) return;
+    loading = true;
+    var toast = ptcShowLoadingToast();
+    fetch(SUPABASE_URL + '/rest/v1/calculator_scripts?slug=eq.' + encodeURIComponent(SLUG) + '&select=js_code', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      if(rows && rows[0] && rows[0].js_code){
+        var s = document.createElement('script');
+        s.textContent = rows[0].js_code;
+        document.body.appendChild(s);
+        loaded = true;
+      } else {
+        loading = false;
       }
-      const pct = baseTax>0 ? Math.min(100, (amt/baseTax*100)) : 0;
-      const rangeText = s.max===Infinity
-        ? `Rs. ${s.min.toLocaleString('en-US')} &amp; above`
-        : `Rs. ${s.min.toLocaleString('en-US')} – ${s.max.toLocaleString('en-US')}`;
-      slabHtml += slabRowHtml(s.rate+'%', amt, pct, rangeText);
-    });
-    if(surchargeApplies && surcharge>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">+9%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(surcharge)}</div></div><div class="slab-row-range">Surcharge on tax, income above Rs. 10,000,000</div></div>`;
-    }
-    if(superTax>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
-    }
-
-    if(income<=0){
-      heroSubEl.textContent = 'Enter an amount above to calculate';
-    } else if(slab && slab.rate===0){
-      heroSubEl.textContent = 'Below taxable threshold (Rs. 600,000) — no income tax';
-    } else if(slab){
-      const rangeText = slab.max===Infinity
-        ? `above Rs. ${slab.min.toLocaleString('en-PK')}`
-        : `Rs. ${slab.min.toLocaleString('en-PK')} – Rs. ${slab.max.toLocaleString('en-PK')}`;
-      heroSubEl.textContent = `You fall in the ${slab.rate}% tax bracket (${rangeText})`;
-    }
-
-    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
-    document.getElementById('heroStat1Value').textContent = fmt(total/12);
-    document.getElementById('heroStat2Label').textContent = 'Take-home / month';
-    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
-  } else {
-    // company
-    const compType = document.getElementById('companyType').value;
-    const rate = COMPANY_RATES[compType];
-    baseTax = income * (rate/100);
-    superTax = income * (superTaxRate(income)/100);
-    const turnover = numVal('turnoverInput');
-    minTax = turnover * 0.0125;
-    const higherBase = Math.max(baseTax, minTax);
-    total = higherBase + superTax;
-
-    document.getElementById('slabPanelTitle').textContent = 'Tax Breakdown';
-    slabHtml += slabRowHtml(rate+'%', baseTax, higherBase>0 ? Math.min(100, baseTax/higherBase*100) : 0, 'Corporate tax on taxable income');
-    if(turnover>0){
-      slabHtml += slabRowHtml('1.25%', minTax, higherBase>0 ? Math.min(100, minTax/higherBase*100) : 0, 'Minimum tax on turnover (Sec 113)');
-    }
-    if(superTax>0){
-      slabHtml += `<div class="slab-row"><div class="slab-row-top"><div class="slab-rate">${superTaxRate(income)}%</div><div class="slab-bar-track"><div class="slab-bar-fill extra" style="width:100%"></div></div><div class="slab-amount">${fmt(superTax)}</div></div><div class="slab-row-range">Super tax (Sec 4C) on income</div></div>`;
-    }
-
-    const compLabel = compType==='small'?'Small':compType==='banking'?'Banking':'Standard';
-    heroSubEl.textContent = income>0 ? `${compLabel} company rate: ${rate}%` : 'Enter an amount above to calculate';
-
-    document.getElementById('heroStat1Label').textContent = 'Monthly tax';
-    document.getElementById('heroStat1Value').textContent = fmt(total/12);
-    document.getElementById('heroStat2Label').textContent = 'Net profit / month';
-    document.getElementById('heroStat2Value').textContent = fmt(Math.max(income-total,0)/12);
+    }).catch(function(e){ console.error('Calculator failed to load:', e); loading = false; })
+      .then(function(){ if(toast && toast.parentNode) toast.parentNode.removeChild(toast); });
   }
-
-  slabEl.innerHTML = slabHtml;
-  document.getElementById('incomeTotalTax').textContent = fmt(total);
-  updateExtraStats(income, total, currentType, currentYear);
-}
-
-function updateExtraStats(income, total, taxpayerType, taxYear){
-  var grossEl = document.getElementById('statGrossAnnual');
-  var taxEl = document.getElementById('statTotalTax');
-  var rateEl = document.getElementById('statEffRate');
-  if(grossEl) grossEl.textContent = fmt(income);
-  if(taxEl) taxEl.textContent = fmt(total);
-  var effRate = income>0 ? (total/income*100) : 0;
-  if(rateEl) rateEl.textContent = effRate.toFixed(1)+'%';
-
-  var takeHomePct = income>0 ? Math.max(0, Math.min(100, (income-total)/income*100)) : 100;
-  var taxPct = 100 - takeHomePct;
-  var barTake = document.getElementById('distTakeHomeBar');
-  var barTax = document.getElementById('distTaxBar');
-  var lblTake = document.getElementById('distTakeHomeLabel');
-  var lblTax = document.getElementById('distTaxLabel');
-  if(barTake) barTake.style.width = takeHomePct+'%';
-  if(barTax) barTax.style.width = taxPct+'%';
-  if(lblTake) lblTake.textContent = 'Take-Home ('+takeHomePct.toFixed(1)+'%)';
-  if(lblTax) lblTax.textContent = 'Tax ('+taxPct.toFixed(1)+'%)';
-
-  var bracketEl = document.getElementById('bracketRuleText');
-  var marginalEl = document.getElementById('marginalRateBadge');
-  var yearData = TAX_DATA[taxYear];
-  if(taxpayerType === 'salaried' || taxpayerType === 'business'){
-    var slabs = taxpayerType==='salaried' ? yearData.salariedSlabs : yearData.businessSlabs;
-    var chosen = slabs[slabs.length-1];
-    for(var i=0;i<slabs.length;i++){ if(income > slabs[i].min && income <= slabs[i].max){ chosen = slabs[i]; break; } }
-    if(bracketEl){
-      bracketEl.textContent = (income>0 && chosen.rate>0)
-        ? ('Rs. '+chosen.base.toLocaleString('en-US')+' + '+chosen.rate+'% of the amount exceeding Rs. '+chosen.min.toLocaleString('en-US'))
-        : (income>0 ? 'Below the taxable threshold — no income tax due.' : 'Enter an amount to see the applicable rule.');
-    }
-    if(marginalEl) marginalEl.textContent = 'Marginal Rate: '+chosen.rate+'%';
-  } else {
-    var compTypeEl = document.getElementById('companyType');
-    var compType = compTypeEl ? compTypeEl.value : 'other';
-    var rate = COMPANY_RATES[compType];
-    if(bracketEl){
-      bracketEl.textContent = income>0
-        ? ('Flat '+rate+'% of taxable income (plus 1.25% minimum tax on turnover, if higher)')
-        : 'Enter an amount to see the applicable rule.';
-    }
-    if(marginalEl) marginalEl.textContent = 'Marginal Rate: '+rate+'%';
-  }
-}
-
-/* ---- Quick income presets ---- */
-document.querySelectorAll('.preset-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    document.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-    var input = document.getElementById('incomeInput');
-    if(!input) return;
-    input.value = Number(btn.getAttribute('data-val')).toLocaleString('en-US');
-    input.dispatchEvent(new Event('input', { bubbles:true }));
+  var root = document.querySelector('main') || document.body;
+  ['pointerdown','focusin','keydown'].forEach(function(evt){
+    root.addEventListener(evt, ptcLoadCalculator, { once:true, passive:true });
   });
-});
-
-/* =========================================================
-   RESIDENT STATUS CHECKER (Section 82)
-========================================================= */
-const TAX_YEAR_RANGES = {
-  "2025-26": { start: Date.UTC(2025,6,1), end: Date.UTC(2026,5,30) },
-  "2026-27": { start: Date.UTC(2026,6,1), end: Date.UTC(2027,5,30) },
-};
-const MS_DAY = 86400000;
-
-let residencyMode = 'days';
-let tripCounter = 0;
-
-document.querySelectorAll('#residencyModeSeg button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('#residencyModeSeg button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    residencyMode = b.dataset.mode;
-    document.getElementById('residencyDaysMode').style.display = residencyMode==='days' ? 'block':'none';
-    document.getElementById('residencyTripsMode').style.display = residencyMode==='trips' ? 'block':'none';
-    computeResidency();
-  });
-});
-
-function addTripRow(){
-  tripCounter++;
-  const id = 'trip'+tripCounter;
-  const row = document.createElement('div');
-  row.className = 'trip-row';
-  row.dataset.id = id;
-  row.innerHTML = `
-    <input type="date" class="tripEntry" id="${id}-entry">
-    <span class="arrow">&rarr;</span>
-    <input type="date" class="tripExit" id="${id}-exit">
-    <span class="tripDays" id="${id}-days">0 days</span>
-    <button type="button" class="tripRemove" aria-label="Remove trip">&times;</button>
-  `;
-  row.querySelector('.tripEntry').addEventListener('input', computeResidency);
-  row.querySelector('.tripExit').addEventListener('input', computeResidency);
-  row.querySelector('.tripRemove').addEventListener('click', ()=>{
-    row.remove();
-    computeResidency();
-  });
-  document.getElementById('tripsList').appendChild(row);
-}
-document.getElementById('addTripBtn').addEventListener('click', addTripRow);
-addTripRow(); // start with one row
-
-document.getElementById('residencyDaysInput').addEventListener('input', computeResidency);
-document.getElementById('residencyPrev4Input').addEventListener('input', computeResidency);
-document.getElementById('residencyGovt').addEventListener('change', computeResidency);
-document.getElementById('residencyCitizen').addEventListener('change', computeResidency);
-
-function computeResidency(){
-  const range = TAX_YEAR_RANGES[currentYear];
-  let daysThisYear = 0;
-
-  if(residencyMode === 'days'){
-    daysThisYear = parseFloat(document.getElementById('residencyDaysInput').value) || 0;
-  } else {
-    document.querySelectorAll('#tripsList .trip-row').forEach(row=>{
-      const entryVal = row.querySelector('.tripEntry').value;
-      const exitVal = row.querySelector('.tripExit').value;
-      const daysLabel = row.querySelector('.tripDays');
-      let rowDays = 0;
-      if(entryVal && exitVal){
-        const entryMs = Date.parse(entryVal + 'T00:00:00Z');
-        const exitMs = Date.parse(exitVal + 'T00:00:00Z');
-        if(!isNaN(entryMs) && !isNaN(exitMs) && exitMs >= entryMs){
-          const clipStart = Math.max(entryMs, range.start);
-          const clipEnd = Math.min(exitMs, range.end);
-          if(clipEnd >= clipStart){
-            rowDays = Math.round((clipEnd - clipStart) / MS_DAY) + 1;
-          }
-        }
-      }
-      daysLabel.textContent = rowDays + (rowDays===1?' day':' days');
-      daysThisYear += rowDays;
-    });
-  }
-
-  const prev4 = parseFloat(document.getElementById('residencyPrev4Input').value) || 0;
-  const govt = document.getElementById('residencyGovt').checked;
-  const citizen = document.getElementById('residencyCitizen').checked;
-
-  const test183 = daysThisYear >= 183;
-  const test120 = daysThisYear >= 120 && prev4 >= 365;
-  const anyInput = daysThisYear>0 || prev4>0 || govt || citizen;
-
-  const isResident = test183 || test120 || govt || citizen;
-
-  const pill = document.getElementById('residencyStatus');
-  const breakdownEl = document.getElementById('residencyBreakdown');
-
-  if(!anyInput){
-    pill.className = 'status-pill pending';
-    pill.textContent = 'Enter your details above';
-    breakdownEl.innerHTML = '';
-    return;
-  }
-
-  pill.className = 'status-pill ' + (isResident ? 'resident' : 'nonresident');
-  pill.textContent = isResident ? 'Resident' : 'Non-Resident';
-
-  breakdownEl.innerHTML = `
-    <tr><th>Test (Sec 82)</th><th>Your Figures</th><th>Result</th></tr>
-    <tr><td>(a) 183+ days present this tax year</td><td>${daysThisYear} days</td><td>${test183?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(b) 120+ days this year AND 365+ days in preceding 4 years</td><td>${daysThisYear} days this year, ${prev4} days prior 4 yrs</td><td>${test120?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(c) Govt employee posted abroad</td><td>${govt?'Yes':'No'}</td><td>${govt?'✅ Met':'Not met'}</td></tr>
-    <tr><td>(d) Citizen, not resident/183+ days elsewhere</td><td>${citizen?'Yes':'No'}</td><td>${citizen?'✅ Met':'Not met'}</td></tr>
-    <tr><td colspan="2">Overall Status</td><td>${isResident?'Resident':'Non-Resident'}</td></tr>
-  `;
-}
-
-/* =========================================================
-   INIT
-========================================================= */
-computeIncomeTax();
-computeResidency();
 })();
 </script>
 <script>

@@ -67,7 +67,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -158,11 +158,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -961,7 +979,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1228,7 +1246,7 @@ header.site-header .headerTop h1{
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1439,7 +1457,7 @@ header.site-header .headerTop h1{
   <div id="ptopRateSection">
 
   <div class="card">
-    <h2>Khyber Pakhtunkhwa Sales Tax on Services</h2>
+    <h1>Khyber Pakhtunkhwa Sales Tax on Services Calculator (KPRA)</h1>
     <p class="sub">Provincial sales tax on services in Khyber Pakhtunkhwa, administered by the Khyber Pakhtunkhwa Revenue Authority (KPRA) under the KP Finance Act (Sales Tax on Services). Select a service category and enter the value excluding tax.</p>
 
     <div class="field">
@@ -1541,7 +1559,48 @@ The default/standard rate for services in Khyber Pakhtunkhwa is 15% under the KP
 
   </div>
 
+    <div class="card no-print">
+    <h2>Khyber Pakhtunkhwa Sales Tax on Services: Categories &amp; Rates at a Glance</h2>
+    <p class="sub">Every category below is drawn directly from the calculator above, grouped by tariff heading. Where a category lists a lower rate for a specific condition (digital payment, government works, etc.), that condition is noted alongside it.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Service Category</th><th>KPRA Rate</th></tr>
+      <tr class="rateGroupRow"><td colspan="2">General</td></tr>
+      <tr><td>Standard rate (default for services not listed below)</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Specifically Amended / Notified Rates (May 2026)</td></tr>
+      <tr><td>Rental / leasing services</td><td>3%</td></tr>
+      <tr><td>Real estate services</td><td>3%</td></tr>
+      <tr><td>Renting/leasing of meters &amp; goods transport operator leasing</td><td>3%</td></tr>
+      <tr><td>Transportation of goods through pipeline</td><td>5%</td></tr>
+      <tr><td>Foreign exchange dealers / money changing services</td><td>3%</td></tr>
+      <tr><td>Motor vehicle insurance services</td><td>3%</td></tr>
+      <tr><td>Intellectual property / IP licensing services</td><td>5%</td></tr>
+      <tr><td>Publishing &amp; reproduction services</td><td>5%</td></tr>
+      <tr><td>Health-related services</td><td>2%</td></tr>
+      <tr><td>Restaurants / hotels – digital, card, wallet or QR payment</td><td>6%</td></tr>
+      <tr><td>Annual developmental projects (construction-related services)</td><td>4%</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">Rates shown are as reflected in the calculator above and may not include every condition, exemption or turnover threshold that applies to a specific taxpayer. Always confirm your exact tariff heading with the KPRA before filing.</p>
+  </div>
+
   <div class="card no-print">
+    <h2>Understanding Khyber Pakhtunkhwa Sales Tax on Services (KPRA)</h2>
+
+    <h3>Who has to register with KPRA?</h3>
+    <p>Any person or business providing a taxable service under the Khyber Pakhtunkhwa Finance Act (Sales Tax on Services) — and rendered or provided in Khyber Pakhtunkhwa — is generally required to register with the KPRA and charge sales tax on its invoices. This spans a wide range of sectors captured in the table above, from hotels and restaurants to professional and IT services.</p>
+
+    <h3>Why rates differ by category</h3>
+    <p>KPRA sets a general rate for most services, but a number of categories carry their own notified rate — sometimes lower to reflect a policy priority (health, low-cost housing, digital payment adoption), sometimes conditional on a specific circumstance. These category-specific rates are revised periodically through provincial Finance Acts and standalone notifications, so it's worth re-checking a rate that matters to your business each year.</p>
+
+    <h3>Filing and payment</h3>
+    <p>Registered persons file periodic sales tax returns with KPRA (typically monthly), declaring the output tax charged on their invoices net of any input tax credit, and deposit the balance by the statutory due date. Late filing or short payment can trigger default surcharge and penalties under the Act, separate from any federal FBR obligations the same business may also have.</p>
+
+    <h3>How this differs from federal GST and withholding</h3>
+    <p>Khyber Pakhtunkhwa's provincial sales tax on services is separate from federal GST, which taxes the sale of goods under the Sales Tax Act, 1990 — a business dealing in both goods and services can owe both taxes on different parts of the same transaction. Separately, when a company or other designated withholding agent pays a registered service provider, it may need to withhold a portion of the sales tax shown on the invoice and deposit it directly with KPRA. Use the "Check Withholding Tax" tab above, or the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, to work that out.</p>
+  </div>
+
+<div class="card no-print">
     <h2>Worked Example: A KPK Consulting Services Invoice</h2>
     <p class="sub">A Peshawar-based consulting firm invoices a client Rs. 300,000 at KPK's 15% standard rate.</p>
     <div class="example-box">
@@ -1576,6 +1635,16 @@ The default/standard rate for services in Khyber Pakhtunkhwa is 15% under the KP
     </details>
 
     <details class="faq-item">
+      <summary>What is the KPRA sales tax rate on IT-based services in Khyber Pakhtunkhwa?</summary>
+      <p>Most services in KP are taxed at the flat standard rate of 15%. A specific set of categories notified in May 2026 carry their own lower rates, but general IT-based services are not among the specifically reduced categories, so the 15% standard rate applies unless your exact service is separately notified.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which Khyber Pakhtunkhwa services get a reduced sales tax rate?</summary>
+      <p>A group of categories notified in May 2026 carry rates well below the 15% standard: health-related services (2%), rental/leasing and real estate services (3%), transportation of goods through pipeline (5%), and restaurants/hotels accepting digital, card, wallet or QR payment (6%), among others.</p>
+    </details>
+
+    <details class="faq-item">
       <summary>How current are the KPK rates shown here?</summary>
       <p>We were not provided the full, consolidated First and Second Schedule for KPK, so this calculator reflects the specific rate changes we could source plus the 15% default for everything else. KPRA revises its schedules periodically &mdash; confirm your exact tariff heading and current rate with KPRA or a tax advisor before filing.</p>
     </details>
@@ -1587,7 +1656,9 @@ The default/standard rate for services in Khyber Pakhtunkhwa is 15% under the KP
       "mainEntity": [
         {"@type":"Question","name":"What is the standard sales tax rate on services in Khyber Pakhtunkhwa?","acceptedAnswer":{"@type":"Answer","text":"The default rate under the KP Sales Tax on Services Act is 15%, applying to services not covered by a specific category rate notified by KPRA."}},
         {"@type":"Question","name":"Is KPK sales tax on services different from federal GST?","acceptedAnswer":{"@type":"Answer","text":"Yes, federal GST applies to goods under the Sales Tax Act, 1990, while KPK sales tax on services is a separate provincial levy administered by KPRA."}},
-        {"@type":"Question","name":"Does withholding apply to KPK sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Generally yes, a withholding agent deducts a portion of the sales tax shown from a registered service provider, though KPRA separately references a 50% residual rate for some non-standard categories."}}
+        {"@type":"Question","name":"Does withholding apply to KPK sales tax invoices?","acceptedAnswer":{"@type":"Answer","text":"Generally yes, a withholding agent deducts a portion of the sales tax shown from a registered service provider, though KPRA separately references a 50% residual rate for some non-standard categories."}},
+        {"@type":"Question","name":"What is the KPRA sales tax rate on IT-based services in Khyber Pakhtunkhwa?","acceptedAnswer":{"@type":"Answer","text":"General IT-based services are not among KP's specifically reduced categories, so the 15% standard rate applies."}},
+        {"@type":"Question","name":"Which Khyber Pakhtunkhwa services get a reduced sales tax rate?","acceptedAnswer":{"@type":"Answer","text":"Health-related services (2%), rental/leasing and real estate services (3%), pipeline goods transport (5%), and digital-payment restaurants/hotels (6%) are among the categories with rates below the 15% standard."}}
       ]
     }
     </script>

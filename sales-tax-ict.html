@@ -67,7 +67,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -158,11 +158,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -961,7 +979,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -1228,7 +1246,7 @@ header.site-header .headerTop h1{
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -1439,7 +1457,7 @@ header.site-header .headerTop h1{
   <div id="ptopRateSection">
 
   <div class="card">
-    <h2>Islamabad Sales Tax on Services</h2>
+    <h1>Islamabad (ICT) Sales Tax on Services Calculator</h1>
     <p class="sub">Provincial sales tax on services in Islamabad, administered by the Islamabad Capital Territory (ICT) under the Islamabad Capital Territory (Tax on Services) Ordinance 2001. Select a service category and enter the value excluding tax.</p>
 
     <div class="field">
@@ -1541,7 +1559,107 @@ header.site-header .headerTop h1{
 
   </div>
 
+    <div class="card no-print">
+    <h2>Islamabad Sales Tax on Services: Categories &amp; Rates at a Glance</h2>
+    <p class="sub">Every category below is drawn directly from the calculator above, grouped by tariff heading. Where a category lists a lower rate for a specific condition (digital payment, government works, etc.), that condition is noted alongside it.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Service Category</th><th>ICT Rate</th></tr>
+      <tr class="rateGroupRow"><td colspan="2">Hotels, Restaurants &amp; Marriage Halls</td></tr>
+      <tr><td>Hotels, motels, guest houses &amp; farmhouses</td><td>15%</td></tr>
+      <tr><td>Clubs</td><td>15%</td></tr>
+      <tr><td>Restaurants – cash payment</td><td>15%</td></tr>
+      <tr><td>Restaurants – debit/credit card, wallet or QR payment (no input credit)</td><td>5%</td></tr>
+      <tr><td>Marriage halls &amp; lawns (incl. pandal/shamiana) &amp; caterers</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Advertisement</td></tr>
+      <tr><td>Advertisement on TV &amp; radio</td><td>15%</td></tr>
+      <tr><td>Advertisement on hoarding boards, poles, signboards, websites/internet</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Agents &amp; Intermediaries</td></tr>
+      <tr><td>Stevedores, customs agents &amp; ship chandlers</td><td>15%</td></tr>
+      <tr><td>Freight forwarding agents, packers &amp; movers</td><td>5%</td></tr>
+      <tr><td>Tour operators &amp; travel agents (excl. Hajj/Umrah)</td><td>5%</td></tr>
+      <tr><td>Manpower recruitment agents, labour &amp; manpower supply</td><td>15%</td></tr>
+      <tr><td>Advertising agents</td><td>15%</td></tr>
+      <tr><td>Share transfer / depository agents</td><td>15%</td></tr>
+      <tr><td>Business support services</td><td>15%</td></tr>
+      <tr><td>Sponsorship services</td><td>15%</td></tr>
+      <tr><td>Stockbrokers, future/commodity brokers, money exchanger, surveyors, outdoor/event photographers &amp; videographers, art painters, auctioneers</td><td>15%</td></tr>
+      <tr><td>Underwriter, indenters &amp; commission agents (incl. brokers)</td><td>15%</td></tr>
+      <tr><td>Corporate law consultants</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Courier, Cargo &amp; Transport</td></tr>
+      <tr><td>Courier services &amp; cargo services by road</td><td>15%</td></tr>
+      <tr><td>Transportation through pipeline &amp; conduit</td><td>15%</td></tr>
+      <tr><td>Inter-city transportation/carriage of goods by road or pipeline</td><td>15%</td></tr>
+      <tr><td>Ready mix concrete services</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Construction &amp; Property</td></tr>
+      <tr><td>Construction services</td><td>15%</td></tr>
+      <tr><td>Property developers &amp; promoters (general, land development/construction)</td><td>15%</td></tr>
+      <tr><td>Property developers &amp; promoters – low-cost housing (Naya Pakistan/Ehsaas)</td><td><span class="rate-zero">0% (exempt/zero-rated)</span></td></tr>
+      <tr><td>Property dealers &amp; realtors</td><td><span class="rate-zero">0% (exempt/zero-rated)</span></td></tr>
+      <tr><td>Architects, town planners &amp; interior decorators</td><td>15%</td></tr>
+      <tr><td>Landscape designers</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Beauty, Wellness, Health &amp; Personal Care</td></tr>
+      <tr><td>Beauty parlours, clinics, slimming/body massage &amp; pedicure centres, incl. cosmetic &amp; plastic surgery</td><td>5%</td></tr>
+      <tr><td>Health clubs, gyms, fitness centres, indoor sports &amp; games centres</td><td>5%</td></tr>
+      <tr><td>Laundries &amp; dry cleaners</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">IT, Consultancy &amp; Professional Services</td></tr>
+      <tr><td>IT services &amp; IT-enabled services (software dev, web/hosting, BPO, data entry, cloud, etc.)</td><td>15%</td></tr>
+      <tr><td>Software / IT-based system development consultants</td><td>5%</td></tr>
+      <tr><td>Management consultancy services</td><td>15%</td></tr>
+      <tr><td>Technical, scientific &amp; engineering consultants</td><td>15%</td></tr>
+      <tr><td>Other consultants (HR, personnel development, market research, credit rating)</td><td>15%</td></tr>
+      <tr><td>Legal practitioners &amp; consultants</td><td>15%</td></tr>
+      <tr><td>Accountants &amp; auditors</td><td>15%</td></tr>
+      <tr><td>Visa processing, migration advisory/consultancy</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Specialized Workshops &amp; Auto</td></tr>
+      <tr><td>Specialized workshops (auto, industrial/earth-moving machinery, electric/electronic equipment, car washing)</td><td>5%</td></tr>
+      <tr><td>Rent a car</td><td>15%</td></tr>
+      <tr><td>Car / automobile dealers</td><td>5%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Cleaning, Fumigation &amp; Site Services</td></tr>
+      <tr><td>Fumigation, maintenance/repair, cleaning, janitorial, waste collection &amp; de-silting services</td><td>15%</td></tr>
+      <tr><td>Mining of minerals, oil &amp; gas incl. related/allied activities</td><td>15%</td></tr>
+      <tr class="rateGroupRow"><td colspan="2">Security, Agencies &amp; Business Services</td></tr>
+      <tr><td>Security agencies</td><td>15%</td></tr>
+      <tr><td>Laboratories (other than pathological/diagnostic tests)</td><td>15%</td></tr>
+      <tr><td>Technical analysis &amp; testing services</td><td>15%</td></tr>
+      <tr><td>Technical inspection, certification &amp; quality control services</td><td>15%</td></tr>
+      <tr><td>Debt collection &amp; debt recovery services</td><td>15%</td></tr>
+      <tr><td>Supply chain management / distribution (incl. delivery) services</td><td>15%</td></tr>
+      <tr><td>Public relations services</td><td>15%</td></tr>
+      <tr><td>Training or coaching services (other than education)</td><td>15%</td></tr>
+      <tr><td>Fund and asset (incl. investment) management services</td><td>15%</td></tr>
+      <tr><td>Erection, commissioning &amp; installation services</td><td>15%</td></tr>
+      <tr><td>Valuation, competency &amp; eligibility testing services</td><td>15%</td></tr>
+      <tr><td>Event management, exhibition &amp; convention services</td><td>15%</td></tr>
+      <tr><td>Inland port, airport &amp; terminal operators, incl. public bonded warehouses</td><td>15%</td></tr>
+      <tr><td>Call centres</td><td>15%</td></tr>
+      <tr><td>Cable TV operators</td><td>15%</td></tr>
+      <tr><td>Fashion designers</td><td>15%</td></tr>
+      <tr><td>TV/radio programme producers &amp; production houses</td><td>15%</td></tr>
+      <tr><td>Race clubs – entry/admission &amp; other services</td><td>15%</td></tr>
+      <tr><td>Electric power transmission services</td><td>15%</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">Rates shown are as reflected in the calculator above and may not include every condition, exemption or turnover threshold that applies to a specific taxpayer. Always confirm your exact tariff heading with the ICT before filing.</p>
+  </div>
+
   <div class="card no-print">
+    <h2>Understanding Islamabad Sales Tax on Services (ICT)</h2>
+
+    <h3>Who has to register with ICT?</h3>
+    <p>Any person or business providing a taxable service under the Islamabad Capital Territory (Tax on Services) Ordinance, 2001, as amended up to 30 June 2025 — and rendered or provided in Islamabad — is generally required to register with the ICT and charge sales tax on its invoices. This spans a wide range of sectors captured in the table above, from hotels and restaurants to professional and IT services.</p>
+
+    <h3>Why rates differ by category</h3>
+    <p>ICT sets a general rate for most services, but a number of categories carry their own notified rate — sometimes lower to reflect a policy priority (health, low-cost housing, digital payment adoption), sometimes conditional on a specific circumstance. These category-specific rates are revised periodically through provincial Finance Acts and standalone notifications, so it's worth re-checking a rate that matters to your business each year.</p>
+
+    <h3>Filing and payment</h3>
+    <p>Registered persons file periodic sales tax returns with ICT (typically monthly), declaring the output tax charged on their invoices net of any input tax credit, and deposit the balance by the statutory due date. Late filing or short payment can trigger default surcharge and penalties under the Act, separate from any federal FBR obligations the same business may also have.</p>
+
+    <h3>How this differs from federal GST and withholding</h3>
+    <p>Islamabad's provincial sales tax on services is separate from federal GST, which taxes the sale of goods under the Sales Tax Act, 1990 — a business dealing in both goods and services can owe both taxes on different parts of the same transaction. Separately, when a company or other designated withholding agent pays a registered service provider, it may need to withhold a portion of the sales tax shown on the invoice and deposit it directly with ICT. Use the "Check Withholding Tax" tab above, or the full <a href="sales-tax-withholding.html">Sales Tax Withholding</a> calculator, to work that out.</p>
+  </div>
+
+<div class="card no-print">
     <h2>Worked Example: Restaurant Bill, Cash vs Digital Payment</h2>
     <p class="sub">A restaurant in Islamabad bills a customer Rs. 10,000 &mdash; the ICT sales tax rate actually depends on how the customer pays.</p>
     <div class="example-box">

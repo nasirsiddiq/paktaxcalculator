@@ -67,7 +67,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -158,11 +158,29 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -475,7 +493,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -491,7 +509,7 @@ header.site-header .headerTop h1{
 }
 
 .pageIntro{ max-width:820px; margin:0 auto 4px; padding:0 4px; }
-.pageIntro h2{ font-size:clamp(20px,4vw,26px); color:var(--green); margin:0 0 8px; }
+.pageIntro h2, .pageIntro h1{ font-size:clamp(20px,4vw,26px); color:var(--green); margin:0 0 8px; }
 .pageIntro p{ color:var(--muted); font-size:14px; margin:0; }
 
 /* ---- Site search ---- */
@@ -667,7 +685,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
     <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
@@ -859,7 +877,7 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
   </div>
 
   <div class="pageIntro">
-    <h2>PTA Mobile Tax Calculator</h2>
+    <h1>PTA Mobile Tax Calculator</h1>
     <p>Any phone bought abroad (or imported) that isn't already approved by the <strong>Pakistan Telecommunication Authority (PTA)</strong> will get its mobile network blocked after 60 days unless you register its IMEI with FBR and pay the applicable tax. Estimate that tax below, and compare the <strong>Passport</strong> route against the <strong>CNIC</strong> route before you decide how to register.</p>
   </div>
 
@@ -1001,6 +1019,37 @@ table.features-table th{ width:38%; color:var(--muted); font-weight:700; font-si
       <tr><th>Where to Pay</th><td>PTA's DIRBS portal (dirbs.pta.gov.pk), linked to FBR for payment</td></tr>
       <tr><th>Per-Trip Allowance</th><td>One phone per passport, per trip, via the Passport route</td></tr>
     </table>
+  </div>
+
+  <div class="card no-print">
+    <h2>PTA Tax Value Brackets &amp; Duty Rates</h2>
+    <p class="sub">Every phone falls into one of these seven value brackets (based on its C&amp;F value in USD). Each bracket sets its own regulatory duty, sales tax rate, and mobile handset levy &mdash; the income tax column applies only if you register via the CNIC route.</p>
+    <div class="rateTableWrap">
+      <table class="breakdown rateTable">
+        <tr><th>Value Bracket</th><th>Regulatory Duty</th><th>Sales Tax</th><th>Mobile Levy</th><th>Income Tax</th></tr>
+      <tr><td>Up to $30</td><td>Rs. 240</td><td>18%</td><td>Rs. 100</td><td>Rs. 100 (CNIC route only)</td></tr>
+      <tr><td>$30 – $100</td><td>Rs. 2,400</td><td>18%</td><td>Rs. 200</td><td>Rs. 100 (CNIC route only)</td></tr>
+      <tr><td>$100 – $200</td><td>Rs. 6,000</td><td>18%</td><td>Rs. 200</td><td>Rs. 930 (CNIC route only)</td></tr>
+      <tr><td>$200 – $350</td><td>Rs. 8,800</td><td>18%</td><td>Rs. 1,800</td><td>Rs. 970 (CNIC route only)</td></tr>
+      <tr><td>$350 – $500</td><td>Rs. 12,000</td><td>18%</td><td>Rs. 4,000</td><td>Rs. 5,000 (CNIC route only)</td></tr>
+      <tr><td>$500 – $700</td><td>Rs. 17,600</td><td>25%</td><td>Rs. 8,000</td><td>Rs. 11,500 (CNIC route only)</td></tr>
+      <tr><td>Above $700</td><td>Rs. 17,600</td><td>25%</td><td>Rs. 16,000</td><td>Rs. 11,500 (CNIC route only)</td></tr>
+      </table>
+    </div>
+    <p class="disclaimer" style="margin-top:12px;">Customs duty of Rs. 250 additionally applies to basic/feature phones only (smartphones are exempt from this specific line item). Figures reflect the calculator above; always confirm the final amount on PTA's DIRBS portal before paying.</p>
+  </div>
+
+  <div class="card no-print">
+    <h2>Understanding PTA Mobile Tax</h2>
+
+    <h3>Why the tax jumps between brackets</h3>
+    <p>Because the regulatory duty, sales tax rate, and mobile levy are all set per bracket rather than smoothed into one continuous formula, a phone valued just above a boundary — say $501 instead of $499 — moves into a bracket with a higher regulatory duty, a higher levy, and a higher sales tax rate (25% instead of 18%) all at once. This is why two nearly identical phones can show noticeably different totals.</p>
+
+    <h3>Passport route vs. CNIC route</h3>
+    <p>Every bracket's income tax component applies only on the CNIC route. Registering via Passport within 60 days of arrival skips that component entirely, since it's treated as a traveller bringing in personal baggage rather than a taxable local acquisition. This is the single biggest lever for reducing what you pay, and it's reflected as the "if registered via the other route" comparison line in the calculator's breakdown above.</p>
+
+    <h3>How your phone's value is set</h3>
+    <p>FBR uses the invoice value (Cost &amp; Freight) where you have one, converted to PKR at the prevailing exchange rate, or its own valuation ruling for that specific model if that figure is higher. Since resale/import valuations shift over time and by model, the value you should enter is the one FBR would actually assess — not necessarily the price you personally paid.</p>
   </div>
 
   <div class="card no-print">
