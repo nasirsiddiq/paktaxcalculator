@@ -3,26 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Account | Save & Export Your Withholding Records</title>
-<meta name="description" content="Sign in to save every withholding tax entry you calculate, then download a CSV of your monthly records to file with FBR, SRB, PRA or KPRA.">
-<meta name="robots" content="noindex">
-<link rel="canonical" href="https://paktaxcalculator.net/my-wht-log.html">
+<title>FBR IRIS Practice Simulator | Pakistan Tax Calculator</title>
+<meta name="description" content="Practice the FBR IRIS return-filing flow before filing for real: sample income, live tax computation, wealth statement, practice receipt.">
+<meta name="google-site-verification" content="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+<meta name="robots" content="noindex, nofollow">
 
+<link rel="canonical" href="https://paktaxcalculator.net/iris-practice-simulator.html">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
 <link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0a4f2c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="My Account | Save & Export Your Withholding Records">
-<meta property="og:description" content="Sign in to save every withholding tax entry you calculate, then download a CSV of your monthly records to file with FBR, SRB, PRA, KPRA, BRA or ICT.">
+<meta property="og:url" content="https://paktaxcalculator.net/iris-practice-simulator.html">
+<meta property="og:title" content="FBR IRIS Practice Simulator | Pakistan Tax Calculator">
+<meta property="og:description" content="Practice the FBR IRIS return-filing flow before you file for real: sample income, live tax computation, wealth statement reconciliation and a practice acknowledgment receipt. Not affiliated with FBR.">
 <meta property="og:image" content="https://paktaxcalculator.net/og-image.png">
-<meta property="og:url" content="https://paktaxcalculator.net/my-wht-log.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="My Account | Save & Export Your Withholding Records">
-<meta name="twitter:description" content="Sign in to save every withholding tax entry you calculate, then download a CSV of your monthly records to file with FBR, SRB, PRA, KPRA, BRA or ICT.">
+<meta name="twitter:title" content="FBR IRIS Practice Simulator | Pakistan Tax Calculator">
+<meta name="twitter:description" content="Practice the FBR IRIS return-filing flow before you file for real: sample income, live tax computation, wealth statement reconciliation and a practice acknowledgment receipt. Not affiliated with FBR.">
 <meta name="twitter:image" content="https://paktaxcalculator.net/og-image.png">
 
 <!-- Google tag (gtag.js) -->
@@ -68,7 +73,7 @@ header.site-header{
   text-align:center;
 }
 header.site-header .brand{text-decoration:none;color:#fff;display:inline-block;}
-header.site-header h1{
+header.site-header .brandTitle{
   margin:0 0 6px;
   font-size:clamp(22px,4.5vw,32px);
   font-weight:700;
@@ -159,11 +164,30 @@ header.site-header p.tagline{
   margin-bottom:16px;
   box-shadow:var(--shadow);
 }
-.card h2{
+#freqField, #residentStatusChecker{ scroll-margin-top:210px; }
+.card h2, .card h1{
   margin:0 0 4px;
   font-size:18px;
   color:var(--green);
 }
+.card h3{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:var(--text);
+}
+.card h3:first-of-type{ margin-top:4px; }
+.rateTableWrap{ overflow-x:auto; }
+table.rateTable td:last-child, table.rateTable th:last-child{ text-align:right; white-space:nowrap; }
+.card table.rateTable tr:last-child td{ font-weight:400; border-bottom:1px solid var(--border); color:var(--text); }
+tr.rateGroupRow td{
+  background:var(--green-pale);
+  font-weight:700;
+  color:var(--green);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rate-zero{ color:var(--muted); font-size:12px; }
 .card .sub{
   color:var(--muted);
   font-size:13px;
@@ -236,40 +260,6 @@ input.amount-input:focus{
 @media (max-width:520px){
   .row{grid-template-columns:1fr;}
 }
-.stw-toggle-label{
-  font-size:15px;
-  font-weight:600;
-  color:var(--text);
-  margin:0 0 10px;
-}
-.stw-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.stw-toggle button{
-  flex:1 1 auto;
-  min-width:150px;
-  padding:9px 12px;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--muted);
-  cursor:pointer;
-  transition:all .15s ease;
-}
-.stw-toggle button:hover{border-color:var(--green-light);}
-.stw-toggle button.active{
-  background:var(--green);
-  border-color:var(--green);
-  color:#fff;
-}
-.stw-rate-result{
-  background:var(--green-pale);
-  border-radius:10px;
-  padding:16px;
-  margin-top:6px;
-}
-.stw-rate-result .big{font-size:22px;font-weight:800;color:var(--green);}
-.stw-rate-result .note{font-size:13px;color:var(--muted);margin-top:6px;}
 .seg{
   display:flex;
   border:1px solid var(--border);
@@ -358,6 +348,29 @@ table.breakdown tr:last-child td{
   padding:12px 14px;
   margin-top:6px;
 }
+.shareButtons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:4px;
+}
+.shareBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  border-radius:24px;
+  font-weight:700;
+  font-size:13.5px;
+  text-decoration:none;
+  color:#fff;
+  transition:opacity .15s ease;
+}
+.shareBtn:hover{ opacity:.87; }
+.shareBtn svg{ width:17px; height:17px; fill:#fff; flex-shrink:0; }
+.shareBtn-whatsapp{ background:#25D366; }
+.shareBtn-facebook{ background:#1877F2; }
+.shareBtn-x{ background:#000; }
 .footerCalcs{
   background:var(--green-pale);
   border-top:1px solid var(--border);
@@ -456,146 +469,6 @@ table.gst td.note{
   cursor:pointer;
 }
 .checkbox-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
-
-/* ===== My Account page-specific styles ===== */
-.wht-btn{
-  display:inline-block;
-  background:var(--green);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  padding:12px 18px;
-  font-size:14.5px;
-  font-weight:700;
-  cursor:pointer;
-  transition:background .15s ease;
-}
-.wht-btn:hover{background:var(--green-light);}
-.wht-btn:disabled{background:#a9bdb0;cursor:not-allowed;}
-.wht-btn-outline{
-  background:#fff;
-  color:var(--green);
-  border:1.5px solid var(--green);
-}
-.wht-btn-outline:hover{background:var(--green-pale);}
-.wht-btn-danger{
-  background:#fff;
-  color:#b3261e;
-  border:1.5px solid #f3c6c6;
-}
-.wht-btn-danger:hover{background:#fdecea;}
-.wht-btn-small{padding:8px 14px;font-size:13px;}
-.wht-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-.wht-note{font-size:13px;color:var(--muted);margin:10px 0 0;}
-.wht-note.err{color:#b3261e;}
-.wht-note.ok{color:var(--green);}
-
-.wht-logo-preview-wrap{display:flex;align-items:center;gap:14px;margin-top:10px;}
-.wht-logo-preview-wrap img{
-  width:64px;height:64px;object-fit:contain;
-  border:1px solid var(--border);border-radius:8px;background:#fff;padding:4px;
-}
-.wht-report-table-wrap{overflow-x:auto;margin-top:12px;}
-table.wht-report{width:100%;border-collapse:collapse;font-size:13.5px;}
-table.wht-report th, table.wht-report td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border);}
-table.wht-report th{background:var(--green-pale);color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:.3px;}
-table.wht-report td.wht-amt{font-weight:700;color:var(--green);}
-table.wht-report tr.wht-report-total td{font-weight:700;border-top:2px solid var(--green);}
-@media print{
-  header.site-header, footer, #whtModalBackdrop, #ptcChatToggle, #ptcChatPanel{display:none !important;}
-  .wrap .card:not(#wpReportCard){display:none !important;}
-  #wpReportCard .wht-btn-row, #wpReportCard .field{display:none !important;}
-  body{background:#fff;}
-  .card{box-shadow:none;border:none;padding:0;}
-}
-
-.wht-summary-row{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-  gap:10px;
-  margin-bottom:16px;
-}
-.wht-summary-card{
-  background:var(--green-pale);
-  border:1px solid #cfe7d8;
-  border-radius:10px;
-  padding:12px 14px;
-}
-.wht-summary-card .v{font-size:19px;font-weight:800;color:var(--green);}
-.wht-summary-card .k{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.3px;}
-
-.wht-month-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;}
-.wht-month-row .field{margin-bottom:0;flex:0 0 auto;min-width:170px;}
-
-.wht-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-table.wht-entries{
-  width:100%;
-  min-width:820px;
-  border-collapse:collapse;
-  font-size:13px;
-}
-table.wht-entries th, table.wht-entries td{
-  text-align:left;
-  padding:9px 8px;
-  border-bottom:1px solid var(--border);
-  white-space:nowrap;
-}
-table.wht-entries th{
-  color:var(--muted);
-  font-weight:700;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.3px;
-  background:#fbfdfc;
-}
-table.wht-entries td.wht-amt{font-weight:700;color:var(--green);}
-table.wht-entries td.wht-notes{white-space:normal;max-width:220px;color:var(--muted);font-size:12.5px;}
-table.wht-entries .wht-row-actions{display:flex;gap:6px;}
-.wht-icon-btn{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:6px;
-  width:28px;height:28px;
-  cursor:pointer;
-  font-size:13px;
-  color:var(--muted);
-  flex-shrink:0;
-}
-.wht-icon-btn:hover{border-color:var(--green-light);color:var(--green);}
-.wht-icon-btn.wht-del:hover{border-color:#f3c6c6;color:#b3261e;background:#fdecea;}
-.wht-empty{
-  text-align:center;
-  padding:30px 10px;
-  color:var(--muted);
-  font-size:14px;
-}
-.wht-loading{text-align:center;padding:20px;color:var(--muted);font-size:13px;}
-
-.wht-type-pill{
-  display:inline-block;
-  padding:2px 9px;
-  border-radius:20px;
-  font-size:10.5px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.3px;
-}
-.wht-type-pill.sales_tax{background:#e0f5e6;color:#0a6b34;}
-.wht-type-pill.income_tax{background:#eaf0fb;color:#1e4fb3;}
-
-.wht-modal-backdrop{
-  position:fixed; inset:0; background:rgba(1,20,10,0.45);
-  display:none; align-items:center; justify-content:center;
-  z-index:200; padding:16px;
-}
-.wht-modal-backdrop.open{display:flex;}
-.wht-modal{
-  background:#fff; border-radius:var(--radius); padding:22px;
-  max-width:420px; width:100%; box-shadow:0 20px 50px rgba(0,0,0,0.3);
-}
-.wht-modal h3{margin:0 0 14px;color:var(--green);font-size:16px;}
-.wht-modal .wht-btn-row{margin-top:18px;justify-content:flex-end;}
-
 .trip-row{
   display:flex;
   align-items:center;
@@ -959,7 +832,23 @@ header.site-header .brand{
   line-height:0;
   text-decoration:none;
 }
-.brandSpacer{ flex:0 0 auto; width:162px; }
+.brandSpacer{ flex:0 0 auto; width:162px; display:flex; align-items:center; justify-content:flex-end; }
+.headerAuthBtn{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:20px;
+  background:#fff;
+  color:var(--green);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  transition:background .15s ease, color .15s ease;
+}
+.headerAuthBtn:hover{ background:#eef7f1; }
+.headerAuthBtn.loggedIn{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.7); }
+.headerAuthBtn.loggedIn:hover{ background:rgba(255,255,255,.15); }
 .brandLogo{
   width:162px;
   height:162px;
@@ -970,7 +859,7 @@ header.site-header .brand{
   box-sizing:border-box;
   box-shadow:0 3px 12px rgba(0,0,0,.25);
 }
-header.site-header .headerTop h1{
+header.site-header .headerTop .brandTitle{
   flex:1 1 auto;
   margin:0;
   text-align:center;
@@ -979,10 +868,12 @@ header.site-header .headerTop h1{
   .headerTop{ gap:10px; }
   .brandLogo{ width:117px; height:117px; border-radius:16px; padding:6px; }
   .brandSpacer{ width:117px; }
+  .headerAuthBtn{ padding:6px 10px; font-size:11px; border-radius:16px; }
 }
 @media (max-width:400px){
   .brandLogo{ width:99px; height:99px; }
-  .brandSpacer{ width:0; }
+  .brandSpacer{ width:auto; }
+  .headerAuthBtn{ padding:5px 8px; font-size:10px; }
 }
 
 /* ---- Blog article typography ---- */
@@ -1116,6 +1007,51 @@ header.site-header .headerTop h1{
 .example-box .ex-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:8px;font-weight:700;color:var(--green);}
 .example-box .ex-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
 
+/* ---- English / Urdu language toggle ---- */
+.lang-ur{
+  display:none;
+  font-family:'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  direction:rtl;
+  text-align:right;
+  line-height:2.1;
+}
+html[data-lang="ur"] .lang-en{ display:none; }
+html[data-lang="ur"] .lang-ur{ display:block; }
+html[data-lang="ur"] span.lang-ur{ display:inline; }
+.ptcLangSwitch{
+  position:sticky; top:8px; z-index:80;
+  display:flex; justify-content:flex-end; gap:6px;
+  margin:0 0 12px;
+}
+.ptcLangBtn{
+  font:inherit; font-size:0.82rem; font-weight:700;
+  padding:6px 14px; border-radius:999px;
+  border:1px solid var(--border); background:#fff; color:var(--green);
+  cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.ptcLangBtn.active{ background:var(--green); color:#fff; border-color:var(--green); }
+html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; font-size:1.1rem; }
+
+/* ---- Print ---- */
+.btn-print{
+  background:#01411C;color:#fff;border:none;border-radius:8px;
+  padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;
+}
+.btn-print:hover{ opacity:0.9; }
+@media print{
+  header.site-header, footer, .ptcLangSwitch, .no-print,
+  .wht-save-row, .wht-save-status, .disclaimer,
+  #ptcChatToggle, #ptcChatPanel,
+  ins.adsbygoogle, .google-auto-placed, [id^="google_ads"], iframe[id^="google_ads"]
+  { display:none !important; }
+  body{ background:#fff; }
+  .card, .zk-card{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .print-only{ display:none; }
+  .print-footer-note{ display:block !important; margin-top:24px; padding-top:10px; border-top:1px solid #ccc; font-size:11px; color:#666; }
+  #ptcPrintLetterhead.has-data{ display:block !important; }
+}
+.print-only{ display:none; }
+
 /* ---- Sticky header + Login/Sign Up buttons ---- */
 .headerTop{
   display:flex;
@@ -1203,18 +1139,75 @@ header.site-header .headerTop h1{
   line-height:1.3;
 }
 .railLink:hover{ background:var(--green-pale); }
+
+/* ===== IRIS PRACTICE SIMULATOR ===== */
+.practiceBanner{
+  display:flex; gap:12px; align-items:flex-start;
+  background:#fff7e0; border:1px solid #f0d98c; color:#5c4a12;
+  border-radius:var(--radius); padding:14px 16px; margin-bottom:16px;
+  font-size:13px; line-height:1.55;
+}
+.practiceBannerIcon{ font-size:22px; flex-shrink:0; }
+.practiceBanner a{ color:#8a6d00; font-weight:700; }
+.practiceBanner strong{ color:#4a3a0d; }
+
+.irisStepper{
+  display:flex; justify-content:space-between; position:relative; gap:4px;
+}
+.irisStepper::before{
+  content:''; position:absolute; top:15px; left:5%; right:5%; height:2px; background:var(--border); z-index:0;
+}
+.irisStepDot{
+  position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; flex:1;
+}
+.irisStepDot .dotNum{
+  width:30px; height:30px; border-radius:50%; background:#fff; border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; color:var(--muted);
+  transition:background .2s ease, border-color .2s ease, color .2s ease;
+}
+.irisStepDot .dotLabel{ font-size:10.5px; color:var(--muted); text-align:center; max-width:76px; }
+.irisStepDot.active .dotNum{ background:var(--green); border-color:var(--green); color:#fff; }
+.irisStepDot.active .dotLabel{ color:var(--green); font-weight:700; }
+.irisStepDot.done .dotNum{ background:var(--green-pale); border-color:var(--green-light); color:var(--green-light); }
+@media (max-width:600px){
+  .irisStepDot .dotLabel{ display:none; }
+}
+
+.irisBtnRow{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; gap:10px; flex-wrap:wrap; }
+.btn-iris-next, .btn-iris-back{
+  border:none; border-radius:8px; padding:12px 22px; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit;
+}
+.btn-iris-next{ background:var(--green); color:#fff; margin-left:auto; }
+.btn-iris-next:hover{ background:var(--green-light); }
+.btn-iris-next:disabled{ background:#b7c4bb; cursor:not-allowed; }
+.btn-iris-back{ background:#fff; color:var(--text); border:1px solid var(--border); }
+.btn-iris-back:hover{ background:var(--bg); }
+.hintInline{ font-weight:400; color:var(--muted); font-size:11.5px; }
+
+.wsRow2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:520px){ .wsRow2{ grid-template-columns:1fr; } }
+
+.irisAckBox{ text-align:center; position:relative; padding:14px 0 4px; }
+.irisAckWatermark{
+  display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.5px; color:#b3261e;
+  text-transform:uppercase; background:#fdecea; border:1px solid #f3c6c6; border-radius:20px; padding:4px 12px; margin-bottom:14px;
+}
+.irisAckIcon{ font-size:44px; margin:6px 0 6px; }
+.irisAckBox h2{ color:var(--green); margin:0 0 6px; }
+.irisAckBox table{ text-align:left; margin:16px 0; }
+.irisAckBox .btn-iris-next{ margin:8px auto 0; display:inline-block; }
 </style>
 </head>
 <body>
-<aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">💰</p><p class="railText">Calculate withholding tax first.</p><a href="withholding-tax.html" class="railLink">Withholding Tax&nbsp;&rarr;</a></div></aside>
-<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🌙</p><p class="railText">Set a Zakat reminder.</p><a href="zakat-calculator.html" class="railLink">Zakat Calculator&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-left" aria-label="You might also want"><div class="railCard"><p class="railEmoji">🧮</p><p class="railText">Need your exact tax figure first?</p><a href="income-tax.html" class="railLink">Income Tax Calculator&nbsp;&rarr;</a></div></aside>
+<aside class="sideRail sideRail-right" aria-label="You might also want"><div class="railCard"><p class="railEmoji">📝</p><p class="railText">Want to save your real entries as you go?</p><a href="my-wht-log.html" class="railLink">My Account&nbsp;&rarr;</a></div></aside>
 <header class="site-header">
   <div class="headerTop">
     <a href="index.html" class="brand" aria-label="Pak Tax Calculator home">
       <img src="logo-icon.png" alt="Pak Tax Calculator" class="brandLogo" width="340" height="340">
     </a>
-    <h1>Pakistan Tax Calculator</h1>
-    <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="#accountCard" class="headerAuthBtn outline">Log In</a><a href="#accountCard" class="headerAuthBtn">Sign Up</a></span></span>
+    <p class="brandTitle">Pakistan Tax Calculator</p>
+    <span class="brandSpacer"><span class="headerAuthBtnGroup" id="headerAuthBtnGroup"><a href="my-wht-log.html" class="headerAuthBtn outline" onclick="this.href='my-wht-log.html?auth=login&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Log In</a><a href="my-wht-log.html" class="headerAuthBtn" onclick="this.href='my-wht-log.html?auth=signup&amp;return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')+'#accountCard'">Sign Up</a></span></span>
 <script>
 (function(){
   var railLeftAllowed = false, railRightAllowed = false;
@@ -1313,7 +1306,7 @@ header.site-header .headerTop h1{
     var exp = sess && (sess.expires_at || (sess.currentSession && sess.currentSession.expires_at));
     if(exp && exp * 1000 > Date.now()){
       var grp = document.getElementById('headerAuthBtnGroup');
-      if(grp){ grp.innerHTML = '<a href="#accountCard" class="headerAuthBtn loggedIn">My Account</a>'; fixHeaderOffset(); }
+      if(grp){ grp.innerHTML = '<a href="my-wht-log.html" class="headerAuthBtn loggedIn" onclick="this.href=\'my-wht-log.html?return=\'+encodeURIComponent(location.pathname.split(\'/\').pop()||\'index.html\')">My Account</a>'; fixHeaderOffset(); }
     }
   }catch(e){}
 })();
@@ -1350,7 +1343,7 @@ header.site-header .headerTop h1{
     </span>
     <a href="feedback.html">Feedback</a>
     <a href="contact.html">Contact</a>
-    <a href="my-wht-log.html" class="active">My Account</a>
+    <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
   </nav>
   <nav class="mainnav" id="mainNav">
     <button class="navToggle" id="navToggle" type="button" aria-expanded="false">
@@ -1389,7 +1382,7 @@ header.site-header .headerTop h1{
 <a href="feedback.html">Give Feedback</a>
 <a href="contact.html">Contact Us</a>
 <a href="privacy.html">Privacy Policy</a>
-<a href="my-wht-log.html" class="active">My Account</a>
+<a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
     </div>
   </nav>
@@ -1397,283 +1390,477 @@ header.site-header .headerTop h1{
 <main>
 
 <div class="wrap">
+  <div class="no-print" style="text-align:right;margin:0 0 10px;">
+    <button type="button" class="btn-print" onclick="window.print()">Print This Page</button>
+  </div>
 
-  <div id="whtLogSection" style="display:none;">
-
-    <div class="card">
-      <h2>Business Profile</h2>
-      <p class="sub">Saved once and reused on your reports &mdash; handy when preparing a summary for your accountant or for FBR/SRB/PRA.</p>
-      <div class="row">
-        <div class="field">
-          <label for="wpCompanyName">Company / Business Name</label>
-          <input type="text" id="wpCompanyName" placeholder="e.g. Al-Falah Traders">
-        </div>
-        <div class="field">
-          <label for="wpPhone">Phone</label>
-          <input type="text" id="wpPhone" placeholder="e.g. 0300-1234567">
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label for="wpEmail">Email</label>
-          <input type="email" id="wpEmail" placeholder="e.g. info@company.com">
-        </div>
-        <div class="field">
-          <label for="wpLogo">Logo <span style="font-weight:400;color:var(--muted);font-size:12px;">(optional, shown on your reports)</span></label>
-          <input type="file" id="wpLogo" accept="image/*">
-        </div>
-      </div>
-      <div class="field">
-        <label for="wpAddress">Address</label>
-        <textarea id="wpAddress" rows="2" placeholder="Business address"></textarea>
-      </div>
-      <div class="wht-logo-preview-wrap" id="wpLogoPreviewWrap" style="display:none;">
-        <img id="wpLogoPreview" alt="Logo preview">
-        <button type="button" class="wht-btn-outline wht-btn-small" id="wpLogoRemoveBtn">Remove Logo</button>
-      </div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="wpSaveBtn">Save Profile</button>
-      </div>
-      <p class="wht-note" id="wpStatus" style="display:none;"></p>
+  <div class="practiceBanner no-print" role="note">
+    <span class="practiceBannerIcon">&#127891;</span>
+    <div>
+      <strong>Practice Simulator &mdash; this is not the real FBR IRIS portal.</strong>
+      Nothing you type below is saved, submitted, or sent anywhere &mdash; it only exists in this browser tab. This tool is built by Pakistan Tax Calculator and is not affiliated with, endorsed by, or connected to the Federal Board of Revenue. File your actual return only at <a href="https://iris.fbr.gov.pk" target="_blank" rel="noopener noreferrer">iris.fbr.gov.pk</a>.
     </div>
-
-    <div class="card">
-      <h2>Monthly Summary</h2>
-      <div class="wht-month-row">
-        <div class="field">
-          <label for="whtMonthPicker">Month</label>
-          <input type="month" id="whtMonthPicker">
-        </div>
-      </div>
-      <div class="wht-summary-row" id="whtSummaryRow"></div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="whtDownloadCsvBtn">Download CSV for this Month</button>
-        <button type="button" class="wht-btn wht-btn-outline" id="whtAddManualBtn">+ Add Entry Manually</button>
-      </div>
-      <p class="wht-note" id="whtLogStatus" style="display:none;"></p>
-    </div>
-
-    <div class="card">
-      <h2>Entries</h2>
-      <p class="sub">Use the "Save to My Account" button on any withholding calculator to add an entry automatically, or add one by hand above.</p>
-      <div id="whtEntriesWrap">
-        <div class="wht-loading" id="whtLoading">Loading your entries&hellip;</div>
-      </div>
-    </div>
-
-    <div class="card" id="wpReportCard">
-      <h2>Report</h2>
-      <p class="sub">A summary of your saved withholding &mdash; altogether, and broken down by authority. Useful for your own records or to hand to your accountant.</p>
-
-      <div class="row">
-        <div class="field">
-          <label for="wpReportPeriod">Period</label>
-          <select id="wpReportPeriod">
-            <option value="month">This Month</option>
-            <option value="taxyear">This Tax Year (Jul&ndash;Jun)</option>
-            <option value="all">All Time</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="wpReportAuthority">Authority</label>
-          <select id="wpReportAuthority">
-            <option value="all">All Authorities</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label for="wpReportSupplier">Supplier</label>
-        <select id="wpReportSupplier">
-          <option value="all">All Suppliers</option>
-        </select>
-      </div>
-      <p class="wht-note" id="wpReportPeriodLabel"></p>
-
-      <div id="wpReportBizHeader" style="display:none;">
-        <div class="wht-logo-preview-wrap" style="margin-top:0;">
-          <img id="wpReportLogo" alt="Company logo" style="display:none;">
-          <div>
-            <div id="wpReportCompanyName" style="font-weight:700;color:var(--green);"></div>
-            <div id="wpReportCompanyMeta" class="wht-note" style="margin-top:2px;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="wht-summary-row" id="wpReportSummaryRow"></div>
-
-      <h3 style="margin:18px 0 6px;font-size:15px;color:var(--green);" id="wpReportByAuthorityHeading">By Authority</h3>
-      <div class="wht-report-table-wrap">
-        <table class="wht-report" id="wpReportByAuthorityTable"></table>
-      </div>
-
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="wpReportPrintBtn">Print Report</button>
-        <button type="button" class="wht-btn wht-btn-outline" id="wpReportCsvBtn">Download Report CSV</button>
-      </div>
-      <p class="wht-note" id="wpReportStatus" style="display:none;"></p>
-    </div>
-
   </div>
 
   <div class="card">
-    <h2>How This Works</h2>
-
-    <details class="faq-item">
-      <summary>Where is my data stored?</summary>
-      <p>Your entries are stored securely in this site's database, protected so only your signed-in account can read or change them. No one else, including other users, can see your entries.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Does this file my return or make a payment for me?</summary>
-      <p>No. This log only helps you track and export what you've withheld. Downloading a CSV does not submit anything to FBR, SRB, PRA, KPRA, BRA or ICT &mdash; you still need to log into the relevant authority's own portal yourself and complete the filing or payment there.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>What's in the CSV file?</summary>
-      <p>Each row is one saved entry: date, tax type, authority, category, supplier name and CNIC/NTN (if you entered them), the value, the rate applied, and the amount withheld &mdash; everything you'd typically need to fill in an authority's own upload template or return by hand.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Can I edit or delete an entry after saving it?</summary>
-      <p>Yes &mdash; every row in your Entries table has edit and delete buttons. Nothing is locked once saved.</p>
-    </details>
+    <h1>FBR IRIS Practice Simulator &ndash; Rehearse Your Income Tax Return</h1>
+    <p class="sub">Walk through the same shape as a salaried individual's 114(1) Return of Income on IRIS &mdash; login, personal details, salary income, tax chargeable, wealth statement and verification &mdash; with a live progress tracker, real slab-based tax computation, and a practice acknowledgment receipt at the end.</p>
   </div>
 
-  <div class="card" id="accountCard">
-    <h2>My Account</h2>
-    <p class="sub">Save every withholding tax entry you calculate on this site &mdash; sales tax or income tax &mdash; and pull a CSV of your monthly totals when it's time to file. Your entries are private to your account; no one else can see them.</p>
-
-    <div id="whtAuthLoggedOut">
-      <div class="row">
-        <div class="field">
-          <label for="whtAuthName">Full Name <span style="font-weight:400;color:var(--muted);">(for new accounts, optional)</span></label>
-          <input type="text" id="whtAuthName" placeholder="e.g. Ahmed Khan" autocomplete="name">
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label for="whtAuthEmail">Email</label>
-          <input type="email" id="whtAuthEmail" placeholder="you@example.com" autocomplete="email">
-        </div>
-        <div class="field">
-          <label for="whtAuthPassword">Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
-          <input type="password" id="whtAuthPassword" placeholder="••••••••" autocomplete="current-password">
-        </div>
-      </div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="whtSignUpBtn">Sign Up</button>
-        <button type="button" class="wht-btn wht-btn-outline" id="whtLogInBtn">Log In</button>
-      </div>
-      <p class="wht-note"><a href="#" id="whtForgotPasswordLink" style="color:var(--green);font-weight:600;">Forgot your password?</a></p>
-      <p class="wht-note" id="whtAuthStatus" style="display:none;"></p>
-      <p class="wht-note">Already have an account from the Zakat Calculator page? Use the same email and password &mdash; it's the same account.</p>
-    </div>
-
-    <div id="whtResetPasswordSection" style="display:none;">
-      <h3>Set a New Password</h3>
-      <p class="wht-note">Choose a new password for your account below.</p>
-      <div class="row">
-        <div class="field">
-          <label for="whtNewPassword">New Password <span style="font-weight:400;color:var(--muted);">(min. 6 characters)</span></label>
-          <input type="password" id="whtNewPassword" placeholder="••••••••" autocomplete="new-password">
-        </div>
-      </div>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn" id="whtUpdatePasswordBtn">Update Password</button>
-      </div>
-      <p class="wht-note" id="whtResetStatus" style="display:none;"></p>
-    </div>
-
-    <div id="whtAuthLoggedIn" style="display:none;">
-      <p class="wht-note">Signed in as <strong id="whtAuthUserEmail"></strong></p>
-      <div class="wht-btn-row">
-        <button type="button" class="wht-btn wht-btn-outline wht-btn-small" id="whtLogOutBtn">Log Out</button>
-      </div>
+  <div class="card no-print">
+    <div class="irisStepper" id="irisStepper">
+      <div class="irisStepDot" data-step="1"><span class="dotNum">1</span><span class="dotLabel">Login</span></div>
+      <div class="irisStepDot" data-step="2"><span class="dotNum">2</span><span class="dotLabel">Personal Info</span></div>
+      <div class="irisStepDot" data-step="3"><span class="dotNum">3</span><span class="dotLabel">Income</span></div>
+      <div class="irisStepDot" data-step="4"><span class="dotNum">4</span><span class="dotLabel">Tax Chargeable</span></div>
+      <div class="irisStepDot" data-step="5"><span class="dotNum">5</span><span class="dotLabel">Wealth Statement</span></div>
+      <div class="irisStepDot" data-step="6"><span class="dotNum">6</span><span class="dotLabel">Verify &amp; Submit</span></div>
     </div>
   </div>
 
-</div>
+  <div class="card no-print" id="irisWizardCard">
 
-<div class="wht-modal-backdrop" id="whtModalBackdrop">
-  <div class="wht-modal">
-    <h3 id="whtModalTitle">Edit Entry</h3>
-    <div class="field">
-      <label>Date</label>
-      <input type="date" id="whtModalDate">
-    </div>
-    <div class="row">
+    <section class="irisStep" data-step="1">
+      <h2>Step 1 of 6 &mdash; Log In to IRIS (Practice)</h2>
+      <p class="sub">On the real portal you'd log in with your CNIC/NTN and IRIS password at iris.fbr.gov.pk. Here, type anything &mdash; it's purely for rehearsal and nothing is checked or sent anywhere.</p>
       <div class="field">
-        <label>Type</label>
-        <select id="whtModalType">
-          <option value="sales_tax">Sales Tax WHT</option>
-          <option value="income_tax">Income Tax WHT</option>
-        </select>
+        <label>Registration No. (CNIC / NTN)</label>
+        <input type="text" id="irisLoginId" placeholder="e.g. 35202-1234567-1" inputmode="numeric" autocomplete="off">
       </div>
       <div class="field">
-        <label>Authority</label>
-        <input type="text" id="whtModalAuthority" placeholder="e.g. SRB, PRA, FBR">
+        <label>Password</label>
+        <input type="text" id="irisLoginPw" placeholder="Any text works here" autocomplete="off">
       </div>
-    </div>
-    <div class="field">
-      <label>Category</label>
-      <input type="text" id="whtModalCategory" placeholder="e.g. Registered service provider">
-    </div>
-    <div class="row">
-      <div class="field">
-        <label>Supplier Name</label>
-        <input type="text" id="whtModalSupplierName">
+      <div class="irisBtnRow">
+        <span></span>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(2)">Log In &rarr;</button>
       </div>
+    </section>
+
+    <section class="irisStep" data-step="2" style="display:none;">
+      <h2>Step 2 of 6 &mdash; Declaration: 114(1) Return of Income</h2>
+      <p class="sub">On IRIS this starts from the <strong>Declaration</strong> menu, where you choose the return type and tax year before entering any figures.</p>
       <div class="field">
-        <label>Supplier CNIC / NTN</label>
-        <input type="text" id="whtModalSupplierId">
+        <label>Full Name</label>
+        <input type="text" id="irisName" placeholder="e.g. Ali Ahmed" autocomplete="off">
       </div>
-    </div>
-    <div class="row">
-      <div class="field">
-        <label>Invoice Number</label>
-        <input type="text" id="whtModalInvoiceNumber" placeholder="e.g. INV-1042">
-      </div>
-      <div class="field">
-        <label>Invoice Date</label>
-        <input type="date" id="whtModalInvoiceDate">
-      </div>
-    </div>
-    <div class="field">
-      <label>Mode of Payment</label>
-      <select id="whtModalPaymentMode">
-        <option value="">Not specified</option>
-        <option value="cash">Cash</option>
-        <option value="cheque">Cheque</option>
-        <option value="bank">Bank Transfer</option>
-      </select>
-    </div>
-    <div class="row">
-      <div class="field">
-        <label>Value (PKR)</label>
-        <input type="number" id="whtModalValue" step="0.01">
+      <div class="row">
+        <div class="field">
+          <label>Tax Year</label>
+          <select id="irisTaxYear">
+            <option value="2025-26">Tax Year 2025-26</option>
+            <option value="2026-27" selected>Tax Year 2026-27</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Return Type</label>
+          <select disabled>
+            <option>114(1) &ndash; Individual (Salaried)</option>
+          </select>
+        </div>
       </div>
       <div class="field">
-        <label>Rate (%)</label>
-        <input type="number" id="whtModalRate" step="0.01">
+        <label>Employer Name</label>
+        <input type="text" id="irisEmployer" placeholder="e.g. ABC Textiles (Pvt) Ltd" autocomplete="off">
       </div>
-    </div>
-    <div class="field">
-      <label>Amount Withheld (PKR)</label>
-      <input type="number" id="whtModalWithheld" step="0.01">
-    </div>
-    <div class="field">
-      <label>Notes</label>
-      <input type="text" id="whtModalNotes">
-    </div>
-    <p class="wht-note err" id="whtModalStatus" style="display:none;"></p>
-    <div class="wht-btn-row">
-      <button type="button" class="wht-btn wht-btn-outline" id="whtModalCancelBtn">Cancel</button>
-      <button type="button" class="wht-btn" id="whtModalSaveBtn">Save Entry</button>
+      <div class="irisBtnRow">
+        <button type="button" class="btn-iris-back" onclick="irisGoto(1)">&larr; Back</button>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(3)">Save &amp; Continue &rarr;</button>
+      </div>
+    </section>
+
+    <section class="irisStep" data-step="3" style="display:none;">
+      <h2>Step 3 of 6 &mdash; Employment / Salary Income</h2>
+      <p class="sub">Enter figures the way they'd appear on your employer's salary certificate &mdash; the document IRIS expects you to have on hand for this tab.</p>
+      <div class="field">
+        <label>Gross Annual Salary (PKR)</label>
+        <div class="amount-wrap"><span class="currency-prefix">&#8368;</span>
+          <input type="text" inputmode="numeric" id="irisSalary" class="amount-input" placeholder="e.g. 3,000,000" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label>Tax Already Deducted by Employer (PKR) <span class="hintInline">&mdash; from your salary slips / certificate</span></label>
+        <div class="amount-wrap"><span class="currency-prefix">&#8368;</span>
+          <input type="text" inputmode="numeric" id="irisTaxDeducted" class="amount-input" placeholder="e.g. 250,000" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label>Other Income (rent, business, capital gains &mdash; optional)</label>
+        <div class="amount-wrap"><span class="currency-prefix">&#8368;</span>
+          <input type="text" inputmode="numeric" id="irisOtherIncome" class="amount-input" placeholder="e.g. 0" autocomplete="off">
+        </div>
+      </div>
+      <div class="irisBtnRow">
+        <button type="button" class="btn-iris-back" onclick="irisGoto(2)">&larr; Back</button>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(4)">Save &amp; Continue &rarr;</button>
+      </div>
+    </section>
+
+    <section class="irisStep" data-step="4" style="display:none;">
+      <h2>Step 4 of 6 &mdash; Tax Chargeable / Adjustable Tax</h2>
+      <p class="sub">IRIS computes your tax chargeable from the slab rates for your selected tax year, then nets off tax already deducted (your "adjustable tax") to show what you still owe or can claim back.</p>
+      <div class="result">
+        <div class="label">Tax Chargeable (computed from slab)</div>
+        <div class="big" id="irisTaxChargeable">Rs. 0</div>
+        <div class="grid3" id="irisTaxStats"></div>
+      </div>
+      <div class="rateTableWrap">
+        <table class="breakdown" id="irisSlabBreakdown"></table>
+      </div>
+      <div class="irisBtnRow">
+        <button type="button" class="btn-iris-back" onclick="irisGoto(3)">&larr; Back</button>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(5)">Save &amp; Continue &rarr;</button>
+      </div>
+    </section>
+
+    <section class="irisStep" data-step="5" style="display:none;">
+      <h2>Step 5 of 6 &mdash; Wealth Statement</h2>
+      <p class="sub">IRIS requires your assets and liabilities to reconcile with your income and expenses for the year &mdash; this single tab is where most first-time filers get stuck, which is exactly why it's worth practicing.</p>
+
+      <h3>Opening Position (start of tax year)</h3>
+      <div class="field">
+        <label>Opening Net Assets (PKR)</label>
+        <div class="amount-wrap"><span class="currency-prefix">&#8368;</span>
+          <input type="text" inputmode="numeric" id="irisOpeningAssets" class="amount-input" placeholder="e.g. 5,000,000" autocomplete="off">
+        </div>
+      </div>
+
+      <h3>Assets Held at Year End</h3>
+      <div class="wsRow2">
+        <div class="field"><label>Property</label><input type="text" inputmode="numeric" id="wsProperty" placeholder="0" autocomplete="off"></div>
+        <div class="field"><label>Vehicles</label><input type="text" inputmode="numeric" id="wsVehicle" placeholder="0" autocomplete="off"></div>
+      </div>
+      <div class="wsRow2">
+        <div class="field"><label>Bank Balances &amp; Cash</label><input type="text" inputmode="numeric" id="wsBank" placeholder="0" autocomplete="off"></div>
+        <div class="field"><label>Gold / Jewelry</label><input type="text" inputmode="numeric" id="wsGold" placeholder="0" autocomplete="off"></div>
+      </div>
+      <div class="field"><label>Investments / Shares / Other Assets</label><input type="text" inputmode="numeric" id="wsOtherAssets" placeholder="0" autocomplete="off"></div>
+
+      <h3>Liabilities at Year End</h3>
+      <div class="wsRow2">
+        <div class="field"><label>Loans Outstanding</label><input type="text" inputmode="numeric" id="wsLoans" placeholder="0" autocomplete="off"></div>
+        <div class="field"><label>Credit Card / Other Payables</label><input type="text" inputmode="numeric" id="wsPayables" placeholder="0" autocomplete="off"></div>
+      </div>
+
+      <h3>Personal Expenses This Year</h3>
+      <div class="field">
+        <label>Household &amp; Personal Expenses (PKR)</label>
+        <div class="amount-wrap"><span class="currency-prefix">&#8368;</span>
+          <input type="text" inputmode="numeric" id="irisExpenses" class="amount-input" placeholder="e.g. 1,200,000" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="result" id="irisReconcileBox">
+        <div class="label">Wealth Reconciliation Difference</div>
+        <div class="big" id="irisReconcileDiff">Rs. 0</div>
+        <div class="hint" id="irisReconcileMsg"></div>
+      </div>
+
+      <div class="irisBtnRow">
+        <button type="button" class="btn-iris-back" onclick="irisGoto(4)">&larr; Back</button>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(6)">Save &amp; Continue &rarr;</button>
+      </div>
+    </section>
+
+    <section class="irisStep" data-step="6" style="display:none;">
+      <h2>Step 6 of 6 &mdash; Verification</h2>
+      <p class="sub">Review everything below the way IRIS's own final verification screen would show it, before submitting.</p>
+      <div class="rateTableWrap">
+        <table class="breakdown" id="irisSummaryTable"></table>
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="irisVerifyCheck">
+        I verify that the particulars given above are correct and complete to the best of my knowledge and belief. (Practice only &mdash; this has no legal effect.)
+      </label>
+      <div class="irisBtnRow">
+        <button type="button" class="btn-iris-back" onclick="irisGoto(5)">&larr; Back</button>
+        <button type="button" class="btn-iris-next" id="irisSubmitBtn" onclick="irisSubmit()" disabled>Submit Return (Practice) &rarr;</button>
+      </div>
+      <p class="hint" id="irisSubmitBlockMsg"></p>
+    </section>
+
+    <section class="irisStep" data-step="ack" style="display:none;">
+      <div class="irisAckBox">
+        <div class="irisAckWatermark">Practice only &mdash; not a real FBR receipt</div>
+        <div class="irisAckIcon">&#9989;</div>
+        <h2>Practice Return "Submitted"</h2>
+        <p class="sub">This is a simulated acknowledgment screen. Nothing was transmitted to FBR, to us, or to anyone else &mdash; it existed only in this browser tab and disappears when you leave the page.</p>
+        <div class="rateTableWrap">
+          <table class="breakdown">
+            <tr><th>Practice Ack. No.</th><td id="ackNo"></td></tr>
+            <tr><th>Filed By</th><td id="ackName"></td></tr>
+            <tr><th>Tax Year</th><td id="ackYear"></td></tr>
+            <tr><th>Date/Time (practice)</th><td id="ackDate"></td></tr>
+          </table>
+        </div>
+        <button type="button" class="btn-iris-next" onclick="irisReset()">Start a New Practice Session</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="disclaimer">
+    This simulator uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a> (Finance Act 2025 and Finance Act 2026-27), but simplifies the real 114(1) form &mdash; it does not cover every schedule, tax credit, exemption, or attachment the actual IRIS return may require. It is an independent practice tool, not affiliated with or endorsed by the Federal Board of Revenue. Always file your real return at <a href="https://iris.fbr.gov.pk" target="_blank" rel="noopener noreferrer">iris.fbr.gov.pk</a>, and confirm anything unusual in your situation with a tax practitioner.
+  </div>
+
+  <div class="card no-print">
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>Is this the real FBR IRIS portal?</summary>
+      <p>No. This is an independent practice simulator built by Pakistan Tax Calculator to help you rehearse the return-filing flow before you use the real thing. It is not affiliated with, endorsed by, or connected to the Federal Board of Revenue in any way. To file an actual return, go to <a href="https://iris.fbr.gov.pk" target="_blank" rel="noopener noreferrer">iris.fbr.gov.pk</a>.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does anything I type here get saved or sent to FBR?</summary>
+      <p>No. Everything you enter stays in your browser tab only, held in memory for this session &mdash; nothing is transmitted to FBR, to us, or saved anywhere. Refreshing or closing the page clears it completely.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which tax year's slabs does the calculation use?</summary>
+      <p>You can choose either Tax Year 2025-26 or 2026-27 in Step 2. Step 4's tax computation uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a>, based on the Finance Act 2025 and Finance Act 2026-27.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What does it mean if my wealth statement doesn't reconcile?</summary>
+      <p>IRIS requires that your opening net assets, plus your income for the year, minus tax paid and personal expenses, equal your closing net assets (total assets minus liabilities). If those don't match, real IRIS blocks submission until you fix the mismatch &mdash; usually caused by an asset, loan, or expense that wasn't accounted for. This simulator flags the same imbalance so you can get comfortable finding and fixing it before it matters.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use this to actually file my tax return?</summary>
+      <p>No. This only rehearses the general flow with a simplified version of the real form, and doesn't submit anything anywhere. File your actual return only through FBR's official IRIS portal, and consult a tax practitioner for anything beyond a straightforward salaried return.</p>
+    </details>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Is this the real FBR IRIS portal?","acceptedAnswer":{"@type":"Answer","text":"No. This is an independent practice simulator built by Pakistan Tax Calculator to help you rehearse the return-filing flow. It is not affiliated with, endorsed by, or connected to the Federal Board of Revenue. File an actual return at iris.fbr.gov.pk."}},
+        {"@type":"Question","name":"Does anything typed into the IRIS practice simulator get saved or sent to FBR?","acceptedAnswer":{"@type":"Answer","text":"No. Everything entered stays in the browser tab only, in memory for that session. Nothing is transmitted to FBR or saved anywhere, and closing the page clears it."}},
+        {"@type":"Question","name":"Which tax year does the IRIS practice simulator use for tax calculations?","acceptedAnswer":{"@type":"Answer","text":"Tax Year 2025-26 or 2026-27, using the same salaried-individual slab rates as the site's Income Tax Calculator, based on the Finance Act 2025 and Finance Act 2026-27."}},
+        {"@type":"Question","name":"What happens if a wealth statement does not reconcile on IRIS?","acceptedAnswer":{"@type":"Answer","text":"IRIS requires opening net assets plus income for the year, minus tax paid and personal expenses, to equal closing net assets. A mismatch blocks submission until corrected."}},
+        {"@type":"Question","name":"Can the IRIS practice simulator be used to file an actual tax return?","acceptedAnswer":{"@type":"Answer","text":"No. It only rehearses the general flow with a simplified form and submits nothing anywhere. File the actual return only through FBR's official IRIS portal."}}
+      ]
+    }
+    </script>
+  </div>
+
+  <div class="card no-print" id="shareCard">
+    <h2>Share This Practice Simulator</h2>
+    <p class="sub">Know someone about to file their first IRIS return? Send them this practice run first.</p>
+    <div class="shareButtons">
+      <a class="shareBtn shareBtn-whatsapp" href="https://wa.me/?text=Practice%20filing%20your%20FBR%20IRIS%20income%20tax%20return%20before%20doing%20it%20for%20real%3A%20https%3A%2F%2Fpaktaxcalculator.net%2Firis-practice-simulator.html" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.986.579 3.833 1.578 5.392L2 22l4.735-1.554A9.943 9.943 0 0012.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.13a8.1 8.1 0 01-4.363-1.267l-.313-.185-3.242 1.064 1.078-3.155-.204-.324A8.11 8.11 0 013.87 12c0-4.484 3.647-8.13 8.131-8.13 4.484 0 8.13 3.646 8.13 8.13 0 4.484-3.646 8.13-8.13 8.13z"/></svg>
+        WhatsApp
+      </a>
+      <a class="shareBtn shareBtn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpaktaxcalculator.net%2Firis-practice-simulator.html" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.49-1.46H16.5V4.36C16.24 4.32 15.32 4.25 14.25 4.25c-2.23 0-3.75 1.36-3.75 3.86V10.5H8v3h2.5V21h3z"/></svg>
+        Facebook
+      </a>
+      <a class="shareBtn shareBtn-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpaktaxcalculator.net%2Firis-practice-simulator.html&text=Practice%20filing%20your%20FBR%20IRIS%20income%20tax%20return%20before%20doing%20it%20for%20real%3A" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
     </div>
   </div>
+
 </div>
 
 </main>
+
+  <script>
+/* ===== IRIS PRACTICE SIMULATOR LOGIC (fully client-side — nothing is ever sent anywhere) ===== */
+(function(){
+  var TAX_DATA = {
+    "2025-26": {
+      salariedSlabs: [
+        {min:0, max:600000, rate:0, base:0},
+        {min:600000, max:1200000, rate:1, base:0},
+        {min:1200000, max:2200000, rate:11, base:6000},
+        {min:2200000, max:3200000, rate:23, base:116000},
+        {min:3200000, max:4100000, rate:30, base:346000},
+        {min:4100000, max:Infinity, rate:35, base:616000}
+      ],
+      surcharge:true
+    },
+    "2026-27": {
+      salariedSlabs: [
+        {min:0, max:600000, rate:0, base:0},
+        {min:600000, max:1200000, rate:1, base:0},
+        {min:1200000, max:2200000, rate:11, base:6000},
+        {min:2200000, max:3200000, rate:20, base:116000},
+        {min:3200000, max:4100000, rate:25, base:316000},
+        {min:4100000, max:5600000, rate:29, base:541000},
+        {min:5600000, max:7000000, rate:32, base:976000},
+        {min:7000000, max:Infinity, rate:35, base:1424000}
+      ],
+      surcharge:false
+    }
+  };
+  var SURCHARGE_THRESHOLD = 10000000, SURCHARGE_RATE = 9;
+
+  function fmt(n){ if(isNaN(n)) n=0; n=Math.round(n); return "Rs. " + n.toLocaleString('en-PK'); }
+  function numVal(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').replace(/,/g,'')) || 0; }
+  function escHtml(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function attachCommaFormat(id){
+    var el = document.getElementById(id); if(!el) return;
+    el.addEventListener('input', function(){
+      var cursorFromEnd = el.value.length - el.selectionStart;
+      var raw = el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+      el.value = raw==='' ? '' : Number(raw).toLocaleString('en-US');
+      var newPos = Math.max(0, el.value.length - cursorFromEnd);
+      el.setSelectionRange(newPos, newPos);
+    });
+  }
+  ['irisSalary','irisTaxDeducted','irisOtherIncome','irisOpeningAssets','wsProperty','wsVehicle','wsBank','wsGold','wsOtherAssets','wsLoans','wsPayables','irisExpenses'].forEach(attachCommaFormat);
+
+  function slabTax(income, slabs){
+    income = Math.max(0, income||0);
+    if(income<=0) return {tax:0, slab:null};
+    var chosen = slabs[slabs.length-1];
+    for(var i=0;i<slabs.length;i++){ var s=slabs[i]; if(income > s.min && income <= s.max){ chosen = s; break; } }
+    var tax = chosen.base + (income - chosen.min) * (chosen.rate/100);
+    return {tax: Math.max(0,tax), slab: chosen};
+  }
+
+  window.irisGoto = function(step){
+    document.querySelectorAll('.irisStep').forEach(function(sec){
+      sec.style.display = (String(sec.dataset.step) === String(step)) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.irisStepDot').forEach(function(dot){
+      var s = parseInt(dot.dataset.step,10);
+      dot.classList.toggle('active', s === step);
+      dot.classList.toggle('done', s < step);
+    });
+    if(step === 4) computeTaxChargeable();
+    if(step === 5) computeReconciliation();
+    if(step === 6) buildSummary();
+    var card = document.getElementById('irisWizardCard');
+    if(card){ window.scrollTo({top: card.offsetTop - 90, behavior:'smooth'}); }
+  };
+
+  function computeTaxChargeable(){
+    var year = document.getElementById('irisTaxYear').value;
+    var yd = TAX_DATA[year];
+    var salary = numVal('irisSalary');
+    var other = numVal('irisOtherIncome');
+    var income = salary + other;
+    var deducted = numVal('irisTaxDeducted');
+    var r = slabTax(income, yd.salariedSlabs);
+    var surcharge = (yd.surcharge && income > SURCHARGE_THRESHOLD) ? r.tax*(SURCHARGE_RATE/100) : 0;
+    var chargeable = r.tax + surcharge;
+    var balance = chargeable - deducted;
+
+    document.getElementById('irisTaxChargeable').textContent = fmt(chargeable);
+    document.getElementById('irisTaxStats').innerHTML =
+      '<div class="stat"><div class="v">'+fmt(deducted)+'</div><div class="k">Adjustable Tax (already deducted)</div></div>'+
+      '<div class="stat"><div class="v">'+fmt(Math.abs(balance))+'</div><div class="k">'+(balance>=0?'Balance Payable':'Refundable')+'</div></div>'+
+      '<div class="stat"><div class="v">'+(r.slab?r.slab.rate:0)+'%</div><div class="k">Marginal Slab Rate</div></div>';
+
+    var html = '<tr><th>Slab</th><th>Rate</th><th>Tax</th></tr>';
+    yd.salariedSlabs.forEach(function(s){
+      var amt = 0;
+      if(income > s.min){ var cap = s.max===Infinity ? income : Math.min(income, s.max); amt = (cap - s.min)*(s.rate/100); }
+      var rangeText = s.max===Infinity ? ('Rs. '+s.min.toLocaleString('en-US')+' &amp; above') : ('Rs. '+s.min.toLocaleString('en-US')+' – '+s.max.toLocaleString('en-US'));
+      html += '<tr><td>'+rangeText+'</td><td>'+s.rate+'%</td><td>'+(amt>0?fmt(amt):'&minus;')+'</td></tr>';
+    });
+    if(surcharge>0){ html += '<tr><td>Surcharge (income &gt; Rs. 10,000,000)</td><td>9%</td><td>'+fmt(surcharge)+'</td></tr>'; }
+    document.getElementById('irisSlabBreakdown').innerHTML = html;
+
+    window._irisChargeable = chargeable;
+    window._irisBalance = balance;
+    window._irisIncome = income;
+  }
+
+  function computeReconciliation(){
+    var opening = numVal('irisOpeningAssets');
+    var assets = numVal('wsProperty')+numVal('wsVehicle')+numVal('wsBank')+numVal('wsGold')+numVal('wsOtherAssets');
+    var liabilities = numVal('wsLoans')+numVal('wsPayables');
+    var closingReported = assets - liabilities;
+    var income = window._irisIncome || 0;
+    var taxPaid = window._irisChargeable || 0;
+    var expenses = numVal('irisExpenses');
+    var expectedClosing = opening + income - taxPaid - expenses;
+    var diff = closingReported - expectedClosing;
+
+    document.getElementById('irisReconcileDiff').textContent = fmt(Math.abs(diff));
+    var box = document.getElementById('irisReconcileBox');
+    var msg = document.getElementById('irisReconcileMsg');
+    if(Math.abs(diff) < 1000){
+      box.style.background = '#e0f5e6'; box.style.borderColor='#a9dab8';
+      msg.textContent = 'This reconciles — that’s what real IRIS needs before it lets you submit.';
+    } else {
+      box.style.background = '#fdecea'; box.style.borderColor='#f3c6c6';
+      msg.textContent = 'Off by ' + fmt(Math.abs(diff)) + '. On real IRIS this blocks submission — adjust assets, liabilities or expenses until opening net assets + income − tax − expenses = closing net assets.';
+    }
+    window._irisReconciled = Math.abs(diff) < 1000;
+  }
+
+  function buildSummary(){
+    var name = document.getElementById('irisName').value || '(not entered)';
+    var year = document.getElementById('irisTaxYear').value;
+    var employer = document.getElementById('irisEmployer').value || '(not entered)';
+    var salary = numVal('irisSalary');
+    var chargeable = window._irisChargeable || 0;
+    var balance = window._irisBalance || 0;
+    var reconciled = !!window._irisReconciled;
+
+    document.getElementById('irisSummaryTable').innerHTML =
+      '<tr><th>Field</th><th>Value</th></tr>'+
+      '<tr><td>Name</td><td>'+escHtml(name)+'</td></tr>'+
+      '<tr><td>Tax Year</td><td>'+year+'</td></tr>'+
+      '<tr><td>Employer</td><td>'+escHtml(employer)+'</td></tr>'+
+      '<tr><td>Gross Annual Salary</td><td>'+fmt(salary)+'</td></tr>'+
+      '<tr><td>Tax Chargeable</td><td>'+fmt(chargeable)+'</td></tr>'+
+      '<tr><td>'+(balance>=0?'Balance Payable':'Refundable')+'</td><td>'+fmt(Math.abs(balance))+'</td></tr>'+
+      '<tr><td>Wealth Statement Reconciled</td><td>'+(reconciled?'Yes':'No — go back to Step 5')+'</td></tr>';
+
+    var submitBtn = document.getElementById('irisSubmitBtn');
+    var blockMsg = document.getElementById('irisSubmitBlockMsg');
+    var verified = document.getElementById('irisVerifyCheck').checked;
+    var canSubmit = reconciled && verified;
+    submitBtn.disabled = !canSubmit;
+    blockMsg.textContent = reconciled ? '' : 'Submit is disabled until your wealth statement reconciles in Step 5 — just like on real IRIS.';
+  }
+
+  document.getElementById('irisVerifyCheck').addEventListener('change', buildSummary);
+  document.getElementById('irisTaxYear').addEventListener('change', function(){});
+
+  /* Recompute the wealth reconciliation live as any wealth-statement field changes */
+  ['irisOpeningAssets','wsProperty','wsVehicle','wsBank','wsGold','wsOtherAssets','wsLoans','wsPayables','irisExpenses'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.addEventListener('input', computeReconciliation); }
+  });
+
+  window.irisSubmit = function(){
+    if(document.getElementById('irisSubmitBtn').disabled) return;
+    var name = document.getElementById('irisName').value || 'Practice User';
+    var year = document.getElementById('irisTaxYear').value;
+    document.getElementById('ackNo').textContent = 'PRACTICE-' + Math.floor(100000+Math.random()*900000);
+    document.getElementById('ackName').textContent = name;
+    document.getElementById('ackYear').textContent = year;
+    document.getElementById('ackDate').textContent = new Date().toLocaleString('en-PK');
+    document.querySelectorAll('.irisStep').forEach(function(sec){ sec.style.display='none'; });
+    var ack = document.querySelector('.irisStep[data-step="ack"]');
+    if(ack){ ack.style.display = 'block'; }
+    var stepper = document.getElementById('irisStepper');
+    if(stepper){ stepper.style.opacity = '0.4'; }
+  };
+
+  window.irisReset = function(){
+    document.querySelectorAll('#irisWizardCard input[type=text]').forEach(function(el){ el.value=''; });
+    document.getElementById('irisVerifyCheck').checked = false;
+    var stepper = document.getElementById('irisStepper');
+    if(stepper){ stepper.style.opacity = '1'; }
+    irisGoto(1);
+  };
+
+  irisGoto(1);
+})();
+</script>
+
+<div class="print-only print-footer-note">Estimate only — confirm exact rates and rules with FBR or the relevant provincial tax authority before filing.</div>
 
 <footer>
   <div class="footerCalcs">
@@ -1719,833 +1906,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-function fmt(n){
-  if(isNaN(n)) n = 0;
-  n = Math.round(n);
-  return "Rs. " + n.toLocaleString('en-PK');
-}
-function escapeHtml(s){
-  if(s === null || s === undefined) return '';
-  return String(s).replace(/[&<>"']/g, function(c){
-    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
-  });
-}
-
-/* =========================================================
-   MY WHT LOG — Supabase-backed personal withholding log
-========================================================= */
-(function(){
-  var SUPABASE_URL = "https://znzidjtbsovvjzfyccyu.supabase.co";
-  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuemlkanRic292dmp6ZnljY3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTAwOTYsImV4cCI6MjEwMjk4NjA5Nn0.8cqncm4h3x0FLnIjMI6iPUFS_3f8yFhvNDH5innLVhg";
-
-  var loggedOutEl = document.getElementById("whtAuthLoggedOut");
-  var loggedInEl = document.getElementById("whtAuthLoggedIn");
-  var logSection = document.getElementById("whtLogSection");
-
-  if(!window.supabase){
-    var notice = document.createElement("p");
-    notice.className = "wht-note err";
-    notice.textContent = "Sign up / login isn't available right now — please try again shortly.";
-    loggedOutEl.appendChild(notice);
-    document.getElementById("whtSignUpBtn").disabled = true;
-    document.getElementById("whtLogInBtn").disabled = true;
-    return;
-  }
-
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  var statusEl = document.getElementById("whtAuthStatus");
-  var userEmailEl = document.getElementById("whtAuthUserEmail");
-  var logStatusEl = document.getElementById("whtLogStatus");
-  var monthPicker = document.getElementById("whtMonthPicker");
-  var entriesWrap = document.getElementById("whtEntriesWrap");
-  var summaryRow = document.getElementById("whtSummaryRow");
-  var resetSectionEl = document.getElementById("whtResetPasswordSection");
-  var resetStatusEl = document.getElementById("whtResetStatus");
-  var currentUser = null;
-  var currentEntries = [];
-  var editingId = null;
-
-  function showAuthStatus(msg, isError){
-    statusEl.textContent = msg;
-    statusEl.style.display = "block";
-    statusEl.style.color = isError ? "#b3261e" : "var(--muted)";
-  }
-  function showResetStatus(msg, isError){
-    resetStatusEl.textContent = msg;
-    resetStatusEl.style.display = "block";
-    resetStatusEl.style.color = isError ? "#b3261e" : "var(--muted)";
-  }
-  function showLogStatus(msg, isError){
-    logStatusEl.textContent = msg;
-    logStatusEl.style.display = msg ? "block" : "none";
-    logStatusEl.style.color = isError ? "#b3261e" : "var(--green)";
-  }
-
-  function currentMonthValue(){
-    var d = new Date();
-    var m = String(d.getMonth() + 1).padStart(2, '0');
-    return d.getFullYear() + "-" + m;
-  }
-  monthPicker.value = currentMonthValue();
-
-  function redirectToReturnPage(){
-    try{
-      var params = new URLSearchParams(window.location.search);
-      var ret = params.get('return');
-      if(ret && /^[A-Za-z0-9_-]+\.html$/.test(ret) && ret !== 'my-wht-log.html'){
-        window.location.href = ret;
-      }
-    }catch(e){}
-  }
-
-  function setLoggedInUI(user){
-    currentUser = user;
-    resetSectionEl.style.display = "none";
-    loggedOutEl.style.display = "none";
-    loggedInEl.style.display = "block";
-    logSection.style.display = "block";
-    var fullName = (user.user_metadata && user.user_metadata.full_name) || "";
-    userEmailEl.textContent = fullName ? (fullName + " (" + user.email + ")") : user.email;
-    loadEntries();
-    loadProfile();
-    loadReport();
-    redirectToReturnPage();
-  }
-  function setLoggedOutUI(){
-    currentUser = null;
-    resetSectionEl.style.display = "none";
-    loggedOutEl.style.display = "block";
-    loggedInEl.style.display = "none";
-    logSection.style.display = "none";
-    resetProfileForm();
-    currentReportEntries = [];
-    if(document.getElementById('wpReportSummaryRow')){
-      document.getElementById('wpReportSummaryRow').innerHTML = "";
-      document.getElementById('wpReportByAuthorityTable').innerHTML = "";
-      document.getElementById('wpReportBizHeader').style.display = "none";
-    }
-  }
-  function showResetPasswordUI(){
-    loggedOutEl.style.display = "none";
-    loggedInEl.style.display = "none";
-    logSection.style.display = "none";
-    resetSectionEl.style.display = "block";
-  }
-
-  document.getElementById("whtSignUpBtn").addEventListener("click", function(){
-    var name = document.getElementById("whtAuthName").value.trim();
-    var email = document.getElementById("whtAuthEmail").value.trim();
-    var password = document.getElementById("whtAuthPassword").value;
-    if(!email || !password){ showAuthStatus("Please enter both an email and a password.", true); return; }
-    if(password.length < 6){ showAuthStatus("Password must be at least 6 characters.", true); return; }
-    showAuthStatus("Creating your account…", false);
-    var signUpPayload = { email: email, password: password };
-    if(name){ signUpPayload.options = { data: { full_name: name } }; }
-    sb.auth.signUp(signUpPayload).then(function(res){
-      if(res.error){ showAuthStatus(res.error.message, true); return; }
-      if(res.data && res.data.session){
-        setLoggedInUI(res.data.user);
-      } else {
-        showAuthStatus("Account created — please check your email to confirm it, then come back and log in.", false);
-      }
-    });
-  });
-
-  document.getElementById("whtLogInBtn").addEventListener("click", function(){
-    var email = document.getElementById("whtAuthEmail").value.trim();
-    var password = document.getElementById("whtAuthPassword").value;
-    if(!email || !password){ showAuthStatus("Please enter both an email and a password.", true); return; }
-    showAuthStatus("Logging in…", false);
-    sb.auth.signInWithPassword({ email: email, password: password }).then(function(res){
-      if(res.error){ showAuthStatus(res.error.message, true); return; }
-      setLoggedInUI(res.data.user);
-    });
-  });
-
-  document.getElementById("whtForgotPasswordLink").addEventListener("click", function(e){
-    e.preventDefault();
-    var email = document.getElementById("whtAuthEmail").value.trim();
-    if(!email){ showAuthStatus('Please enter your email above, then click "Forgot your password?" again.', true); return; }
-    showAuthStatus("Sending password reset email…", false);
-    sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname }).then(function(res){
-      if(res.error){ showAuthStatus(res.error.message, true); return; }
-      showAuthStatus("Password reset email sent — check your inbox (and spam folder) for a link to set a new password.", false);
-    });
-  });
-
-  document.getElementById("whtUpdatePasswordBtn").addEventListener("click", function(){
-    var newPassword = document.getElementById("whtNewPassword").value;
-    if(!newPassword || newPassword.length < 6){ showResetStatus("Password must be at least 6 characters.", true); return; }
-    showResetStatus("Updating your password…", false);
-    sb.auth.updateUser({ password: newPassword }).then(function(res){
-      if(res.error){ showResetStatus(res.error.message, true); return; }
-      showResetStatus("Password updated! Taking you to your account…", false);
-      setTimeout(function(){
-        if(res.data && res.data.user){ setLoggedInUI(res.data.user); }
-      }, 1200);
-    });
-  });
-
-  document.getElementById("whtLogOutBtn").addEventListener("click", function(){
-    sb.auth.signOut().then(function(){ setLoggedOutUI(); }).catch(function(){ setLoggedOutUI(); });
-  });
-
-  sb.auth.getSession().then(function(res){
-    if(res.data && res.data.session){ setLoggedInUI(res.data.session.user); }
-  });
-  sb.auth.onAuthStateChange(function(event, session){
-    if(event === 'PASSWORD_RECOVERY'){ showResetPasswordUI(); return; }
-    if(session && session.user){ setLoggedInUI(session.user); }
-    else { setLoggedOutUI(); }
-  });
-
-  /* ---- Arrived from a header "Log In" / "Sign Up" button on another page ---- */
-  (function focusAuthIntent(){
-    try{
-      var authIntent = new URLSearchParams(window.location.search).get('auth');
-      if(!authIntent) return;
-      setTimeout(function(){
-        var card = document.getElementById('accountCard');
-        if(card && card.scrollIntoView){ card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        if(authIntent === 'signup'){
-          var nameEl = document.getElementById('whtAuthName');
-          if(nameEl && loggedOutEl.style.display !== 'none'){ nameEl.focus(); }
-        } else if(authIntent === 'login'){
-          var emailEl = document.getElementById('whtAuthEmail');
-          if(emailEl && loggedOutEl.style.display !== 'none'){ emailEl.focus(); }
-        }
-      }, 300);
-    }catch(e){}
-  })();
-
-  /* ---- Business Profile ---- */
-  var wpCompanyNameEl = document.getElementById("wpCompanyName");
-  var wpAddressEl = document.getElementById("wpAddress");
-  var wpPhoneEl = document.getElementById("wpPhone");
-  var wpEmailEl = document.getElementById("wpEmail");
-  var wpLogoEl = document.getElementById("wpLogo");
-  var wpLogoPreviewWrap = document.getElementById("wpLogoPreviewWrap");
-  var wpLogoPreview = document.getElementById("wpLogoPreview");
-  var wpStatusEl = document.getElementById("wpStatus");
-  var currentLogoDataUrl = null;
-  var currentProfileId = null;
-
-  function showProfileStatus(msg, isError){
-    wpStatusEl.textContent = msg;
-    wpStatusEl.style.display = msg ? "block" : "none";
-    wpStatusEl.style.color = isError ? "#b3261e" : "var(--green)";
-  }
-
-  function resetProfileForm(){
-    currentLogoDataUrl = null;
-    currentProfileId = null;
-    wpCompanyNameEl.value = "";
-    wpAddressEl.value = "";
-    wpPhoneEl.value = "";
-    wpEmailEl.value = "";
-    wpLogoEl.value = "";
-    wpLogoPreviewWrap.style.display = "none";
-    wpLogoPreview.src = "";
-    showProfileStatus("", false);
-  }
-
-  function resizeLogoFile(file, maxDim, quality){
-    return new Promise(function(resolve, reject){
-      if(!file.type || file.type.indexOf('image/') !== 0){ reject(new Error('Please choose an image file.')); return; }
-      var reader = new FileReader();
-      reader.onerror = function(){ reject(new Error('Could not read that file.')); };
-      reader.onload = function(){
-        var img = new Image();
-        img.onerror = function(){ reject(new Error('Could not load that image.')); };
-        img.onload = function(){
-          var w = img.width, h = img.height;
-          var scale = Math.min(1, maxDim / Math.max(w, h));
-          var cw = Math.max(1, Math.round(w * scale));
-          var ch = Math.max(1, Math.round(h * scale));
-          var canvas = document.createElement('canvas');
-          canvas.width = cw; canvas.height = ch;
-          var ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, cw, ch);
-          ctx.drawImage(img, 0, 0, cw, ch);
-          resolve(canvas.toDataURL('image/jpeg', quality));
-        };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  wpLogoEl.addEventListener("change", function(){
-    var file = wpLogoEl.files && wpLogoEl.files[0];
-    if(!file) return;
-    resizeLogoFile(file, 320, 0.85).then(function(dataUrl){
-      if(dataUrl.length > 400000){
-        showProfileStatus("That logo is too large even after compressing — please try a smaller or simpler image.", true);
-        wpLogoEl.value = "";
-        return;
-      }
-      currentLogoDataUrl = dataUrl;
-      wpLogoPreview.src = dataUrl;
-      wpLogoPreviewWrap.style.display = "flex";
-      showProfileStatus("", false);
-    }).catch(function(err){
-      showProfileStatus(err.message || "Couldn't process that image.", true);
-      wpLogoEl.value = "";
-    });
-  });
-
-  document.getElementById("wpLogoRemoveBtn").addEventListener("click", function(){
-    currentLogoDataUrl = null;
-    wpLogoEl.value = "";
-    wpLogoPreviewWrap.style.display = "none";
-    wpLogoPreview.src = "";
-  });
-
-  function loadProfile(){
-    if(!currentUser) return;
-    sb.from('company_profiles').select('*').eq('user_id', currentUser.id).then(function(res){
-      if(res.error || !res.data || !res.data.length){
-        resetProfileForm();
-        if(typeof renderReportBizHeader === 'function') renderReportBizHeader();
-        return;
-      }
-      var p = res.data[0];
-      currentProfileId = p.id;
-      wpCompanyNameEl.value = p.company_name || "";
-      wpAddressEl.value = p.address || "";
-      wpPhoneEl.value = p.phone || "";
-      wpEmailEl.value = p.email || "";
-      if(p.logo_data_url){
-        currentLogoDataUrl = p.logo_data_url;
-        wpLogoPreview.src = p.logo_data_url;
-        wpLogoPreviewWrap.style.display = "flex";
-      } else {
-        currentLogoDataUrl = null;
-        wpLogoPreviewWrap.style.display = "none";
-      }
-      if(typeof renderReportBizHeader === 'function') renderReportBizHeader();
-    });
-  }
-
-  document.getElementById("wpSaveBtn").addEventListener("click", function(){
-    if(!currentUser) return;
-    var payload = {
-      user_id: currentUser.id,
-      company_name: wpCompanyNameEl.value.trim() || null,
-      address: wpAddressEl.value.trim() || null,
-      phone: wpPhoneEl.value.trim() || null,
-      email: wpEmailEl.value.trim() || null,
-      logo_data_url: currentLogoDataUrl,
-      updated_at: new Date().toISOString()
-    };
-    showProfileStatus("Saving…", false);
-    sb.from('company_profiles').upsert(payload, { onConflict: 'user_id' }).then(function(res){
-      if(res.error){
-        showProfileStatus("Couldn't save: " + res.error.message, true);
-        return;
-      }
-      showProfileStatus("Profile saved.", false);
-      loadProfile();
-    });
-  });
-
-  /* ---- Month range helpers ---- */
-  function monthBounds(monthValue){
-    var parts = monthValue.split('-');
-    var year = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10);
-    var start = year + '-' + String(month).padStart(2,'0') + '-01';
-    var lastDay = new Date(year, month, 0).getDate();
-    var end = year + '-' + String(month).padStart(2,'0') + '-' + String(lastDay).padStart(2,'0');
-    return { start: start, end: end };
-  }
-
-  /* ---- Load & render entries for the selected month ---- */
-  function loadEntries(){
-    if(!currentUser) return;
-    entriesWrap.innerHTML = '<div class="wht-loading">Loading your entries…</div>';
-    var bounds = monthBounds(monthPicker.value);
-    sb.from('wht_entries')
-      .select('*')
-      .eq('user_id', currentUser.id)
-      .gte('entry_date', bounds.start)
-      .lte('entry_date', bounds.end)
-      .order('entry_date', { ascending: false })
-      .then(function(res){
-        if(res.error){
-          entriesWrap.innerHTML = '<div class="wht-empty">Couldn\'t load your entries: ' + escapeHtml(res.error.message) + '</div>';
-          return;
-        }
-        currentEntries = res.data || [];
-        renderSummary();
-        renderEntries();
-      });
-  }
-
-  function renderSummary(){
-    var totalWithheld = 0, salesTaxTotal = 0, incomeTaxTotal = 0;
-    currentEntries.forEach(function(e){
-      var amt = parseFloat(e.amount_withheld) || 0;
-      totalWithheld += amt;
-      if(e.wht_type === 'sales_tax') salesTaxTotal += amt;
-      else incomeTaxTotal += amt;
-    });
-    summaryRow.innerHTML =
-      '<div class="wht-summary-card"><div class="v">' + currentEntries.length + '</div><div class="k">Entries This Month</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(totalWithheld) + '</div><div class="k">Total Withheld</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(salesTaxTotal) + '</div><div class="k">Sales Tax WHT</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(incomeTaxTotal) + '</div><div class="k">Income Tax WHT</div></div>';
-  }
-
-  function renderEntries(){
-    if(!currentEntries.length){
-      entriesWrap.innerHTML = '<div class="wht-empty">No entries saved for this month yet. Use a withholding calculator\'s "Save to My Account" button, or add one manually above.</div>';
-      return;
-    }
-    var paymentModeLabels = { cash: 'Cash', cheque: 'Cheque', bank: 'Bank Transfer' };
-    var rows = currentEntries.map(function(e){
-      var typeLabel = e.wht_type === 'sales_tax' ? 'Sales Tax' : 'Income Tax';
-      var invoiceText = [e.invoice_number, e.invoice_date].filter(Boolean).join(' · ');
-      return '<tr>' +
-        '<td>' + escapeHtml(e.entry_date) + '</td>' +
-        '<td><span class="wht-type-pill ' + e.wht_type + '">' + typeLabel + '</span></td>' +
-        '<td>' + escapeHtml(e.authority) + '</td>' +
-        '<td>' + escapeHtml(e.category || '') + '</td>' +
-        '<td>' + escapeHtml(e.supplier_name || '') + '</td>' +
-        '<td>' + escapeHtml(invoiceText) + '</td>' +
-        '<td>' + escapeHtml(paymentModeLabels[e.payment_mode] || '') + '</td>' +
-        '<td>' + fmt(e.amount_value) + '</td>' +
-        '<td>' + (e.rate !== null && e.rate !== undefined ? e.rate + '%' : '—') + '</td>' +
-        '<td class="wht-amt">' + fmt(e.amount_withheld) + '</td>' +
-        '<td class="wht-notes">' + escapeHtml(e.notes || '') + '</td>' +
-        '<td><div class="wht-row-actions">' +
-          '<button type="button" class="wht-icon-btn wht-edit" data-id="' + e.id + '" title="Edit">&#9998;</button>' +
-          '<button type="button" class="wht-icon-btn wht-del" data-id="' + e.id + '" title="Delete">&#128465;</button>' +
-        '</div></td>' +
-        '</tr>';
-    }).join('');
-    entriesWrap.innerHTML =
-      '<div class="wht-table-wrap"><table class="wht-entries">' +
-      '<tr><th>Date</th><th>Type</th><th>Authority</th><th>Category</th><th>Supplier</th><th>Invoice</th><th>Payment</th><th>Value</th><th>Rate</th><th>Withheld</th><th>Notes</th><th>Actions</th></tr>' +
-      rows +
-      '</table></div>';
-
-    entriesWrap.querySelectorAll('.wht-edit').forEach(function(btn){
-      btn.addEventListener('click', function(){ openModalForEdit(btn.getAttribute('data-id')); });
-    });
-    entriesWrap.querySelectorAll('.wht-del').forEach(function(btn){
-      btn.addEventListener('click', function(){ deleteEntry(btn.getAttribute('data-id')); });
-    });
-  }
-
-  function deleteEntry(id){
-    if(!confirm('Delete this entry? This cannot be undone.')) return;
-    sb.from('wht_entries').delete().eq('id', id).eq('user_id', currentUser.id).then(function(res){
-      if(res.error){ showLogStatus("Couldn't delete: " + res.error.message, true); return; }
-      showLogStatus('Entry deleted.', false);
-      loadEntries();
-      loadReport();
-    });
-  }
-
-  monthPicker.addEventListener('change', loadEntries);
-
-  /* ---- CSV export ---- */
-  document.getElementById('whtDownloadCsvBtn').addEventListener('click', function(){
-    if(!currentEntries.length){ showLogStatus('No entries to export for this month.', true); return; }
-    var headers = ['Date','Type','Authority','Category','Supplier Name','Supplier CNIC/NTN','Invoice Number','Invoice Date','Mode of Payment','Value (PKR)','Rate (%)','Withholding Basis','Amount Withheld (PKR)','Net Paid (PKR)','Notes'];
-    var paymentModeLabels = { cash: 'Cash', cheque: 'Cheque', bank: 'Bank Transfer' };
-    function csvCell(v){
-      if(v === null || v === undefined) v = '';
-      v = String(v);
-      if(/[",\n]/.test(v)) v = '"' + v.replace(/"/g,'""') + '"';
-      return v;
-    }
-    var lines = [headers.map(csvCell).join(',')];
-    currentEntries.forEach(function(e){
-      lines.push([
-        e.entry_date,
-        e.wht_type === 'sales_tax' ? 'Sales Tax' : 'Income Tax',
-        e.authority,
-        e.category || '',
-        e.supplier_name || '',
-        e.supplier_id_number || '',
-        e.invoice_number || '',
-        e.invoice_date || '',
-        paymentModeLabels[e.payment_mode] || '',
-        e.amount_value,
-        e.rate !== null && e.rate !== undefined ? e.rate : '',
-        e.withholding_basis || '',
-        e.amount_withheld,
-        e.net_paid !== null && e.net_paid !== undefined ? e.net_paid : '',
-        e.notes || ''
-      ].map(csvCell).join(','));
-    });
-    var csvContent = lines.join('\r\n');
-    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'wht-log-' + monthPicker.value + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-
-  /* ---- Report ---- */
-  var wpReportPeriodEl = document.getElementById('wpReportPeriod');
-  var wpReportAuthorityEl = document.getElementById('wpReportAuthority');
-  var wpReportSupplierEl = document.getElementById('wpReportSupplier');
-  var wpReportPeriodLabelEl = document.getElementById('wpReportPeriodLabel');
-  var wpReportBizHeader = document.getElementById('wpReportBizHeader');
-  var wpReportLogo = document.getElementById('wpReportLogo');
-  var wpReportCompanyName = document.getElementById('wpReportCompanyName');
-  var wpReportCompanyMeta = document.getElementById('wpReportCompanyMeta');
-  var wpReportSummaryRow = document.getElementById('wpReportSummaryRow');
-  var wpReportTable = document.getElementById('wpReportByAuthorityTable');
-  var wpReportByAuthorityHeading = document.getElementById('wpReportByAuthorityHeading');
-  var wpReportStatusEl = document.getElementById('wpReportStatus');
-  var currentReportEntries = [];
-  var currentReportLabel = '';
-
-  function populateReportAuthorities(){
-    var previous = wpReportAuthorityEl.value || 'all';
-    var authorities = [];
-    currentReportEntries.forEach(function(e){
-      var key = e.authority || 'Unspecified';
-      if(authorities.indexOf(key) === -1) authorities.push(key);
-    });
-    authorities.sort();
-    wpReportAuthorityEl.innerHTML = '<option value="all">All Authorities</option>' +
-      authorities.map(function(a){ return '<option value="' + escapeHtml(a) + '">' + escapeHtml(a) + '</option>'; }).join('');
-    if(previous !== 'all' && authorities.indexOf(previous) !== -1){
-      wpReportAuthorityEl.value = previous;
-    } else {
-      wpReportAuthorityEl.value = 'all';
-    }
-  }
-
-  function populateReportSuppliers(){
-    var previous = wpReportSupplierEl.value || 'all';
-    var suppliers = [];
-    currentReportEntries.forEach(function(e){
-      var key = e.supplier_name || 'Unspecified';
-      if(suppliers.indexOf(key) === -1) suppliers.push(key);
-    });
-    suppliers.sort();
-    wpReportSupplierEl.innerHTML = '<option value="all">All Suppliers</option>' +
-      suppliers.map(function(s){ return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + '</option>'; }).join('');
-    if(previous !== 'all' && suppliers.indexOf(previous) !== -1){
-      wpReportSupplierEl.value = previous;
-    } else {
-      wpReportSupplierEl.value = 'all';
-    }
-  }
-
-  function getFilteredReportEntries(){
-    var entries = currentReportEntries;
-    if(wpReportAuthorityEl && wpReportAuthorityEl.value !== 'all'){
-      var chosenAuth = wpReportAuthorityEl.value;
-      entries = entries.filter(function(e){ return (e.authority || 'Unspecified') === chosenAuth; });
-    }
-    if(wpReportSupplierEl && wpReportSupplierEl.value !== 'all'){
-      var chosenSupplier = wpReportSupplierEl.value;
-      entries = entries.filter(function(e){ return (e.supplier_name || 'Unspecified') === chosenSupplier; });
-    }
-    return entries;
-  }
-
-  function showReportStatus(msg, isError){
-    wpReportStatusEl.textContent = msg;
-    wpReportStatusEl.style.display = msg ? 'block' : 'none';
-    wpReportStatusEl.style.color = isError ? '#b3261e' : 'var(--muted)';
-  }
-
-  function taxYearBounds(d){
-    var y = d.getFullYear();
-    var m = d.getMonth() + 1;
-    var startYear = m >= 7 ? y : y - 1;
-    var endYear = startYear + 1;
-    return {
-      start: startYear + '-07-01',
-      end: endYear + '-06-30',
-      label: 'Tax Year ' + startYear + '-' + String(endYear).slice(2) + ' (Jul ' + startYear + ' – Jun ' + endYear + ')'
-    };
-  }
-
-  function reportBounds(period){
-    var now = new Date();
-    if(period === 'month'){
-      var mb = monthBounds(currentMonthValue());
-      var monthName = now.toLocaleString('en-US', { month: 'long' });
-      return { start: mb.start, end: mb.end, label: 'This Month (' + monthName + ' ' + now.getFullYear() + ')' };
-    }
-    if(period === 'taxyear'){
-      return taxYearBounds(now);
-    }
-    return { start: null, end: null, label: 'All Time' };
-  }
-
-  function loadReport(){
-    if(!currentUser) return;
-    var bounds = reportBounds(wpReportPeriodEl.value);
-    currentReportLabel = bounds.label;
-    wpReportPeriodLabelEl.textContent = 'Period: ' + bounds.label;
-    var q = sb.from('wht_entries').select('*').eq('user_id', currentUser.id);
-    if(bounds.start) q = q.gte('entry_date', bounds.start);
-    if(bounds.end) q = q.lte('entry_date', bounds.end);
-    q.order('entry_date', { ascending: false }).then(function(res){
-      if(res.error){
-        showReportStatus("Couldn't load report: " + res.error.message, true);
-        return;
-      }
-      currentReportEntries = res.data || [];
-      populateReportAuthorities();
-      populateReportSuppliers();
-      renderReport();
-    });
-  }
-
-  function renderReportBizHeader(){
-    var name = wpCompanyNameEl.value.trim();
-    var metaParts = [];
-    if(wpAddressEl.value.trim()) metaParts.push(wpAddressEl.value.trim());
-    if(wpPhoneEl.value.trim()) metaParts.push(wpPhoneEl.value.trim());
-    if(wpEmailEl.value.trim()) metaParts.push(wpEmailEl.value.trim());
-    if(!name && !metaParts.length && !currentLogoDataUrl){
-      wpReportBizHeader.style.display = 'none';
-      return;
-    }
-    wpReportCompanyName.textContent = name || (currentUser ? currentUser.email : '');
-    wpReportCompanyMeta.textContent = metaParts.join(' · ');
-    if(currentLogoDataUrl){
-      wpReportLogo.src = currentLogoDataUrl;
-      wpReportLogo.style.display = 'block';
-    } else {
-      wpReportLogo.style.display = 'none';
-    }
-    wpReportBizHeader.style.display = 'block';
-  }
-
-  function renderReport(){
-    renderReportBizHeader();
-    var filtered = getFilteredReportEntries();
-    var authFilter = wpReportAuthorityEl.value || 'all';
-    var supplierFilter = wpReportSupplierEl.value || 'all';
-    wpReportPeriodLabelEl.textContent = 'Period: ' + currentReportLabel +
-      (authFilter !== 'all' ? ' · Authority: ' + authFilter : '') +
-      (supplierFilter !== 'all' ? ' · Supplier: ' + supplierFilter : '');
-
-    var totalWithheld = 0, salesTaxTotal = 0, incomeTaxTotal = 0, totalValue = 0;
-    var byAuth = {};
-    filtered.forEach(function(e){
-      var amt = parseFloat(e.amount_withheld) || 0;
-      var val = parseFloat(e.amount_value) || 0;
-      totalWithheld += amt;
-      totalValue += val;
-      if(e.wht_type === 'sales_tax') salesTaxTotal += amt; else incomeTaxTotal += amt;
-      var key = e.authority || 'Unspecified';
-      if(!byAuth[key]) byAuth[key] = { count: 0, value: 0, withheld: 0 };
-      byAuth[key].count += 1;
-      byAuth[key].value += val;
-      byAuth[key].withheld += amt;
-    });
-
-    wpReportSummaryRow.innerHTML =
-      '<div class="wht-summary-card"><div class="v">' + filtered.length + '</div><div class="k">Total Entries</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(totalWithheld) + '</div><div class="k">Total Withheld</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(salesTaxTotal) + '</div><div class="k">Sales Tax WHT</div></div>' +
-      '<div class="wht-summary-card"><div class="v">' + fmt(incomeTaxTotal) + '</div><div class="k">Income Tax WHT</div></div>';
-
-    var authKeys = Object.keys(byAuth).sort(function(a,b){ return byAuth[b].withheld - byAuth[a].withheld; });
-
-    // A single-authority filter makes the "By Authority" breakdown redundant
-    // with the summary above — hide that section rather than show one row
-    // duplicated as its own total.
-    var singleAuthority = authFilter !== 'all';
-    wpReportByAuthorityHeading.style.display = singleAuthority ? 'none' : 'block';
-    wpReportTable.parentElement.style.display = singleAuthority ? 'none' : 'block';
-    if(singleAuthority) return;
-
-    if(!authKeys.length){
-      wpReportTable.innerHTML = '<tr><td style="padding:14px 4px;color:var(--muted);">No entries in this period.</td></tr>';
-      return;
-    }
-    var rows = authKeys.map(function(k){
-      return '<tr><td>' + escapeHtml(k) + '</td><td>' + byAuth[k].count + '</td><td>' + fmt(byAuth[k].value) + '</td><td class="wht-amt">' + fmt(byAuth[k].withheld) + '</td></tr>';
-    }).join('');
-    wpReportTable.innerHTML =
-      '<tr><th>Authority</th><th>Entries</th><th>Total Value</th><th>Total Withheld</th></tr>' +
-      rows +
-      '<tr class="wht-report-total"><td>All Authorities</td><td>' + filtered.length + '</td><td>' + fmt(totalValue) + '</td><td>' + fmt(totalWithheld) + '</td></tr>';
-  }
-
-  wpReportPeriodEl.addEventListener('change', loadReport);
-  wpReportAuthorityEl.addEventListener('change', renderReport);
-  wpReportSupplierEl.addEventListener('change', renderReport);
-
-  document.getElementById('wpReportPrintBtn').addEventListener('click', function(){
-    if(!getFilteredReportEntries().length){ showReportStatus('Nothing to print — no entries match this period/authority/supplier.', true); return; }
-    window.print();
-  });
-
-  document.getElementById('wpReportCsvBtn').addEventListener('click', function(){
-    var filtered = getFilteredReportEntries();
-    if(!filtered.length){ showReportStatus('No entries to export for this period/authority/supplier.', true); return; }
-    function csvCell(v){
-      if(v === null || v === undefined) v = '';
-      v = String(v);
-      if(/[",\n]/.test(v)) v = '"' + v.replace(/"/g,'""') + '"';
-      return v;
-    }
-    var lines = [];
-    lines.push(csvCell('Report Period: ' + currentReportLabel +
-      (wpReportAuthorityEl.value !== 'all' ? ' — Authority: ' + wpReportAuthorityEl.value : '') +
-      (wpReportSupplierEl.value !== 'all' ? ' — Supplier: ' + wpReportSupplierEl.value : '')));
-    if(wpCompanyNameEl.value.trim()) lines.push(csvCell('Company: ' + wpCompanyNameEl.value.trim()));
-    lines.push('');
-    lines.push(['Authority','Entries','Total Value (PKR)','Total Withheld (PKR)'].map(csvCell).join(','));
-    var totalWithheld = 0, totalValue = 0, totalCount = 0;
-    var byAuth = {};
-    filtered.forEach(function(e){
-      var amt = parseFloat(e.amount_withheld) || 0;
-      var val = parseFloat(e.amount_value) || 0;
-      totalWithheld += amt; totalValue += val; totalCount += 1;
-      var key = e.authority || 'Unspecified';
-      if(!byAuth[key]) byAuth[key] = { count: 0, value: 0, withheld: 0 };
-      byAuth[key].count += 1; byAuth[key].value += val; byAuth[key].withheld += amt;
-    });
-    Object.keys(byAuth).sort(function(a,b){ return byAuth[b].withheld - byAuth[a].withheld; }).forEach(function(k){
-      lines.push([k, byAuth[k].count, byAuth[k].value, byAuth[k].withheld].map(csvCell).join(','));
-    });
-    if(Object.keys(byAuth).length > 1){
-      lines.push(['All Authorities', totalCount, totalValue, totalWithheld].map(csvCell).join(','));
-    }
-    var csvContent = lines.join('\r\n');
-    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    var authSlug = wpReportAuthorityEl.value !== 'all' ? '-' + wpReportAuthorityEl.value.replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'') : '';
-    var supplierSlug = wpReportSupplierEl.value !== 'all' ? '-' + wpReportSupplierEl.value.replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'') : '';
-    a.download = 'wht-report-' + wpReportPeriodEl.value + authSlug + supplierSlug + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-
-  /* ---- Add / edit modal ---- */
-  var modalBackdrop = document.getElementById('whtModalBackdrop');
-  var modalTitle = document.getElementById('whtModalTitle');
-  var modalStatus = document.getElementById('whtModalStatus');
-
-  function todayIso(){
-    var d = new Date();
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  }
-
-  function openModalForAdd(){
-    editingId = null;
-    modalTitle.textContent = 'Add Entry Manually';
-    document.getElementById('whtModalDate').value = todayIso();
-    document.getElementById('whtModalType').value = 'sales_tax';
-    document.getElementById('whtModalAuthority').value = '';
-    document.getElementById('whtModalCategory').value = '';
-    document.getElementById('whtModalSupplierName').value = '';
-    document.getElementById('whtModalSupplierId').value = '';
-    document.getElementById('whtModalInvoiceNumber').value = '';
-    document.getElementById('whtModalInvoiceDate').value = '';
-    document.getElementById('whtModalPaymentMode').value = '';
-    document.getElementById('whtModalValue').value = '';
-    document.getElementById('whtModalRate').value = '';
-    document.getElementById('whtModalWithheld').value = '';
-    document.getElementById('whtModalNotes').value = '';
-    modalStatus.style.display = 'none';
-    modalBackdrop.classList.add('open');
-  }
-
-  function openModalForEdit(id){
-    var e = currentEntries.find(function(x){ return String(x.id) === String(id); });
-    if(!e) return;
-    editingId = e.id;
-    modalTitle.textContent = 'Edit Entry';
-    document.getElementById('whtModalDate').value = e.entry_date;
-    document.getElementById('whtModalType').value = e.wht_type;
-    document.getElementById('whtModalAuthority').value = e.authority || '';
-    document.getElementById('whtModalCategory').value = e.category || '';
-    document.getElementById('whtModalSupplierName').value = e.supplier_name || '';
-    document.getElementById('whtModalSupplierId').value = e.supplier_id_number || '';
-    document.getElementById('whtModalInvoiceNumber').value = e.invoice_number || '';
-    document.getElementById('whtModalInvoiceDate').value = e.invoice_date || '';
-    document.getElementById('whtModalPaymentMode').value = e.payment_mode || '';
-    document.getElementById('whtModalValue').value = e.amount_value;
-    document.getElementById('whtModalRate').value = e.rate !== null && e.rate !== undefined ? e.rate : '';
-    document.getElementById('whtModalWithheld').value = e.amount_withheld;
-    document.getElementById('whtModalNotes').value = e.notes || '';
-    modalStatus.style.display = 'none';
-    modalBackdrop.classList.add('open');
-  }
-
-  function closeModal(){ modalBackdrop.classList.remove('open'); }
-
-  document.getElementById('whtAddManualBtn').addEventListener('click', openModalForAdd);
-  document.getElementById('whtModalCancelBtn').addEventListener('click', closeModal);
-  modalBackdrop.addEventListener('click', function(e){ if(e.target === modalBackdrop) closeModal(); });
-
-  document.getElementById('whtModalSaveBtn').addEventListener('click', function(){
-    var date = document.getElementById('whtModalDate').value;
-    var authority = document.getElementById('whtModalAuthority').value.trim();
-    var value = parseFloat(document.getElementById('whtModalValue').value);
-    var withheld = parseFloat(document.getElementById('whtModalWithheld').value);
-    if(!date || !authority || isNaN(value) || isNaN(withheld)){
-      modalStatus.textContent = 'Date, Authority, Value and Amount Withheld are required.';
-      modalStatus.style.display = 'block';
-      return;
-    }
-    var payload = {
-      user_id: currentUser.id,
-      entry_date: date,
-      wht_type: document.getElementById('whtModalType').value,
-      authority: authority,
-      category: document.getElementById('whtModalCategory').value.trim() || null,
-      supplier_name: document.getElementById('whtModalSupplierName').value.trim() || null,
-      supplier_id_number: document.getElementById('whtModalSupplierId').value.trim() || null,
-      invoice_number: document.getElementById('whtModalInvoiceNumber').value.trim() || null,
-      invoice_date: document.getElementById('whtModalInvoiceDate').value || null,
-      payment_mode: document.getElementById('whtModalPaymentMode').value || null,
-      amount_value: value,
-      rate: document.getElementById('whtModalRate').value ? parseFloat(document.getElementById('whtModalRate').value) : null,
-      amount_withheld: withheld,
-      notes: document.getElementById('whtModalNotes').value.trim() || null,
-      updated_at: new Date().toISOString()
-    };
-    var query = editingId
-      ? sb.from('wht_entries').update(payload).eq('id', editingId).eq('user_id', currentUser.id)
-      : sb.from('wht_entries').insert(payload);
-    query.then(function(res){
-      if(res.error){
-        modalStatus.textContent = "Couldn't save: " + res.error.message;
-        modalStatus.style.display = 'block';
-        return;
-      }
-      closeModal();
-      showLogStatus(editingId ? 'Entry updated.' : 'Entry added.', false);
-      loadEntries();
-      loadReport();
-    });
-  });
-})();
-
-/* =========================================================
-   INIT (shared page chrome below)
-========================================================= */
-
 /* ---- Nav dropdown toggle (shared) ---- */
 document.getElementById('navToggle').addEventListener('click', ()=>{
   document.getElementById('navToggle').classList.toggle('open');
@@ -2586,6 +1947,7 @@ document.addEventListener('click', (e)=>{
     }
   });
 })();
+
 </script>
 <script>
 /* ---- Site search (all pages) ---- */
@@ -2967,5 +2329,21 @@ document.addEventListener('click', (e)=>{
 <!-- ===== END PTC MINI CHATBOT ===== -->
 
 
+<script>
+/* ---- English / Urdu language toggle (shared across the site) ---- */
+function ptcSetLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  var enBtn = document.getElementById('ptcLangEn');
+  var urBtn = document.getElementById('ptcLangUr');
+  if(enBtn) enBtn.classList.toggle('active', lang === 'en');
+  if(urBtn) urBtn.classList.toggle('active', lang === 'ur');
+  try{ localStorage.setItem('ptcLang', lang); }catch(e){}
+}
+(function(){
+  var saved = 'en';
+  try{ saved = localStorage.getItem('ptcLang') || 'en'; }catch(e){}
+  ptcSetLang(saved);
+})();
+</script>
 </body>
 </html>
