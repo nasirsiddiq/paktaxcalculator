@@ -725,6 +725,7 @@ table.gst td.note{
   transition:background .15s ease, color .15s ease;
 }
 .quickLinks a:hover{ background:rgba(255,255,255,.2); color:#fff; }
+.quickLinks a.active{ background:#fff; color:var(--green); }
 .quickLinks a + a{ border-left:1px solid rgba(255,255,255,.28); border-radius:0 6px 6px 0; }
 @media (max-width:560px){
   .quickLinks{ gap:.1rem 0; }
@@ -1178,6 +1179,14 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
   border:none; border-radius:8px; padding:12px 22px; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit;
 }
 .btn-iris-next{ background:var(--green); color:#fff; margin-left:auto; }
+.easyModeRow{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border); }
+.btn-easy-fill{
+  display:block; width:100%; text-align:center;
+  background:#c99a2e; color:#fff; border:none; border-radius:10px;
+  font-size:14.5px; font-weight:700; padding:12px 16px; cursor:pointer;
+}
+.btn-easy-fill:hover{ background:#b4881f; }
+.easyModeRow .hint{ margin-top:8px; text-align:center; }
 .btn-iris-next:hover{ background:var(--green-light); }
 .btn-iris-next:disabled{ background:#b7c4bb; cursor:not-allowed; }
 .btn-iris-back{ background:#fff; color:var(--text); border:1px solid var(--border); }
@@ -1313,7 +1322,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 </script>
   </div>
   <p class="tagline">Income Tax &middot; Withholding Tax &middot; Federal &amp; Provincial Sales Tax</p>
-  <span class="badge" id="taxYearBadge">Tax Year 2025-26 &amp; 2026-27</span>
+  <span class="badge" id="taxYearBadge">Tax Year 2026 &amp; 2027</span>
 
   <div class="siteSearch" id="siteSearch">
     <input type="text" id="siteSearchInput" placeholder="&#128269; Search calculators, articles&hellip;" autocomplete="off" aria-label="Search this site">
@@ -1331,6 +1340,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     <a href="zakat-calculator.html">Zakat Calculator</a>
     <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
     <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax</a>
+    <a href="iris-practice-simulator.html" class="active">IRIS Practice</a>
     <span class="qlDrop" id="qlDrop">
       <button type="button" class="qlDropBtn" id="qlDropBtn" aria-expanded="false">Provincial Tax <span class="chev">&#9662;</span></button>
       <span class="qlDropMenu" id="qlDropMenu">
@@ -1376,6 +1386,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 <a href="zakat-calculator.html">Zakat Calculator</a>
 <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
 <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
+<a href="iris-practice-simulator.html" class="active">IRIS Practice Simulator</a>
       </div>
       <div class="navGroup">
 <a href="about.html">About Us</a>
@@ -1405,6 +1416,10 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
   <div class="card">
     <h1>FBR IRIS Practice Simulator &ndash; Rehearse Your Income Tax Return</h1>
     <p class="sub">Walk through the same shape as a salaried individual's 114(1) Return of Income on IRIS &mdash; login, personal details, salary income, tax chargeable, wealth statement and verification &mdash; with a live progress tracker, real slab-based tax computation, and a practice acknowledgment receipt at the end.</p>
+    <div class="easyModeRow no-print">
+      <button type="button" class="btn-easy-fill" id="irisEasyFillBtn" onclick="irisFillSample()">&#10024; Fill With Sample Numbers &mdash; See How It Works</button>
+      <p class="hint">New here? Click this once and every field below fills in with example figures, so you can just press "Save &amp; Continue" through all 6 steps and see exactly how a real return flows &mdash; no need to gather your own numbers first.</p>
+    </div>
   </div>
 
   <div class="card no-print">
@@ -1422,18 +1437,10 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 
     <section class="irisStep" data-step="1">
       <h2>Step 1 of 6 &mdash; Log In to IRIS (Practice)</h2>
-      <p class="sub">On the real portal you'd log in with your CNIC/NTN and IRIS password at iris.fbr.gov.pk. Here, type anything &mdash; it's purely for rehearsal and nothing is checked or sent anywhere.</p>
-      <div class="field">
-        <label>Registration No. (CNIC / NTN)</label>
-        <input type="text" id="irisLoginId" placeholder="e.g. 35202-1234567-1" inputmode="numeric" autocomplete="off">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="text" id="irisLoginPw" placeholder="Any text works here" autocomplete="off">
-      </div>
+      <p class="sub">On the real portal you'd log in with your CNIC/NTN and IRIS password at iris.fbr.gov.pk. This practice version skips that screen entirely &mdash; just press Continue below to jump straight into the return.</p>
       <div class="irisBtnRow">
         <span></span>
-        <button type="button" class="btn-iris-next" onclick="irisGoto(2)">Log In &rarr;</button>
+        <button type="button" class="btn-iris-next" onclick="irisGoto(2)">Continue &rarr;</button>
       </div>
     </section>
 
@@ -1448,8 +1455,8 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
         <div class="field">
           <label>Tax Year</label>
           <select id="irisTaxYear">
-            <option value="2025-26">Tax Year 2025-26</option>
-            <option value="2026-27" selected>Tax Year 2026-27</option>
+            <option value="2026">Tax Year 2026</option>
+            <option value="2027" selected>Tax Year 2027</option>
           </select>
         </div>
         <div class="field">
@@ -1497,8 +1504,8 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     </section>
 
     <section class="irisStep" data-step="4" style="display:none;">
-      <h2>Step 4 of 6 &mdash; Tax Chargeable / Adjustable Tax</h2>
-      <p class="sub">IRIS computes your tax chargeable from the slab rates for your selected tax year, then nets off tax already deducted (your "adjustable tax") to show what you still owe or can claim back.</p>
+      <h2>Step 4 of 6 &mdash; Your Tax Calculation</h2>
+      <p class="sub">In plain terms: IRIS looks at your total income, works out the tax on it using the year's slab rates, then subtracts the tax your employer already deducted. Whatever's left is what you owe &mdash; or if your employer deducted more than needed, what you can get back.</p>
       <div class="result">
         <div class="label">Tax Chargeable (computed from slab)</div>
         <div class="big" id="irisTaxChargeable">Rs. 0</div>
@@ -1515,7 +1522,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 
     <section class="irisStep" data-step="5" style="display:none;">
       <h2>Step 5 of 6 &mdash; Wealth Statement</h2>
-      <p class="sub">IRIS requires your assets and liabilities to reconcile with your income and expenses for the year &mdash; this single tab is where most first-time filers get stuck, which is exactly why it's worth practicing.</p>
+      <p class="sub">In plain terms: list what you own and owe at year-end. IRIS checks that the change in your net worth this year roughly matches your income minus your spending &mdash; if it doesn't add up, it flags a mismatch. This is where most first-time filers get stuck, so it's worth practicing here first. Not sure of an exact figure? A close estimate is fine &mdash; you're just learning the shape of the form.</p>
 
       <h3>Opening Position (start of tax year)</h3>
       <div class="field">
@@ -1600,7 +1607,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
   </div>
 
   <div class="disclaimer">
-    This simulator uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a> (Finance Act 2025 and Finance Act 2026-27), but simplifies the real 114(1) form &mdash; it does not cover every schedule, tax credit, exemption, or attachment the actual IRIS return may require. It is an independent practice tool, not affiliated with or endorsed by the Federal Board of Revenue. Always file your real return at <a href="https://iris.fbr.gov.pk" target="_blank" rel="noopener noreferrer">iris.fbr.gov.pk</a>, and confirm anything unusual in your situation with a tax practitioner.
+    This simulator uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a> (Finance Act 2025 for Tax Year 2026, and Finance Act 2026-27 for Tax Year 2027), but simplifies the real 114(1) form &mdash; it does not cover every schedule, tax credit, exemption, or attachment the actual IRIS return may require. It is an independent practice tool, not affiliated with or endorsed by the Federal Board of Revenue. Always file your real return at <a href="https://iris.fbr.gov.pk" target="_blank" rel="noopener noreferrer">iris.fbr.gov.pk</a>, and confirm anything unusual in your situation with a tax practitioner.
   </div>
 
   <div class="card no-print">
@@ -1618,7 +1625,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 
     <details class="faq-item">
       <summary>Which tax year's slabs does the calculation use?</summary>
-      <p>You can choose either Tax Year 2025-26 or 2026-27 in Step 2. Step 4's tax computation uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a>, based on the Finance Act 2025 and Finance Act 2026-27.</p>
+      <p>You can choose either Tax Year 2026 or 2027 in Step 2 (FBR names a tax year by the calendar year it ends in &mdash; Tax Year 2026 covers 1 July 2025 to 30 June 2026). Step 4's tax computation uses the same salaried-individual slab rates as our <a href="income-tax.html">Income Tax Calculator</a>, based on the Finance Act 2025 and Finance Act 2026-27.</p>
     </details>
 
     <details class="faq-item">
@@ -1638,7 +1645,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       "mainEntity": [
         {"@type":"Question","name":"Is this the real FBR IRIS portal?","acceptedAnswer":{"@type":"Answer","text":"No. This is an independent practice simulator built by Pakistan Tax Calculator to help you rehearse the return-filing flow. It is not affiliated with, endorsed by, or connected to the Federal Board of Revenue. File an actual return at iris.fbr.gov.pk."}},
         {"@type":"Question","name":"Does anything typed into the IRIS practice simulator get saved or sent to FBR?","acceptedAnswer":{"@type":"Answer","text":"No. Everything entered stays in the browser tab only, in memory for that session. Nothing is transmitted to FBR or saved anywhere, and closing the page clears it."}},
-        {"@type":"Question","name":"Which tax year does the IRIS practice simulator use for tax calculations?","acceptedAnswer":{"@type":"Answer","text":"Tax Year 2025-26 or 2026-27, using the same salaried-individual slab rates as the site's Income Tax Calculator, based on the Finance Act 2025 and Finance Act 2026-27."}},
+        {"@type":"Question","name":"Which tax year does the IRIS practice simulator use for tax calculations?","acceptedAnswer":{"@type":"Answer","text":"Tax Year 2026 or Tax Year 2027, using the same salaried-individual slab rates as the site's Income Tax Calculator, based on the Finance Act 2025 and Finance Act 2026-27."}},
         {"@type":"Question","name":"What happens if a wealth statement does not reconcile on IRIS?","acceptedAnswer":{"@type":"Answer","text":"IRIS requires opening net assets plus income for the year, minus tax paid and personal expenses, to equal closing net assets. A mismatch blocks submission until corrected."}},
         {"@type":"Question","name":"Can the IRIS practice simulator be used to file an actual tax return?","acceptedAnswer":{"@type":"Answer","text":"No. It only rehearses the general flow with a simplified form and submits nothing anywhere. File the actual return only through FBR's official IRIS portal."}}
       ]
@@ -1673,7 +1680,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
 /* ===== IRIS PRACTICE SIMULATOR LOGIC (fully client-side — nothing is ever sent anywhere) ===== */
 (function(){
   var TAX_DATA = {
-    "2025-26": {
+    "2026": {
       salariedSlabs: [
         {min:0, max:600000, rate:0, base:0},
         {min:600000, max:1200000, rate:1, base:0},
@@ -1684,7 +1691,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
       ],
       surcharge:true
     },
-    "2026-27": {
+    "2027": {
       salariedSlabs: [
         {min:0, max:600000, rate:0, base:0},
         {min:600000, max:1200000, rate:1, base:0},
@@ -1738,6 +1745,38 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
     if(step === 6) buildSummary();
     var card = document.getElementById('irisWizardCard');
     if(card){ window.scrollTo({top: card.offsetTop - 90, behavior:'smooth'}); }
+  };
+
+  window.irisFillSample = function(){
+    var sample = {
+      irisName: 'Ali Ahmed',
+      irisEmployer: 'ABC Textiles (Pvt) Ltd',
+      irisSalary: '3,000,000',
+      irisTaxDeducted: '250,000',
+      irisOtherIncome: '0',
+      irisOpeningAssets: '5,000,000',
+      wsProperty: '4,500,000',
+      wsVehicle: '1,200,000',
+      wsBank: '600,000',
+      wsGold: '200,000',
+      wsOtherAssets: '150,000',
+      wsLoans: '500,000',
+      wsPayables: '50,000',
+      irisExpenses: '1,200,000'
+    };
+    Object.keys(sample).forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.value = sample[id];
+    });
+    var check = document.getElementById('irisVerifyCheck');
+    if(check) check.checked = true;
+    var btn = document.getElementById('irisEasyFillBtn');
+    if(btn){
+      var original = btn.textContent;
+      btn.textContent = '\u2705 Filled! Now click "Save & Continue" below to move through each step.';
+      setTimeout(function(){ btn.textContent = original; }, 4000);
+    }
+    irisGoto(1);
   };
 
   function computeTaxChargeable(){
@@ -1888,6 +1927,7 @@ html[data-lang="ur"] .faq-item summary{ font-family:'Noto Nastaliq Urdu','Jameel
         <a href="zakat-calculator.html">Zakat Calculator</a>
         <a href="apna-ghar-calculator.html">Apna Ghar Calculator</a>
         <a href="pta-mobile-tax-calculator.html">PTA Mobile Tax Calculator</a>
+        <a href="iris-practice-simulator.html" class="active">IRIS Practice Simulator</a>
         <a href="my-wht-log.html" onclick="this.href='my-wht-log.html?return='+encodeURIComponent(location.pathname.split('/').pop()||'index.html')">My Account</a>
       </div>
       <div class="footerCalcsCol">
@@ -1955,6 +1995,7 @@ document.addEventListener('click', (e)=>{
   var PAGES = [
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, stocks, funds & business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"IRIS Practice Simulator", url:"iris-practice-simulator.html", desc:"Rehearse filing your FBR IRIS income tax return step by step before doing it for real"},
     {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"},
     {title:"Home", url:"index.html", desc:"Income tax calculator & residency checker"},
@@ -2147,6 +2188,7 @@ document.addEventListener('click', (e)=>{
     {title:"Islamabad Sales Tax (ICT)", url:"sales-tax-ict.html", desc:"Islamabad sales tax on services"},
     {title:"Zakat Calculator", url:"zakat-calculator.html", desc:"Calculate Zakat on cash, gold, silver, business assets"},
     {title:"Apna Ghar Calculator", url:"apna-ghar-calculator.html", desc:"Islamic home finance (Diminishing Musharakah) payment plan estimator"},
+    {title:"IRIS Practice Simulator", url:"iris-practice-simulator.html", desc:"Rehearse filing your FBR IRIS income tax return step by step before doing it for real"},
     {title:"PTA Mobile Tax Calculator", url:"pta-mobile-tax-calculator.html", desc:"Estimate PTA tax on a non-PTA phone: CNIC vs Passport, full duty breakdown"},
     {title:"My Account", url:"my-wht-log.html", desc:"Save & track your sales tax and income tax withholding entries, then export to CSV"}
   ];
