@@ -2,6 +2,48 @@
   publish = "."
   command = ""
 
+[[redirects]]
+  from = "/fbr-electricity-taxs-teel-2026.html"
+  to = "/fbr-electricity-tax-steel-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/apna-ghar-calculator"
+  to = "/apna-ghar-calculator.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sales-tax-punjab"
+  to = "/sales-tax-punjab.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/invoice-withholding"
+  to = "/invoice-withholding.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fbr-sales-tax-five-categories-2026"
+  to = "/fbr-sales-tax-five-categories-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/invoice-tax.html"
+  to = "/invoice-withholding.html"
+  status = 301
+  force = true
+
 [functions]
   directory = "netlify/functions"
 
