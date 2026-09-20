@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Balochistan Sales Tax on Services Calculator 2026 | BRA Rates</title>
+<title>Balochistan Sales Tax on Services Calculator 2026 (BRA)</title>
 <meta name="description" content="Calculate Balochistan sales tax on services under BRA — hotels, restaurants, professionals, IT services and more, per the Second Schedule.">
 <meta name="keywords" content="Balochistan sales tax calculator, BRA sales tax on services, Balochistan Revenue Authority tax rates">
 <link rel="canonical" href="https://paktaxcalculator.net/sales-tax-balochistan.html">
@@ -16,7 +16,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="Balochistan Sales Tax on Services Calculator 2026 | BRA Rates">
+<meta property="og:title" content="Balochistan Sales Tax on Services Calculator 2026 (BRA)">
 <meta property="og:description" content="Calculate Balochistan sales tax on services under BRA — hotels, restaurants, professionals, IT services and more, per the Second Schedule.">
 <meta property="og:image" content="https://paktaxcalculator.net/og-sales-tax-balochistan.jpg">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="Balochistan Sales Tax on Services Calculator 2026 | BRA Rates">
 <meta property="og:url" content="https://paktaxcalculator.net/sales-tax-balochistan.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Balochistan Sales Tax on Services Calculator 2026 | BRA Rates">
+<meta name="twitter:title" content="Balochistan Sales Tax on Services Calculator 2026 (BRA)">
 <meta name="twitter:description" content="Calculate Balochistan sales tax on services under BRA — hotels, restaurants, professionals, IT services and more, per the Second Schedule.">
 <meta name="twitter:image" content="https://paktaxcalculator.net/og-sales-tax-balochistan.jpg">
 
@@ -56,6 +56,31 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<script>
+/* Fires once per pageview, the first time the visitor actually interacts
+   with a calculator input/select/button (not nav, search, or chat widget).
+   This tells us real usage, not just page views. */
+(function(){
+  if(window.calculator_engagement_tracked) return;
+  window.calculator_engagement_tracked = true;
+  var fired = false;
+  function fire(){
+    if(fired) return;
+    fired = true;
+    if(typeof gtag === 'function'){
+      gtag('event', 'calculator_engaged', { 'calculator': 'sales-tax-balochistan' });
+    }
+  }
+  var excludeIds = ['siteSearchInput','ptcChatToggle','ptcChatClose','navToggle','qlDropBtn'];
+  document.addEventListener('input', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+  document.addEventListener('change', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+})();
 </script>
 
 <!-- Facebook Pixel Code -->

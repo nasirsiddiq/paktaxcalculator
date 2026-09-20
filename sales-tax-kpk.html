@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Khyber Pakhtunkhwa Sales Tax on Services Calculator 2026 | KPRA Rates</title>
+<title>KPK Sales Tax on Services Calculator 2026 (KPRA)</title>
 <meta name="description" content="Calculate KP sales tax on services under KPRA — standard 15% rate plus 2026-notified rate changes for rental, real estate, IT, health and more.">
 <meta name="keywords" content="KP sales tax calculator, KPRA sales tax on services, Khyber Pakhtunkhwa Revenue Authority tax rates">
 <link rel="canonical" href="https://paktaxcalculator.net/sales-tax-kpk.html">
@@ -16,7 +16,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="Khyber Pakhtunkhwa Sales Tax on Services Calculator 2026 | KPRA Rates">
+<meta property="og:title" content="KPK Sales Tax on Services Calculator 2026 (KPRA)">
 <meta property="og:description" content="Calculate KP sales tax on services under KPRA — standard 15% rate plus 2026-notified rate changes for rental, real estate, IT, health and more.">
 <meta property="og:image" content="https://paktaxcalculator.net/og-sales-tax-kpk.jpg">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="Khyber Pakhtunkhwa Sales Tax on Services Calculator 2026 | KPRA Rates">
 <meta property="og:url" content="https://paktaxcalculator.net/sales-tax-kpk.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Khyber Pakhtunkhwa Sales Tax on Services Calculator 2026 | KPRA Rates">
+<meta name="twitter:title" content="KPK Sales Tax on Services Calculator 2026 (KPRA)">
 <meta name="twitter:description" content="Calculate KP sales tax on services under KPRA — standard 15% rate plus 2026-notified rate changes for rental, real estate, IT, health and more.">
 <meta name="twitter:image" content="https://paktaxcalculator.net/og-sales-tax-kpk.jpg">
 
@@ -56,6 +56,31 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<script>
+/* Fires once per pageview, the first time the visitor actually interacts
+   with a calculator input/select/button (not nav, search, or chat widget).
+   This tells us real usage, not just page views. */
+(function(){
+  if(window.calculator_engagement_tracked) return;
+  window.calculator_engagement_tracked = true;
+  var fired = false;
+  function fire(){
+    if(fired) return;
+    fired = true;
+    if(typeof gtag === 'function'){
+      gtag('event', 'calculator_engaged', { 'calculator': 'sales-tax-kpk' });
+    }
+  }
+  var excludeIds = ['siteSearchInput','ptcChatToggle','ptcChatClose','navToggle','qlDropBtn'];
+  document.addEventListener('input', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+  document.addEventListener('change', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+})();
 </script>
 
 <!-- Facebook Pixel Code -->

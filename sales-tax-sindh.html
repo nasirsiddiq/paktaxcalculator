@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator</title>
+<title>Sindh Sales Tax on Services Calculator (SRB) 2026</title>
 <meta name="description" content="Calculate Sindh sales tax on services under the SRB Working Tariff — over 80 categories across hotels, professionals and construction.">
 <meta name="keywords" content="Sindh sales tax calculator, SRB sales tax on services, Sindh Revenue Board tax rates, sales tax on services Sindh">
 <link rel="canonical" href="https://paktaxcalculator.net/sales-tax-sindh.html">
@@ -16,7 +16,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pakistan Tax Calculator">
-<meta property="og:title" content="Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator">
+<meta property="og:title" content="Sindh Sales Tax on Services Calculator (SRB) 2026">
 <meta property="og:description" content="Calculate Sindh sales tax on services under the SRB Working Tariff — over 80 categories across hotels, professionals and construction.">
 <meta property="og:image" content="https://paktaxcalculator.net/sales-tax-sindh-og.png">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:url" content="https://paktaxcalculator.net/sales-tax-sindh.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sindh Sales Tax on Services Calculator (SRB) | Pakistan Tax Calculator">
+<meta name="twitter:title" content="Sindh Sales Tax on Services Calculator (SRB) 2026">
 <meta name="twitter:description" content="Calculate Sindh sales tax on services under the SRB Working Tariff — over 80 categories across hotels, professionals and construction.">
 <meta name="twitter:image" content="https://paktaxcalculator.net/sales-tax-sindh-og.png">
 
@@ -56,6 +56,31 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3GWC3JE3YR');
+</script>
+
+<script>
+/* Fires once per pageview, the first time the visitor actually interacts
+   with a calculator input/select/button (not nav, search, or chat widget).
+   This tells us real usage, not just page views. */
+(function(){
+  if(window.calculator_engagement_tracked) return;
+  window.calculator_engagement_tracked = true;
+  var fired = false;
+  function fire(){
+    if(fired) return;
+    fired = true;
+    if(typeof gtag === 'function'){
+      gtag('event', 'calculator_engaged', { 'calculator': 'sales-tax-sindh' });
+    }
+  }
+  var excludeIds = ['siteSearchInput','ptcChatToggle','ptcChatClose','navToggle','qlDropBtn'];
+  document.addEventListener('input', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+  document.addEventListener('change', function(e){
+    if(excludeIds.indexOf(e.target.id) === -1) fire();
+  }, { once:true, capture:true });
+})();
 </script>
 
 <!-- Facebook Pixel Code -->
