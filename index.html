@@ -1716,10 +1716,10 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="true" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
-  <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
+  <p id="newsletterPromptDesc">Enter your email and choose Subscribe. Real subscription delivery requires backend/provider integration.</p>
   <form id="newsletterPromptForm" novalidate>
     <div class="field">
       <label for="newsletterPromptEmail">Email address</label>
@@ -2359,7 +2359,7 @@ document.addEventListener('click', (e)=>{
       return;
     }
     emailInput.setAttribute('aria-invalid', 'false');
-    setStatus('Thanks! This prompt is now hidden on this device. Connect a backend/provider endpoint to process real subscriptions.', 'success');
+    setStatus('Thanks! No subscription was sent yet; this prompt is now hidden on this device until backend/provider integration is added.', 'success');
     form.reset();
     setTimeout(function(){ closePrompt(STATE_DISMISSED, false); }, 1400);
   });
