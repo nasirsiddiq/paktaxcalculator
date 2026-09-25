@@ -25,6 +25,12 @@ Each page is a self-contained static HTML file with inline CSS and JavaScript â€
 
 Supporting files: `sitemap.xml`, `robots.txt`, `ads.txt` (AdSense publisher verification).
 
+## Newsletter prompt behavior
+
+`index.html` includes a scroll-triggered newsletter prompt that appears after roughly 45% page scroll and stores the visitor's dismiss/submit choice in `localStorage` so it is not shown repeatedly.
+
+The current implementation is client-side only. To collect real subscriptions, connect the form submit handler to a newsletter backend/provider endpoint (for example, via a Netlify Function) and persist the email server-side.
+
 ## Deployment
 
 Netlify builds from this repository. Publish directory is the repo root; there is no build command.

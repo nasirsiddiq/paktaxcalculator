@@ -1128,6 +1128,81 @@ header.site-header .headerTop h1{
   line-height:1.3;
 }
 .railLink:hover{ background:var(--green-pale); }
+
+.newsletterPrompt{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:9500;
+  width:min(360px, calc(100vw - 24px));
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.16);
+  padding:14px;
+  display:none;
+}
+.newsletterPrompt.open{ display:block; }
+.newsletterPrompt h3{
+  margin:0 0 6px;
+  color:var(--green);
+  font-size:16px;
+}
+.newsletterPrompt p{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:13px;
+}
+.newsletterPrompt .field{ margin-bottom:10px; }
+.newsletterPromptActions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+}
+.newsletterPrompt .btn-submit{
+  min-width:118px;
+  font-size:13px;
+  padding:10px 12px;
+}
+.newsletterDismiss{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.newsletterDismiss:hover{ background:#f7faf8; }
+.newsletterPrompt .closeX{
+  position:absolute;
+  top:8px;
+  right:8px;
+  border:none;
+  background:transparent;
+  color:var(--muted);
+  font-size:20px;
+  line-height:1;
+  padding:2px 6px;
+  cursor:pointer;
+}
+.newsletterPromptStatus{
+  margin-top:10px;
+  font-size:13px;
+  min-height:1.2em;
+  opacity:0;
+}
+.newsletterPromptStatus.show{ opacity:1; }
+.newsletterPromptStatus.success{ color:#0b5c33; }
+.newsletterPromptStatus.error{ color:#b3261e; }
+@media (max-width:560px){
+  .newsletterPrompt{
+    right:8px;
+    left:8px;
+    width:auto;
+    bottom:8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1635,6 +1710,24 @@ header.site-header .headerTop h1{
   Rates last reviewed: August 2026, based on Finance Act 2025, Finance Act 2026-27, and FBR's Withholding Tax Rate Card (updated 30 June 2025).
   </div>
 </footer>
+
+<section class="newsletterPrompt" id="newsletterPrompt" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+  <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
+  <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
+  <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
+  <form id="newsletterPromptForm" novalidate>
+    <div class="field">
+      <label for="newsletterPromptEmail">Email address</label>
+      <input type="email" id="newsletterPromptEmail" autocomplete="email" placeholder="you@example.com" required aria-describedby="newsletterPromptDesc newsletterPromptStatus" aria-invalid="false">
+    </div>
+    <div class="newsletterPromptActions">
+      <button type="button" class="newsletterDismiss" id="newsletterPromptDismiss">No thanks</button>
+      <button type="submit" class="btn-submit">Subscribe</button>
+    </div>
+    <p style="margin-top:8px;font-size:12px;color:var(--muted);">For real email delivery, connect this form to a newsletter backend/provider endpoint.</p>
+    <div class="newsletterPromptStatus" id="newsletterPromptStatus" role="status" aria-live="polite"></div>
+  </form>
+</section>
 
 <script>
 /* =========================================================
@@ -2149,6 +2242,95 @@ document.addEventListener('click', (e)=>{
     } else if(e.key === 'Escape'){
       results.classList.remove('open'); input.blur();
     }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var prompt = document.getElementById('newsletterPrompt');
+  var form = document.getElementById('newsletterPromptForm');
+  var emailInput = document.getElementById('newsletterPromptEmail');
+  var status = document.getElementById('newsletterPromptStatus');
+  var dismissBtn = document.getElementById('newsletterPromptDismiss');
+  var closeBtn = document.getElementById('newsletterPromptClose');
+  if(!prompt || !form || !emailInput || !status || !dismissBtn || !closeBtn) return;
+
+  var STORAGE_KEY = 'ptc-newsletter-prompt-state';
+  var shown = false;
+  var lastFocused = null;
+  function onKeyDown(e){
+    if(e.key === 'Escape' && prompt.classList.contains('open')){
+      closePrompt('dismissed');
+    }
+  }
+
+  function getState(){
+    try{ return localStorage.getItem(STORAGE_KEY) || ''; }catch(e){ return ''; }
+  }
+  function setState(next){
+    try{ localStorage.setItem(STORAGE_KEY, next); }catch(e){}
+  }
+  function setStatus(message, kind){
+    status.textContent = message;
+    status.className = 'newsletterPromptStatus show ' + (kind || '');
+  }
+  function closePrompt(finalState){
+    prompt.classList.remove('open');
+    prompt.setAttribute('aria-hidden', 'true');
+    if(finalState){ setState(finalState); }
+    else { shown = false; }
+    if(lastFocused && typeof lastFocused.focus === 'function'){
+      try{ lastFocused.focus(); }catch(e){}
+    }
+    document.removeEventListener('keydown', onKeyDown);
+    window.removeEventListener('scroll', onScroll);
+  }
+  function openPrompt(){
+    if(shown || getState()) return;
+    shown = true;
+    lastFocused = document.activeElement;
+    prompt.classList.add('open');
+    prompt.setAttribute('aria-hidden', 'false');
+    document.addEventListener('keydown', onKeyDown);
+    window.removeEventListener('scroll', onScroll);
+    try{ emailInput.focus(); }catch(e){}
+  }
+  function onScroll(){
+    var doc = document.documentElement;
+    var scrollable = (doc.scrollHeight || 0) - window.innerHeight;
+    if(scrollable <= 0) return;
+    var ratio = (window.scrollY || window.pageYOffset || 0) / scrollable;
+    if(ratio >= 0.45) openPrompt();
+  }
+
+  if(!getState()){
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+
+  dismissBtn.addEventListener('click', function(){
+    closePrompt('dismissed');
+  });
+  closeBtn.addEventListener('click', function(){
+    closePrompt('dismissed');
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'newsletterPromptStatus';
+    status.textContent = '';
+    emailInput.setAttribute('aria-invalid', 'false');
+    if(!emailInput.value.trim() || !emailInput.checkValidity()){
+      setStatus('Please enter a valid email address.', 'error');
+      emailInput.setAttribute('aria-invalid', 'true');
+      emailInput.focus();
+      return;
+    }
+    emailInput.setAttribute('aria-invalid', 'false');
+    setStatus('Thanks! Request saved on this device. Connect a backend/provider endpoint to complete real email signup.', 'success');
+    setState('dismissed');
+    form.reset();
+    setTimeout(function(){ closePrompt(); }, 1400);
   });
 })();
 </script>
