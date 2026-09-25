@@ -1718,7 +1718,7 @@ header.site-header .headerTop h1{
   <form id="newsletterPromptForm" novalidate>
     <div class="field">
       <label for="newsletterPromptEmail">Email address</label>
-      <input type="email" id="newsletterPromptEmail" autocomplete="email" placeholder="you@example.com" required>
+      <input type="email" id="newsletterPromptEmail" autocomplete="email" placeholder="you@example.com" required aria-describedby="newsletterPromptDesc newsletterPromptStatus" aria-invalid="false">
     </div>
     <div class="newsletterPromptActions">
       <button type="button" class="newsletterDismiss" id="newsletterPromptDismiss">No thanks</button>
@@ -2279,6 +2279,7 @@ document.addEventListener('click', (e)=>{
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
     if(finalState){ setState(finalState); }
+    else { shown = false; }
     if(lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
@@ -2318,11 +2319,14 @@ document.addEventListener('click', (e)=>{
     e.preventDefault();
     status.className = 'newsletterPromptStatus';
     status.textContent = '';
+    emailInput.setAttribute('aria-invalid', 'false');
     if(!emailInput.value.trim() || !emailInput.checkValidity()){
       setStatus('Please enter a valid email address.', 'error');
+      emailInput.setAttribute('aria-invalid', 'true');
       emailInput.focus();
       return;
     }
+    emailInput.setAttribute('aria-invalid', 'false');
     setStatus('Thanks! Request saved on this device. Connect a backend/provider endpoint to complete real email signup.', 'success');
     setState('dismissed');
     form.reset();
