@@ -1711,7 +1711,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
   <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
@@ -2291,6 +2291,7 @@ document.addEventListener('click', (e)=>{
     lastFocused = document.activeElement;
     prompt.classList.add('open');
     prompt.setAttribute('aria-hidden', 'false');
+    document.addEventListener('keydown', onKeyDown);
     window.removeEventListener('scroll', onScroll);
     try{ emailInput.focus(); }catch(e){}
   }
@@ -2313,8 +2314,6 @@ document.addEventListener('click', (e)=>{
   closeBtn.addEventListener('click', function(){
     closePrompt('dismissed');
   });
-  document.addEventListener('keydown', onKeyDown);
-
   form.addEventListener('submit', function(e){
     e.preventDefault();
     status.className = 'newsletterPromptStatus';
@@ -2325,7 +2324,7 @@ document.addEventListener('click', (e)=>{
       return;
     }
     setStatus('Thanks! Request saved on this device. Connect a backend/provider endpoint to complete real email signup.', 'success');
-    setState('submitted-local');
+    setState('dismissed');
     form.reset();
     setTimeout(function(){ closePrompt(); }, 1400);
   });
