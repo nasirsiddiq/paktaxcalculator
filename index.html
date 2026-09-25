@@ -1716,7 +1716,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="true" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
   <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
@@ -2265,23 +2265,11 @@ document.addEventListener('click', (e)=>{
   var STATE_DISMISSED = 'dismissed';
   var shown = false;
   var lastFocused = null;
+  var scrollTicking = false;
   function onKeyDown(e){
     if(!prompt.classList.contains('open')) return;
     if(e.key === 'Escape'){
-      closePrompt(STATE_DISMISSED);
-      return;
-    }
-    if(e.key !== 'Tab') return;
-    var focusables = prompt.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
-    if(!focusables.length) return;
-    var first = focusables[0];
-    var last = focusables[focusables.length - 1];
-    if(e.shiftKey && document.activeElement === first){
-      e.preventDefault();
-      last.focus();
-    } else if(!e.shiftKey && document.activeElement === last){
-      e.preventDefault();
-      first.focus();
+      closePrompt(STATE_DISMISSED, true);
     }
   }
 
@@ -2295,12 +2283,12 @@ document.addEventListener('click', (e)=>{
     status.textContent = message;
     status.className = 'newsletterPromptStatus show ' + (kind || '');
   }
-  function closePrompt(finalState){
+  function closePrompt(finalState, shouldRestoreFocus){
     if(!finalState){ finalState = STATE_DISMISSED; }
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
     setState(finalState);
-    if(lastFocused && typeof lastFocused.focus === 'function'){
+    if(shouldRestoreFocus && lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
     document.removeEventListener('keydown', onKeyDown);
@@ -2316,24 +2304,34 @@ document.addEventListener('click', (e)=>{
     window.removeEventListener('scroll', onScroll);
     try{ emailInput.focus(); }catch(e){}
   }
-  function onScroll(){
+  function onScrollCheck(){
     var doc = document.documentElement;
     var scrollable = (doc.scrollHeight || 0) - window.innerHeight;
     if(scrollable <= 0) return;
     var ratio = (window.scrollY || window.pageYOffset || 0) / scrollable;
     if(ratio >= 0.45) openPrompt();
   }
+  function onScroll(){
+    if(scrollTicking) return;
+    scrollTicking = true;
+    var cb = function(){
+      scrollTicking = false;
+      onScrollCheck();
+    };
+    if(typeof requestAnimationFrame === 'function'){ requestAnimationFrame(cb); }
+    else { setTimeout(cb, 16); }
+  }
 
   if(!getState()){
     window.addEventListener('scroll', onScroll, { passive:true });
-    onScroll();
+    onScrollCheck();
   }
 
   dismissBtn.addEventListener('click', function(){
-    closePrompt(STATE_DISMISSED);
+    closePrompt(STATE_DISMISSED, true);
   });
   closeBtn.addEventListener('click', function(){
-    closePrompt(STATE_DISMISSED);
+    closePrompt(STATE_DISMISSED, true);
   });
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -2349,7 +2347,7 @@ document.addEventListener('click', (e)=>{
     emailInput.setAttribute('aria-invalid', 'false');
     setStatus('Thanks! This prompt is now hidden on this device. Connect a backend/provider endpoint to process real subscriptions.', 'success');
     form.reset();
-    setTimeout(function(){ closePrompt(STATE_DISMISSED); }, 1400);
+    setTimeout(function(){ closePrompt(STATE_DISMISSED, false); }, 1400);
   });
 })();
 </script>
