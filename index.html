@@ -1189,9 +1189,10 @@ header.site-header .headerTop h1{
 .newsletterPromptStatus{
   margin-top:10px;
   font-size:13px;
-  display:none;
+  min-height:1.2em;
+  opacity:0;
 }
-.newsletterPromptStatus.show{ display:block; }
+.newsletterPromptStatus.show{ opacity:1; }
 .newsletterPromptStatus.success{ color:#0b5c33; }
 .newsletterPromptStatus.error{ color:#b3261e; }
 @media (max-width:560px){
@@ -2283,6 +2284,7 @@ document.addEventListener('click', (e)=>{
     lastFocused = document.activeElement;
     prompt.classList.add('open');
     prompt.setAttribute('aria-hidden', 'false');
+    window.removeEventListener('scroll', onScroll);
     try{ emailInput.focus(); }catch(e){}
   }
   function onScroll(){
@@ -2319,8 +2321,8 @@ document.addEventListener('click', (e)=>{
       emailInput.focus();
       return;
     }
-    setStatus('Thanks! Subscription intent saved on this device. Connect a backend/provider endpoint to complete email signup.', 'success');
-    setState('subscribed');
+    setStatus('Thanks! Request saved on this device. Connect a backend/provider endpoint to complete real email signup.', 'success');
+    setState('submitted-local');
     form.reset();
     setTimeout(function(){ closePrompt(); }, 1400);
   });

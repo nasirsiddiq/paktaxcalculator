@@ -27,7 +27,7 @@ Supporting files: `sitemap.xml`, `robots.txt`, `ads.txt` (AdSense publisher veri
 
 ## Newsletter prompt behavior
 
-`index.html` includes a scroll-triggered newsletter prompt that appears after roughly 45% page scroll and stores the visitor's dismiss/subscribe choice in `localStorage` so it is not shown repeatedly.
+`index.html` includes a scroll-triggered newsletter prompt that appears after roughly 45% page scroll and stores the visitor's dismiss/submit choice in `localStorage` so it is not shown repeatedly.
 
 The current implementation is client-side only. To collect real subscriptions, connect the form submit handler to a newsletter backend/provider endpoint (for example, via a Netlify Function) and persist the email server-side.
 
