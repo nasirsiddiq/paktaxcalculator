@@ -2270,7 +2270,7 @@ document.addEventListener('click', (e)=>{
   function onKeyDown(e){
     if(!prompt.classList.contains('open')) return;
     if(e.key === 'Escape'){
-      closePrompt(STATE_DISMISSED, true);
+      closePrompt('', true);
     }
   }
 
@@ -2286,15 +2286,16 @@ document.addEventListener('click', (e)=>{
     status.className = 'newsletterPromptStatus show ' + (kind || '');
   }
   function closePrompt(finalState, shouldRestoreFocus){
-    if(!finalState){ finalState = STATE_DISMISSED; }
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
-    setState(finalState);
+    if(finalState){ setState(finalState); }
+    else { shown = false; }
     if(shouldRestoreFocus && lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
     document.removeEventListener('keydown', onKeyDown);
-    window.removeEventListener('scroll', onScroll);
+    if(finalState){ window.removeEventListener('scroll', onScroll); }
+    else { window.addEventListener('scroll', onScroll, { passive:true }); }
   }
   function openPrompt(){
     if(shown || getState()) return;
@@ -2347,9 +2348,11 @@ document.addEventListener('click', (e)=>{
       return;
     }
     emailInput.setAttribute('aria-invalid', 'false');
-    setStatus('Thanks! No subscription was sent yet; this prompt is now hidden on this device until backend/provider integration is added.', 'success');
-    form.reset();
-    setTimeout(function(){ closePrompt(STATE_SUBMITTED, false); }, 1400);
+    setStatus('Thanks! No subscription was sent yet. Connect backend/provider integration to process real subscriptions.', 'success');
+    setState(STATE_SUBMITTED);
+    emailInput.setAttribute('disabled', 'disabled');
+    form.querySelector('button[type="submit"]').setAttribute('disabled', 'disabled');
+    dismissBtn.textContent = 'Close';
   });
 })();
 </script>
