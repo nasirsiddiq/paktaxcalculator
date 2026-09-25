@@ -1716,7 +1716,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true" tabindex="-1">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
   <p id="newsletterPromptDesc">Enter your email and choose Subscribe. Real subscription delivery requires backend/provider integration.</p>
@@ -2317,7 +2317,7 @@ document.addEventListener('click', (e)=>{
     prompt.setAttribute('aria-hidden', 'false');
     document.addEventListener('keydown', onKeyDown);
     window.removeEventListener('scroll', onScroll);
-    try{ emailInput.focus(); }catch(e){}
+    try{ prompt.focus(); }catch(e){}
   }
   function onScrollCheck(){
     var doc = document.documentElement;
@@ -2364,7 +2364,8 @@ document.addEventListener('click', (e)=>{
     pendingSubmitted = true;
     setState(STATE_SUBMITTED);
     emailInput.setAttribute('disabled', 'disabled');
-    form.querySelector('button[type="submit"]').setAttribute('disabled', 'disabled');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    if(submitBtn) submitBtn.setAttribute('disabled', 'disabled');
     dismissBtn.textContent = 'Close';
   });
 })();
