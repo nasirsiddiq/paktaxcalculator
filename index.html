@@ -1716,7 +1716,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="true" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
   <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
@@ -2296,16 +2296,15 @@ document.addEventListener('click', (e)=>{
     status.className = 'newsletterPromptStatus show ' + (kind || '');
   }
   function closePrompt(finalState){
+    if(!finalState){ finalState = STATE_DISMISSED; }
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
-    if(finalState){ setState(finalState); }
-    else { shown = false; }
+    setState(finalState);
     if(lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
     document.removeEventListener('keydown', onKeyDown);
-    if(finalState){ window.removeEventListener('scroll', onScroll); }
-    else { window.addEventListener('scroll', onScroll, { passive:true }); }
+    window.removeEventListener('scroll', onScroll);
   }
   function openPrompt(){
     if(shown || getState()) return;
@@ -2348,7 +2347,7 @@ document.addEventListener('click', (e)=>{
       return;
     }
     emailInput.setAttribute('aria-invalid', 'false');
-    setStatus('Thanks! Request saved on this device. Connect a backend/provider endpoint to complete real email signup.', 'success');
+    setStatus('Thanks! This prompt is now hidden on this device. Connect a backend/provider endpoint to process real subscriptions.', 'success');
     form.reset();
     setTimeout(function(){ closePrompt(STATE_DISMISSED); }, 1400);
   });
