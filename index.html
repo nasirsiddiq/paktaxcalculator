@@ -2267,10 +2267,11 @@ document.addEventListener('click', (e)=>{
   var shown = false;
   var lastFocused = null;
   var scrollTicking = false;
+  var pendingSubmitted = false;
   function onKeyDown(e){
     if(!prompt.classList.contains('open')) return;
     if(e.key === 'Escape'){
-      closePrompt('', true);
+      closePrompt(pendingSubmitted ? STATE_SUBMITTED : '', true);
     }
   }
 
@@ -2331,10 +2332,10 @@ document.addEventListener('click', (e)=>{
   }
 
   dismissBtn.addEventListener('click', function(){
-    closePrompt(STATE_DISMISSED, true);
+    closePrompt(pendingSubmitted ? STATE_SUBMITTED : STATE_DISMISSED, true);
   });
   closeBtn.addEventListener('click', function(){
-    closePrompt(STATE_DISMISSED, true);
+    closePrompt(pendingSubmitted ? STATE_SUBMITTED : STATE_DISMISSED, true);
   });
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -2349,7 +2350,7 @@ document.addEventListener('click', (e)=>{
     }
     emailInput.setAttribute('aria-invalid', 'false');
     setStatus('Thanks! No subscription was sent yet. Connect backend/provider integration to process real subscriptions.', 'success');
-    setState(STATE_SUBMITTED);
+    pendingSubmitted = true;
     emailInput.setAttribute('disabled', 'disabled');
     form.querySelector('button[type="submit"]').setAttribute('disabled', 'disabled');
     dismissBtn.textContent = 'Close';
