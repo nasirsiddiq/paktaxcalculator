@@ -1710,10 +1710,10 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" aria-label="Newsletter sign up" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
-  <h3>Get tax updates in your inbox</h3>
-  <p>Scroll-tested reminder only: connect this form to your newsletter provider endpoint to collect real subscriptions.</p>
+  <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
+  <p id="newsletterPromptDesc">Scroll-tested reminder only: connect this form to your newsletter provider endpoint to collect real subscriptions.</p>
   <form id="newsletterPromptForm" novalidate>
     <div class="field">
       <label for="newsletterPromptEmail">Email address</label>
@@ -2256,6 +2256,7 @@ document.addEventListener('click', (e)=>{
 
   var STORAGE_KEY = 'ptc-newsletter-prompt-state';
   var shown = false;
+  var lastFocused = null;
 
   function getState(){
     try{ return localStorage.getItem(STORAGE_KEY) || ''; }catch(e){ return ''; }
@@ -2271,13 +2272,18 @@ document.addEventListener('click', (e)=>{
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
     if(finalState){ setState(finalState); }
+    if(lastFocused && typeof lastFocused.focus === 'function'){
+      try{ lastFocused.focus(); }catch(e){}
+    }
     window.removeEventListener('scroll', onScroll);
   }
   function openPrompt(){
     if(shown || getState()) return;
     shown = true;
+    lastFocused = document.activeElement;
     prompt.classList.add('open');
     prompt.setAttribute('aria-hidden', 'false');
+    try{ emailInput.focus(); }catch(e){}
   }
   function onScroll(){
     var doc = document.documentElement;
