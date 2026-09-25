@@ -2268,6 +2268,16 @@ document.addEventListener('click', (e)=>{
   var lastFocused = null;
   var scrollTicking = false;
   var pendingSubmitted = false;
+  function resetPromptState(){
+    pendingSubmitted = false;
+    emailInput.removeAttribute('disabled');
+    emailInput.setAttribute('aria-invalid', 'false');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    if(submitBtn) submitBtn.removeAttribute('disabled');
+    dismissBtn.textContent = 'No thanks';
+    status.className = 'newsletterPromptStatus';
+    status.textContent = '';
+  }
   function onKeyDown(e){
     if(!prompt.classList.contains('open')) return;
     if(e.key === 'Escape'){
@@ -2290,7 +2300,7 @@ document.addEventListener('click', (e)=>{
     prompt.classList.remove('open');
     prompt.setAttribute('aria-hidden', 'true');
     if(finalState){ setState(finalState); }
-    else { shown = false; }
+    else { shown = false; resetPromptState(); }
     if(shouldRestoreFocus && lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
@@ -2301,6 +2311,7 @@ document.addEventListener('click', (e)=>{
   function openPrompt(){
     if(shown || getState()) return;
     shown = true;
+    resetPromptState();
     lastFocused = document.activeElement;
     prompt.classList.add('open');
     prompt.setAttribute('aria-hidden', 'false');
@@ -2351,6 +2362,7 @@ document.addEventListener('click', (e)=>{
     emailInput.setAttribute('aria-invalid', 'false');
     setStatus('Thanks! No subscription was sent yet. Connect backend/provider integration to process real subscriptions.', 'success');
     pendingSubmitted = true;
+    setState(STATE_SUBMITTED);
     emailInput.setAttribute('disabled', 'disabled');
     form.querySelector('button[type="submit"]').setAttribute('disabled', 'disabled');
     dismissBtn.textContent = 'Close';
