@@ -1714,7 +1714,7 @@ header.site-header .headerTop h1{
 <section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
-  <p id="newsletterPromptDesc">Scroll-tested reminder only: connect this form to your newsletter provider endpoint to collect real subscriptions.</p>
+  <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
   <form id="newsletterPromptForm" novalidate>
     <div class="field">
       <label for="newsletterPromptEmail">Email address</label>
@@ -1724,6 +1724,7 @@ header.site-header .headerTop h1{
       <button type="button" class="newsletterDismiss" id="newsletterPromptDismiss">No thanks</button>
       <button type="submit" class="btn-submit">Subscribe</button>
     </div>
+    <p style="margin-top:8px;font-size:12px;color:var(--muted);">For real email delivery, connect this form to a newsletter backend/provider endpoint.</p>
     <div class="newsletterPromptStatus" id="newsletterPromptStatus" role="status" aria-live="polite"></div>
   </form>
 </section>
@@ -2258,6 +2259,11 @@ document.addEventListener('click', (e)=>{
   var STORAGE_KEY = 'ptc-newsletter-prompt-state';
   var shown = false;
   var lastFocused = null;
+  function onKeyDown(e){
+    if(e.key === 'Escape' && prompt.classList.contains('open')){
+      closePrompt('dismissed');
+    }
+  }
 
   function getState(){
     try{ return localStorage.getItem(STORAGE_KEY) || ''; }catch(e){ return ''; }
@@ -2276,6 +2282,7 @@ document.addEventListener('click', (e)=>{
     if(lastFocused && typeof lastFocused.focus === 'function'){
       try{ lastFocused.focus(); }catch(e){}
     }
+    document.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('scroll', onScroll);
   }
   function openPrompt(){
@@ -2306,11 +2313,7 @@ document.addEventListener('click', (e)=>{
   closeBtn.addEventListener('click', function(){
     closePrompt('dismissed');
   });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && prompt.classList.contains('open')){
-      closePrompt('dismissed');
-    }
-  });
+  document.addEventListener('keydown', onKeyDown);
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
