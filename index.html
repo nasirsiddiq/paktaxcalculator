@@ -1195,6 +1195,11 @@ header.site-header .headerTop h1{
 .newsletterPromptStatus.show{ opacity:1; }
 .newsletterPromptStatus.success{ color:#0b5c33; }
 .newsletterPromptStatus.error{ color:#b3261e; }
+.newsletterProviderNote{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--muted);
+}
 @media (max-width:560px){
   .newsletterPrompt{
     right:8px;
@@ -1724,7 +1729,7 @@ header.site-header .headerTop h1{
       <button type="button" class="newsletterDismiss" id="newsletterPromptDismiss">No thanks</button>
       <button type="submit" class="btn-submit">Subscribe</button>
     </div>
-    <p style="margin-top:8px;font-size:12px;color:var(--muted);">For real email delivery, connect this form to a newsletter backend/provider endpoint.</p>
+    <p class="newsletterProviderNote">For real email delivery, connect this form to a newsletter backend/provider endpoint.</p>
     <div class="newsletterPromptStatus" id="newsletterPromptStatus" role="status" aria-live="polite"></div>
   </form>
 </section>
@@ -2261,8 +2266,22 @@ document.addEventListener('click', (e)=>{
   var shown = false;
   var lastFocused = null;
   function onKeyDown(e){
-    if(e.key === 'Escape' && prompt.classList.contains('open')){
-      closePrompt('dismissed');
+    if(!prompt.classList.contains('open')) return;
+    if(e.key === 'Escape'){
+      closePrompt(STATE_DISMISSED);
+      return;
+    }
+    if(e.key !== 'Tab') return;
+    var focusables = prompt.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    if(!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if(e.shiftKey && document.activeElement === first){
+      e.preventDefault();
+      last.focus();
+    } else if(!e.shiftKey && document.activeElement === last){
+      e.preventDefault();
+      first.focus();
     }
   }
 
@@ -2285,7 +2304,8 @@ document.addEventListener('click', (e)=>{
       try{ lastFocused.focus(); }catch(e){}
     }
     document.removeEventListener('keydown', onKeyDown);
-    window.removeEventListener('scroll', onScroll);
+    if(finalState){ window.removeEventListener('scroll', onScroll); }
+    else { window.addEventListener('scroll', onScroll, { passive:true }); }
   }
   function openPrompt(){
     if(shown || getState()) return;
