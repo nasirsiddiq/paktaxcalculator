@@ -1716,7 +1716,7 @@ header.site-header .headerTop h1{
   </div>
 </footer>
 
-<section class="newsletterPrompt" id="newsletterPrompt" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
+<section class="newsletterPrompt" id="newsletterPrompt" role="dialog" aria-modal="false" aria-labelledby="newsletterPromptTitle" aria-describedby="newsletterPromptDesc" aria-hidden="true">
   <button type="button" class="closeX" id="newsletterPromptClose" aria-label="Dismiss newsletter sign up">&times;</button>
   <h3 id="newsletterPromptTitle">Get tax updates in your inbox</h3>
   <p id="newsletterPromptDesc">Enter your email and choose Subscribe to save your request.</p>
@@ -2263,6 +2263,7 @@ document.addEventListener('click', (e)=>{
 
   var STORAGE_KEY = 'ptc-newsletter-prompt-state';
   var STATE_DISMISSED = 'dismissed';
+  var STATE_SUBMITTED = 'submitted-local';
   var shown = false;
   var lastFocused = null;
   var scrollTicking = false;
@@ -2280,6 +2281,7 @@ document.addEventListener('click', (e)=>{
     try{ localStorage.setItem(STORAGE_KEY, next); }catch(e){}
   }
   function setStatus(message, kind){
+    status.setAttribute('aria-live', kind === 'error' ? 'assertive' : 'polite');
     status.textContent = message;
     status.className = 'newsletterPromptStatus show ' + (kind || '');
   }
@@ -2347,7 +2349,7 @@ document.addEventListener('click', (e)=>{
     emailInput.setAttribute('aria-invalid', 'false');
     setStatus('Thanks! This prompt is now hidden on this device. Connect a backend/provider endpoint to process real subscriptions.', 'success');
     form.reset();
-    setTimeout(function(){ closePrompt(STATE_DISMISSED, false); }, 1400);
+    setTimeout(function(){ closePrompt(STATE_SUBMITTED, false); }, 1400);
   });
 })();
 </script>
